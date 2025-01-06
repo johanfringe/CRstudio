@@ -311,14 +311,12 @@ const InstagramLink = () => {
     fill: "currentColor"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("style", {
     type: "text/css"
-  }, ".st0{fill:#FFFFFF;}"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("g", {
-    id: "Livello_2"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("circle", {
+  }, ".st0{fill:#FFFFFF;}"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("circle", {
     className: "st0",
     cx: "12",
     cy: "12.9",
     r: "8.5"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("g", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("path", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("path", {
     d: "M12,14.1c1.2,0,2.1-0.9,2.1-2.1c0-0.5-0.1-0.9-0.4-1.2c-0.4-0.5-1-0.9-1.7-0.9s-1.3,0.3-1.7,0.9C10,11.1,9.9,11.5,9.9,12C9.9,13.2,10.8,14.1,12,14.1z"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("polygon", {
     points: "16.6,9.4 16.6,7.7 16.6,7.4 16.3,7.4 14.6,7.4 14.6,9.4"
@@ -326,7 +324,7 @@ const InstagramLink = () => {
     d: "M15.3,12c0,1.8-1.5,3.3-3.3,3.3S8.7,13.8,8.7,12c0-0.4,0.1-0.9,0.2-1.2H7.2v4.9c0,0.6,0.5,1.1,1.1,1.1h7.3c0.6,0,1.1-0.5,1.1-1.1v-4.9H15C15.2,11.2,15.3,11.6,15.3,12z"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("path", {
     d: "M12,0C5.4,0,0,5.4,0,12s5.4,12,12,12s12-5.4,12-12S18.6,0,12,0z M18,10.8v4.9c0,1.3-1,2.3-2.3,2.3H8.3C7,18,6,17,6,15.7v-4.9V8.3C6,7.1,7,6,8.3,6h7.3C17,6,18,7.1,18,8.3V10.8z"
-  }))));
+  })));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (InstagramLink);
 
@@ -442,16 +440,17 @@ const WeChatLink = () => {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("svg", {
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 24 24",
-    className: "w-6 h-6"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("g", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("circle", {
+    className: "w-6 h-6",
+    fill: "currentColor"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("circle", {
     cx: "12",
     cy: "12.9",
     r: "8.5",
-    fill: "white"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("g", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("path", {
-    d: "M12,0c6.6,0,12,5.4,12,12s-5.4,12-12,12S0,18.6,0,12S5.4,0,12,0z M14.2,10.2c2,0,3.8,1.5,3.8,3.3 c0,1-0.7,1.9-1.6,2.6l0.3,1.1l-1.2-0.7c-0.4,0.1-0.9,0.2-1.4,0.2c-2.1,0-3.8-1.5-3.8-3.3C10.3,11.7,12,10.2,14.2,10.2z M9.8,6.8 c2.2,0,4.2,1.4,4.6,3.2c-0.1,0-0.3,0-0.4,0c-2.1,0-3.8,1.6-3.8,3.6c0,0.3,0.1,0.7,0.1,1c-0.1,0-0.3,0-0.4,0c-0.6,0-1-0.1-1.6-0.2 l-1.6,0.8l0.5-1.4c-1.1-0.8-1.8-1.8-1.8-3.1C5.2,8.5,7.3,6.8,9.8,6.8L9.8,6.8z M12.9,12c-0.2,0-0.5,0.2-0.5,0.5 c0,0.2,0.2,0.5,0.5,0.5c0.3,0,0.6-0.2,0.6-0.5C13.5,12.2,13.3,12,12.9,12z M15.4,12c-0.2,0-0.4,0.2-0.4,0.5c0,0.2,0.2,0.5,0.4,0.5 c0.3,0,0.6-0.2,0.6-0.5C16,12.2,15.7,12,15.4,12z M11.5,8.7c-0.3,0-0.7,0.2-0.7,0.6c0,0.3,0.3,0.6,0.7,0.6c0.3,0,0.6-0.2,0.6-0.6 C12,8.9,11.8,8.7,11.5,8.7z M8.3,8.7C8,8.7,7.6,8.9,7.6,9.3c0,0.3,0.3,0.6,0.7,0.6c0.3,0,0.6-0.2,0.6-0.6C8.9,8.9,8.6,8.7,8.3,8.7z",
     fill: "currentColor"
-  }))));
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("path", {
+    d: "M12,0c6.6,0,12,5.4,12,12s-5.4,12-12,12S0,18.6,0,12S5.4,0,12,0z M14.2,10.2c2,0,3.8,1.5,3.8,3.3 c0,1-0.7,1.9-1.6,2.6l0.3,1.1l-1.2-0.7c-0.4,0.1-0.9,0.2-1.4,0.2c-2.1,0-3.8-1.5-3.8-3.3C10.3,11.7,12,10.2,14.2,10.2z M9.8,6.8 c2.2,0,4.2,1.4,4.6,3.2c-0.1,0-0.3,0-0.4,0c-2.1,0-3.8,1.6-3.8,3.6c0,0.3,0.1,0.7,0.1,1c-0.1,0-0.3,0-0.4,0c-0.6,0-1-0.1-1.6-0.2 l-1.6,0.8l0.5-1.4c-1.1-0.8-1.8-1.8-1.8-3.1C5.2,8.5,7.3,6.8,9.8,6.8L9.8,6.8z M12.9,12c-0.2,0-0.5,0.2-0.5,0.5 c0,0.2,0.2,0.5,0.5,0.5c0.3,0,0.6-0.2,0.6-0.5C13.5,12.2,13.3,12,12.9,12z M15.4,12c-0.2,0-0.4,0.2-0.4,0.5c0,0.2,0.2,0.5,0.4,0.5 c0.3,0,0.6-0.2,0.6-0.5C16,12.2,15.7,12,15.4,12z M11.5,8.7c-0.3,0-0.7,0.2-0.7,0.6c0,0.3,0.3,0.6,0.7,0.6c0.3,0,0.6-0.2,0.6-0.6 C12,8.9,11.8,8.7,11.5,8.7z M8.3,8.7C8,8.7,7.6,8.9,7.6,9.3c0,0.3,0.3,0.6,0.7,0.6c0.3,0,0.6-0.2,0.6-0.6C8.9,8.9,8.6,8.7,8.3,8.7z",
+    fill: "white"
+  })));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (WeChatLink);
 
@@ -523,15 +522,15 @@ const YouTubeLink = () => {
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 24 24",
     className: "w-6 h-6"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("g", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("circle", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("circle", {
     cx: "13.3",
     cy: "12.6",
     r: "8.5",
     fill: "white"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("g", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("path", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("path", {
     d: "M9.7,15.5V8.5l6.1,3.5L9.7,15.5z M12,5.8c-3.4,0-6.2,2.8-6.2,6.2s2.8,6.2,6.2,6.2c3.4,0,6.2-2.8,6.2-6.2l0,0 C18.2,8.6,15.4,5.8,12,5.8L12,5.8L12,5.8z M12,19.1L12,19.1c-3.9,0-7.1-3.2-7.1-7.1S8.1,4.9,12,4.9c3.9,0,7.1,3.2,7.1,7.1l0,0l0,0 v0C19.1,15.9,15.9,19.1,12,19.1L12,19.1L12,19.1L12,19.1z M12,0L12,0C5.4,0,0,5.4,0,12s5.4,12,12,12s12-5.4,12-12l0,0 C24,5.4,18.6,0,12,0L12,0L12,0z",
     fill: "currentColor"
-  }))));
+  })));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (YouTubeLink);
 
@@ -794,7 +793,7 @@ const IndexPage = () => {
 /***/ ((module) => {
 
 "use strict";
-module.exports = /*#__PURE__*/JSON.parse('{"data":{"allLanguagesJson":{"nodes":[{"footer":{"links":{"partners":"Partners EN","cookies":"Cookies","legal":"Legal"}},"parent":{"name":"en"}},{"footer":{"links":{"partners":"Partners NL","cookies":"Cookies","legal":"Legal"}},"parent":{"name":"nl"}},{"footer":{"links":{"partners":"Partners FR","cookies":"Cookies","legal":"Legal"}},"parent":{"name":"fr"}}]}}}');
+module.exports = /*#__PURE__*/JSON.parse('{"data":{"allLanguagesJson":{"nodes":[{"footer":{"links":{"partners":"Partners FR","cookies":"Cookies","legal":"Legal"}},"parent":{"name":"fr"}},{"footer":{"links":{"partners":"Partners NL","cookies":"Cookies","legal":"Legal"}},"parent":{"name":"nl"}},{"footer":{"links":{"partners":"Partners EN","cookies":"Cookies","legal":"Legal"}},"parent":{"name":"en"}}]}}}');
 
 /***/ }),
 
@@ -805,7 +804,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"data":{"allLanguagesJson":{"nodes":[
 /***/ ((module) => {
 
 "use strict";
-module.exports = /*#__PURE__*/JSON.parse('{"data":{"allLanguagesJson":{"nodes":[{"header":{"links":{"demo":"Demo EN","pricing":"Pricing","contact":"Contact","login":"Login","signup":"Try the Demo"}},"parent":{"name":"en"}},{"header":{"links":{"demo":"Demo NL","pricing":"Pricing","contact":"Contact","login":"Inloggen","signup":"Probeer de Demo"}},"parent":{"name":"nl"}},{"header":{"links":{"demo":"Demo FR","pricing":"Pricing","contact":"Contact","login":"Login","signup":"Essayer le Demo"}},"parent":{"name":"fr"}}]}}}');
+module.exports = /*#__PURE__*/JSON.parse('{"data":{"allLanguagesJson":{"nodes":[{"header":{"links":{"demo":"Demo FR","pricing":"Pricing","contact":"Contact","login":"Login","signup":"Essayer le Demo"}},"parent":{"name":"fr"}},{"header":{"links":{"demo":"Demo NL","pricing":"Pricing","contact":"Contact","login":"Inloggen","signup":"Probeer de Demo"}},"parent":{"name":"nl"}},{"header":{"links":{"demo":"Demo EN","pricing":"Pricing","contact":"Contact","login":"Login","signup":"Try the Demo"}},"parent":{"name":"en"}}]}}}');
 
 /***/ })
 
