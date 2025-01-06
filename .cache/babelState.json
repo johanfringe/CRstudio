@@ -7,27 +7,27 @@
           "options": {}
         },
         {
-          "name": "/Users/johan/CRstudio/CRstudio-1Template/node_modules/gatsby-plugin-image/dist/babel-plugin-parse-static-images.js",
+          "name": "/Users/johan/CRstudio/CRstudio/node_modules/gatsby-plugin-image/dist/babel-plugin-parse-static-images.js",
           "options": {
-            "cacheDir": "/Users/johan/CRstudio/CRstudio-1Template/.cache/caches/gatsby-plugin-image"
+            "cacheDir": "/Users/johan/CRstudio/CRstudio/.cache/caches/gatsby-plugin-image"
           }
         },
         {
-          "name": "/Users/johan/CRstudio/CRstudio-1Template/node_modules/@babel/plugin-proposal-optional-chaining/lib/index.js",
+          "name": "/Users/johan/CRstudio/CRstudio/node_modules/@babel/plugin-proposal-optional-chaining/lib/index.js",
           "options": {}
         },
         {
-          "name": "/Users/johan/CRstudio/CRstudio-1Template/node_modules/@babel/plugin-proposal-nullish-coalescing-operator/lib/index.js",
+          "name": "/Users/johan/CRstudio/CRstudio/node_modules/@babel/plugin-proposal-nullish-coalescing-operator/lib/index.js",
           "options": {}
         },
         {
-          "name": "/Users/johan/CRstudio/CRstudio-1Template/node_modules/@babel/plugin-proposal-numeric-separator/lib/index.js",
+          "name": "/Users/johan/CRstudio/CRstudio/node_modules/@babel/plugin-proposal-numeric-separator/lib/index.js",
           "options": {}
         }
       ],
       "presets": [
         {
-          "name": "/Users/johan/CRstudio/CRstudio-1Template/node_modules/@babel/preset-typescript/lib/index.js",
+          "name": "/Users/johan/CRstudio/CRstudio/node_modules/@babel/preset-typescript/lib/index.js",
           "options": {
             "plugins": [],
             "allExtensions": false,
@@ -48,27 +48,27 @@
           "options": {}
         },
         {
-          "name": "/Users/johan/CRstudio/CRstudio-1Template/node_modules/gatsby-plugin-image/dist/babel-plugin-parse-static-images.js",
+          "name": "/Users/johan/CRstudio/CRstudio/node_modules/gatsby-plugin-image/dist/babel-plugin-parse-static-images.js",
           "options": {
-            "cacheDir": "/Users/johan/CRstudio/CRstudio-1Template/.cache/caches/gatsby-plugin-image"
+            "cacheDir": "/Users/johan/CRstudio/CRstudio/.cache/caches/gatsby-plugin-image"
           }
         },
         {
-          "name": "/Users/johan/CRstudio/CRstudio-1Template/node_modules/@babel/plugin-proposal-optional-chaining/lib/index.js",
+          "name": "/Users/johan/CRstudio/CRstudio/node_modules/@babel/plugin-proposal-optional-chaining/lib/index.js",
           "options": {}
         },
         {
-          "name": "/Users/johan/CRstudio/CRstudio-1Template/node_modules/@babel/plugin-proposal-nullish-coalescing-operator/lib/index.js",
+          "name": "/Users/johan/CRstudio/CRstudio/node_modules/@babel/plugin-proposal-nullish-coalescing-operator/lib/index.js",
           "options": {}
         },
         {
-          "name": "/Users/johan/CRstudio/CRstudio-1Template/node_modules/@babel/plugin-proposal-numeric-separator/lib/index.js",
+          "name": "/Users/johan/CRstudio/CRstudio/node_modules/@babel/plugin-proposal-numeric-separator/lib/index.js",
           "options": {}
         }
       ],
       "presets": [
         {
-          "name": "/Users/johan/CRstudio/CRstudio-1Template/node_modules/@babel/preset-typescript/lib/index.js",
+          "name": "/Users/johan/CRstudio/CRstudio/node_modules/@babel/preset-typescript/lib/index.js",
           "options": {
             "plugins": [],
             "allExtensions": false,
@@ -89,27 +89,27 @@
           "options": {}
         },
         {
-          "name": "/Users/johan/CRstudio/CRstudio-1Template/node_modules/gatsby-plugin-image/dist/babel-plugin-parse-static-images.js",
+          "name": "/Users/johan/CRstudio/CRstudio/node_modules/gatsby-plugin-image/dist/babel-plugin-parse-static-images.js",
           "options": {
-            "cacheDir": "/Users/johan/CRstudio/CRstudio-1Template/.cache/caches/gatsby-plugin-image"
+            "cacheDir": "/Users/johan/CRstudio/CRstudio/.cache/caches/gatsby-plugin-image"
           }
         },
         {
-          "name": "/Users/johan/CRstudio/CRstudio-1Template/node_modules/@babel/plugin-proposal-optional-chaining/lib/index.js",
+          "name": "/Users/johan/CRstudio/CRstudio/node_modules/@babel/plugin-proposal-optional-chaining/lib/index.js",
           "options": {}
         },
         {
-          "name": "/Users/johan/CRstudio/CRstudio-1Template/node_modules/@babel/plugin-proposal-nullish-coalescing-operator/lib/index.js",
+          "name": "/Users/johan/CRstudio/CRstudio/node_modules/@babel/plugin-proposal-nullish-coalescing-operator/lib/index.js",
           "options": {}
         },
         {
-          "name": "/Users/johan/CRstudio/CRstudio-1Template/node_modules/@babel/plugin-proposal-numeric-separator/lib/index.js",
+          "name": "/Users/johan/CRstudio/CRstudio/node_modules/@babel/plugin-proposal-numeric-separator/lib/index.js",
           "options": {}
         }
       ],
       "presets": [
         {
-          "name": "/Users/johan/CRstudio/CRstudio-1Template/node_modules/@babel/preset-typescript/lib/index.js",
+          "name": "/Users/johan/CRstudio/CRstudio/node_modules/@babel/preset-typescript/lib/index.js",
           "options": {
             "plugins": [],
             "allExtensions": false,
@@ -130,27 +130,27 @@
           "options": {}
         },
         {
-          "name": "/Users/johan/CRstudio/CRstudio-1Template/node_modules/gatsby-plugin-image/dist/babel-plugin-parse-static-images.js",
+          "name": "/Users/johan/CRstudio/CRstudio/node_modules/gatsby-plugin-image/dist/babel-plugin-parse-static-images.js",
           "options": {
-            "cacheDir": "/Users/johan/CRstudio/CRstudio-1Template/.cache/caches/gatsby-plugin-image"
+            "cacheDir": "/Users/johan/CRstudio/CRstudio/.cache/caches/gatsby-plugin-image"
           }
         },
         {
-          "name": "/Users/johan/CRstudio/CRstudio-1Template/node_modules/@babel/plugin-proposal-optional-chaining/lib/index.js",
+          "name": "/Users/johan/CRstudio/CRstudio/node_modules/@babel/plugin-proposal-optional-chaining/lib/index.js",
           "options": {}
         },
         {
-          "name": "/Users/johan/CRstudio/CRstudio-1Template/node_modules/@babel/plugin-proposal-nullish-coalescing-operator/lib/index.js",
+          "name": "/Users/johan/CRstudio/CRstudio/node_modules/@babel/plugin-proposal-nullish-coalescing-operator/lib/index.js",
           "options": {}
         },
         {
-          "name": "/Users/johan/CRstudio/CRstudio-1Template/node_modules/@babel/plugin-proposal-numeric-separator/lib/index.js",
+          "name": "/Users/johan/CRstudio/CRstudio/node_modules/@babel/plugin-proposal-numeric-separator/lib/index.js",
           "options": {}
         }
       ],
       "presets": [
         {
-          "name": "/Users/johan/CRstudio/CRstudio-1Template/node_modules/@babel/preset-typescript/lib/index.js",
+          "name": "/Users/johan/CRstudio/CRstudio/node_modules/@babel/preset-typescript/lib/index.js",
           "options": {
             "plugins": [],
             "allExtensions": false,

@@ -36,3 +36,4 @@ bower_components/
 *.tmp
 *.swp
 *.swp~
+node_modules

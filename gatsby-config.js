@@ -4,7 +4,7 @@ require("dotenv").config({
 
 module.exports = {
   siteMetadata: {
-    title: `Catalogue Raisonné`,
+    title: `CRstudio`,
     description: `The most powerful tool for creating and managing catalogues raisonnés.`,
     author: `@crstudio`,
     siteUrl: `https://crstudio.online/`,
@@ -12,19 +12,10 @@ module.exports = {
   plugins: [
     `gatsby-plugin-image`,
     `gatsby-plugin-postcss`,
+    `gatsby-plugin-sharp`,
     `gatsby-transformer-remark`,
     `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
     
-    {
-      resolve: `gatsby-plugin-algolia`,
-      options: {
-        appId: process.env.ALGOLIA_APP_ID,
-        apiKey: process.env.ALGOLIA_ADMIN_KEY,
-        queries: require("./src/config/algolia-queries"),
-        chunkSize: 5000,
-      },
-    },
     {
       resolve: `gatsby-plugin-netlify`,
       options: {
@@ -58,20 +49,15 @@ module.exports = {
     `gatsby-transformer-json`,
     // Gecombineerde configuratie voor gatsby-source-filesystem
     ...[
-      { name: "datart", path: `${__dirname}/content/datart` },
-      { name: "datbio", path: `${__dirname}/content/datbio` },
-      { name: "datcol", path: `${__dirname}/content/datcol` },
-      { name: "datexh", path: `${__dirname}/content/datexh` },
-      { name: "datlit", path: `${__dirname}/content/datlit` },
+      { name: "languages", path: `${__dirname}/src/config/languages` },
       { name: "images", path: `${__dirname}/content/images` },
-      { name: "imaart", path: `${__dirname}/content/imaart` },
-      { name: "imabio", path: `${__dirname}/content/imabio` },
-      { name: "imacol", path: `${__dirname}/content/imacol` },
-      { name: "imaexh", path: `${__dirname}/content/imaexh` },
-      { name: "imalit", path: `${__dirname}/content/imalit` },
-    ].map(({ name, path }) => ({
-      resolve: `gatsby-source-filesystem`,
-      options: { name, path },
-    })),
+      { name: "texts", path: `${__dirname}/content/texts` },
+    ].map(({ name, path }) => {
+      // console.log(`Laden van bron: ${name}, pad: ${path}`); // Debug
+      return {
+        resolve: `gatsby-source-filesystem`,
+        options: { name, path },
+      };
+    }),
   ],
 };
