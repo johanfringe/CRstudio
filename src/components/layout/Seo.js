@@ -1,5 +1,4 @@
-// src/components/layout/Seo.js :
-
+// src/components/layout/Seo.js
 import React from "react";
 import { Helmet } from "react-helmet";
 import { useI18next, useTranslation } from "gatsby-plugin-react-i18next";
@@ -81,36 +80,6 @@ export default function Seo(props) {
       <link rel="icon" type="image/png" sizes="512x512" href="/content/images/icons/favicon-512x512.png" />
       <link rel="apple-touch-icon" sizes="180x180" href="/content/images/icons/apple-touch-icon.png" />
 
-      {/* JSON-LD Structured Data, gebruiken met Algolia */}
-      {/* <script type="application/ld+json">
-         {
-           "@context": "https://schema.org",
-           "@type": "WebSite",
-           "name": "${title}",
-           "url": "${canonicalUrl}",
-           "description": "${description}",
-           "potentialAction": {
-             "@type": "SearchAction",
-             "target": "${siteUrl}/search?q={search_term}",
-             "query-input": "required name=search_term"
-           }
-         }
-
-         OF
-
-         {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          "name": title,
-          "url": canonicalUrl,
-          "description": description,
-          "potentialAction": {
-            "@type": "SearchAction",
-            "target": `${siteUrl}/search?q={search_term_string}`,
-            "query-input": "required name=search_term_string",
-          },
-        })}
-      </script> */}
     </Helmet>
   );
 }
