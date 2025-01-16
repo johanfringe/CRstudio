@@ -1,0 +1,15 @@
+{
+  "defaultTitle": "CRStudio - The Ultimate Catalogue Raisonné Tool",
+  "defaultDescription": "Create and manage catalogues raisonnés with ease.",
+  "defaultOgImage": "/content/images/icons/default-og-image.jpg",
+  "siteUrl": "https://crstudio.online",
+  "social": {
+    "facebook": "CRStudioOfficial"
+  },
+  "seo": {
+    "title": "CRstudio - De Ultieme Tool voor Catalogue Raisonnés",
+    "description": "Hét platform voor het creëren, beheren en publiceren van professionele Catalogue Raisonnés. Ontworpen voor kunstenaars, erfgenamen, galeries en musea. CRstudio combineert eenvoud met technische kracht, zonder afbreuk te doen aan professionaliteit en kwaliteit."
+  },
+  "welcome_message": "Welkom bij CRStudio",
+  "description": "Maak en beheer catalogues raisonnés met gemak."
+}

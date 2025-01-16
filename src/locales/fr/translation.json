@@ -1,0 +1,16 @@
+{
+  "defaultTitle": "CRStudio - The Ultimate Catalogue Raisonné Tool",
+  "defaultDescription": "Create and manage catalogues raisonnés with ease.",
+  "defaultOgImage": "/content/images/icons/default-og-image.jpg",
+  "siteUrl": "https://crstudio.online",
+  "social": {
+    "facebook": "CRStudioOfficial"
+  },
+  "seo": {
+    "title": "Bienvenue sur CRStudio",
+    "description": "L'outil ultime pour les catalogues raisonnés"
+  },
+  "welcome_message": "Bienvenue sur CRStudio",
+  "description": "Créez et gérez des catalogues raisonnés facilement."
+}
+

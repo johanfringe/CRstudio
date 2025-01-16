@@ -1,0 +1,16 @@
+{
+    "policy": [
+      {
+        "userAgent": ["Googlebot", "Bingbot", "YandexBot", "DuckDuckBot", "BaiduSpider", "Applebot", "facebookexternalhit", "Twitterbot"],
+        "allow": "/",
+        "disallow": ["/admin/", "/drafts/", "/preview/", "/private/", "/404/", "/404.html"]
+      },
+      {
+        "userAgent": "*",
+        "disallow": "/"
+      }
+    ],
+    "sitemap": "https://crstudio.online/sitemap.xml",
+    "host": "https://crstudio.online"
+  }
+  

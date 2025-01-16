@@ -7,7 +7,7 @@ yarn-error.log*
 # Environment variables
 .env
 .env.* # Voor specifieke omgevingen zoals .env.production of .env.development
-settings/config/.env
+content/settings/.env
 
 # Gatsby files
 .cache/

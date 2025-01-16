@@ -2,18 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Importeer Roboto van Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
-
-/* Aangepaste styling voor links */
-.nav-link {
-  @apply font-roboto text-lg font-medium hover:text-gray-800;
+/* Font-face definitie */
+@font-face {
+  font-family: 'Inter';
+  src: url('/assets/fonts/inter-v18-latin-regular.woff2') format('woff2');
+  font-display: swap;
 }
 
-.mobile-nav-link {
-  @apply font-roboto text-lg font-medium hover:text-gray-800 block;
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/assets/fonts/montserrat-v29-latin-regular.woff2') format('woff2');
+  font-display: swap;
 }
 
-.footer-link {
-  @apply font-roboto text-sm hover:underline;
+@font-face {
+  font-family: 'Open Sans';
+  src: url('/assets/fonts/open-sans-v40-latin-regular.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('/assets/fonts/roboto-v47-latin-regular.woff2') format('woff2');
+  font-display: swap;
+}
+
+/* Tailwind-aanpassingen */
+:root {
+  --font-sans: 'Inter', 'Montserrat', 'Open Sans', 'Roboto', sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
 }

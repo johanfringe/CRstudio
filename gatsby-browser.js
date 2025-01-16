@@ -1,7 +1,4 @@
-import "./src/styles/global.css";
-import React from "react";
-import { LanguageProvider } from "./src/context/LanguageProvider";
+import "./src/styles/global.css"; 
+// of welke global styling je ook hebt
 
-export const wrapRootElement = ({ element }) => (
-  <LanguageProvider>{element}</LanguageProvider>
-);
+// Verder niets. Geen i18n-wrapping!
