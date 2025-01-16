@@ -15,12 +15,28 @@ module.exports = {
     siteUrl: `https://crstudio.online/`,
   },
   plugins: [
-    `gatsby-plugin-image`,
-    `gatsby-plugin-postcss`,
-    `gatsby-plugin-sharp`,
-    `gatsby-plugin-react-helmet`,
+    // Gecombineerde configuratie voor gatsby-source-filesystem voor verschillende bronnen
+    ...[
+      { name: "locales", path: `${__dirname}/src/locales` }, // Meertalige JSON-bestanden
+      { name: "utils", path: `${__dirname}/src/utils` }, // Seo
+      { name: "images", path: `${__dirname}/content/images` }, // Afbeeldingen
+      { name: "icons", path: `${__dirname}/content/images/icons` },
+      { name: "texts", path: `${__dirname}/content/texts` },
+    ].map(({ name, path }) => {
+
+      return {
+        resolve: `gatsby-source-filesystem`,
+        options: { name, path },
+      };
+    }),
+
     `gatsby-transformer-json`,
     `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`,
+    `gatsby-plugin-image`,
+    `gatsby-plugin-postcss`,
+    `gatsby-plugin-react-helmet`,
+    
     {
       resolve: `gatsby-plugin-react-i18next`,
       options: {
@@ -51,15 +67,15 @@ module.exports = {
       },
     },
     {
-      resolve: "gatsby-plugin-robots-txt",
-      options: robotsConfig
-    },
-    {
       resolve: "gatsby-plugin-sitemap",
       options: {
         output: "/sitemap.xml",
         excludes: ['/admin/*', '/drafts/*', '/preview/*', '/private/*'],
       },
+    },
+    {
+      resolve: "gatsby-plugin-robots-txt",
+      options: robotsConfig
     },
     {
       resolve: `gatsby-plugin-manifest`, // Genereert naam en icoontje in de browser
@@ -73,19 +89,5 @@ module.exports = {
         icon: `content/images/icons/favicon-512x512.png`,
       },
     },
-    // Gecombineerde configuratie voor gatsby-source-filesystem voor verschillende bronnen
-    ...[
-      { name: "locales", path: `${__dirname}/src/locales` }, // Meertalige JSON-bestanden
-      { name: "utils", path: `${__dirname}/src/utils` }, // Seo
-      { name: "images", path: `${__dirname}/content/images` }, // Afbeeldingen
-      { name: "icons", path: `${__dirname}/content/images/icons` },
-      { name: "texts", path: `${__dirname}/content/texts` },
-    ].map(({ name, path }) => {
-
-      return {
-        resolve: `gatsby-source-filesystem`,
-        options: { name, path },
-      };
-    }),
   ],
 };
