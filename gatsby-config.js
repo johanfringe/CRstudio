@@ -18,6 +18,8 @@ module.exports = {
     `gatsby-plugin-image`,
     `gatsby-plugin-postcss`,
     `gatsby-plugin-sharp`,
+    `gatsby-plugin-react-helmet`,
+    `gatsby-transformer-json`,
     `gatsby-transformer-sharp`,
     {
       resolve: `gatsby-plugin-react-i18next`,
@@ -49,15 +51,15 @@ module.exports = {
       },
     },
     {
+      resolve: "gatsby-plugin-robots-txt",
+      options: robotsConfig
+    },
+    {
       resolve: "gatsby-plugin-sitemap",
       options: {
         output: "/sitemap.xml",
         excludes: ['/admin/*', '/drafts/*', '/preview/*', '/private/*'],
       },
-    },
-    {
-      resolve: "gatsby-plugin-robots-txt",
-      options: robotsConfig
     },
     {
       resolve: `gatsby-plugin-manifest`, // Genereert naam en icoontje in de browser
@@ -71,7 +73,6 @@ module.exports = {
         icon: `content/images/icons/favicon-512x512.png`,
       },
     },
-    `gatsby-transformer-json`,
     // Gecombineerde configuratie voor gatsby-source-filesystem voor verschillende bronnen
     ...[
       { name: "locales", path: `${__dirname}/src/locales` }, // Meertalige JSON-bestanden
