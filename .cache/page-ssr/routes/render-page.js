@@ -1888,6 +1888,7 @@ function getForwards(collectedScripts) {
 
 exports.components = {
   "component---cache-dev-404-page-js": () => __webpack_require__.e(/*! import() | component---cache-dev-404-page-js */ "component---cache-dev-404-page-js").then(__webpack_require__.bind(__webpack_require__, /*! ./../../dev-404-page.js?export=default */ "./.cache/dev-404-page.js?export=default")),
+  "component---src-pages-404-js": () => __webpack_require__.e(/*! import() | component---src-pages-404-js */ "component---src-pages-404-js").then(__webpack_require__.bind(__webpack_require__, /*! ./../../../src/pages/404.js?export=default */ "./src/pages/404.js?export=default")),
   "component---src-pages-index-js": () => __webpack_require__.e(/*! import() | component---src-pages-index-js */ "component---src-pages-index-js").then(__webpack_require__.bind(__webpack_require__, /*! ./../../../src/pages/index.js?export=default */ "./src/pages/index.js?export=default"))
 };
 exports.head = {};
@@ -1924,7 +1925,7 @@ var plugins = [{
   options: {
     "plugins": [],
     "localeJsonSourceName": "locales",
-    "languages": ["da", "de", "df", "en", "es", "fr", "it", "hu", "nl", "pl", "pt", "ro", "ru", "sv", "tr", "uk", "cs", "el", "ar", "bn", "hi", "zh", "ja", "ko", "ur"],
+    "languages": ["df", "en", "fr", "nl"],
     "defaultLanguage": "df",
     "siteUrl": "http://localhost:8000",
     "i18nextOptions": {

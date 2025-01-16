@@ -9,7 +9,7 @@ var plugins = [{
     },{
       name: 'gatsby-plugin-react-i18next',
       plugin: require('/Users/johan/CRstudio/CRstudio/node_modules/gatsby-plugin-react-i18next/gatsby-ssr.js'),
-      options: {"plugins":[],"localeJsonSourceName":"locales","languages":["da","de","df","en","es","fr","it","hu","nl","pl","pt","ro","ru","sv","tr","uk","cs","el","ar","bn","hi","zh","ja","ko","ur"],"defaultLanguage":"df","siteUrl":"http://localhost:8000","i18nextOptions":{"interpolation":{"escapeValue":false},"detection":{"order":["path","htmlTag","cookie","navigator"],"caches":["cookie"]},"fallbackLng":"df","backend":{"loadPath":"/Users/johan/CRstudio/CRstudio/src/locales/{{lng}}/{{ns}}.json"}},"pages":[{"matchPath":"/:lang/:rest*","getLanguageFromPath":true}]},
+      options: {"plugins":[],"localeJsonSourceName":"locales","languages":["df","en","fr","nl"],"defaultLanguage":"df","siteUrl":"http://localhost:8000","i18nextOptions":{"interpolation":{"escapeValue":false},"detection":{"order":["path","htmlTag","cookie","navigator"],"caches":["cookie"]},"fallbackLng":"df","backend":{"loadPath":"/Users/johan/CRstudio/CRstudio/src/locales/{{lng}}/{{ns}}.json"}},"pages":[{"matchPath":"/:lang/:rest*","getLanguageFromPath":true}]},
     },{
       name: 'gatsby-plugin-sitemap',
       plugin: require('/Users/johan/CRstudio/CRstudio/node_modules/gatsby-plugin-sitemap/gatsby-ssr.js'),

@@ -1,0 +1,28 @@
+// src/locales/languages.js
+module.exports = [
+  { code: "da", label: "Dansk" },
+  { code: "de", label: "Deutsch" },
+  { code: "df", label: "Default", default: true }, // Standaardtaal
+  { code: "en", label: "English",},
+  { code: "es", label: "Español" },
+  { code: "fr", label: "Français" },
+  { code: "it", label: "Italiano" },
+  { code: "hu", label: "Magyar" },
+  { code: "nl", label: "Nederlands" },
+  { code: "pl", label: "Polski" },
+  { code: "pt", label: "Português" },
+  { code: "ro", label: "Română" },
+  { code: "ru", label: "Русский" },
+  { code: "sv", label: "Svenska" },
+  { code: "tr", label: "Türkçe" },
+  { code: "uk", label: "Українська" },
+  { code: "cs", label: "Čeština" },
+  { code: "el", label: "Ελληνικά" },
+  { code: "ar", label: "العربية" },
+  { code: "bn", label: "বাংলা" },
+  { code: "hi", label: "हिंदी" },
+  { code: "zh", label: "中文" },
+  { code: "ja", label: "日本語" },
+  { code: "ko", label: "한국어" },
+  { code: "ur", label: "اُردُو" },
+];
