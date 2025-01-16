@@ -15,9 +15,9 @@ export default function Seo(props) {
 
   const fonts = [
     "inter-v18-latin-regular",
-    "montserrat-v29-latin-regular",
-    "open-sans-v40-latin-regular",
-    "roboto-v47-latin-regular",
+    // "montserrat-v29-latin-regular",
+    // "open-sans-v40-latin-regular",
+    // "roboto-v47-latin-regular",
   ];
 
   return (
@@ -53,7 +53,7 @@ export default function Seo(props) {
         <link
           key={font}
           rel="preload"
-          href={`/assets/fonts/${font}.woff2`}
+          href={`/fonts/${font}.woff2`}
           as="font"
           type="font/woff2"
           crossOrigin="anonymous"
