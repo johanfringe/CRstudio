@@ -1,7 +1,7 @@
 {
     "policy": [
       {
-        "userAgent": ["Googlebot", "Bingbot", "YandexBot", "DuckDuckBot", "BaiduSpider", "Applebot", "facebookexternalhit", "Twitterbot"],
+        "userAgent": ["Googlebot", "Bingbot", "YandexBot", "DuckDuckBot", "BaiduSpider", "Sogou", "Slurp", "Applebot", "facebookexternalhit", "Twitterbot", "archive.org_bot"],
         "allow": "/",
         "disallow": ["/admin/", "/drafts/", "/preview/", "/private/", "/404/", "/404.html"]
       },

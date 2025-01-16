@@ -5,25 +5,25 @@
 /* Font-face definitie */
 @font-face {
   font-family: 'Inter';
-  src: url('/assets/fonts/inter-v18-latin-regular.woff2') format('woff2');
+  src: url('/fonts/inter-v18-latin-regular.woff2') format('woff2');
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('/assets/fonts/montserrat-v29-latin-regular.woff2') format('woff2');
+  src: url('/fonts/montserrat-v29-latin-regular.woff2') format('woff2');
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Open Sans';
-  src: url('/assets/fonts/open-sans-v40-latin-regular.woff2') format('woff2');
+  src: url('/fonts/open-sans-v40-latin-regular.woff2') format('woff2');
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Roboto';
-  src: url('/assets/fonts/roboto-v47-latin-regular.woff2') format('woff2');
+  src: url('/fonts/roboto-v47-latin-regular.woff2') format('woff2');
   font-display: swap;
 }
 

@@ -2,7 +2,6 @@
 module.exports = [
   { code: "da", label: "Dansk" },
   { code: "de", label: "Deutsch" },
-  { code: "df", label: "Default", default: true }, // Standaardtaal
   { code: "en", label: "English",},
   { code: "es", label: "Español" },
   { code: "fr", label: "Français" },
@@ -25,4 +24,5 @@ module.exports = [
   { code: "ja", label: "日本語" },
   { code: "ko", label: "한국어" },
   { code: "ur", label: "اُردُو" },
+  { code: "zu", label: "Default", default: true },
 ];
