@@ -1,4 +1,4 @@
-{/* src/components/layout/Seo.js */}
+// src/components/layout/Seo.js
 import React from "react";
 import { Helmet } from "react-helmet";
 import { useI18next, useTranslation } from "gatsby-plugin-react-i18next";
