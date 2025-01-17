@@ -221,7 +221,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_helmet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-helmet */ "./node_modules/react-helmet/es/Helmet.js");
 /* harmony import */ var gatsby_plugin_react_i18next__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! gatsby-plugin-react-i18next */ "./node_modules/gatsby-plugin-react-i18next/index.js");
 /* harmony import */ var gatsby_plugin_react_i18next__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(gatsby_plugin_react_i18next__WEBPACK_IMPORTED_MODULE_2__);
-// src/components/layout/Seo.js
+{/* src/components/layout/Seo.js */}
 
 
 
@@ -239,6 +239,7 @@ function Seo(props) {
   const description = t("seo.description");
   const canonicalUrl = `${siteUrl}/${language}${originalPath}`;
   const ogImage = `${siteUrl}/icons/default-og-image.jpg`;
+  const ogimagealt = t("seo.ogimagealt");
   const fonts = ["inter-v18-latin-regular"
   // "montserrat-v29-latin-regular",
   // "open-sans-v40-latin-regular",
@@ -273,6 +274,9 @@ function Seo(props) {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("meta", {
     property: "og:image",
     content: ogImage
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("meta", {
+    property: "og:image:alt",
+    content: ogimagealt
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("meta", {
     property: "og:image:width",
     content: "1200"

@@ -8,7 +8,8 @@
   },
   "seo": {
     "title": "Bienvenue sur CRStudio",
-    "description": "L'outil ultime pour les catalogues raisonnés"
+    "description": "L'outil ultime pour les catalogues raisonnés",
+    "ogimagealt": "Créez et gérez votre catalogue raisonné de manière professionnelle avec CRstudio"
   },
   "welcome_message": "Bienvenue sur CRStudio",
   "description": "Créez et gérez des catalogues raisonnés facilement."

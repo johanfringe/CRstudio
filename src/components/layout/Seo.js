@@ -1,4 +1,4 @@
-// src/components/layout/Seo.js
+{/* src/components/layout/Seo.js */}
 import React from "react";
 import { Helmet } from "react-helmet";
 import { useI18next, useTranslation } from "gatsby-plugin-react-i18next";
@@ -12,6 +12,7 @@ export default function Seo(props) {
   const description = t("seo.description");
   const canonicalUrl = `${siteUrl}/${language}${originalPath}`;
   const ogImage = `${siteUrl}/icons/default-og-image.jpg`;
+  const ogimagealt = t("seo.ogimagealt");
 
   const fonts = [
     "inter-v18-latin-regular",
@@ -36,10 +37,16 @@ export default function Seo(props) {
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:locale" content={`${language}_${language.toUpperCase()}`} />
       <meta property="og:image" content={ogImage} />
+      <meta property="og:image:alt" content={ogimagealt} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content="CRstudio" />
+      {/* Voor Instant Articles, na registratie als Facebook Developer */}
+      {/* <meta property="ia:markup_url" content="https://example.com/instant-articles/markup" /> */}
+      {/* <meta property="ia:markup_url_dev" content="https://example.com/dev-instant-articles/markup" /> */}
+      {/* <meta property="ia:rules_url" content="https://example.com/instant-articles/rules" /> */}
+      {/* <meta property="ia:rules_url_dev" content="https://example.com/dev-instant-articles/rules" /> */}
 
       {/* Twitter */}
       <meta name="twitter:title" content={title} />
