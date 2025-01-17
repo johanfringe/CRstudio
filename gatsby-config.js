@@ -20,7 +20,6 @@ module.exports = {
       { name: "locales", path: `${__dirname}/src/locales` }, // Meertalige JSON-bestanden
       { name: "utils", path: `${__dirname}/src/utils` }, // Seo
       { name: "images", path: `${__dirname}/content/images` }, // Afbeeldingen
-      { name: "icons", path: `${__dirname}/content/images/icons` },
       { name: "texts", path: `${__dirname}/content/texts` },
     ].map(({ name, path }) => {
 
@@ -86,7 +85,7 @@ module.exports = {
         background_color: `#ffffff`,
         theme_color: `#663399`,
         display: `standalone`,
-        icon: `content/images/icons/favicon-512x512.png`,
+        icon: `static/icons/favicon-512x512.png`,
       },
     },
   ],

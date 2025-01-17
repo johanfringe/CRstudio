@@ -11,7 +11,7 @@ export default function Seo(props) {
   const title = t("seo.title");
   const description = t("seo.description");
   const canonicalUrl = `${siteUrl}/${language}${originalPath}`;
-  const ogImage = `${siteUrl}/default-og-image.jpg`;
+  const ogImage = `${siteUrl}/icons/default-og-image.jpg`;
 
   const fonts = [
     "inter-v18-latin-regular",
@@ -71,14 +71,14 @@ export default function Seo(props) {
       ))}
       
       {/* Favicon */}
-      <link rel="icon" href="/content/images/icons/favicon.svg" type="image/svg+xml" />
-      <link rel="icon" href="/content/images/icons/favicon.ico" sizes="any" />
-      <link rel="icon" type="image/png" sizes="16x16" href="/content/images/icons/favicon-16x16.png" />
-      <link rel="icon" type="image/png" sizes="32x32" href="/content/images/icons/favicon-32x32.png" />
-      <link rel="icon" type="image/png" sizes="180x180" href="/content/images/icons/favicon-180x180.png" />
-      <link rel="icon" type="image/png" sizes="192x192" href="/content/images/icons/favicon-192x192.png" />
-      <link rel="icon" type="image/png" sizes="512x512" href="/content/images/icons/favicon-512x512.png" />
-      <link rel="apple-touch-icon" sizes="180x180" href="/content/images/icons/apple-touch-icon.png" />
+      <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
+      <link rel="icon" href="/icons/favicon.ico" sizes="any" />
+      <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
+      <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
+      <link rel="icon" type="image/png" sizes="180x180" href="/icons/favicon-180x180.png" />
+      <link rel="icon" type="image/png" sizes="192x192" href="/icons/favicon-192x192.png" />
+      <link rel="icon" type="image/png" sizes="512x512" href="/icons/favicon-512x512.png" />
+      <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
 
     </Helmet>
   );
