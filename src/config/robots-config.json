@@ -1,16 +1,15 @@
 {
-    "policy": [
+    "Policy": [
       {
-        "userAgent": ["Googlebot", "Bingbot", "YandexBot", "DuckDuckBot", "BaiduSpider", "Sogou", "Slurp", "Applebot", "facebookexternalhit", "Twitterbot", "archive.org_bot"],
-        "allow": "/",
-        "disallow": ["/admin/", "/drafts/", "/preview/", "/private/", "/404/", "/404.html"]
+        "User-agent": ["Googlebot", "Bingbot", "YandexBot", "DuckDuckBot", "BaiduSpider", "Sogou", "Slurp", "Applebot", "facebookexternalhit", "Twitterbot", "archive.org_bot"],
+        "Allow": "/",
+        "Disallow": ["/admin/", "/drafts/", "/preview/", "/private/", "/404/", "/404.html"]
       },
       {
-        "userAgent": "*",
-        "disallow": "/"
+        "User-agent": "*",
+        "Disallow": "/"
       }
     ],
-    "sitemap": "https://crstudio.online/sitemap.xml",
-    "host": "https://crstudio.online"
+    "Sitemap": "https://crstudio.online/sitemap.xml",
+    "Host": "https://crstudio.online"
   }
-  
