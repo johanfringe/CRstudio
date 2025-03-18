@@ -74,7 +74,6 @@ const handleSocialLogin = async (provider) => {
   }
 };
 
-
   // 📩 Formulier submit handler voor e-mailregistratie
   const handleSubmit = async (e) => {
     e.preventDefault();
