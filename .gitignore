@@ -8,6 +8,8 @@ yarn-error.log*
 .env
 .env.* # Voor specifieke omgevingen zoals .env.production of .env.development
 content/settings/.env
+content/settings/.env.development
+content/settings/.env.production
 
 # Gatsby files
 .cache/
