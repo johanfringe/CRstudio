@@ -4,13 +4,13 @@ import Redis from "ioredis";
 import crypto from "crypto";
 import { sendEmail } from "../utils/sendEmail";
 
-console.log("🔑 Supabase URL:", process.env.GATSBY_SUPABASE_URL);
-console.log("🔑 Supabase Service Role Key:", process.env.SUPABASE_SERVICE_ROLE_KEY ? "✔️ Loaded" : "❌ Not Loaded");
-console.log("🔑 TURNSTILE_SECRET:", process.env.TURNSTILE_SECRET ? "✔️ Loaded" : "❌ Not Loaded");
-console.log("🔑 GATSBY_TURNSTILE_SITE_KEY:", process.env.GATSBY_TURNSTILE_SITE_KEY);
-console.log("🔑 Kickbox API Key:", process.env.KICKBOX_API_KEY);
-console.log("🔑 Redis URL:", process.env.REDIS_URL);
-console.log("🔍 Verbinding maken met Redis...");
+//console.log("🔑 Supabase URL:", process.env.GATSBY_SUPABASE_URL);
+//console.log("🔑 Supabase Service Role Key:", process.env.SUPABASE_SERVICE_ROLE_KEY ? "✔️ Loaded" : "❌ Not Loaded");
+//console.log("🔑 TURNSTILE_SECRET:", process.env.TURNSTILE_SECRET ? "✔️ Loaded" : "❌ Not Loaded");
+//console.log("🔑 GATSBY_TURNSTILE_SITE_KEY:", process.env.GATSBY_TURNSTILE_SITE_KEY);
+//console.log("🔑 Kickbox API Key:", process.env.KICKBOX_API_KEY);
+//console.log("🔑 Redis URL:", process.env.REDIS_URL);
+//console.log("🔍 Verbinding maken met Redis...");
 
 const supabase = createClient(
   process.env.GATSBY_SUPABASE_URL,
