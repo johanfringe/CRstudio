@@ -1,0 +1,18 @@
+[build]
+  command = "yarn build"
+  publish = "public"
+
+[dev]
+  framework = "gatsby"
+  targetPort = 8000
+  command = "yarn develop --port 8000"
+  autoLaunch = false
+
+[functions]
+  node_bundler = "esbuild"
+  directory = "src/api"
+  external_node_modules = ["@supabase/supabase-js"]
+
+[[scheduled.functions]]
+  function = "cleanupUsers"
+  cron = "0 * * * *"  # Elk uur

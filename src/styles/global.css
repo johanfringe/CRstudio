@@ -1,38 +1,141 @@
-/* global.css */
+/* global.css : */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Font-face definitie */
+/* ✅ Inter voor bodytekst en UI */
 @font-face {
   font-family: 'Inter';
-  src: url('/fonts/inter-v18-latin-regular.woff2') format('woff2');
-  font-display: swap;
-}
-
-/*@font-face {
-  font-family: 'Montserrat';
-  src: url('/fonts/montserrat-v29-latin-regular.woff2') format('woff2');
+  src: url('/fonts/Inter-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Open Sans';
-  src: url('/fonts/open-sans-v40-latin-regular.woff2') format('woff2');
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Roboto';
-  src: url('/fonts/roboto-v47-latin-regular.woff2') format('woff2');
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
   font-display: swap;
-}*/
+}
 
-/* Tailwind-aanpassingen */
+/* ✅ Inter Display voor titels */
+@font-face {
+  font-family: 'Inter Display';
+  src: url('/fonts/InterDisplay-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter Display';
+  src: url('/fonts/InterDisplay-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ✅ CSS variabelen */
 :root {
-  --font-sans: 'Inter', 'Montserrat', 'Open Sans', 'Roboto', sans-serif;
+  --font-sans: 'Inter', sans-serif; /* ✅ Verander dit ook in tailwind.config ! */
+  --font-display: 'Inter Display', sans-serif;
 }
 
+/* ✅ Standaard instellingen */
 body {
-  font-family: var(--font-sans);
+  font-family: var(--font-sans); /* ✅ Moderne variabelen */
+  font-family: 'Inter', sans-serif; /* ✅ Ouderwetse fallback */
+  font-weight: 400;
 }
+
+/* ✅ Gebruik Inter Display voor koppen */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+.btn {
+  @apply px-7 py-2 rounded-full bg-blue-500 text-white font-medium transition-all duration-300;
+}
+.btn-primary {
+  @apply bg-blue-500 hover:bg-blue-600 focus:ring-blue-300 text-white;
+}
+.btn-secondary { /* Bv Annuleren */
+  @apply bg-gray-500 hover:bg-gray-600 focus:ring-gray-300 text-white;
+}
+.btn-tertiary { /* Bv Contact */
+  @apply bg-green-500 hover:bg-green-600 focus:ring-green-300 text-white;
+}
+.btn-danger {/* Bv Verwijderen */
+  @apply bg-red-500 hover:bg-red-600 focus:ring-red-300 text-white;
+}
+.btn-outline {/* Bv Tweede knop met witte achtergrond */
+  @apply border border-blue-500 text-blue-500 bg-white hover:bg-blue-500 hover:text-white;
+}
+
+.input {
+  @apply p-1 border rounded-lg w-full text-gray-500 text-sm md:text-base;
+  @apply focus:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-300;
+}
+.input-error {
+  @apply focus:bg-red-100 focus:ring-red-300;
+}
+.select {
+  @apply input appearance-none  text-gray-500 text-sm md:text-base;
+  @apply hover:bg-white;
+}
+.select option {
+  font-size: 16px; /* 16px: expliciete fontgrootte instellen */
+  color: #6b7280; /* Grijs (#6b7280 = Tailwind's text-gray-500) */
+}
+.radio-wrapper {
+  @apply flex items-center space-x-4 mb-4;
+}
+.radio-label {
+  @apply flex items-center space-x-2 text-gray-700;
+}
+.radio-input {
+  @apply w-4 h-4 text-blue-500 border-gray-300 rounded-full;
+}
+
+/* .textarea = Om opmderkingen in een invulformulier te schrijven */
+
+.card {
+  @apply shadow-lg rounded-lg p-4;
+  @apply border border-gray-200 p-6;
+}
+.card-primary {
+  @apply bg-white;
+}
+.card-secondary {
+  @apply bg-gray-100;
+}
+
+/* .alert = berichten of meldingen om aandacht vd gebruiker te trekken */
+
+/* .navbar = navigatiebalk */
+
+/* .badge = klein, visueel opvallend element, bij knoppen, lijsten, (Nieuw, Verzonden, ...) */
+
+/* .modal & modal-content */
+
+/* .table */
+
+/* .footer */
+
+/* .list  & list-ordered */

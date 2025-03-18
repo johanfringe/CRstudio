@@ -1,16 +1,118 @@
 {
-  "defaultTitle": "CRStudio - The Ultimate Catalogue Raisonné Tool",
-  "defaultDescription": "Create and manage catalogues raisonnés with ease.",
-  "defaultOgImage": "/icons/default-og-image.jpg",
-  "siteUrl": "https://crstudio.online",
+  "_comment": "This is src/locales/en/translation.js",
+  "default_title": "CRstudio - The Ultimate Catalogue Raisonné Tool",
+  "default_description": "Create and manage catalogues raisonnés with ease.",
+  "default_ogImage": "/icons/default-og-image.jpg",
+  "site_url": "https://crstudio.online",
+  "welcome_message": "EN Welcome to CRstudio",
+  "description": "Create and manage catalogues raisonnés with ease.",
+
   "social": {
-    "facebook": "CRStudioOfficial"
+    "facebook": "CRstudioOfficial"
   },
+
   "seo": {
-    "title": "Welcome to CRStudio",
-    "description": "The ultimate tool for catalogues raisonnés",
+    "title": "EN Welcome to CRstudio",
+    "description": "EN The ultimate tool for catalogues raisonnés",
     "ogimagealt": "Create and manage your catalogue raisonné professionally with CRstudio"
   },
-  "welcome_message": "Welcome to CRStudio",
-  "description": "Create and manage catalogues raisonnés with ease."
+
+  "stheader": {
+    "logo_label": "Ga naar de startpagina",
+    "logo_alt": "CR Studio Logo",
+    "login": "EN Inloggen",
+    "register": "Probeer gratis",
+    "menu": {
+      "overview": "Overzicht",
+      "feature": "Demo's",
+      "pricing": "Prijzen",
+      "faq": "Veelgestelde vragen"
+    },
+    "language": {
+      "toggle": "Taal wijzigen",
+      "current": "Huidige taal"
+    }
+  },
+
+  "header": {
+    "overview": "EN Overzicht",
+    "feature": "Demo's",
+    "pricing": "Prijzen",
+    "faq": "Veelgestelde vragen"
+  },
+  "sections": {
+    "overview": {
+      "title": "EN Overzicht",
+      "description": "Dit is de overzichtssectie."
+    },
+    "feature": {
+      "title": "Demo's",
+      "description": "Dit is de demo-sectie."
+    },
+    "pricing": {
+      "title": "Prijzen",
+      "description": "Dit is de prijzensectie."
+    },
+    "faq": {
+      "title": "Veelgestelde vragen",
+      "description": "Dit is de FAQ-sectie."
+    }
+  },
+
+  "login": {
+    "seo_title": "Login | CRstudio",
+    "seo_description": "Log in op je CRstudio-account.",
+    "logo_alt": "CRstudio Logo",
+    "heading": "EN Inloggen bij CRstudio",
+    "email_label": "E-mailadres",
+    "email_placeholder": "Voer je e-mailadres in",
+    "password_label": "Wachtwoord",
+    "password_placeholder": "Voer je wachtwoord in",
+    "remember_me": "Onthoud mij",
+    "forgot_password": "Wachtwoord vergeten?",
+    "login_button": "Inloggen",
+    "no_account": "Nog geen account?",
+    "register_link": "Registreer hier",
+    "error_required_fields": "Vul zowel je e-mailadres als wachtwoord in."
+  },
+
+  "registration_form": {
+    "i_am_a": "I'm",
+    "consumer": "Consument",
+    "business": "Zakelijk",
+    "role_label": "Kies je rol",
+    "role_placeholder": "Selecteer een rol",
+    "artist": "Kunstenaar",
+    "heir": "Erfgenaam",
+    "gallery_owner": "Galerijhouder",
+    "researcher": "Onderzoeker",
+    "curator": "Curator",
+    "email_address": "E-mailadres",
+    "invalid_email": "Ongeldig e-mailadres",
+    "password": "Wachtwoord",
+    "password_criteria": "Minimaal 8 tekens, inclusief hoofdletters, cijfers en speciale tekens.",
+    "first_name": "Voornaam",
+    "last_name": "Achternaam",
+    "company_name": "Bedrijfsnaam",
+    "vat": "BTW-nummer",
+    "street": "Straatnaam",
+    "zip_code": "Postcode",
+    "city": "Stad",
+    "country_label": "Selecteer een land",
+    "country_placeholder": "Kies een land",
+    "sub_domain_name": "Subdomeinnaam",
+    "choose_sub_domain_name": "Kies een unieke subdomeinnaam voor je pagina.",
+    "checking": "Controle uitvoeren...",
+    "available": "Beschikbaar!",
+    "not_available": "Niet beschikbaar, kies een andere naam.",
+    "custom_domain_name": "Eigen domeinnaam (optioneel)",
+    "agree_to_conditions": "Door verder te gaan, ga je akkoord met onze algemene voorwaarden.",
+    "cta_submit": "Registreren"
+  },
+
+  "notfound": {
+    "title": "We are sorry, the page you requested cannot be found.",
+    "message": "The URL may be misspelled or the page you're looking for is no longer available.",
+    "homeLink": "Go to the Homepage"
+  }
 }

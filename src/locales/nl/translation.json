@@ -1,16 +1,282 @@
 {
-  "defaultTitle": "CRStudio - The Ultimate Catalogue Raisonné Tool",
-  "defaultDescription": "Create and manage catalogues raisonnés with ease.",
-  "defaultOgImage": "/icons/default-og-image.jpg",
-  "siteUrl": "https://crstudio.online",
+  "_comment": "Dit is src/locales/nl/translation.js",
+  "default_title": "CRstudio - De ultieme catalogus raisonné tool",
+  "default_description": "Maak en beheer catalogi raisonnés met gemak.",
+  "default_ogImage": "/icons/default-og-image.jpg",
+  "site_url": "https://crstudio.online",
+  "welcome_message": "Welkom bij CRstudio",
+  "description": "Maak en beheer catalogi raisonnés met gemak.",
+
   "social": {
-    "facebook": "CRStudioOfficial"
+    "facebook": "CRstudioOfficial"
   },
+
   "seo": {
-    "title": "CRstudio - De Ultieme Tool voor Catalogue Raisonnés",
-    "description": "Hét platform voor het creëren, beheren en publiceren van professionele Catalogue Raisonnés. Ontworpen voor kunstenaars, erfgenamen, galeries en musea. CRstudio combineert eenvoud met technische kracht, zonder afbreuk te doen aan professionaliteit en kwaliteit.",
-    "ogimagealt": "Creëer en beheer uw catalogue raisonné professioneel met CRstudio"
+    "title": "Welkom bij CRstudio",
+    "description": "De ultieme tool voor catalogi raisonnés",
+    "ogimagealt": "Maak en beheer uw catalogus raisonné professioneel met CRstudio"
   },
-  "welcome_message": "Welkom bij CRStudio",
-  "description": "Maak en beheer catalogues raisonnés met gemak."
+  
+  "stheader": {
+    "logo_label": "Ga naar de startpagina",
+    "logo_alt": "CR Studio Logo",
+    "trial": "Probeer gratis",
+    "menu": {
+      "overview": "Overzicht",
+      "feature": "Demo's",
+      "pricing": "Prijzen",
+      "faq": "Veelgestelde vragen"
+    },
+    "language": {
+      "toggle": "Taal wijzigen",
+      "current": "Huidige taal"
+    }
+  },
+
+  "footer": {
+    "slogan": "De efficiëntste manier om\ncatalogues raisonnés te maken",
+    "privacy": "Privacy",
+    "terms": "Voorwaarden"
+  },
+
+  "header": {
+    "overview": "Overzicht",
+    "feature": "Demo's",
+    "pricing": "Prijzen",
+    "faq": "Veelgestelde vragen"
+  },
+
+  "sections": {
+    "overview": {
+      "title": "Overzicht",
+      "description": "Dit is de overzichtssectie."
+    },
+    "feature": {
+      "title": "Demo's",
+      "description": "Dit is de demo-sectie."
+    },
+    "pricing": {
+      "title": "Prijzen",
+      "description": "Dit is de prijzensectie."
+    },
+    "faq": {
+      "title": "Veelgestelde vragen",
+      "description": "Dit is de FAQ-sectie."
+    }
+  },
+
+  "cta": {
+    "text": "Start gratis een proefperiode van 30 dagen\nGeen creditcard vereist"
+  },
+  
+  "feature": {
+    "title_1": "Eenvoudig, geen technische kennis ",
+    "subtitle_1": "Alles in één abonnement",
+    "description_1": "Met CRstudio is het ontzettend gemakkelijk om een CR te maken. En je spaart veel tijd en geld uit.\nBekijk onze demo’s om te zien hoe CRstudio werkt,\nhoe eenvoudig en toch uiterst krachtig en professioneel het is.",
+    "title_2": "Eenvoudig, geen technische kennis ",
+    "subtitle_2": "Alles in één abonnement",
+    "description_2": "Met CRstudio is het ontzettend gemakkelijk om een CR te maken. En je spaart veel tijd en geld uit.\nBekijk onze demo’s om te zien hoe CRstudio werkt,\nhoe eenvoudig en toch uiterst krachtig en professioneel het is.",
+    "title_3": "Eenvoudig, geen technische kennis ",
+    "subtitle_3": "Alles in één abonnement",
+    "description_3": "Met CRstudio is het ontzettend gemakkelijk om een CR te maken. En je spaart veel tijd en geld uit.\nBekijk onze demo’s om te zien hoe CRstudio werkt,\nhoe eenvoudig en toch uiterst krachtig en professioneel het is."
+    
+  },
+  
+  "faq": {
+    "title": "Vind de antwoorden die je nodig hebt",
+    "expand_all": "Alles uitvouwen",
+    "collapse_all": "Alles samenvouwen",
+    "q1": "Wat is CRstudio en hoe werkt het?",
+    "a1": "CRstudio is een compleet online platform waarmee je een catalogue raisonné kunt starten, online publiceren en continu aanvullen.\n• alle kunstwerken, alle literatuur, alle tentoonstellingen insteken.\n• …………\n• …………\nJe hebt geen software nodig, wat betekent dat je je niet bezig hoeft te houden met het upgraden of onderhouden van software of webservers.",
+    "q2": "Kan ik CRstudio gratis proberen voordat ik het aanschaf?",
+    "a2": "Absoluut. Je kunt CRstudio gratis en zonder creditcard full-option proberen gedurende 1 maand. Klik hier om aan de slag te gaan met een kosteloze proefperiode.",
+    "q3": "Hoe start ik mijn gratis proefperiode?",
+    "a3": "Eenvoudig, klik hier om aan de slag te gaan met een kosteloze proefperiode.",
+    "q4": "Hoeveel kost CRstudio?",
+    "a4": "Nadat je gratis proefperiode is verlopen, kies je een abonnement dat past. Klik hier om onze prijzen te zien.",
+    "q5": "Kan ik op elk moment mijn abonnement upgraden of opzeggen?",
+    "a5": "Ja, je kunt jouw abonnement elk moment upgraden. Ga gewoon naar jouw beheercentrum van je website. Je kunt ook op elk moment jouw abonnement opzeggen.\nOp het einde van jouw abonnementsperiode gaat de site automatisch offline. Jouw gegevens worden dan nog 6 maanden bewaard.",
+    "q6": "Kan ik mijn eigen domeinnaam gebruiken?",
+    "a6": "Ja, je kunt je eigen domeinnaam gebruiken met CRstudio.\nAls je een bestaande domeinnaam hebt, kun je die verbinden met CRstudio vanuit jouw beheercentrum van je website.\nAls je nog geen domeinnaam hebt, kun je er een kopen via een externe provider.",
+    "q7": "Kan ik de layout van mijn site personaliseren?",
+    "a7": "Ja, je kunt de layout van jouw site aanpassen...",
+    "q8": "Moet ik ontwerper of ontwikkelaar zijn om CRstudio te kunnen gebruiken?",
+    "a8": "Nee, absoluut niet. CRstudio is uiterst intuïtief...",
+    "q9": "Moet ik extra soft- of hardware hebben om CRstudio te kunnen gebruiken?",
+    "a9": "Nee, absoluut niet. Je hebt geen software nodig...",
+    "q10": "Ik heb een archief in mijn atelier. Kunnen jullie helpen?",
+    "a10": "Absoluut...",
+    "q11": "Ik heb al een CR in boekvorm. Kunnen jullie helpen?",
+    "a11": "Absoluut...",
+    "q12": "Ik heb al een online CR. Kan die gemigreerd worden?",
+    "a12": "Absoluut...",
+    "q13": "Kunnen er meerdere mensen aan mijn CR werken?",
+    "a13": "Absoluut...",
+    "q14": "Wordt mijn CR veilig bewaard?",
+    "a14": "Ja, jouw site wordt gehost bij Netlify...",
+    "q15": "Ik heb nog een vraag",
+    "a15": "Stuur ze ons per mail: info@crstudio.online"
+  },
+
+  "forgot": {
+    "seo_title": "Reset je wachtwoord | CRstudio",
+    "seo_description": "Jouw wachtwoord resetten op je CRstudio-account.",
+    "logo_alt": "CRstudio Logo",
+    "heading": "Reset je wachtwoord",
+    "sub_heading": "Voer je e-mailadres in en we sturen je instructies over hoe je je wachtwoord kunt resetten.",
+    "email_placeholder": "E-mailadres",
+    "submit_button": "Zend instructies",
+    "to_login": "Ga terug naar de ",
+    "to_login_link": "login-pagina",
+    "success_message": "Een link voor het opnieuw instellen van uw wachtwoord is naar uw e-mail verzonden.",
+    "error_server": "Er is een onverwachte fout opgetreden. Probeer het later opnieuw.",
+    "error_required_fields": "Vul uw e-mailadres in."
+  },
+  
+  "highlight": {
+    "sentence_1": "Maak jouw catalogue raisonné overzichtelijk en klaar voor publicatie, Gemakkelijk zonder ingewikkelde tools",
+    "sentence_2": "Zorg ervoor dat jouw werk wordt gepresenteerd aan een breed publiek.",
+    "sentence_3": "Met CRstudio is het ontzettend gemakkelijk om een CR te maken. En je spaart veel tijd en geld uit.",
+    "sentence_4": "Toon je oeuvre aan de wereld en bewaar het voor de volgende generaties.",
+    "sentence_5": "Probeer CRstudio gratis voor 1 maand ->"
+  },
+
+  "login": {
+    "seo_title": "Login | CRstudio",
+    "seo_description": "Log in op je CRstudio-account.",
+    "logo_alt": "CRstudio Logo",
+    "heading": "Welkom bij CRstudio",
+    "email_placeholder": "E-mailadres",
+    "password_placeholder": "Wachtwoord",
+    "remember_me": "Onthoud mij",
+    "forgot_password": "Wachtwoord vergeten?",
+    "login_button": "Inloggen",
+    "no_account": "Nog geen account?",
+    "register_link": "Registreer hier",
+    "error_required_fields": "Vul zowel je e-mailadres als wachtwoord in."
+  },
+
+  "register": {
+    "seo_title": "Gratis proberen bij CRstudio",
+    "seo_description": "Gratis CRstudio proberen voor een maand.",
+    "page_description": "xxxxxxxxx",
+    "logo_alt": "CRstudio Logo",
+    "heading": "Welkom bij CRstudio",
+    "subheading": "Welkom bij CRstudio",
+    "google_placeholder": "Doorgaan met Google",
+    "or": "OF",
+    "email_placeholder": "E-mailadres",
+    "button_busy": "Registeren ...",
+    "button_register": "Registreren",
+    "invalid_mail": "Ongeldig e-mailformaat",
+    "check": "Gelieve de beveiligingscontrole te voltooien",
+    "succes": "Succes! Controleer uw e-mail voor de verificatielink!"
+  },
+
+  "try": {
+    "title": "Probeer het \ngratis",
+    "text": "Toon je oeuvre aan de wereld en bewaar het voor de volgende generaties. \nProbeer de volledige site."
+  },
+
+  "pricing": {
+    "title": "Start vandaag jouw catalogue raisonné",
+    "subtitle": "Probeer het gratis uit of kies het juiste abonnement voor u, afhankelijk van het aantal kunstwerken.",
+    "up_to": "Tot",
+    "up_to_free": "Gratis proberen tot",
+    "artworks": "kunstwerken",
+    "monthly": "Maandelijks",
+    "annually": "Jaarlijks",
+    "month": "/ maand",
+    "billed_monthly": "Maandelijkse betaling",
+    "billed_annually": "Jaarlijkse betaling",
+    "more_than_4000": "Meer dan 4.000 kunstwerken?",
+    "basic_plan_description": "Tot 1.000 kunstwerken",
+    "other_services": "Kunnen we je helpen?",
+    "offering": "Wij bieden professioneel het volgende aan:",
+    "taxes": "Prices shown are exclusive of any applicable taxes such as VAT, added at checkout.",
+    "button_10": "Tot 1.000 kunstwerken",
+    "button_11": "Geen creditcard vereist",
+    "button_12": "Online opslag inbegrepen",
+    "button_13": "Online opslag inbegrepen",
+    "button_20": "Prijs afhankelijk van jouw aantal kunstwerken",
+    "button_21": "Alles uit de voorgaande kolom",
+    "button_30": "Ontsluiten van jouw archief om een online CR te maken",
+    "button_31": "Invoeren van jouw kunstwerken in CRstudio",
+    "button_32": "Omzetten van jouw gedrukte CR naar CRstudio",
+    "button_33": "Migreren van jouw online CR naar CRstudio",
+    "buy_now": "Start gratis, upgrade later!",
+    "try_free": "Probeer het 30 dagen gratis uit",
+    "contact_us": "Contacteer ons",
+    "email_subject": "Aanvraag gepersonaliseerde diensten",
+    "email_body": "Beste team, ik ben geïnteresseerd in jullie gepersonaliseerde diensten. Kunnen jullie me meer info sturen?"
+  },
+  
+  "overview": {
+    "title": "Uw oeuvre / CR\n voor altijd online",
+    "description": "Spotgemakkelijk en spotgoedkoop\nZonder technische kennis\nContinu aan te vullen\nIn 3 talen uit 30 beschikbare talen\nIn een gepersonaliseerde layout"
+  },
+  
+  "subscription-signup": {
+    "seo_title": "Inschrijven bij CRstudio",
+    "seo_description": "Een abonnement kopen op CRstudio.",
+    "page_description": "xxxxxxxxx"
+  },
+
+  "registration_form": {
+    "logo_alt": "CRstudio Logo",
+    "heading": "Welkom bij CRstudio",
+    "sub_heading": "Start nu je gratis trial. Geen creditcard nodig. Je kunt later altijd upgraden naar een betaald abonnement. De veiligheid van jouw site is onze hoogste prioriteit. Na het registreren ontvang je een e-mail met een verificatie-knop die 10 minuten geldig is. Kijk zeker ook in jouw spam-map.",
+    "i_am_a": "Ik ben",
+    "consumer": "Consument",
+    "business": "Zakelijk",
+    "role_label": "Kies je rol",
+    "role_placeholder": "Selecteer een rol",
+    "artist": "Kunstenaar",
+    "heir": "Erfgenaam",
+    "gallery_owner": "Galerijhouder",
+    "researcher": "Onderzoeker",
+    "curator": "Curator",
+    "email_address": "E-mailadres",
+    "invalid_email": "Ongeldig e-mailadres",
+    "password": "Wachtwoord",
+    "password_criteria": "Minimaal 8 karakters, waarvan 1 hoofdletter, 1 cijfer en 1 speciaal teken.",
+    "first_name": "Voornaam",
+    "last_name": "Achternaam",
+    "company_name": "Bedrijfsnaam",
+    "vat": "BTW-nummer",
+    "street": "Straatnaam",
+    "zip_code": "Postcode",
+    "city": "Stad",
+    "country_label": "Selecteer een land",
+    "country_placeholder": "Kies een land",
+    "sub_domain_name": "Subdomeinnaam",
+    "choose_sub_domain_name": "Kies een unieke subdomeinnaam voor je pagina.",
+    "checking": "Controle uitvoeren...",
+    "available": "Beschikbaar!",
+    "fill_all_fields": "Vul alle velden in",
+    "subdomain_unavailable": "Het gekozen subdomein is al bezet",
+    "success_message": "Registratie gelukt! Controleer je e-mail om je account te activeren",
+    "not_available": "Niet beschikbaar, kies een andere naam.",
+    "custom_domain_name": "Eigen domeinnaam (optioneel)",
+    "agree_to_conditions": "Door verder te gaan, ga je akkoord met onze Privacy Policy and Terms of Service.",
+    "cta_submit": "Registreren"
+  },
+  
+  "testi": {
+    "testimonial_title": "Zij vertrouwen op CRstudio om kunstwerken te behouden en te beschermen",
+    "feature_1": "Een krachtige en eenvoudige tool om mijn volledig oeuvre te tonen aan verzamelaars, curatoren en kunsthistorici.",
+    "feature_2": "Eindelijk kan ik het werk van mijn grootvader goedkoop bewaren en bewaken voor toekomstige generaties",
+    "feature_3": "Een uiterst efficiënte manier om de nalatenschap van een kunstenaar te documenteren en te beschermen tegen vervalsingen.",
+    "feature_4": "Een zeer waardevol instrument die de reputatie en de waarde van een kunstenaar verhoogt.",
+    "client_1": "Paul, kunstenaar",
+    "client_2": "Emma, erfgename van een beeldhouwer",
+    "client_3": "Jean, kunstarchivaris",
+    "client_4": "Marcel, galeriehouder"
+  },
+
+  "notfound": {
+    "title": "Het spijt ons, de pagina die u hebt opgevraagd kan niet worden gevonden.",
+    "message": "De URL is mogelijk verkeerd gespeld of de pagina die u zoekt is niet langer beschikbaar.",
+    "homeLink": "Ga naar de Homepage"
+  }
 }
