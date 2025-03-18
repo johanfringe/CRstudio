@@ -1,4 +1,4 @@
-// /src/pages/register.js :
+// /src/pages/register.js:
 import React, { useState, useEffect } from "react";
 import { graphql } from "gatsby";
 import { useTranslation } from "gatsby-plugin-react-i18next";
