@@ -2,7 +2,7 @@
 import { createClient } from "@supabase/supabase-js";
 import Redis from "ioredis";
 import crypto from "crypto";
-import { sendEmail } from "@/utils/sendEmail";
+import { sendEmail } from "../utils/sendEmail";
 
 const supabase = createClient(
   process.env.GATSBY_SUPABASE_URL,

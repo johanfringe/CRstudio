@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { graphql } from "gatsby";
 import { useTranslation } from "gatsby-plugin-react-i18next";
-import { validateEmail } from "@/utils/emailValidator";
-import { Button, Input } from "@/components/ui";
+import { validateEmail } from "../utils/emailValidator";
+import { Button, Input } from "../components/ui";
 import Seo from "../components/Seo";
 import SectionWrapper from "../components/SectionWrapper";
 
