@@ -1,5 +1,5 @@
 // gatsby-config.js :
-console.log("🔍 Gatsby Functions worden geladen...");
+//console.log("🔍 Gatsby Functions worden geladen...");
 
 require("dotenv-flow").config({
   path: `${__dirname}/content/settings`,

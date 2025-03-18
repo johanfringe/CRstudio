@@ -6,8 +6,8 @@ const path = require("path");
 
 // ✅ Debugging: Log alleen in development of debug-mode
 if (process.env.NODE_ENV === "development") {
-  console.log("✅ .env-bestanden geladen uit:", `${__dirname}/content/settings`);
-  console.log("✅ Actieve omgeving:", process.env.NODE_ENV);
+  //console.log("✅ .env-bestanden geladen uit:", `${__dirname}/content/settings`);
+  //console.log("✅ Actieve omgeving:", process.env.NODE_ENV);
 }
 
 // ✅ Controleer kritieke variabelen
@@ -30,5 +30,5 @@ exports.onCreateWebpackConfig = ({ actions }) => {
 
 // ✅ Gatsby's standaard API-exports
 exports.onPreInit = () => {
-  console.log("✅ Gatsby Node.js script geladen");
+  //console.log("✅ Gatsby Node.js script geladen");
 };
