@@ -48,7 +48,7 @@ const checkIfUserExists = async (email) => {
     return !!data;
   } catch (error) {
     console.error("❌ Supabase API-fout:", error.message);
-    throw error; // Gooit de fout door zodat de caller deze correct kan verwerken
+    throw error; // Gooit de fout door zodat de caller deze correct kan verwerken,
   }
 };
 
