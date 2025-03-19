@@ -2912,6 +2912,9 @@ function addHistoryInstrumentationHandler(handler) {
   core.maybeInstrument(type, instrumentHistory);
 }
 
+/**
+ * Exported just for testing
+ */
 function instrumentHistory() {
   // The `popstate` event may also be triggered on `pushState`, but it may not always reliably be emitted by the browser
   // Which is why we also monkey-patch methods below, in addition to this
@@ -2960,6 +2963,7 @@ function instrumentHistory() {
 }
 
 exports.addHistoryInstrumentationHandler = addHistoryInstrumentationHandler;
+exports.instrumentHistory = instrumentHistory;
 //# sourceMappingURL=history.js.map
 
 
@@ -36818,6 +36822,8 @@ const string = __webpack_require__(/*! ./string.js */ "./node_modules/@sentry/co
 /**
  * Replace a method in an object with a wrapped version of itself.
  *
+ * If the method on the passed object is not a function, the wrapper will not be applied.
+ *
  * @param source An object that contains a method to be wrapped.
  * @param name The name of the method to be wrapped.
  * @param replacementFactory A higher-order function that takes the original version of the given method and returns a
@@ -36831,7 +36837,13 @@ function fill(source, name, replacementFactory) {
     return;
   }
 
+  // explicitly casting to unknown because we don't know the type of the method initially at all
   const original = source[name] ;
+
+  if (typeof original !== 'function') {
+    return;
+  }
+
   const wrapped = replacementFactory(original) ;
 
   // Make sure it's a function first, as we need to attach an empty prototype for `defineProperties` to work
@@ -38041,7 +38053,7 @@ function supportsDOMException() {
  * @returns Answer to the given question.
  */
 function supportsHistory() {
-  return 'history' in WINDOW;
+  return 'history' in WINDOW && !!WINDOW.history;
 }
 
 /**
@@ -38822,7 +38834,7 @@ Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
 
 // This is a magic string replaced by rollup
 
-const SDK_VERSION = "9.5.0" ;
+const SDK_VERSION = "9.6.0" ;
 
 exports.SDK_VERSION = SDK_VERSION;
 //# sourceMappingURL=version.js.map

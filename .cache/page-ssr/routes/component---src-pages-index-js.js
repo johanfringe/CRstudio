@@ -13,15 +13,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   animateSingleValue: () => (/* binding */ animateSingleValue)
 /* harmony export */ });
-/* harmony import */ var _value_index_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../value/index.mjs */ "./node_modules/framer-motion/dist/es/value/index.mjs");
-/* harmony import */ var _value_utils_is_motion_value_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../value/utils/is-motion-value.mjs */ "./node_modules/framer-motion/dist/es/value/utils/is-motion-value.mjs");
+/* harmony import */ var motion_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-dom */ "./node_modules/motion-dom/dist/es/index.mjs");
+/* harmony import */ var _value_utils_is_motion_value_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../value/utils/is-motion-value.mjs */ "./node_modules/framer-motion/dist/es/value/utils/is-motion-value.mjs");
 /* harmony import */ var _interfaces_motion_value_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../interfaces/motion-value.mjs */ "./node_modules/framer-motion/dist/es/animation/interfaces/motion-value.mjs");
 
 
 
 
 function animateSingleValue(value, keyframes, options) {
-    const motionValue$1 = (0,_value_utils_is_motion_value_mjs__WEBPACK_IMPORTED_MODULE_0__.isMotionValue)(value) ? value : (0,_value_index_mjs__WEBPACK_IMPORTED_MODULE_1__.motionValue)(value);
+    const motionValue$1 = (0,_value_utils_is_motion_value_mjs__WEBPACK_IMPORTED_MODULE_1__.isMotionValue)(value) ? value : (0,motion_dom__WEBPACK_IMPORTED_MODULE_0__.motionValue)(value);
     motionValue$1.start((0,_interfaces_motion_value_mjs__WEBPACK_IMPORTED_MODULE_2__.animateMotionValue)("", motionValue$1, keyframes, options));
     return motionValue$1.animation;
 }
@@ -386,7 +386,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   BaseAnimation: () => (/* binding */ BaseAnimation)
 /* harmony export */ });
-/* harmony import */ var _frameloop_sync_time_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../frameloop/sync-time.mjs */ "./node_modules/framer-motion/dist/es/frameloop/sync-time.mjs");
+/* harmony import */ var motion_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-dom */ "./node_modules/motion-dom/dist/es/index.mjs");
 /* harmony import */ var _render_utils_KeyframesResolver_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../render/utils/KeyframesResolver.mjs */ "./node_modules/framer-motion/dist/es/render/utils/KeyframesResolver.mjs");
 /* harmony import */ var _utils_use_instant_transition_state_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils/use-instant-transition-state.mjs */ "./node_modules/framer-motion/dist/es/utils/use-instant-transition-state.mjs");
 /* harmony import */ var _utils_can_animate_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/can-animate.mjs */ "./node_modules/framer-motion/dist/es/animation/animators/utils/can-animate.mjs");
@@ -411,7 +411,7 @@ class BaseAnimation {
         // Track whether the animation has been stopped. Stopped animations won't restart.
         this.isStopped = false;
         this.hasAttemptedResolve = false;
-        this.createdAt = _frameloop_sync_time_mjs__WEBPACK_IMPORTED_MODULE_0__.time.now();
+        this.createdAt = motion_dom__WEBPACK_IMPORTED_MODULE_0__.time.now();
         this.options = {
             autoplay,
             delay,
@@ -457,7 +457,7 @@ class BaseAnimation {
      * Otherwise, it will call initPlayback on the implementing class.
      */
     onKeyframesResolved(keyframes, finalKeyframe) {
-        this.resolvedAt = _frameloop_sync_time_mjs__WEBPACK_IMPORTED_MODULE_0__.time.now();
+        this.resolvedAt = motion_dom__WEBPACK_IMPORTED_MODULE_0__.time.now();
         this.hasAttemptedResolve = true;
         const { name, type, velocity, delay, onComplete, onUpdate, isGenerator, } = this.options;
         /**
@@ -498,6 +498,8 @@ class BaseAnimation {
         return this.currentFinishedPromise.then(resolve, reject);
     }
     flatten() {
+        if (!this.options.allowFlatten)
+            return;
         this.options.type = "keyframes";
         this.options.ease = "linear";
     }
@@ -528,17 +530,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var motion_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-dom */ "./node_modules/motion-dom/dist/es/index.mjs");
 /* harmony import */ var motion_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! motion-utils */ "./node_modules/motion-utils/dist/es/index.mjs");
 /* harmony import */ var _render_utils_KeyframesResolver_mjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../render/utils/KeyframesResolver.mjs */ "./node_modules/framer-motion/dist/es/render/utils/KeyframesResolver.mjs");
-/* harmony import */ var _stats_animation_count_mjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../stats/animation-count.mjs */ "./node_modules/framer-motion/dist/es/stats/animation-count.mjs");
-/* harmony import */ var _utils_clamp_mjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../utils/clamp.mjs */ "./node_modules/framer-motion/dist/es/utils/clamp.mjs");
+/* harmony import */ var _utils_clamp_mjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../utils/clamp.mjs */ "./node_modules/framer-motion/dist/es/utils/clamp.mjs");
 /* harmony import */ var _utils_mix_index_mjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../utils/mix/index.mjs */ "./node_modules/framer-motion/dist/es/utils/mix/index.mjs");
 /* harmony import */ var _utils_pipe_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../utils/pipe.mjs */ "./node_modules/framer-motion/dist/es/utils/pipe.mjs");
 /* harmony import */ var _generators_inertia_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../generators/inertia.mjs */ "./node_modules/framer-motion/dist/es/animation/generators/inertia.mjs");
 /* harmony import */ var _generators_keyframes_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../generators/keyframes.mjs */ "./node_modules/framer-motion/dist/es/animation/generators/keyframes.mjs");
 /* harmony import */ var _generators_spring_index_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../generators/spring/index.mjs */ "./node_modules/framer-motion/dist/es/animation/generators/spring/index.mjs");
 /* harmony import */ var _BaseAnimation_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./BaseAnimation.mjs */ "./node_modules/framer-motion/dist/es/animation/animators/BaseAnimation.mjs");
-/* harmony import */ var _drivers_driver_frameloop_mjs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./drivers/driver-frameloop.mjs */ "./node_modules/framer-motion/dist/es/animation/animators/drivers/driver-frameloop.mjs");
-/* harmony import */ var _waapi_utils_get_final_keyframe_mjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./waapi/utils/get-final-keyframe.mjs */ "./node_modules/framer-motion/dist/es/animation/animators/waapi/utils/get-final-keyframe.mjs");
-
+/* harmony import */ var _drivers_driver_frameloop_mjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./drivers/driver-frameloop.mjs */ "./node_modules/framer-motion/dist/es/animation/animators/drivers/driver-frameloop.mjs");
+/* harmony import */ var _waapi_utils_get_final_keyframe_mjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./waapi/utils/get-final-keyframe.mjs */ "./node_modules/framer-motion/dist/es/animation/animators/waapi/utils/get-final-keyframe.mjs");
 
 
 
@@ -680,7 +680,7 @@ class MainThreadAnimation extends _BaseAnimation_mjs__WEBPACK_IMPORTED_MODULE_5_
     }
     onPostResolved() {
         const { autoplay = true } = this.options;
-        _stats_animation_count_mjs__WEBPACK_IMPORTED_MODULE_9__.activeAnimations.mainThread++;
+        motion_dom__WEBPACK_IMPORTED_MODULE_0__.activeAnimations.mainThread++;
         this.play();
         if (this.pendingPlayState === "paused" || !autoplay) {
             this.pause();
@@ -779,7 +779,7 @@ class MainThreadAnimation extends _BaseAnimation_mjs__WEBPACK_IMPORTED_MODULE_5_
                     frameGenerator = mirroredGenerator;
                 }
             }
-            elapsed = (0,_utils_clamp_mjs__WEBPACK_IMPORTED_MODULE_10__.clamp)(0, 1, iterationProgress) * resolvedDuration;
+            elapsed = (0,_utils_clamp_mjs__WEBPACK_IMPORTED_MODULE_9__.clamp)(0, 1, iterationProgress) * resolvedDuration;
         }
         /**
          * If we're in negative time, set state as the initial keyframe.
@@ -802,7 +802,7 @@ class MainThreadAnimation extends _BaseAnimation_mjs__WEBPACK_IMPORTED_MODULE_5_
         const isAnimationFinished = this.holdTime === null &&
             (this.state === "finished" || (this.state === "running" && done));
         if (isAnimationFinished && finalKeyframe !== undefined) {
-            state.value = (0,_waapi_utils_get_final_keyframe_mjs__WEBPACK_IMPORTED_MODULE_11__.getFinalKeyframe)(keyframes, this.options, finalKeyframe);
+            state.value = (0,_waapi_utils_get_final_keyframe_mjs__WEBPACK_IMPORTED_MODULE_10__.getFinalKeyframe)(keyframes, this.options, finalKeyframe);
         }
         if (onUpdate) {
             onUpdate(state.value);
@@ -849,7 +849,7 @@ class MainThreadAnimation extends _BaseAnimation_mjs__WEBPACK_IMPORTED_MODULE_5_
         }
         if (this.isStopped)
             return;
-        const { driver = _drivers_driver_frameloop_mjs__WEBPACK_IMPORTED_MODULE_12__.frameloopDriver, onPlay, startTime } = this.options;
+        const { driver = _drivers_driver_frameloop_mjs__WEBPACK_IMPORTED_MODULE_11__.frameloopDriver, onPlay, startTime } = this.options;
         if (!this.driver) {
             this.driver = driver((timestamp) => this.tick(timestamp));
         }
@@ -912,7 +912,7 @@ class MainThreadAnimation extends _BaseAnimation_mjs__WEBPACK_IMPORTED_MODULE_5_
         this.updateFinishedPromise();
         this.startTime = this.cancelTime = null;
         this.resolver.cancel();
-        _stats_animation_count_mjs__WEBPACK_IMPORTED_MODULE_9__.activeAnimations.mainThread--;
+        motion_dom__WEBPACK_IMPORTED_MODULE_0__.activeAnimations.mainThread--;
     }
     stopDriver() {
         if (!this.driver)
@@ -946,21 +946,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   frameloopDriver: () => (/* binding */ frameloopDriver)
 /* harmony export */ });
-/* harmony import */ var _frameloop_sync_time_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../frameloop/sync-time.mjs */ "./node_modules/framer-motion/dist/es/frameloop/sync-time.mjs");
-/* harmony import */ var _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../frameloop/frame.mjs */ "./node_modules/framer-motion/dist/es/frameloop/frame.mjs");
-
+/* harmony import */ var motion_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-dom */ "./node_modules/motion-dom/dist/es/index.mjs");
 
 
 const frameloopDriver = (update) => {
     const passTimestamp = ({ timestamp }) => update(timestamp);
     return {
-        start: () => _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_0__.frame.update(passTimestamp, true),
-        stop: () => (0,_frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_0__.cancelFrame)(passTimestamp),
+        start: () => motion_dom__WEBPACK_IMPORTED_MODULE_0__.frame.update(passTimestamp, true),
+        stop: () => (0,motion_dom__WEBPACK_IMPORTED_MODULE_0__.cancelFrame)(passTimestamp),
         /**
          * If we're processing this frame we can use the
          * framelocked timestamp to keep things in sync.
          */
-        now: () => (_frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_0__.frameData.isProcessing ? _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_0__.frameData.timestamp : _frameloop_sync_time_mjs__WEBPACK_IMPORTED_MODULE_1__.time.now()),
+        now: () => (motion_dom__WEBPACK_IMPORTED_MODULE_0__.frameData.isProcessing ? motion_dom__WEBPACK_IMPORTED_MODULE_0__.frameData.timestamp : motion_dom__WEBPACK_IMPORTED_MODULE_0__.time.now()),
     };
 };
 
@@ -1070,10 +1068,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   startWaapiAnimation: () => (/* binding */ startWaapiAnimation)
 /* harmony export */ });
 /* harmony import */ var motion_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-dom */ "./node_modules/motion-dom/dist/es/index.mjs");
-/* harmony import */ var _stats_animation_count_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../stats/animation-count.mjs */ "./node_modules/framer-motion/dist/es/stats/animation-count.mjs");
-/* harmony import */ var _stats_buffer_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../stats/buffer.mjs */ "./node_modules/framer-motion/dist/es/stats/buffer.mjs");
-
-
 
 
 function startWaapiAnimation(element, valueName, keyframes, { delay = 0, duration = 300, repeat = 0, repeatType = "loop", ease = "easeInOut", times, } = {}) {
@@ -1086,8 +1080,8 @@ function startWaapiAnimation(element, valueName, keyframes, { delay = 0, duratio
      */
     if (Array.isArray(easing))
         keyframeOptions.easing = easing;
-    if (_stats_buffer_mjs__WEBPACK_IMPORTED_MODULE_1__.statsBuffer.value) {
-        _stats_animation_count_mjs__WEBPACK_IMPORTED_MODULE_2__.activeAnimations.waapi++;
+    if (motion_dom__WEBPACK_IMPORTED_MODULE_0__.statsBuffer.value) {
+        motion_dom__WEBPACK_IMPORTED_MODULE_0__.activeAnimations.waapi++;
     }
     const animation = element.animate(keyframeOptions, {
         delay,
@@ -1097,9 +1091,9 @@ function startWaapiAnimation(element, valueName, keyframes, { delay = 0, duratio
         iterations: repeat + 1,
         direction: repeatType === "reverse" ? "alternate" : "normal",
     });
-    if (_stats_buffer_mjs__WEBPACK_IMPORTED_MODULE_1__.statsBuffer.value) {
+    if (motion_dom__WEBPACK_IMPORTED_MODULE_0__.statsBuffer.value) {
         animation.finished.finally(() => {
-            _stats_animation_count_mjs__WEBPACK_IMPORTED_MODULE_2__.activeAnimations.waapi--;
+            motion_dom__WEBPACK_IMPORTED_MODULE_0__.activeAnimations.waapi--;
         });
     }
     return animation;
@@ -1679,13 +1673,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   calcGeneratorVelocity: () => (/* binding */ calcGeneratorVelocity)
 /* harmony export */ });
-/* harmony import */ var _utils_velocity_per_second_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../utils/velocity-per-second.mjs */ "./node_modules/framer-motion/dist/es/utils/velocity-per-second.mjs");
+/* harmony import */ var motion_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-utils */ "./node_modules/motion-utils/dist/es/index.mjs");
 
 
 const velocitySampleDuration = 5; // ms
 function calcGeneratorVelocity(resolveValue, t, current) {
     const prevT = Math.max(t - velocitySampleDuration, 0);
-    return (0,_utils_velocity_per_second_mjs__WEBPACK_IMPORTED_MODULE_0__.velocityPerSecond)(current - resolveValue(prevT), t - prevT);
+    return (0,motion_utils__WEBPACK_IMPORTED_MODULE_0__.velocityPerSecond)(current - resolveValue(prevT), t - prevT);
 }
 
 
@@ -1706,16 +1700,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var motion_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-dom */ "./node_modules/motion-dom/dist/es/index.mjs");
 /* harmony import */ var motion_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! motion-utils */ "./node_modules/motion-utils/dist/es/index.mjs");
-/* harmony import */ var _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../frameloop/frame.mjs */ "./node_modules/framer-motion/dist/es/frameloop/frame.mjs");
-/* harmony import */ var _utils_GlobalConfig_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/GlobalConfig.mjs */ "./node_modules/framer-motion/dist/es/utils/GlobalConfig.mjs");
 /* harmony import */ var _utils_use_instant_transition_state_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/use-instant-transition-state.mjs */ "./node_modules/framer-motion/dist/es/utils/use-instant-transition-state.mjs");
-/* harmony import */ var _animators_AcceleratedAnimation_mjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../animators/AcceleratedAnimation.mjs */ "./node_modules/framer-motion/dist/es/animation/animators/AcceleratedAnimation.mjs");
-/* harmony import */ var _animators_MainThreadAnimation_mjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../animators/MainThreadAnimation.mjs */ "./node_modules/framer-motion/dist/es/animation/animators/MainThreadAnimation.mjs");
-/* harmony import */ var _animators_waapi_utils_get_final_keyframe_mjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../animators/waapi/utils/get-final-keyframe.mjs */ "./node_modules/framer-motion/dist/es/animation/animators/waapi/utils/get-final-keyframe.mjs");
+/* harmony import */ var _animators_AcceleratedAnimation_mjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../animators/AcceleratedAnimation.mjs */ "./node_modules/framer-motion/dist/es/animation/animators/AcceleratedAnimation.mjs");
+/* harmony import */ var _animators_MainThreadAnimation_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../animators/MainThreadAnimation.mjs */ "./node_modules/framer-motion/dist/es/animation/animators/MainThreadAnimation.mjs");
+/* harmony import */ var _animators_waapi_utils_get_final_keyframe_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../animators/waapi/utils/get-final-keyframe.mjs */ "./node_modules/framer-motion/dist/es/animation/animators/waapi/utils/get-final-keyframe.mjs");
 /* harmony import */ var _utils_default_transitions_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/default-transitions.mjs */ "./node_modules/framer-motion/dist/es/animation/utils/default-transitions.mjs");
 /* harmony import */ var _utils_is_transition_defined_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/is-transition-defined.mjs */ "./node_modules/framer-motion/dist/es/animation/utils/is-transition-defined.mjs");
-
-
 
 
 
@@ -1759,7 +1749,7 @@ const animateMotionValue = (name, value, target, transition = {}, element, isHan
     };
     /**
      * If there's no transition defined for this value, we can generate
-     * unqiue transition settings for this value.
+     * unique transition settings for this value.
      */
     if (!(0,_utils_is_transition_defined_mjs__WEBPACK_IMPORTED_MODULE_2__.isTransitionDefined)(valueTransition)) {
         options = {
@@ -1790,20 +1780,25 @@ const animateMotionValue = (name, value, target, transition = {}, element, isHan
         }
     }
     if (_utils_use_instant_transition_state_mjs__WEBPACK_IMPORTED_MODULE_4__.instantAnimationState.current ||
-        _utils_GlobalConfig_mjs__WEBPACK_IMPORTED_MODULE_5__.MotionGlobalConfig.skipAnimations) {
+        motion_utils__WEBPACK_IMPORTED_MODULE_1__.MotionGlobalConfig.skipAnimations) {
         shouldSkip = true;
         options.duration = 0;
         options.delay = 0;
     }
+    /**
+     * If the transition type or easing has been explicitly set by the user
+     * then we don't want to allow flattening the animation.
+     */
+    options.allowFlatten = !valueTransition.type && !valueTransition.ease;
     /**
      * If we can or must skip creating the animation, and apply only
      * the final keyframe, do so. We also check once keyframes are resolved but
      * this early check prevents the need to create an animation at all.
      */
     if (shouldSkip && !isHandoff && value.get() !== undefined) {
-        const finalKeyframe = (0,_animators_waapi_utils_get_final_keyframe_mjs__WEBPACK_IMPORTED_MODULE_6__.getFinalKeyframe)(options.keyframes, valueTransition);
+        const finalKeyframe = (0,_animators_waapi_utils_get_final_keyframe_mjs__WEBPACK_IMPORTED_MODULE_5__.getFinalKeyframe)(options.keyframes, valueTransition);
         if (finalKeyframe !== undefined) {
-            _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_7__.frame.update(() => {
+            motion_dom__WEBPACK_IMPORTED_MODULE_0__.frame.update(() => {
                 options.onUpdate(finalKeyframe);
                 options.onComplete();
             });
@@ -1817,11 +1812,11 @@ const animateMotionValue = (name, value, target, transition = {}, element, isHan
      * WAAPI. Therefore, this animation must be JS to ensure it runs "under" the
      * optimised animation.
      */
-    if (!isHandoff && _animators_AcceleratedAnimation_mjs__WEBPACK_IMPORTED_MODULE_8__.AcceleratedAnimation.supports(options)) {
-        return new _animators_AcceleratedAnimation_mjs__WEBPACK_IMPORTED_MODULE_8__.AcceleratedAnimation(options);
+    if (!isHandoff && _animators_AcceleratedAnimation_mjs__WEBPACK_IMPORTED_MODULE_6__.AcceleratedAnimation.supports(options)) {
+        return new _animators_AcceleratedAnimation_mjs__WEBPACK_IMPORTED_MODULE_6__.AcceleratedAnimation(options);
     }
     else {
-        return new _animators_MainThreadAnimation_mjs__WEBPACK_IMPORTED_MODULE_9__.MainThreadAnimation(options);
+        return new _animators_MainThreadAnimation_mjs__WEBPACK_IMPORTED_MODULE_7__.MainThreadAnimation(options);
     }
 };
 
@@ -1842,13 +1837,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   animateTarget: () => (/* binding */ animateTarget)
 /* harmony export */ });
 /* harmony import */ var motion_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-dom */ "./node_modules/motion-dom/dist/es/index.mjs");
-/* harmony import */ var _render_html_utils_keys_position_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../render/html/utils/keys-position.mjs */ "./node_modules/framer-motion/dist/es/render/html/utils/keys-position.mjs");
-/* harmony import */ var _render_utils_setters_mjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../render/utils/setters.mjs */ "./node_modules/framer-motion/dist/es/render/utils/setters.mjs");
-/* harmony import */ var _value_use_will_change_add_will_change_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../value/use-will-change/add-will-change.mjs */ "./node_modules/framer-motion/dist/es/value/use-will-change/add-will-change.mjs");
+/* harmony import */ var _render_html_utils_keys_position_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../render/html/utils/keys-position.mjs */ "./node_modules/framer-motion/dist/es/render/html/utils/keys-position.mjs");
+/* harmony import */ var _render_utils_setters_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../render/utils/setters.mjs */ "./node_modules/framer-motion/dist/es/render/utils/setters.mjs");
+/* harmony import */ var _value_use_will_change_add_will_change_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../value/use-will-change/add-will-change.mjs */ "./node_modules/framer-motion/dist/es/value/use-will-change/add-will-change.mjs");
 /* harmony import */ var _optimized_appear_get_appear_id_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../optimized-appear/get-appear-id.mjs */ "./node_modules/framer-motion/dist/es/animation/optimized-appear/get-appear-id.mjs");
-/* harmony import */ var _motion_value_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./motion-value.mjs */ "./node_modules/framer-motion/dist/es/animation/interfaces/motion-value.mjs");
-/* harmony import */ var _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../frameloop/frame.mjs */ "./node_modules/framer-motion/dist/es/frameloop/frame.mjs");
-
+/* harmony import */ var _motion_value_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./motion-value.mjs */ "./node_modules/framer-motion/dist/es/animation/interfaces/motion-value.mjs");
 
 
 
@@ -1896,15 +1889,15 @@ function animateTarget(visualElement, targetAndTransition, { delay = 0, transiti
         if (window.MotionHandoffAnimation) {
             const appearId = (0,_optimized_appear_get_appear_id_mjs__WEBPACK_IMPORTED_MODULE_1__.getOptimisedAppearId)(visualElement);
             if (appearId) {
-                const startTime = window.MotionHandoffAnimation(appearId, key, _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_2__.frame);
+                const startTime = window.MotionHandoffAnimation(appearId, key, motion_dom__WEBPACK_IMPORTED_MODULE_0__.frame);
                 if (startTime !== null) {
                     valueTransition.startTime = startTime;
                     isHandoff = true;
                 }
             }
         }
-        (0,_value_use_will_change_add_will_change_mjs__WEBPACK_IMPORTED_MODULE_3__.addValueToWillChange)(visualElement, key);
-        value.start((0,_motion_value_mjs__WEBPACK_IMPORTED_MODULE_4__.animateMotionValue)(key, value, valueTarget, visualElement.shouldReduceMotion && _render_html_utils_keys_position_mjs__WEBPACK_IMPORTED_MODULE_5__.positionalKeys.has(key)
+        (0,_value_use_will_change_add_will_change_mjs__WEBPACK_IMPORTED_MODULE_2__.addValueToWillChange)(visualElement, key);
+        value.start((0,_motion_value_mjs__WEBPACK_IMPORTED_MODULE_3__.animateMotionValue)(key, value, valueTarget, visualElement.shouldReduceMotion && _render_html_utils_keys_position_mjs__WEBPACK_IMPORTED_MODULE_4__.positionalKeys.has(key)
             ? { type: false }
             : valueTransition, visualElement, isHandoff));
         const animation = value.animation;
@@ -1914,8 +1907,8 @@ function animateTarget(visualElement, targetAndTransition, { delay = 0, transiti
     }
     if (transitionEnd) {
         Promise.all(animations).then(() => {
-            _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_2__.frame.update(() => {
-                transitionEnd && (0,_render_utils_setters_mjs__WEBPACK_IMPORTED_MODULE_6__.setTarget)(visualElement, transitionEnd);
+            motion_dom__WEBPACK_IMPORTED_MODULE_0__.frame.update(() => {
+                transitionEnd && (0,_render_utils_setters_mjs__WEBPACK_IMPORTED_MODULE_5__.setTarget)(visualElement, transitionEnd);
             });
         });
     }
@@ -2497,10 +2490,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var _context_LayoutGroupContext_mjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../context/LayoutGroupContext.mjs */ "./node_modules/framer-motion/dist/es/context/LayoutGroupContext.mjs");
 /* harmony import */ var _utils_use_constant_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/use-constant.mjs */ "./node_modules/framer-motion/dist/es/utils/use-constant.mjs");
+/* harmony import */ var _utils_use_isomorphic_effect_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/use-isomorphic-effect.mjs */ "./node_modules/framer-motion/dist/es/utils/use-isomorphic-effect.mjs");
 /* harmony import */ var _PresenceChild_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./PresenceChild.mjs */ "./node_modules/framer-motion/dist/es/components/AnimatePresence/PresenceChild.mjs");
 /* harmony import */ var _use_presence_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./use-presence.mjs */ "./node_modules/framer-motion/dist/es/components/AnimatePresence/use-presence.mjs");
 /* harmony import */ var _utils_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils.mjs */ "./node_modules/framer-motion/dist/es/components/AnimatePresence/utils.mjs");
-/* harmony import */ var _utils_use_isomorphic_effect_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/use-isomorphic-effect.mjs */ "./node_modules/framer-motion/dist/es/utils/use-isomorphic-effect.mjs");
 "use client";
 
 
@@ -3368,322 +3361,6 @@ const addPointerInfo = (handler) => {
 
 /***/ }),
 
-/***/ "./node_modules/framer-motion/dist/es/frameloop/batcher.mjs":
-/*!******************************************************************!*\
-  !*** ./node_modules/framer-motion/dist/es/frameloop/batcher.mjs ***!
-  \******************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   createRenderBatcher: () => (/* binding */ createRenderBatcher)
-/* harmony export */ });
-/* harmony import */ var _utils_GlobalConfig_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/GlobalConfig.mjs */ "./node_modules/framer-motion/dist/es/utils/GlobalConfig.mjs");
-/* harmony import */ var _order_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./order.mjs */ "./node_modules/framer-motion/dist/es/frameloop/order.mjs");
-/* harmony import */ var _render_step_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./render-step.mjs */ "./node_modules/framer-motion/dist/es/frameloop/render-step.mjs");
-
-
-
-
-const maxElapsed = 40;
-function createRenderBatcher(scheduleNextBatch, allowKeepAlive) {
-    let runNextFrame = false;
-    let useDefaultElapsed = true;
-    const state = {
-        delta: 0.0,
-        timestamp: 0.0,
-        isProcessing: false,
-    };
-    const flagRunNextFrame = () => (runNextFrame = true);
-    const steps = _order_mjs__WEBPACK_IMPORTED_MODULE_0__.stepsOrder.reduce((acc, key) => {
-        acc[key] = (0,_render_step_mjs__WEBPACK_IMPORTED_MODULE_1__.createRenderStep)(flagRunNextFrame, allowKeepAlive ? key : undefined);
-        return acc;
-    }, {});
-    const { read, resolveKeyframes, update, preRender, render, postRender } = steps;
-    const processBatch = () => {
-        const timestamp = _utils_GlobalConfig_mjs__WEBPACK_IMPORTED_MODULE_2__.MotionGlobalConfig.useManualTiming
-            ? state.timestamp
-            : performance.now();
-        runNextFrame = false;
-        if (!_utils_GlobalConfig_mjs__WEBPACK_IMPORTED_MODULE_2__.MotionGlobalConfig.useManualTiming) {
-            state.delta = useDefaultElapsed
-                ? 1000 / 60
-                : Math.max(Math.min(timestamp - state.timestamp, maxElapsed), 1);
-        }
-        state.timestamp = timestamp;
-        state.isProcessing = true;
-        // Unrolled render loop for better per-frame performance
-        read.process(state);
-        resolveKeyframes.process(state);
-        update.process(state);
-        preRender.process(state);
-        render.process(state);
-        postRender.process(state);
-        state.isProcessing = false;
-        if (runNextFrame && allowKeepAlive) {
-            useDefaultElapsed = false;
-            scheduleNextBatch(processBatch);
-        }
-    };
-    const wake = () => {
-        runNextFrame = true;
-        useDefaultElapsed = true;
-        if (!state.isProcessing) {
-            scheduleNextBatch(processBatch);
-        }
-    };
-    const schedule = _order_mjs__WEBPACK_IMPORTED_MODULE_0__.stepsOrder.reduce((acc, key) => {
-        const step = steps[key];
-        acc[key] = (process, keepAlive = false, immediate = false) => {
-            if (!runNextFrame)
-                wake();
-            return step.schedule(process, keepAlive, immediate);
-        };
-        return acc;
-    }, {});
-    const cancel = (process) => {
-        for (let i = 0; i < _order_mjs__WEBPACK_IMPORTED_MODULE_0__.stepsOrder.length; i++) {
-            steps[_order_mjs__WEBPACK_IMPORTED_MODULE_0__.stepsOrder[i]].cancel(process);
-        }
-    };
-    return { schedule, cancel, state, steps };
-}
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/framer-motion/dist/es/frameloop/frame.mjs":
-/*!****************************************************************!*\
-  !*** ./node_modules/framer-motion/dist/es/frameloop/frame.mjs ***!
-  \****************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   cancelFrame: () => (/* binding */ cancelFrame),
-/* harmony export */   frame: () => (/* binding */ frame),
-/* harmony export */   frameData: () => (/* binding */ frameData),
-/* harmony export */   frameSteps: () => (/* binding */ frameSteps)
-/* harmony export */ });
-/* harmony import */ var motion_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-utils */ "./node_modules/motion-utils/dist/es/index.mjs");
-/* harmony import */ var _batcher_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./batcher.mjs */ "./node_modules/framer-motion/dist/es/frameloop/batcher.mjs");
-
-
-
-const { schedule: frame, cancel: cancelFrame, state: frameData, steps: frameSteps, } = (0,_batcher_mjs__WEBPACK_IMPORTED_MODULE_1__.createRenderBatcher)(typeof requestAnimationFrame !== "undefined" ? requestAnimationFrame : motion_utils__WEBPACK_IMPORTED_MODULE_0__.noop, true);
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/framer-motion/dist/es/frameloop/microtask.mjs":
-/*!********************************************************************!*\
-  !*** ./node_modules/framer-motion/dist/es/frameloop/microtask.mjs ***!
-  \********************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   cancelMicrotask: () => (/* binding */ cancelMicrotask),
-/* harmony export */   microtask: () => (/* binding */ microtask)
-/* harmony export */ });
-/* harmony import */ var _batcher_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./batcher.mjs */ "./node_modules/framer-motion/dist/es/frameloop/batcher.mjs");
-
-
-const { schedule: microtask, cancel: cancelMicrotask } = (0,_batcher_mjs__WEBPACK_IMPORTED_MODULE_0__.createRenderBatcher)(queueMicrotask, false);
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/framer-motion/dist/es/frameloop/order.mjs":
-/*!****************************************************************!*\
-  !*** ./node_modules/framer-motion/dist/es/frameloop/order.mjs ***!
-  \****************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   stepsOrder: () => (/* binding */ stepsOrder)
-/* harmony export */ });
-const stepsOrder = [
-    "read", // Read
-    "resolveKeyframes", // Write/Read/Write/Read
-    "update", // Compute
-    "preRender", // Compute
-    "render", // Write
-    "postRender", // Compute
-];
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/framer-motion/dist/es/frameloop/render-step.mjs":
-/*!**********************************************************************!*\
-  !*** ./node_modules/framer-motion/dist/es/frameloop/render-step.mjs ***!
-  \**********************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   createRenderStep: () => (/* binding */ createRenderStep)
-/* harmony export */ });
-/* harmony import */ var _stats_buffer_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../stats/buffer.mjs */ "./node_modules/framer-motion/dist/es/stats/buffer.mjs");
-
-
-function createRenderStep(runNextFrame, stepName) {
-    /**
-     * We create and reuse two queues, one to queue jobs for the current frame
-     * and one for the next. We reuse to avoid triggering GC after x frames.
-     */
-    let thisFrame = new Set();
-    let nextFrame = new Set();
-    /**
-     * Track whether we're currently processing jobs in this step. This way
-     * we can decide whether to schedule new jobs for this frame or next.
-     */
-    let isProcessing = false;
-    let flushNextFrame = false;
-    /**
-     * A set of processes which were marked keepAlive when scheduled.
-     */
-    const toKeepAlive = new WeakSet();
-    let latestFrameData = {
-        delta: 0.0,
-        timestamp: 0.0,
-        isProcessing: false,
-    };
-    let numCalls = 0;
-    function triggerCallback(callback) {
-        if (toKeepAlive.has(callback)) {
-            step.schedule(callback);
-            runNextFrame();
-        }
-        numCalls++;
-        callback(latestFrameData);
-    }
-    const step = {
-        /**
-         * Schedule a process to run on the next frame.
-         */
-        schedule: (callback, keepAlive = false, immediate = false) => {
-            const addToCurrentFrame = immediate && isProcessing;
-            const queue = addToCurrentFrame ? thisFrame : nextFrame;
-            if (keepAlive)
-                toKeepAlive.add(callback);
-            if (!queue.has(callback))
-                queue.add(callback);
-            return callback;
-        },
-        /**
-         * Cancel the provided callback from running on the next frame.
-         */
-        cancel: (callback) => {
-            nextFrame.delete(callback);
-            toKeepAlive.delete(callback);
-        },
-        /**
-         * Execute all schedule callbacks.
-         */
-        process: (frameData) => {
-            latestFrameData = frameData;
-            /**
-             * If we're already processing we've probably been triggered by a flushSync
-             * inside an existing process. Instead of executing, mark flushNextFrame
-             * as true and ensure we flush the following frame at the end of this one.
-             */
-            if (isProcessing) {
-                flushNextFrame = true;
-                return;
-            }
-            isProcessing = true;
-            [thisFrame, nextFrame] = [nextFrame, thisFrame];
-            // Execute this frame
-            thisFrame.forEach(triggerCallback);
-            /**
-             * If we're recording stats then
-             */
-            if (stepName && _stats_buffer_mjs__WEBPACK_IMPORTED_MODULE_0__.statsBuffer.value) {
-                _stats_buffer_mjs__WEBPACK_IMPORTED_MODULE_0__.statsBuffer.value.frameloop[stepName].push(numCalls);
-            }
-            numCalls = 0;
-            // Clear the frame so no callbacks remain. This is to avoid
-            // memory leaks should this render step not run for a while.
-            thisFrame.clear();
-            isProcessing = false;
-            if (flushNextFrame) {
-                flushNextFrame = false;
-                step.process(frameData);
-            }
-        },
-    };
-    return step;
-}
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/framer-motion/dist/es/frameloop/sync-time.mjs":
-/*!********************************************************************!*\
-  !*** ./node_modules/framer-motion/dist/es/frameloop/sync-time.mjs ***!
-  \********************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   time: () => (/* binding */ time)
-/* harmony export */ });
-/* harmony import */ var _utils_GlobalConfig_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/GlobalConfig.mjs */ "./node_modules/framer-motion/dist/es/utils/GlobalConfig.mjs");
-/* harmony import */ var _frame_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./frame.mjs */ "./node_modules/framer-motion/dist/es/frameloop/frame.mjs");
-
-
-
-let now;
-function clearTime() {
-    now = undefined;
-}
-/**
- * An eventloop-synchronous alternative to performance.now().
- *
- * Ensures that time measurements remain consistent within a synchronous context.
- * Usually calling performance.now() twice within the same synchronous context
- * will return different values which isn't useful for animations when we're usually
- * trying to sync animations to the same frame.
- */
-const time = {
-    now: () => {
-        if (now === undefined) {
-            time.set(_frame_mjs__WEBPACK_IMPORTED_MODULE_0__.frameData.isProcessing || _utils_GlobalConfig_mjs__WEBPACK_IMPORTED_MODULE_1__.MotionGlobalConfig.useManualTiming
-                ? _frame_mjs__WEBPACK_IMPORTED_MODULE_0__.frameData.timestamp
-                : performance.now());
-        }
-        return now;
-    },
-    set: (newTime) => {
-        now = newTime;
-        queueMicrotask(clearTime);
-    },
-};
-
-
-
-
-/***/ }),
-
 /***/ "./node_modules/framer-motion/dist/es/gestures/drag/VisualElementDragControls.mjs":
 /*!****************************************************************************************!*\
   !*** ./node_modules/framer-motion/dist/es/gestures/drag/VisualElementDragControls.mjs ***!
@@ -3707,13 +3384,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _projection_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../projection/geometry/models.mjs */ "./node_modules/framer-motion/dist/es/projection/geometry/models.mjs");
 /* harmony import */ var _projection_utils_each_axis_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../projection/utils/each-axis.mjs */ "./node_modules/framer-motion/dist/es/projection/utils/each-axis.mjs");
 /* harmony import */ var _projection_utils_measure_mjs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../projection/utils/measure.mjs */ "./node_modules/framer-motion/dist/es/projection/utils/measure.mjs");
+/* harmony import */ var _utils_get_context_window_mjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../utils/get-context-window.mjs */ "./node_modules/framer-motion/dist/es/utils/get-context-window.mjs");
 /* harmony import */ var _utils_is_ref_object_mjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../utils/is-ref-object.mjs */ "./node_modules/framer-motion/dist/es/utils/is-ref-object.mjs");
 /* harmony import */ var _utils_mix_number_mjs__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../utils/mix/number.mjs */ "./node_modules/framer-motion/dist/es/utils/mix/number.mjs");
 /* harmony import */ var _value_types_numbers_units_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../value/types/numbers/units.mjs */ "./node_modules/framer-motion/dist/es/value/types/numbers/units.mjs");
-/* harmony import */ var _value_use_will_change_add_will_change_mjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../value/use-will-change/add-will-change.mjs */ "./node_modules/framer-motion/dist/es/value/use-will-change/add-will-change.mjs");
-/* harmony import */ var _pan_PanSession_mjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../pan/PanSession.mjs */ "./node_modules/framer-motion/dist/es/gestures/pan/PanSession.mjs");
+/* harmony import */ var _value_use_will_change_add_will_change_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../value/use-will-change/add-will-change.mjs */ "./node_modules/framer-motion/dist/es/value/use-will-change/add-will-change.mjs");
+/* harmony import */ var _pan_PanSession_mjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../pan/PanSession.mjs */ "./node_modules/framer-motion/dist/es/gestures/pan/PanSession.mjs");
 /* harmony import */ var _utils_constraints_mjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./utils/constraints.mjs */ "./node_modules/framer-motion/dist/es/gestures/drag/utils/constraints.mjs");
-/* harmony import */ var _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../frameloop/frame.mjs */ "./node_modules/framer-motion/dist/es/frameloop/frame.mjs");
 
 
 
@@ -3811,9 +3488,9 @@ class VisualElementDragControls {
             });
             // Fire onDragStart event
             if (onDragStart) {
-                _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_7__.frame.postRender(() => onDragStart(event, info));
+                motion_dom__WEBPACK_IMPORTED_MODULE_0__.frame.postRender(() => onDragStart(event, info));
             }
-            (0,_value_use_will_change_add_will_change_mjs__WEBPACK_IMPORTED_MODULE_8__.addValueToWillChange)(this.visualElement, "transform");
+            (0,_value_use_will_change_add_will_change_mjs__WEBPACK_IMPORTED_MODULE_7__.addValueToWillChange)(this.visualElement, "transform");
             const { animationState } = this.visualElement;
             animationState && animationState.setActive("whileDrag", true);
         };
@@ -3856,7 +3533,7 @@ class VisualElementDragControls {
                 ((_a = this.getAxisMotionValue(axis).animation) === null || _a === void 0 ? void 0 : _a.play());
         });
         const { dragSnapToOrigin } = this.getProps();
-        this.panSession = new _pan_PanSession_mjs__WEBPACK_IMPORTED_MODULE_9__.PanSession(originEvent, {
+        this.panSession = new _pan_PanSession_mjs__WEBPACK_IMPORTED_MODULE_8__.PanSession(originEvent, {
             onSessionStart,
             onStart,
             onMove,
@@ -3865,6 +3542,7 @@ class VisualElementDragControls {
         }, {
             transformPagePoint: this.visualElement.getTransformPagePoint(),
             dragSnapToOrigin,
+            contextWindow: (0,_utils_get_context_window_mjs__WEBPACK_IMPORTED_MODULE_9__.getContextWindow)(this.visualElement),
         });
     }
     stop(event, info) {
@@ -3876,7 +3554,7 @@ class VisualElementDragControls {
         this.startAnimation(velocity);
         const { onDragEnd } = this.getProps();
         if (onDragEnd) {
-            _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_7__.frame.postRender(() => onDragEnd(event, info));
+            motion_dom__WEBPACK_IMPORTED_MODULE_0__.frame.postRender(() => onDragEnd(event, info));
         }
     }
     cancel() {
@@ -4009,7 +3687,7 @@ class VisualElementDragControls {
     }
     startAxisValueAnimation(axis, transition) {
         const axisValue = this.getAxisMotionValue(axis);
-        (0,_value_use_will_change_add_will_change_mjs__WEBPACK_IMPORTED_MODULE_8__.addValueToWillChange)(this.visualElement, axis);
+        (0,_value_use_will_change_add_will_change_mjs__WEBPACK_IMPORTED_MODULE_7__.addValueToWillChange)(this.visualElement, axis);
         return axisValue.start((0,_animation_interfaces_motion_value_mjs__WEBPACK_IMPORTED_MODULE_14__.animateMotionValue)(axis, axisValue, 0, transition, this.visualElement, false));
     }
     stopAnimation() {
@@ -4130,7 +3808,7 @@ class VisualElementDragControls {
             projection.root && projection.root.updateScroll();
             projection.updateLayout();
         }
-        _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_7__.frame.read(measureDragConstraints);
+        motion_dom__WEBPACK_IMPORTED_MODULE_0__.frame.read(measureDragConstraints);
         /**
          * Attach a window resize listener to scale the draggable target within its defined
          * constraints as the window resizes.
@@ -4474,10 +4152,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   HoverGesture: () => (/* binding */ HoverGesture)
 /* harmony export */ });
 /* harmony import */ var motion_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-dom */ "./node_modules/motion-dom/dist/es/index.mjs");
-/* harmony import */ var _events_event_info_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../events/event-info.mjs */ "./node_modules/framer-motion/dist/es/events/event-info.mjs");
-/* harmony import */ var _motion_features_Feature_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../motion/features/Feature.mjs */ "./node_modules/framer-motion/dist/es/motion/features/Feature.mjs");
-/* harmony import */ var _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../frameloop/frame.mjs */ "./node_modules/framer-motion/dist/es/frameloop/frame.mjs");
-
+/* harmony import */ var _events_event_info_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../events/event-info.mjs */ "./node_modules/framer-motion/dist/es/events/event-info.mjs");
+/* harmony import */ var _motion_features_Feature_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../motion/features/Feature.mjs */ "./node_modules/framer-motion/dist/es/motion/features/Feature.mjs");
 
 
 
@@ -4490,10 +4166,10 @@ function handleHoverEvent(node, event, lifecycle) {
     const eventName = ("onHover" + lifecycle);
     const callback = props[eventName];
     if (callback) {
-        _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_1__.frame.postRender(() => callback(event, (0,_events_event_info_mjs__WEBPACK_IMPORTED_MODULE_2__.extractEventInfo)(event)));
+        motion_dom__WEBPACK_IMPORTED_MODULE_0__.frame.postRender(() => callback(event, (0,_events_event_info_mjs__WEBPACK_IMPORTED_MODULE_1__.extractEventInfo)(event)));
     }
 }
-class HoverGesture extends _motion_features_Feature_mjs__WEBPACK_IMPORTED_MODULE_3__.Feature {
+class HoverGesture extends _motion_features_Feature_mjs__WEBPACK_IMPORTED_MODULE_2__.Feature {
     mount() {
         const { current } = this.node;
         if (!current)
@@ -4524,12 +4200,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var motion_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-dom */ "./node_modules/motion-dom/dist/es/index.mjs");
 /* harmony import */ var motion_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! motion-utils */ "./node_modules/motion-utils/dist/es/index.mjs");
-/* harmony import */ var _events_add_pointer_event_mjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../events/add-pointer-event.mjs */ "./node_modules/framer-motion/dist/es/events/add-pointer-event.mjs");
-/* harmony import */ var _events_event_info_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../events/event-info.mjs */ "./node_modules/framer-motion/dist/es/events/event-info.mjs");
+/* harmony import */ var _events_add_pointer_event_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../events/add-pointer-event.mjs */ "./node_modules/framer-motion/dist/es/events/add-pointer-event.mjs");
+/* harmony import */ var _events_event_info_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../events/event-info.mjs */ "./node_modules/framer-motion/dist/es/events/event-info.mjs");
 /* harmony import */ var _utils_distance_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/distance.mjs */ "./node_modules/framer-motion/dist/es/utils/distance.mjs");
-/* harmony import */ var _utils_pipe_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/pipe.mjs */ "./node_modules/framer-motion/dist/es/utils/pipe.mjs");
-/* harmony import */ var _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../frameloop/frame.mjs */ "./node_modules/framer-motion/dist/es/frameloop/frame.mjs");
-
+/* harmony import */ var _utils_pipe_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/pipe.mjs */ "./node_modules/framer-motion/dist/es/utils/pipe.mjs");
 
 
 
@@ -4541,7 +4215,7 @@ __webpack_require__.r(__webpack_exports__);
  * @internal
  */
 class PanSession {
-    constructor(event, handlers, { transformPagePoint, dragSnapToOrigin = false } = {}) {
+    constructor(event, handlers, { transformPagePoint, contextWindow, dragSnapToOrigin = false, } = {}) {
         /**
          * @internal
          */
@@ -4558,6 +4232,10 @@ class PanSession {
          * @internal
          */
         this.handlers = {};
+        /**
+         * @internal
+         */
+        this.contextWindow = window;
         this.updatePoint = () => {
             if (!(this.lastMoveEvent && this.lastMoveEventInfo))
                 return;
@@ -4570,7 +4248,7 @@ class PanSession {
             if (!isPanStarted && !isDistancePastThreshold)
                 return;
             const { point } = info;
-            const { timestamp } = _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__.frameData;
+            const { timestamp } = motion_dom__WEBPACK_IMPORTED_MODULE_0__.frameData;
             this.history.push({ ...point, timestamp });
             const { onStart, onMove } = this.handlers;
             if (!isPanStarted) {
@@ -4580,32 +4258,19 @@ class PanSession {
             onMove && onMove(this.lastMoveEvent, info);
         };
         this.handlePointerMove = (event, info) => {
-            this.index = getElementIndex(event.currentTarget);
-            if (event.target instanceof Element &&
-                event.target.hasPointerCapture &&
-                event.pointerId !== undefined) {
-                try {
-                    if (!event.target.hasPointerCapture(event.pointerId)) {
-                        return;
-                    }
-                }
-                catch (e) { }
-            }
             this.lastMoveEvent = event;
             this.lastMoveEventInfo = transformPoint(info, this.transformPagePoint);
             // Throttle mouse move event to once per frame
-            _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__.frame.update(this.updatePoint, true);
+            motion_dom__WEBPACK_IMPORTED_MODULE_0__.frame.update(this.updatePoint, true);
         };
         this.handlePointerUp = (event, info) => {
-            (0,motion_dom__WEBPACK_IMPORTED_MODULE_0__.capturePointer)(event, "release");
             this.end();
             const { onEnd, onSessionEnd, resumeAnimation } = this.handlers;
             if (this.dragSnapToOrigin)
                 resumeAnimation && resumeAnimation();
             if (!(this.lastMoveEvent && this.lastMoveEventInfo))
                 return;
-            const panInfo = getPanInfo(event.type === "pointercancel" ||
-                event.type === "lostpointercapture"
+            const panInfo = getPanInfo(event.type === "pointercancel"
                 ? this.lastMoveEventInfo
                 : transformPoint(info, this.transformPagePoint), this.history);
             if (this.startEvent && onEnd) {
@@ -4619,35 +4284,23 @@ class PanSession {
         this.dragSnapToOrigin = dragSnapToOrigin;
         this.handlers = handlers;
         this.transformPagePoint = transformPagePoint;
-        const info = (0,_events_event_info_mjs__WEBPACK_IMPORTED_MODULE_4__.extractEventInfo)(event);
+        this.contextWindow = contextWindow || window;
+        const info = (0,_events_event_info_mjs__WEBPACK_IMPORTED_MODULE_3__.extractEventInfo)(event);
         const initialInfo = transformPoint(info, this.transformPagePoint);
         const { point } = initialInfo;
-        const { timestamp } = _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__.frameData;
+        const { timestamp } = motion_dom__WEBPACK_IMPORTED_MODULE_0__.frameData;
         this.history = [{ ...point, timestamp }];
         const { onSessionStart } = handlers;
         onSessionStart &&
             onSessionStart(event, getPanInfo(initialInfo, this.history));
-        (0,motion_dom__WEBPACK_IMPORTED_MODULE_0__.capturePointer)(event, "set");
-        this.removeListeners = (0,_utils_pipe_mjs__WEBPACK_IMPORTED_MODULE_5__.pipe)((0,_events_add_pointer_event_mjs__WEBPACK_IMPORTED_MODULE_6__.addPointerEvent)(event.currentTarget, "pointermove", this.handlePointerMove), (0,_events_add_pointer_event_mjs__WEBPACK_IMPORTED_MODULE_6__.addPointerEvent)(event.currentTarget, "pointerup", this.handlePointerUp), (0,_events_add_pointer_event_mjs__WEBPACK_IMPORTED_MODULE_6__.addPointerEvent)(event.currentTarget, "pointercancel", this.handlePointerUp), (0,_events_add_pointer_event_mjs__WEBPACK_IMPORTED_MODULE_6__.addPointerEvent)(event.currentTarget, "lostpointercapture", (lostPointerEvent, lostPointerInfo) => {
-            const index = getElementIndex(lostPointerEvent.currentTarget);
-            /**
-             * If the pointer has lost capture because it's moved in the DOM
-             * then we need to re-capture it.
-             */
-            if (index !== this.index) {
-                (0,motion_dom__WEBPACK_IMPORTED_MODULE_0__.capturePointer)(lostPointerEvent, "set");
-            }
-            else {
-                this.handlePointerUp(lostPointerEvent, lostPointerInfo);
-            }
-        }));
+        this.removeListeners = (0,_utils_pipe_mjs__WEBPACK_IMPORTED_MODULE_4__.pipe)((0,_events_add_pointer_event_mjs__WEBPACK_IMPORTED_MODULE_5__.addPointerEvent)(this.contextWindow, "pointermove", this.handlePointerMove), (0,_events_add_pointer_event_mjs__WEBPACK_IMPORTED_MODULE_5__.addPointerEvent)(this.contextWindow, "pointerup", this.handlePointerUp), (0,_events_add_pointer_event_mjs__WEBPACK_IMPORTED_MODULE_5__.addPointerEvent)(this.contextWindow, "pointercancel", this.handlePointerUp));
     }
     updateHandlers(handlers) {
         this.handlers = handlers;
     }
     end() {
         this.removeListeners && this.removeListeners();
-        (0,_frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__.cancelFrame)(this.updatePoint);
+        (0,motion_dom__WEBPACK_IMPORTED_MODULE_0__.cancelFrame)(this.updatePoint);
     }
 }
 function transformPoint(info, transformPagePoint) {
@@ -4704,11 +4357,6 @@ function getVelocity(history, timeDelta) {
     }
     return currentVelocity;
 }
-function getElementIndex(element) {
-    if (!element.parentNode)
-        return -1;
-    return Array.from(element.parentNode.children).indexOf(element);
-}
 
 
 
@@ -4726,11 +4374,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   PanGesture: () => (/* binding */ PanGesture)
 /* harmony export */ });
-/* harmony import */ var motion_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-utils */ "./node_modules/motion-utils/dist/es/index.mjs");
-/* harmony import */ var _events_add_pointer_event_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../events/add-pointer-event.mjs */ "./node_modules/framer-motion/dist/es/events/add-pointer-event.mjs");
+/* harmony import */ var motion_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-dom */ "./node_modules/motion-dom/dist/es/index.mjs");
+/* harmony import */ var motion_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! motion-utils */ "./node_modules/motion-utils/dist/es/index.mjs");
+/* harmony import */ var _events_add_pointer_event_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../events/add-pointer-event.mjs */ "./node_modules/framer-motion/dist/es/events/add-pointer-event.mjs");
 /* harmony import */ var _motion_features_Feature_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../motion/features/Feature.mjs */ "./node_modules/framer-motion/dist/es/motion/features/Feature.mjs");
+/* harmony import */ var _utils_get_context_window_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/get-context-window.mjs */ "./node_modules/framer-motion/dist/es/utils/get-context-window.mjs");
 /* harmony import */ var _PanSession_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PanSession.mjs */ "./node_modules/framer-motion/dist/es/gestures/pan/PanSession.mjs");
-/* harmony import */ var _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../frameloop/frame.mjs */ "./node_modules/framer-motion/dist/es/frameloop/frame.mjs");
+
 
 
 
@@ -4739,17 +4389,18 @@ __webpack_require__.r(__webpack_exports__);
 
 const asyncHandler = (handler) => (event, info) => {
     if (handler) {
-        _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_1__.frame.postRender(() => handler(event, info));
+        motion_dom__WEBPACK_IMPORTED_MODULE_0__.frame.postRender(() => handler(event, info));
     }
 };
 class PanGesture extends _motion_features_Feature_mjs__WEBPACK_IMPORTED_MODULE_2__.Feature {
     constructor() {
         super(...arguments);
-        this.removePointerDownListener = motion_utils__WEBPACK_IMPORTED_MODULE_0__.noop;
+        this.removePointerDownListener = motion_utils__WEBPACK_IMPORTED_MODULE_1__.noop;
     }
     onPointerDown(pointerDownEvent) {
         this.session = new _PanSession_mjs__WEBPACK_IMPORTED_MODULE_3__.PanSession(pointerDownEvent, this.createPanHandlers(), {
             transformPagePoint: this.node.getTransformPagePoint(),
+            contextWindow: (0,_utils_get_context_window_mjs__WEBPACK_IMPORTED_MODULE_4__.getContextWindow)(this.node),
         });
     }
     createPanHandlers() {
@@ -4761,13 +4412,13 @@ class PanGesture extends _motion_features_Feature_mjs__WEBPACK_IMPORTED_MODULE_2
             onEnd: (event, info) => {
                 delete this.session;
                 if (onPanEnd) {
-                    _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_1__.frame.postRender(() => onPanEnd(event, info));
+                    motion_dom__WEBPACK_IMPORTED_MODULE_0__.frame.postRender(() => onPanEnd(event, info));
                 }
             },
         };
     }
     mount() {
-        this.removePointerDownListener = (0,_events_add_pointer_event_mjs__WEBPACK_IMPORTED_MODULE_4__.addPointerEvent)(this.node.current, "pointerdown", (event) => this.onPointerDown(event));
+        this.removePointerDownListener = (0,_events_add_pointer_event_mjs__WEBPACK_IMPORTED_MODULE_5__.addPointerEvent)(this.node.current, "pointerdown", (event) => this.onPointerDown(event));
     }
     update() {
         this.session && this.session.updateHandlers(this.createPanHandlers());
@@ -4795,10 +4446,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   PressGesture: () => (/* binding */ PressGesture)
 /* harmony export */ });
 /* harmony import */ var motion_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-dom */ "./node_modules/motion-dom/dist/es/index.mjs");
-/* harmony import */ var _events_event_info_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../events/event-info.mjs */ "./node_modules/framer-motion/dist/es/events/event-info.mjs");
-/* harmony import */ var _motion_features_Feature_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../motion/features/Feature.mjs */ "./node_modules/framer-motion/dist/es/motion/features/Feature.mjs");
-/* harmony import */ var _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../frameloop/frame.mjs */ "./node_modules/framer-motion/dist/es/frameloop/frame.mjs");
-
+/* harmony import */ var _events_event_info_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../events/event-info.mjs */ "./node_modules/framer-motion/dist/es/events/event-info.mjs");
+/* harmony import */ var _motion_features_Feature_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../motion/features/Feature.mjs */ "./node_modules/framer-motion/dist/es/motion/features/Feature.mjs");
 
 
 
@@ -4814,10 +4463,10 @@ function handlePressEvent(node, event, lifecycle) {
     const eventName = ("onTap" + (lifecycle === "End" ? "" : lifecycle));
     const callback = props[eventName];
     if (callback) {
-        _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_1__.frame.postRender(() => callback(event, (0,_events_event_info_mjs__WEBPACK_IMPORTED_MODULE_2__.extractEventInfo)(event)));
+        motion_dom__WEBPACK_IMPORTED_MODULE_0__.frame.postRender(() => callback(event, (0,_events_event_info_mjs__WEBPACK_IMPORTED_MODULE_1__.extractEventInfo)(event)));
     }
 }
-class PressGesture extends _motion_features_Feature_mjs__WEBPACK_IMPORTED_MODULE_3__.Feature {
+class PressGesture extends _motion_features_Feature_mjs__WEBPACK_IMPORTED_MODULE_2__.Feature {
     mount() {
         const { current } = this.node;
         if (!current)
@@ -5159,16 +4808,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   MeasureLayout: () => (/* binding */ MeasureLayout)
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var _components_AnimatePresence_use_presence_mjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../components/AnimatePresence/use-presence.mjs */ "./node_modules/framer-motion/dist/es/components/AnimatePresence/use-presence.mjs");
-/* harmony import */ var _context_LayoutGroupContext_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../context/LayoutGroupContext.mjs */ "./node_modules/framer-motion/dist/es/context/LayoutGroupContext.mjs");
-/* harmony import */ var _context_SwitchLayoutGroupContext_mjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../context/SwitchLayoutGroupContext.mjs */ "./node_modules/framer-motion/dist/es/context/SwitchLayoutGroupContext.mjs");
-/* harmony import */ var _frameloop_microtask_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../frameloop/microtask.mjs */ "./node_modules/framer-motion/dist/es/frameloop/microtask.mjs");
-/* harmony import */ var _projection_node_state_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../projection/node/state.mjs */ "./node_modules/framer-motion/dist/es/projection/node/state.mjs");
-/* harmony import */ var _projection_styles_scale_border_radius_mjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../projection/styles/scale-border-radius.mjs */ "./node_modules/framer-motion/dist/es/projection/styles/scale-border-radius.mjs");
-/* harmony import */ var _projection_styles_scale_box_shadow_mjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../projection/styles/scale-box-shadow.mjs */ "./node_modules/framer-motion/dist/es/projection/styles/scale-box-shadow.mjs");
-/* harmony import */ var _projection_styles_scale_correction_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../projection/styles/scale-correction.mjs */ "./node_modules/framer-motion/dist/es/projection/styles/scale-correction.mjs");
-/* harmony import */ var _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../frameloop/frame.mjs */ "./node_modules/framer-motion/dist/es/frameloop/frame.mjs");
+/* harmony import */ var motion_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! motion-dom */ "./node_modules/motion-dom/dist/es/index.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var _components_AnimatePresence_use_presence_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../components/AnimatePresence/use-presence.mjs */ "./node_modules/framer-motion/dist/es/components/AnimatePresence/use-presence.mjs");
+/* harmony import */ var _context_LayoutGroupContext_mjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../context/LayoutGroupContext.mjs */ "./node_modules/framer-motion/dist/es/context/LayoutGroupContext.mjs");
+/* harmony import */ var _context_SwitchLayoutGroupContext_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../context/SwitchLayoutGroupContext.mjs */ "./node_modules/framer-motion/dist/es/context/SwitchLayoutGroupContext.mjs");
+/* harmony import */ var _projection_node_state_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../projection/node/state.mjs */ "./node_modules/framer-motion/dist/es/projection/node/state.mjs");
+/* harmony import */ var _projection_styles_scale_border_radius_mjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../projection/styles/scale-border-radius.mjs */ "./node_modules/framer-motion/dist/es/projection/styles/scale-border-radius.mjs");
+/* harmony import */ var _projection_styles_scale_box_shadow_mjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../projection/styles/scale-box-shadow.mjs */ "./node_modules/framer-motion/dist/es/projection/styles/scale-box-shadow.mjs");
+/* harmony import */ var _projection_styles_scale_correction_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../projection/styles/scale-correction.mjs */ "./node_modules/framer-motion/dist/es/projection/styles/scale-correction.mjs");
 "use client";
 
 
@@ -5181,8 +4829,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-class MeasureLayoutWithContext extends react__WEBPACK_IMPORTED_MODULE_1__.Component {
+class MeasureLayoutWithContext extends react__WEBPACK_IMPORTED_MODULE_2__.Component {
     /**
      * This only mounts projection nodes for components that
      * need measuring, we might want to do it for all components
@@ -5191,7 +4838,7 @@ class MeasureLayoutWithContext extends react__WEBPACK_IMPORTED_MODULE_1__.Compon
     componentDidMount() {
         const { visualElement, layoutGroup, switchLayoutGroup, layoutId } = this.props;
         const { projection } = visualElement;
-        (0,_projection_styles_scale_correction_mjs__WEBPACK_IMPORTED_MODULE_2__.addScaleCorrector)(defaultScaleCorrectors);
+        (0,_projection_styles_scale_correction_mjs__WEBPACK_IMPORTED_MODULE_3__.addScaleCorrector)(defaultScaleCorrectors);
         if (projection) {
             if (layoutGroup.group)
                 layoutGroup.group.add(projection);
@@ -5207,7 +4854,7 @@ class MeasureLayoutWithContext extends react__WEBPACK_IMPORTED_MODULE_1__.Compon
                 onExitComplete: () => this.safeToRemove(),
             });
         }
-        _projection_node_state_mjs__WEBPACK_IMPORTED_MODULE_3__.globalProjectionState.hasEverUpdated = true;
+        _projection_node_state_mjs__WEBPACK_IMPORTED_MODULE_4__.globalProjectionState.hasEverUpdated = true;
     }
     getSnapshotBeforeUpdate(prevProps) {
         const { layoutDependency, visualElement, drag, isPresent } = this.props;
@@ -5241,7 +4888,7 @@ class MeasureLayoutWithContext extends react__WEBPACK_IMPORTED_MODULE_1__.Compon
                  * it's in charge of the exit animation and therefore should
                  * be in charge of the safe to remove. Otherwise we call it here.
                  */
-                _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_4__.frame.postRender(() => {
+                motion_dom__WEBPACK_IMPORTED_MODULE_1__.frame.postRender(() => {
                     const stack = projection.getStack();
                     if (!stack || !stack.members.length) {
                         this.safeToRemove();
@@ -5255,7 +4902,7 @@ class MeasureLayoutWithContext extends react__WEBPACK_IMPORTED_MODULE_1__.Compon
         const { projection } = this.props.visualElement;
         if (projection) {
             projection.root.didUpdate();
-            _frameloop_microtask_mjs__WEBPACK_IMPORTED_MODULE_5__.microtask.postRender(() => {
+            motion_dom__WEBPACK_IMPORTED_MODULE_1__.microtask.postRender(() => {
                 if (!projection.currentAnimation && projection.isLead()) {
                     this.safeToRemove();
                 }
@@ -5282,13 +4929,13 @@ class MeasureLayoutWithContext extends react__WEBPACK_IMPORTED_MODULE_1__.Compon
     }
 }
 function MeasureLayout(props) {
-    const [isPresent, safeToRemove] = (0,_components_AnimatePresence_use_presence_mjs__WEBPACK_IMPORTED_MODULE_6__.usePresence)();
-    const layoutGroup = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_context_LayoutGroupContext_mjs__WEBPACK_IMPORTED_MODULE_7__.LayoutGroupContext);
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(MeasureLayoutWithContext, { ...props, layoutGroup: layoutGroup, switchLayoutGroup: (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_context_SwitchLayoutGroupContext_mjs__WEBPACK_IMPORTED_MODULE_8__.SwitchLayoutGroupContext), isPresent: isPresent, safeToRemove: safeToRemove }));
+    const [isPresent, safeToRemove] = (0,_components_AnimatePresence_use_presence_mjs__WEBPACK_IMPORTED_MODULE_5__.usePresence)();
+    const layoutGroup = (0,react__WEBPACK_IMPORTED_MODULE_2__.useContext)(_context_LayoutGroupContext_mjs__WEBPACK_IMPORTED_MODULE_6__.LayoutGroupContext);
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(MeasureLayoutWithContext, { ...props, layoutGroup: layoutGroup, switchLayoutGroup: (0,react__WEBPACK_IMPORTED_MODULE_2__.useContext)(_context_SwitchLayoutGroupContext_mjs__WEBPACK_IMPORTED_MODULE_7__.SwitchLayoutGroupContext), isPresent: isPresent, safeToRemove: safeToRemove }));
 }
 const defaultScaleCorrectors = {
     borderRadius: {
-        ..._projection_styles_scale_border_radius_mjs__WEBPACK_IMPORTED_MODULE_9__.correctBorderRadius,
+        ..._projection_styles_scale_border_radius_mjs__WEBPACK_IMPORTED_MODULE_8__.correctBorderRadius,
         applyTo: [
             "borderTopLeftRadius",
             "borderTopRightRadius",
@@ -5296,11 +4943,11 @@ const defaultScaleCorrectors = {
             "borderBottomRightRadius",
         ],
     },
-    borderTopLeftRadius: _projection_styles_scale_border_radius_mjs__WEBPACK_IMPORTED_MODULE_9__.correctBorderRadius,
-    borderTopRightRadius: _projection_styles_scale_border_radius_mjs__WEBPACK_IMPORTED_MODULE_9__.correctBorderRadius,
-    borderBottomLeftRadius: _projection_styles_scale_border_radius_mjs__WEBPACK_IMPORTED_MODULE_9__.correctBorderRadius,
-    borderBottomRightRadius: _projection_styles_scale_border_radius_mjs__WEBPACK_IMPORTED_MODULE_9__.correctBorderRadius,
-    boxShadow: _projection_styles_scale_box_shadow_mjs__WEBPACK_IMPORTED_MODULE_10__.correctBoxShadow,
+    borderTopLeftRadius: _projection_styles_scale_border_radius_mjs__WEBPACK_IMPORTED_MODULE_8__.correctBorderRadius,
+    borderTopRightRadius: _projection_styles_scale_border_radius_mjs__WEBPACK_IMPORTED_MODULE_8__.correctBorderRadius,
+    borderBottomLeftRadius: _projection_styles_scale_border_radius_mjs__WEBPACK_IMPORTED_MODULE_8__.correctBorderRadius,
+    borderBottomRightRadius: _projection_styles_scale_border_radius_mjs__WEBPACK_IMPORTED_MODULE_8__.correctBorderRadius,
+    boxShadow: _projection_styles_scale_box_shadow_mjs__WEBPACK_IMPORTED_MODULE_9__.correctBoxShadow,
 };
 
 
@@ -5732,16 +5379,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   useVisualElement: () => (/* binding */ useVisualElement)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var _context_PresenceContext_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../context/PresenceContext.mjs */ "./node_modules/framer-motion/dist/es/context/PresenceContext.mjs");
-/* harmony import */ var _context_MotionContext_index_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../context/MotionContext/index.mjs */ "./node_modules/framer-motion/dist/es/context/MotionContext/index.mjs");
-/* harmony import */ var _utils_use_isomorphic_effect_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../utils/use-isomorphic-effect.mjs */ "./node_modules/framer-motion/dist/es/utils/use-isomorphic-effect.mjs");
-/* harmony import */ var _context_LazyContext_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../context/LazyContext.mjs */ "./node_modules/framer-motion/dist/es/context/LazyContext.mjs");
-/* harmony import */ var _context_MotionConfigContext_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../context/MotionConfigContext.mjs */ "./node_modules/framer-motion/dist/es/context/MotionConfigContext.mjs");
-/* harmony import */ var _animation_optimized_appear_data_id_mjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../animation/optimized-appear/data-id.mjs */ "./node_modules/framer-motion/dist/es/animation/optimized-appear/data-id.mjs");
-/* harmony import */ var _frameloop_microtask_mjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../frameloop/microtask.mjs */ "./node_modules/framer-motion/dist/es/frameloop/microtask.mjs");
+/* harmony import */ var motion_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-dom */ "./node_modules/motion-dom/dist/es/index.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var _animation_optimized_appear_data_id_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../animation/optimized-appear/data-id.mjs */ "./node_modules/framer-motion/dist/es/animation/optimized-appear/data-id.mjs");
+/* harmony import */ var _context_LazyContext_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../context/LazyContext.mjs */ "./node_modules/framer-motion/dist/es/context/LazyContext.mjs");
+/* harmony import */ var _context_MotionConfigContext_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../context/MotionConfigContext.mjs */ "./node_modules/framer-motion/dist/es/context/MotionConfigContext.mjs");
+/* harmony import */ var _context_MotionContext_index_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../context/MotionContext/index.mjs */ "./node_modules/framer-motion/dist/es/context/MotionContext/index.mjs");
+/* harmony import */ var _context_PresenceContext_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../context/PresenceContext.mjs */ "./node_modules/framer-motion/dist/es/context/PresenceContext.mjs");
+/* harmony import */ var _context_SwitchLayoutGroupContext_mjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../context/SwitchLayoutGroupContext.mjs */ "./node_modules/framer-motion/dist/es/context/SwitchLayoutGroupContext.mjs");
 /* harmony import */ var _utils_is_ref_object_mjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../utils/is-ref-object.mjs */ "./node_modules/framer-motion/dist/es/utils/is-ref-object.mjs");
-/* harmony import */ var _context_SwitchLayoutGroupContext_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../context/SwitchLayoutGroupContext.mjs */ "./node_modules/framer-motion/dist/es/context/SwitchLayoutGroupContext.mjs");
+/* harmony import */ var _utils_use_isomorphic_effect_mjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../utils/use-isomorphic-effect.mjs */ "./node_modules/framer-motion/dist/es/utils/use-isomorphic-effect.mjs");
 
 
 
@@ -5755,11 +5402,11 @@ __webpack_require__.r(__webpack_exports__);
 
 function useVisualElement(Component, visualState, props, createVisualElement, ProjectionNodeConstructor) {
     var _a, _b;
-    const { visualElement: parent } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_context_MotionContext_index_mjs__WEBPACK_IMPORTED_MODULE_1__.MotionContext);
-    const lazyContext = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_context_LazyContext_mjs__WEBPACK_IMPORTED_MODULE_2__.LazyContext);
-    const presenceContext = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_context_PresenceContext_mjs__WEBPACK_IMPORTED_MODULE_3__.PresenceContext);
-    const reducedMotionConfig = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_context_MotionConfigContext_mjs__WEBPACK_IMPORTED_MODULE_4__.MotionConfigContext).reducedMotion;
-    const visualElementRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+    const { visualElement: parent } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_context_MotionContext_index_mjs__WEBPACK_IMPORTED_MODULE_2__.MotionContext);
+    const lazyContext = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_context_LazyContext_mjs__WEBPACK_IMPORTED_MODULE_3__.LazyContext);
+    const presenceContext = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_context_PresenceContext_mjs__WEBPACK_IMPORTED_MODULE_4__.PresenceContext);
+    const reducedMotionConfig = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_context_MotionConfigContext_mjs__WEBPACK_IMPORTED_MODULE_5__.MotionConfigContext).reducedMotion;
+    const visualElementRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
     /**
      * If we haven't preloaded a renderer, check to see if we have one lazy-loaded
      */
@@ -5781,15 +5428,15 @@ function useVisualElement(Component, visualState, props, createVisualElement, Pr
      * Load Motion gesture and animation features. These are rendered as renderless
      * components so each feature can optionally make use of React lifecycle methods.
      */
-    const initialLayoutGroupConfig = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_context_SwitchLayoutGroupContext_mjs__WEBPACK_IMPORTED_MODULE_5__.SwitchLayoutGroupContext);
+    const initialLayoutGroupConfig = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_context_SwitchLayoutGroupContext_mjs__WEBPACK_IMPORTED_MODULE_6__.SwitchLayoutGroupContext);
     if (visualElement &&
         !visualElement.projection &&
         ProjectionNodeConstructor &&
         (visualElement.type === "html" || visualElement.type === "svg")) {
         createProjectionNode(visualElementRef.current, props, ProjectionNodeConstructor, initialLayoutGroupConfig);
     }
-    const isMounted = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(false);
-    (0,react__WEBPACK_IMPORTED_MODULE_0__.useInsertionEffect)(() => {
+    const isMounted = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(false);
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useInsertionEffect)(() => {
         /**
          * Check the component has already mounted before calling
          * `update` unnecessarily. This ensures we skip the initial update.
@@ -5802,17 +5449,17 @@ function useVisualElement(Component, visualState, props, createVisualElement, Pr
      * Cache this value as we want to know whether HandoffAppearAnimations
      * was present on initial render - it will be deleted after this.
      */
-    const optimisedAppearId = props[_animation_optimized_appear_data_id_mjs__WEBPACK_IMPORTED_MODULE_6__.optimizedAppearDataAttribute];
-    const wantsHandoff = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(Boolean(optimisedAppearId) &&
+    const optimisedAppearId = props[_animation_optimized_appear_data_id_mjs__WEBPACK_IMPORTED_MODULE_7__.optimizedAppearDataAttribute];
+    const wantsHandoff = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(Boolean(optimisedAppearId) &&
         !((_a = window.MotionHandoffIsComplete) === null || _a === void 0 ? void 0 : _a.call(window, optimisedAppearId)) &&
         ((_b = window.MotionHasOptimisedAnimation) === null || _b === void 0 ? void 0 : _b.call(window, optimisedAppearId)));
-    (0,_utils_use_isomorphic_effect_mjs__WEBPACK_IMPORTED_MODULE_7__.useIsomorphicLayoutEffect)(() => {
+    (0,_utils_use_isomorphic_effect_mjs__WEBPACK_IMPORTED_MODULE_8__.useIsomorphicLayoutEffect)(() => {
         if (!visualElement)
             return;
         isMounted.current = true;
         window.MotionIsMounted = true;
         visualElement.updateFeatures();
-        _frameloop_microtask_mjs__WEBPACK_IMPORTED_MODULE_8__.microtask.render(visualElement.render);
+        motion_dom__WEBPACK_IMPORTED_MODULE_0__.microtask.render(visualElement.render);
         /**
          * Ideally this function would always run in a useEffect.
          *
@@ -5827,7 +5474,7 @@ function useVisualElement(Component, visualState, props, createVisualElement, Pr
             visualElement.animationState.animateChanges();
         }
     });
-    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
         if (!visualElement)
             return;
         if (!wantsHandoff.current && visualElement.animationState) {
@@ -6746,39 +6393,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var motion_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-dom */ "./node_modules/motion-dom/dist/es/index.mjs");
 /* harmony import */ var motion_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! motion-utils */ "./node_modules/motion-utils/dist/es/index.mjs");
-/* harmony import */ var _animation_animate_single_value_mjs__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../../animation/animate/single-value.mjs */ "./node_modules/framer-motion/dist/es/animation/animate/single-value.mjs");
+/* harmony import */ var _animation_animate_single_value_mjs__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../animation/animate/single-value.mjs */ "./node_modules/framer-motion/dist/es/animation/animate/single-value.mjs");
 /* harmony import */ var _animation_optimized_appear_get_appear_id_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../animation/optimized-appear/get-appear-id.mjs */ "./node_modules/framer-motion/dist/es/animation/optimized-appear/get-appear-id.mjs");
-/* harmony import */ var _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../frameloop/frame.mjs */ "./node_modules/framer-motion/dist/es/frameloop/frame.mjs");
-/* harmony import */ var _frameloop_microtask_mjs__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../frameloop/microtask.mjs */ "./node_modules/framer-motion/dist/es/frameloop/microtask.mjs");
-/* harmony import */ var _frameloop_sync_time_mjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../frameloop/sync-time.mjs */ "./node_modules/framer-motion/dist/es/frameloop/sync-time.mjs");
-/* harmony import */ var _render_dom_utils_is_svg_element_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../render/dom/utils/is-svg-element.mjs */ "./node_modules/framer-motion/dist/es/render/dom/utils/is-svg-element.mjs");
-/* harmony import */ var _render_utils_flat_tree_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../render/utils/flat-tree.mjs */ "./node_modules/framer-motion/dist/es/render/utils/flat-tree.mjs");
-/* harmony import */ var _stats_animation_count_mjs__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../../stats/animation-count.mjs */ "./node_modules/framer-motion/dist/es/stats/animation-count.mjs");
-/* harmony import */ var _stats_buffer_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../stats/buffer.mjs */ "./node_modules/framer-motion/dist/es/stats/buffer.mjs");
-/* harmony import */ var _utils_clamp_mjs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../utils/clamp.mjs */ "./node_modules/framer-motion/dist/es/utils/clamp.mjs");
-/* harmony import */ var _utils_delay_mjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../utils/delay.mjs */ "./node_modules/framer-motion/dist/es/utils/delay.mjs");
-/* harmony import */ var _utils_mix_number_mjs__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ../../utils/mix/number.mjs */ "./node_modules/framer-motion/dist/es/utils/mix/number.mjs");
-/* harmony import */ var _utils_subscription_manager_mjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utils/subscription-manager.mjs */ "./node_modules/framer-motion/dist/es/utils/subscription-manager.mjs");
-/* harmony import */ var _value_utils_resolve_motion_value_mjs__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../../value/utils/resolve-motion-value.mjs */ "./node_modules/framer-motion/dist/es/value/utils/resolve-motion-value.mjs");
-/* harmony import */ var _animation_mix_values_mjs__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../animation/mix-values.mjs */ "./node_modules/framer-motion/dist/es/projection/animation/mix-values.mjs");
-/* harmony import */ var _geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../geometry/copy.mjs */ "./node_modules/framer-motion/dist/es/projection/geometry/copy.mjs");
-/* harmony import */ var _geometry_delta_apply_mjs__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../geometry/delta-apply.mjs */ "./node_modules/framer-motion/dist/es/projection/geometry/delta-apply.mjs");
-/* harmony import */ var _geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../geometry/delta-calc.mjs */ "./node_modules/framer-motion/dist/es/projection/geometry/delta-calc.mjs");
-/* harmony import */ var _geometry_delta_remove_mjs__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../geometry/delta-remove.mjs */ "./node_modules/framer-motion/dist/es/projection/geometry/delta-remove.mjs");
-/* harmony import */ var _geometry_models_mjs__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../geometry/models.mjs */ "./node_modules/framer-motion/dist/es/projection/geometry/models.mjs");
-/* harmony import */ var _geometry_utils_mjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../geometry/utils.mjs */ "./node_modules/framer-motion/dist/es/projection/geometry/utils.mjs");
-/* harmony import */ var _shared_stack_mjs__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../shared/stack.mjs */ "./node_modules/framer-motion/dist/es/projection/shared/stack.mjs");
-/* harmony import */ var _styles_scale_correction_mjs__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ../styles/scale-correction.mjs */ "./node_modules/framer-motion/dist/es/projection/styles/scale-correction.mjs");
-/* harmony import */ var _styles_transform_mjs__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../styles/transform.mjs */ "./node_modules/framer-motion/dist/es/projection/styles/transform.mjs");
-/* harmony import */ var _utils_each_axis_mjs__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../utils/each-axis.mjs */ "./node_modules/framer-motion/dist/es/projection/utils/each-axis.mjs");
-/* harmony import */ var _utils_has_transform_mjs__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/has-transform.mjs */ "./node_modules/framer-motion/dist/es/projection/utils/has-transform.mjs");
-/* harmony import */ var _state_mjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./state.mjs */ "./node_modules/framer-motion/dist/es/projection/node/state.mjs");
-
-
-
-
-
-
+/* harmony import */ var _render_dom_utils_is_svg_element_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../render/dom/utils/is-svg-element.mjs */ "./node_modules/framer-motion/dist/es/render/dom/utils/is-svg-element.mjs");
+/* harmony import */ var _render_utils_flat_tree_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../render/utils/flat-tree.mjs */ "./node_modules/framer-motion/dist/es/render/utils/flat-tree.mjs");
+/* harmony import */ var _utils_clamp_mjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../utils/clamp.mjs */ "./node_modules/framer-motion/dist/es/utils/clamp.mjs");
+/* harmony import */ var _utils_delay_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/delay.mjs */ "./node_modules/framer-motion/dist/es/utils/delay.mjs");
+/* harmony import */ var _utils_mix_number_mjs__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ../../utils/mix/number.mjs */ "./node_modules/framer-motion/dist/es/utils/mix/number.mjs");
+/* harmony import */ var _value_utils_resolve_motion_value_mjs__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../value/utils/resolve-motion-value.mjs */ "./node_modules/framer-motion/dist/es/value/utils/resolve-motion-value.mjs");
+/* harmony import */ var _animation_mix_values_mjs__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../animation/mix-values.mjs */ "./node_modules/framer-motion/dist/es/projection/animation/mix-values.mjs");
+/* harmony import */ var _geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../geometry/copy.mjs */ "./node_modules/framer-motion/dist/es/projection/geometry/copy.mjs");
+/* harmony import */ var _geometry_delta_apply_mjs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../geometry/delta-apply.mjs */ "./node_modules/framer-motion/dist/es/projection/geometry/delta-apply.mjs");
+/* harmony import */ var _geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../geometry/delta-calc.mjs */ "./node_modules/framer-motion/dist/es/projection/geometry/delta-calc.mjs");
+/* harmony import */ var _geometry_delta_remove_mjs__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../geometry/delta-remove.mjs */ "./node_modules/framer-motion/dist/es/projection/geometry/delta-remove.mjs");
+/* harmony import */ var _geometry_models_mjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../geometry/models.mjs */ "./node_modules/framer-motion/dist/es/projection/geometry/models.mjs");
+/* harmony import */ var _geometry_utils_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../geometry/utils.mjs */ "./node_modules/framer-motion/dist/es/projection/geometry/utils.mjs");
+/* harmony import */ var _shared_stack_mjs__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../shared/stack.mjs */ "./node_modules/framer-motion/dist/es/projection/shared/stack.mjs");
+/* harmony import */ var _styles_scale_correction_mjs__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../styles/scale-correction.mjs */ "./node_modules/framer-motion/dist/es/projection/styles/scale-correction.mjs");
+/* harmony import */ var _styles_transform_mjs__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../styles/transform.mjs */ "./node_modules/framer-motion/dist/es/projection/styles/transform.mjs");
+/* harmony import */ var _utils_each_axis_mjs__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../utils/each-axis.mjs */ "./node_modules/framer-motion/dist/es/projection/utils/each-axis.mjs");
+/* harmony import */ var _utils_has_transform_mjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/has-transform.mjs */ "./node_modules/framer-motion/dist/es/projection/utils/has-transform.mjs");
+/* harmony import */ var _state_mjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./state.mjs */ "./node_modules/framer-motion/dist/es/projection/node/state.mjs");
 
 
 
@@ -6837,7 +6472,7 @@ function cancelTreeOptimisedTransformAnimations(projectionNode) {
     const appearId = (0,_animation_optimized_appear_get_appear_id_mjs__WEBPACK_IMPORTED_MODULE_2__.getOptimisedAppearId)(visualElement);
     if (window.MotionHasOptimisedAnimation(appearId, "transform")) {
         const { layout, layoutId } = projectionNode.options;
-        window.MotionCancelOptimisedAnimation(appearId, "transform", _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__.frame, !(layout || layoutId));
+        window.MotionCancelOptimisedAnimation(appearId, "transform", motion_dom__WEBPACK_IMPORTED_MODULE_0__.frame, !(layout || layoutId));
     }
     const { parent } = projectionNode;
     if (parent && !parent.hasCheckedOptimisedAppear) {
@@ -6961,7 +6596,7 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
                  * Reset debug counts. Manually resetting rather than creating a new
                  * object each frame.
                  */
-                if (_stats_buffer_mjs__WEBPACK_IMPORTED_MODULE_4__.statsBuffer.value) {
+                if (motion_dom__WEBPACK_IMPORTED_MODULE_0__.statsBuffer.value) {
                     metrics.nodes =
                         metrics.calculatedTargetDeltas =
                             metrics.calculatedProjections =
@@ -6971,8 +6606,8 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
                 this.nodes.forEach(resolveTargetDelta);
                 this.nodes.forEach(calcProjection);
                 this.nodes.forEach(cleanDirtyNodes);
-                if (_stats_buffer_mjs__WEBPACK_IMPORTED_MODULE_4__.statsBuffer.addProjectionMetrics) {
-                    _stats_buffer_mjs__WEBPACK_IMPORTED_MODULE_4__.statsBuffer.addProjectionMetrics(metrics);
+                if (motion_dom__WEBPACK_IMPORTED_MODULE_0__.statsBuffer.addProjectionMetrics) {
+                    motion_dom__WEBPACK_IMPORTED_MODULE_0__.statsBuffer.addProjectionMetrics(metrics);
                 }
             };
             /**
@@ -6996,11 +6631,11 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
                 this.path[i].shouldResetTransform = true;
             }
             if (this.root === this)
-                this.nodes = new _render_utils_flat_tree_mjs__WEBPACK_IMPORTED_MODULE_5__.FlatTree();
+                this.nodes = new _render_utils_flat_tree_mjs__WEBPACK_IMPORTED_MODULE_3__.FlatTree();
         }
         addEventListener(name, handler) {
             if (!this.eventHandlers.has(name)) {
-                this.eventHandlers.set(name, new _utils_subscription_manager_mjs__WEBPACK_IMPORTED_MODULE_6__.SubscriptionManager());
+                this.eventHandlers.set(name, new motion_utils__WEBPACK_IMPORTED_MODULE_1__.SubscriptionManager());
             }
             return this.eventHandlers.get(name).add(handler);
         }
@@ -7017,7 +6652,7 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
         mount(instance, isLayoutDirty = this.root.hasTreeAnimated) {
             if (this.instance)
                 return;
-            this.isSVG = (0,_render_dom_utils_is_svg_element_mjs__WEBPACK_IMPORTED_MODULE_7__.isSVGElement)(instance);
+            this.isSVG = (0,_render_dom_utils_is_svg_element_mjs__WEBPACK_IMPORTED_MODULE_4__.isSVGElement)(instance);
             this.instance = instance;
             const { layoutId, layout, visualElement } = this.options;
             if (visualElement && !visualElement.current) {
@@ -7034,9 +6669,9 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
                 attachResizeListener(instance, () => {
                     this.root.updateBlockedByResize = true;
                     cancelDelay && cancelDelay();
-                    cancelDelay = (0,_utils_delay_mjs__WEBPACK_IMPORTED_MODULE_8__.delay)(resizeUnblockUpdate, 250);
-                    if (_state_mjs__WEBPACK_IMPORTED_MODULE_9__.globalProjectionState.hasAnimatedSinceResize) {
-                        _state_mjs__WEBPACK_IMPORTED_MODULE_9__.globalProjectionState.hasAnimatedSinceResize = false;
+                    cancelDelay = (0,_utils_delay_mjs__WEBPACK_IMPORTED_MODULE_5__.delay)(resizeUnblockUpdate, 250);
+                    if (_state_mjs__WEBPACK_IMPORTED_MODULE_6__.globalProjectionState.hasAnimatedSinceResize) {
+                        _state_mjs__WEBPACK_IMPORTED_MODULE_6__.globalProjectionState.hasAnimatedSinceResize = false;
                         this.nodes.forEach(finishAnimation);
                     }
                 });
@@ -7064,7 +6699,7 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
                      * but its position relative to its parent has changed.
                      */
                     const hasTargetChanged = !this.targetLayout ||
-                        !(0,_geometry_utils_mjs__WEBPACK_IMPORTED_MODULE_10__.boxEqualsRounded)(this.targetLayout, newLayout);
+                        !(0,_geometry_utils_mjs__WEBPACK_IMPORTED_MODULE_7__.boxEqualsRounded)(this.targetLayout, newLayout);
                     /*
                      * Note: Disabled to fix relative animations always triggering new
                      * layout animations. If this causes further issues, we can try
@@ -7123,7 +6758,7 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
             stack && stack.remove(this);
             this.parent && this.parent.children.delete(this);
             this.instance = undefined;
-            (0,_frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__.cancelFrame)(this.updateProjection);
+            (0,motion_dom__WEBPACK_IMPORTED_MODULE_0__.cancelFrame)(this.updateProjection);
         }
         // only on the root
         blockUpdate() {
@@ -7232,19 +6867,19 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
              * we could leave this to the following requestAnimationFrame but this seems
              * to leave a flash of incorrectly styled content.
              */
-            const now = _frameloop_sync_time_mjs__WEBPACK_IMPORTED_MODULE_11__.time.now();
-            _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__.frameData.delta = (0,_utils_clamp_mjs__WEBPACK_IMPORTED_MODULE_12__.clamp)(0, 1000 / 60, now - _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__.frameData.timestamp);
-            _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__.frameData.timestamp = now;
-            _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__.frameData.isProcessing = true;
-            _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__.frameSteps.update.process(_frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__.frameData);
-            _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__.frameSteps.preRender.process(_frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__.frameData);
-            _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__.frameSteps.render.process(_frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__.frameData);
-            _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__.frameData.isProcessing = false;
+            const now = motion_dom__WEBPACK_IMPORTED_MODULE_0__.time.now();
+            motion_dom__WEBPACK_IMPORTED_MODULE_0__.frameData.delta = (0,_utils_clamp_mjs__WEBPACK_IMPORTED_MODULE_8__.clamp)(0, 1000 / 60, now - motion_dom__WEBPACK_IMPORTED_MODULE_0__.frameData.timestamp);
+            motion_dom__WEBPACK_IMPORTED_MODULE_0__.frameData.timestamp = now;
+            motion_dom__WEBPACK_IMPORTED_MODULE_0__.frameData.isProcessing = true;
+            motion_dom__WEBPACK_IMPORTED_MODULE_0__.frameSteps.update.process(motion_dom__WEBPACK_IMPORTED_MODULE_0__.frameData);
+            motion_dom__WEBPACK_IMPORTED_MODULE_0__.frameSteps.preRender.process(motion_dom__WEBPACK_IMPORTED_MODULE_0__.frameData);
+            motion_dom__WEBPACK_IMPORTED_MODULE_0__.frameSteps.render.process(motion_dom__WEBPACK_IMPORTED_MODULE_0__.frameData);
+            motion_dom__WEBPACK_IMPORTED_MODULE_0__.frameData.isProcessing = false;
         }
         didUpdate() {
             if (!this.updateScheduled) {
                 this.updateScheduled = true;
-                _frameloop_microtask_mjs__WEBPACK_IMPORTED_MODULE_13__.microtask.read(this.scheduleUpdate);
+                motion_dom__WEBPACK_IMPORTED_MODULE_0__.microtask.read(this.scheduleUpdate);
             }
         }
         clearAllSnapshots() {
@@ -7254,7 +6889,7 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
         scheduleUpdateProjection() {
             if (!this.projectionUpdateScheduled) {
                 this.projectionUpdateScheduled = true;
-                _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__.frame.preRender(this.updateProjection, false, true);
+                motion_dom__WEBPACK_IMPORTED_MODULE_0__.frame.preRender(this.updateProjection, false, true);
             }
         }
         scheduleCheckAfterUnmount() {
@@ -7263,7 +6898,7 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
              * we manually call didUpdate to give a chance to the siblings to animate.
              * Otherwise, cleanup all snapshots to prevents future nodes from reusing them.
              */
-            _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__.frame.postRender(() => {
+            motion_dom__WEBPACK_IMPORTED_MODULE_0__.frame.postRender(() => {
                 if (this.isLayoutDirty) {
                     this.root.didUpdate();
                 }
@@ -7280,8 +6915,8 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
                 return;
             this.snapshot = this.measure();
             if (this.snapshot &&
-                !(0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_14__.calcLength)(this.snapshot.measuredBox.x) &&
-                !(0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_14__.calcLength)(this.snapshot.measuredBox.y)) {
+                !(0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_9__.calcLength)(this.snapshot.measuredBox.x) &&
+                !(0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_9__.calcLength)(this.snapshot.measuredBox.y)) {
                 this.snapshot = undefined;
             }
         }
@@ -7309,7 +6944,7 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
             }
             const prevLayout = this.layout;
             this.layout = this.measure(false);
-            this.layoutCorrected = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_15__.createBox)();
+            this.layoutCorrected = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_10__.createBox)();
             this.isLayoutDirty = false;
             this.projectionDelta = undefined;
             this.notifyListeners("measure", this.layout.layoutBox);
@@ -7341,7 +6976,7 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
             const isResetRequested = this.isLayoutDirty ||
                 this.shouldResetTransform ||
                 this.options.alwaysMeasureLayout;
-            const hasProjection = this.projectionDelta && !(0,_geometry_utils_mjs__WEBPACK_IMPORTED_MODULE_10__.isDeltaZero)(this.projectionDelta);
+            const hasProjection = this.projectionDelta && !(0,_geometry_utils_mjs__WEBPACK_IMPORTED_MODULE_7__.isDeltaZero)(this.projectionDelta);
             const transformTemplate = this.getTransformTemplate();
             const transformTemplateValue = transformTemplate
                 ? transformTemplate(this.latestValues, "")
@@ -7349,7 +6984,7 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
             const transformTemplateHasChanged = transformTemplateValue !== this.prevTransformTemplateValue;
             if (isResetRequested &&
                 (hasProjection ||
-                    (0,_utils_has_transform_mjs__WEBPACK_IMPORTED_MODULE_16__.hasTransform)(this.latestValues) ||
+                    (0,_utils_has_transform_mjs__WEBPACK_IMPORTED_MODULE_11__.hasTransform)(this.latestValues) ||
                     transformTemplateHasChanged)) {
                 resetTransform(this.instance, transformTemplateValue);
                 this.shouldResetTransform = false;
@@ -7380,23 +7015,23 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
             var _a;
             const { visualElement } = this.options;
             if (!visualElement)
-                return (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_15__.createBox)();
+                return (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_10__.createBox)();
             const box = visualElement.measureViewportBox();
             const wasInScrollRoot = ((_a = this.scroll) === null || _a === void 0 ? void 0 : _a.wasRoot) || this.path.some(checkNodeWasScrollRoot);
             if (!wasInScrollRoot) {
                 // Remove viewport scroll to give page-relative coordinates
                 const { scroll } = this.root;
                 if (scroll) {
-                    (0,_geometry_delta_apply_mjs__WEBPACK_IMPORTED_MODULE_17__.translateAxis)(box.x, scroll.offset.x);
-                    (0,_geometry_delta_apply_mjs__WEBPACK_IMPORTED_MODULE_17__.translateAxis)(box.y, scroll.offset.y);
+                    (0,_geometry_delta_apply_mjs__WEBPACK_IMPORTED_MODULE_12__.translateAxis)(box.x, scroll.offset.x);
+                    (0,_geometry_delta_apply_mjs__WEBPACK_IMPORTED_MODULE_12__.translateAxis)(box.y, scroll.offset.y);
                 }
             }
             return box;
         }
         removeElementScroll(box) {
             var _a;
-            const boxWithoutScroll = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_15__.createBox)();
-            (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_18__.copyBoxInto)(boxWithoutScroll, box);
+            const boxWithoutScroll = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_10__.createBox)();
+            (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_13__.copyBoxInto)(boxWithoutScroll, box);
             if ((_a = this.scroll) === null || _a === void 0 ? void 0 : _a.wasRoot) {
                 return boxWithoutScroll;
             }
@@ -7413,54 +7048,54 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
                      * from the viewport box.
                      */
                     if (scroll.wasRoot) {
-                        (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_18__.copyBoxInto)(boxWithoutScroll, box);
+                        (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_13__.copyBoxInto)(boxWithoutScroll, box);
                     }
-                    (0,_geometry_delta_apply_mjs__WEBPACK_IMPORTED_MODULE_17__.translateAxis)(boxWithoutScroll.x, scroll.offset.x);
-                    (0,_geometry_delta_apply_mjs__WEBPACK_IMPORTED_MODULE_17__.translateAxis)(boxWithoutScroll.y, scroll.offset.y);
+                    (0,_geometry_delta_apply_mjs__WEBPACK_IMPORTED_MODULE_12__.translateAxis)(boxWithoutScroll.x, scroll.offset.x);
+                    (0,_geometry_delta_apply_mjs__WEBPACK_IMPORTED_MODULE_12__.translateAxis)(boxWithoutScroll.y, scroll.offset.y);
                 }
             }
             return boxWithoutScroll;
         }
         applyTransform(box, transformOnly = false) {
-            const withTransforms = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_15__.createBox)();
-            (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_18__.copyBoxInto)(withTransforms, box);
+            const withTransforms = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_10__.createBox)();
+            (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_13__.copyBoxInto)(withTransforms, box);
             for (let i = 0; i < this.path.length; i++) {
                 const node = this.path[i];
                 if (!transformOnly &&
                     node.options.layoutScroll &&
                     node.scroll &&
                     node !== node.root) {
-                    (0,_geometry_delta_apply_mjs__WEBPACK_IMPORTED_MODULE_17__.transformBox)(withTransforms, {
+                    (0,_geometry_delta_apply_mjs__WEBPACK_IMPORTED_MODULE_12__.transformBox)(withTransforms, {
                         x: -node.scroll.offset.x,
                         y: -node.scroll.offset.y,
                     });
                 }
-                if (!(0,_utils_has_transform_mjs__WEBPACK_IMPORTED_MODULE_16__.hasTransform)(node.latestValues))
+                if (!(0,_utils_has_transform_mjs__WEBPACK_IMPORTED_MODULE_11__.hasTransform)(node.latestValues))
                     continue;
-                (0,_geometry_delta_apply_mjs__WEBPACK_IMPORTED_MODULE_17__.transformBox)(withTransforms, node.latestValues);
+                (0,_geometry_delta_apply_mjs__WEBPACK_IMPORTED_MODULE_12__.transformBox)(withTransforms, node.latestValues);
             }
-            if ((0,_utils_has_transform_mjs__WEBPACK_IMPORTED_MODULE_16__.hasTransform)(this.latestValues)) {
-                (0,_geometry_delta_apply_mjs__WEBPACK_IMPORTED_MODULE_17__.transformBox)(withTransforms, this.latestValues);
+            if ((0,_utils_has_transform_mjs__WEBPACK_IMPORTED_MODULE_11__.hasTransform)(this.latestValues)) {
+                (0,_geometry_delta_apply_mjs__WEBPACK_IMPORTED_MODULE_12__.transformBox)(withTransforms, this.latestValues);
             }
             return withTransforms;
         }
         removeTransform(box) {
-            const boxWithoutTransform = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_15__.createBox)();
-            (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_18__.copyBoxInto)(boxWithoutTransform, box);
+            const boxWithoutTransform = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_10__.createBox)();
+            (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_13__.copyBoxInto)(boxWithoutTransform, box);
             for (let i = 0; i < this.path.length; i++) {
                 const node = this.path[i];
                 if (!node.instance)
                     continue;
-                if (!(0,_utils_has_transform_mjs__WEBPACK_IMPORTED_MODULE_16__.hasTransform)(node.latestValues))
+                if (!(0,_utils_has_transform_mjs__WEBPACK_IMPORTED_MODULE_11__.hasTransform)(node.latestValues))
                     continue;
-                (0,_utils_has_transform_mjs__WEBPACK_IMPORTED_MODULE_16__.hasScale)(node.latestValues) && node.updateSnapshot();
-                const sourceBox = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_15__.createBox)();
+                (0,_utils_has_transform_mjs__WEBPACK_IMPORTED_MODULE_11__.hasScale)(node.latestValues) && node.updateSnapshot();
+                const sourceBox = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_10__.createBox)();
                 const nodeBox = node.measurePageBox();
-                (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_18__.copyBoxInto)(sourceBox, nodeBox);
-                (0,_geometry_delta_remove_mjs__WEBPACK_IMPORTED_MODULE_19__.removeBoxTransforms)(boxWithoutTransform, node.latestValues, node.snapshot ? node.snapshot.layoutBox : undefined, sourceBox);
+                (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_13__.copyBoxInto)(sourceBox, nodeBox);
+                (0,_geometry_delta_remove_mjs__WEBPACK_IMPORTED_MODULE_14__.removeBoxTransforms)(boxWithoutTransform, node.latestValues, node.snapshot ? node.snapshot.layoutBox : undefined, sourceBox);
             }
-            if ((0,_utils_has_transform_mjs__WEBPACK_IMPORTED_MODULE_16__.hasTransform)(this.latestValues)) {
-                (0,_geometry_delta_remove_mjs__WEBPACK_IMPORTED_MODULE_19__.removeBoxTransforms)(boxWithoutTransform, this.latestValues);
+            if ((0,_utils_has_transform_mjs__WEBPACK_IMPORTED_MODULE_11__.hasTransform)(this.latestValues)) {
+                (0,_geometry_delta_remove_mjs__WEBPACK_IMPORTED_MODULE_14__.removeBoxTransforms)(boxWithoutTransform, this.latestValues);
             }
             return boxWithoutTransform;
         }
@@ -7495,7 +7130,7 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
              * up the tree.
              */
             if (this.relativeParent.resolvedRelativeTargetAt !==
-                _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__.frameData.timestamp) {
+                motion_dom__WEBPACK_IMPORTED_MODULE_0__.frameData.timestamp) {
                 this.relativeParent.resolveTargetDelta(true);
             }
         }
@@ -7529,7 +7164,7 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
              */
             if (!this.layout || !(layout || layoutId))
                 return;
-            this.resolvedRelativeTargetAt = _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__.frameData.timestamp;
+            this.resolvedRelativeTargetAt = motion_dom__WEBPACK_IMPORTED_MODULE_0__.frameData.timestamp;
             /**
              * If we don't have a targetDelta but do have a layout, we can attempt to resolve
              * a relativeParent. This will allow a component to perform scale correction
@@ -7542,10 +7177,10 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
                     this.animationProgress !== 1) {
                     this.relativeParent = relativeParent;
                     this.forceRelativeParentToResolveTarget();
-                    this.relativeTarget = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_15__.createBox)();
-                    this.relativeTargetOrigin = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_15__.createBox)();
-                    (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_14__.calcRelativePosition)(this.relativeTargetOrigin, this.layout.layoutBox, relativeParent.layout.layoutBox);
-                    (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_18__.copyBoxInto)(this.relativeTarget, this.relativeTargetOrigin);
+                    this.relativeTarget = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_10__.createBox)();
+                    this.relativeTargetOrigin = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_10__.createBox)();
+                    (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_9__.calcRelativePosition)(this.relativeTargetOrigin, this.layout.layoutBox, relativeParent.layout.layoutBox);
+                    (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_13__.copyBoxInto)(this.relativeTarget, this.relativeTargetOrigin);
                 }
                 else {
                     this.relativeParent = this.relativeTarget = undefined;
@@ -7561,8 +7196,8 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
              * Lazy-init target data structure
              */
             if (!this.target) {
-                this.target = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_15__.createBox)();
-                this.targetWithTransforms = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_15__.createBox)();
+                this.target = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_10__.createBox)();
+                this.targetWithTransforms = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_10__.createBox)();
             }
             /**
              * If we've got a relative box for this component, resolve it into a target relative to the parent.
@@ -7572,7 +7207,7 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
                 this.relativeParent &&
                 this.relativeParent.target) {
                 this.forceRelativeParentToResolveTarget();
-                (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_14__.calcRelativeBox)(this.target, this.relativeTarget, this.relativeParent.target);
+                (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_9__.calcRelativeBox)(this.target, this.relativeTarget, this.relativeParent.target);
                 /**
                  * If we've only got a targetDelta, resolve it into a target
                  */
@@ -7583,15 +7218,15 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
                     this.target = this.applyTransform(this.layout.layoutBox);
                 }
                 else {
-                    (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_18__.copyBoxInto)(this.target, this.layout.layoutBox);
+                    (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_13__.copyBoxInto)(this.target, this.layout.layoutBox);
                 }
-                (0,_geometry_delta_apply_mjs__WEBPACK_IMPORTED_MODULE_17__.applyBoxDelta)(this.target, this.targetDelta);
+                (0,_geometry_delta_apply_mjs__WEBPACK_IMPORTED_MODULE_12__.applyBoxDelta)(this.target, this.targetDelta);
             }
             else {
                 /**
                  * If no target, use own layout as target
                  */
-                (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_18__.copyBoxInto)(this.target, this.layout.layoutBox);
+                (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_13__.copyBoxInto)(this.target, this.layout.layoutBox);
             }
             /**
              * If we've been told to attempt to resolve a relative target, do so.
@@ -7607,10 +7242,10 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
                     this.animationProgress !== 1) {
                     this.relativeParent = relativeParent;
                     this.forceRelativeParentToResolveTarget();
-                    this.relativeTarget = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_15__.createBox)();
-                    this.relativeTargetOrigin = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_15__.createBox)();
-                    (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_14__.calcRelativePosition)(this.relativeTargetOrigin, this.target, relativeParent.target);
-                    (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_18__.copyBoxInto)(this.relativeTarget, this.relativeTargetOrigin);
+                    this.relativeTarget = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_10__.createBox)();
+                    this.relativeTargetOrigin = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_10__.createBox)();
+                    (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_9__.calcRelativePosition)(this.relativeTargetOrigin, this.target, relativeParent.target);
+                    (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_13__.copyBoxInto)(this.relativeTarget, this.relativeTargetOrigin);
                 }
                 else {
                     this.relativeParent = this.relativeTarget = undefined;
@@ -7619,14 +7254,14 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
             /**
              * Increase debug counter for resolved target deltas
              */
-            if (_stats_buffer_mjs__WEBPACK_IMPORTED_MODULE_4__.statsBuffer.value) {
+            if (motion_dom__WEBPACK_IMPORTED_MODULE_0__.statsBuffer.value) {
                 metrics.calculatedTargetDeltas++;
             }
         }
         getClosestProjectingParent() {
             if (!this.parent ||
-                (0,_utils_has_transform_mjs__WEBPACK_IMPORTED_MODULE_16__.hasScale)(this.parent.latestValues) ||
-                (0,_utils_has_transform_mjs__WEBPACK_IMPORTED_MODULE_16__.has2DTranslate)(this.parent.latestValues)) {
+                (0,_utils_has_transform_mjs__WEBPACK_IMPORTED_MODULE_11__.hasScale)(this.parent.latestValues) ||
+                (0,_utils_has_transform_mjs__WEBPACK_IMPORTED_MODULE_11__.has2DTranslate)(this.parent.latestValues)) {
                 return undefined;
             }
             if (this.parent.isProjecting()) {
@@ -7666,7 +7301,7 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
              * If we have resolved the target this frame we must recalculate the
              * projection to ensure it visually represents the internal calculations.
              */
-            if (this.resolvedRelativeTargetAt === _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__.frameData.timestamp) {
+            if (this.resolvedRelativeTargetAt === motion_dom__WEBPACK_IMPORTED_MODULE_0__.frameData.timestamp) {
                 canSkip = false;
             }
             if (canSkip)
@@ -7688,7 +7323,7 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
              * Reset the corrected box with the latest values from box, as we're then going
              * to perform mutative operations on it.
              */
-            (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_18__.copyBoxInto)(this.layoutCorrected, this.layout.layoutBox);
+            (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_13__.copyBoxInto)(this.layoutCorrected, this.layout.layoutBox);
             /**
              * Record previous tree scales before updating.
              */
@@ -7698,7 +7333,7 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
              * Apply all the parent deltas to this box to produce the corrected box. This
              * is the layout box, as it will appear on screen as a result of the transforms of its parents.
              */
-            (0,_geometry_delta_apply_mjs__WEBPACK_IMPORTED_MODULE_17__.applyTreeDeltas)(this.layoutCorrected, this.treeScale, this.path, isShared);
+            (0,_geometry_delta_apply_mjs__WEBPACK_IMPORTED_MODULE_12__.applyTreeDeltas)(this.layoutCorrected, this.treeScale, this.path, isShared);
             /**
              * If this layer needs to perform scale correction but doesn't have a target,
              * use the layout as the target.
@@ -7707,7 +7342,7 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
                 !lead.target &&
                 (this.treeScale.x !== 1 || this.treeScale.y !== 1)) {
                 lead.target = lead.layout.layoutBox;
-                lead.targetWithTransforms = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_15__.createBox)();
+                lead.targetWithTransforms = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_10__.createBox)();
             }
             const { target } = lead;
             if (!target) {
@@ -7726,8 +7361,8 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
                 this.createProjectionDeltas();
             }
             else {
-                (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_18__.copyAxisDeltaInto)(this.prevProjectionDelta.x, this.projectionDelta.x);
-                (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_18__.copyAxisDeltaInto)(this.prevProjectionDelta.y, this.projectionDelta.y);
+                (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_13__.copyAxisDeltaInto)(this.prevProjectionDelta.x, this.projectionDelta.x);
+                (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_13__.copyAxisDeltaInto)(this.prevProjectionDelta.y, this.projectionDelta.y);
             }
             /**
              * Update the delta between the corrected box and the target box before user-set transforms were applied.
@@ -7738,11 +7373,11 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
              * to allow people to choose whether these styles are corrected based on just the
              * layout reprojection or the final bounding box.
              */
-            (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_14__.calcBoxDelta)(this.projectionDelta, this.layoutCorrected, target, this.latestValues);
+            (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_9__.calcBoxDelta)(this.projectionDelta, this.layoutCorrected, target, this.latestValues);
             if (this.treeScale.x !== prevTreeScaleX ||
                 this.treeScale.y !== prevTreeScaleY ||
-                !(0,_geometry_utils_mjs__WEBPACK_IMPORTED_MODULE_10__.axisDeltaEquals)(this.projectionDelta.x, this.prevProjectionDelta.x) ||
-                !(0,_geometry_utils_mjs__WEBPACK_IMPORTED_MODULE_10__.axisDeltaEquals)(this.projectionDelta.y, this.prevProjectionDelta.y)) {
+                !(0,_geometry_utils_mjs__WEBPACK_IMPORTED_MODULE_7__.axisDeltaEquals)(this.projectionDelta.x, this.prevProjectionDelta.x) ||
+                !(0,_geometry_utils_mjs__WEBPACK_IMPORTED_MODULE_7__.axisDeltaEquals)(this.projectionDelta.y, this.prevProjectionDelta.y)) {
                 this.hasProjected = true;
                 this.scheduleRender();
                 this.notifyListeners("projectionUpdate", target);
@@ -7750,7 +7385,7 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
             /**
              * Increase debug counter for recalculated projections
              */
-            if (_stats_buffer_mjs__WEBPACK_IMPORTED_MODULE_4__.statsBuffer.value) {
+            if (motion_dom__WEBPACK_IMPORTED_MODULE_0__.statsBuffer.value) {
                 metrics.calculatedProjections++;
             }
         }
@@ -7774,9 +7409,9 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
             }
         }
         createProjectionDeltas() {
-            this.prevProjectionDelta = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_15__.createDelta)();
-            this.projectionDelta = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_15__.createDelta)();
-            this.projectionDeltaWithTransform = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_15__.createDelta)();
+            this.prevProjectionDelta = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_10__.createDelta)();
+            this.projectionDelta = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_10__.createDelta)();
+            this.projectionDeltaWithTransform = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_10__.createDelta)();
         }
         setAnimationOrigin(delta, hasOnlyRelativeTargetChanged = false) {
             const snapshot = this.snapshot;
@@ -7784,13 +7419,13 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
                 ? snapshot.latestValues
                 : {};
             const mixedValues = { ...this.latestValues };
-            const targetDelta = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_15__.createDelta)();
+            const targetDelta = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_10__.createDelta)();
             if (!this.relativeParent ||
                 !this.relativeParent.options.layoutRoot) {
                 this.relativeTarget = this.relativeTargetOrigin = undefined;
             }
             this.attemptToResolveRelativeTarget = !hasOnlyRelativeTargetChanged;
-            const relativeLayout = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_15__.createBox)();
+            const relativeLayout = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_10__.createBox)();
             const snapshotSource = snapshot ? snapshot.source : undefined;
             const layoutSource = this.layout ? this.layout.source : undefined;
             const isSharedLayoutAnimation = snapshotSource !== layoutSource;
@@ -7812,23 +7447,23 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
                     this.layout &&
                     this.relativeParent &&
                     this.relativeParent.layout) {
-                    (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_14__.calcRelativePosition)(relativeLayout, this.layout.layoutBox, this.relativeParent.layout.layoutBox);
+                    (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_9__.calcRelativePosition)(relativeLayout, this.layout.layoutBox, this.relativeParent.layout.layoutBox);
                     mixBox(this.relativeTarget, this.relativeTargetOrigin, relativeLayout, progress);
                     /**
                      * If this is an unchanged relative target we can consider the
                      * projection not dirty.
                      */
                     if (prevRelativeTarget &&
-                        (0,_geometry_utils_mjs__WEBPACK_IMPORTED_MODULE_10__.boxEquals)(this.relativeTarget, prevRelativeTarget)) {
+                        (0,_geometry_utils_mjs__WEBPACK_IMPORTED_MODULE_7__.boxEquals)(this.relativeTarget, prevRelativeTarget)) {
                         this.isProjectionDirty = false;
                     }
                     if (!prevRelativeTarget)
-                        prevRelativeTarget = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_15__.createBox)();
-                    (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_18__.copyBoxInto)(prevRelativeTarget, this.relativeTarget);
+                        prevRelativeTarget = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_10__.createBox)();
+                    (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_13__.copyBoxInto)(prevRelativeTarget, this.relativeTarget);
                 }
                 if (isSharedLayoutAnimation) {
                     this.animationValues = mixedValues;
-                    (0,_animation_mix_values_mjs__WEBPACK_IMPORTED_MODULE_20__.mixValues)(mixedValues, snapshotLatestValues, this.latestValues, progress, shouldCrossfadeOpacity, isOnlyMember);
+                    (0,_animation_mix_values_mjs__WEBPACK_IMPORTED_MODULE_15__.mixValues)(mixedValues, snapshotLatestValues, this.latestValues, progress, shouldCrossfadeOpacity, isOnlyMember);
                 }
                 this.root.scheduleUpdateProjection();
                 this.scheduleRender();
@@ -7843,7 +7478,7 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
                 this.resumingFrom.currentAnimation.stop();
             }
             if (this.pendingAnimation) {
-                (0,_frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__.cancelFrame)(this.pendingAnimation);
+                (0,motion_dom__WEBPACK_IMPORTED_MODULE_0__.cancelFrame)(this.pendingAnimation);
                 this.pendingAnimation = undefined;
             }
             /**
@@ -7851,20 +7486,20 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
              * where the target is the same as when the animation started, so we can
              * calculate the relative positions correctly for instant transitions.
              */
-            this.pendingAnimation = _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__.frame.update(() => {
-                _state_mjs__WEBPACK_IMPORTED_MODULE_9__.globalProjectionState.hasAnimatedSinceResize = true;
-                _stats_animation_count_mjs__WEBPACK_IMPORTED_MODULE_21__.activeAnimations.layout++;
-                this.currentAnimation = (0,_animation_animate_single_value_mjs__WEBPACK_IMPORTED_MODULE_22__.animateSingleValue)(0, animationTarget, {
+            this.pendingAnimation = motion_dom__WEBPACK_IMPORTED_MODULE_0__.frame.update(() => {
+                _state_mjs__WEBPACK_IMPORTED_MODULE_6__.globalProjectionState.hasAnimatedSinceResize = true;
+                motion_dom__WEBPACK_IMPORTED_MODULE_0__.activeAnimations.layout++;
+                this.currentAnimation = (0,_animation_animate_single_value_mjs__WEBPACK_IMPORTED_MODULE_16__.animateSingleValue)(0, animationTarget, {
                     ...options,
                     onUpdate: (latest) => {
                         this.mixTargetDelta(latest);
                         options.onUpdate && options.onUpdate(latest);
                     },
                     onStop: () => {
-                        _stats_animation_count_mjs__WEBPACK_IMPORTED_MODULE_21__.activeAnimations.layout--;
+                        motion_dom__WEBPACK_IMPORTED_MODULE_0__.activeAnimations.layout--;
                     },
                     onComplete: () => {
-                        _stats_animation_count_mjs__WEBPACK_IMPORTED_MODULE_21__.activeAnimations.layout--;
+                        motion_dom__WEBPACK_IMPORTED_MODULE_0__.activeAnimations.layout--;
                         options.onComplete && options.onComplete();
                         this.completeAnimation();
                     },
@@ -7909,32 +7544,32 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
                 this.layout &&
                 layout &&
                 shouldAnimatePositionOnly(this.options.animationType, this.layout.layoutBox, layout.layoutBox)) {
-                target = this.target || (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_15__.createBox)();
-                const xLength = (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_14__.calcLength)(this.layout.layoutBox.x);
+                target = this.target || (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_10__.createBox)();
+                const xLength = (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_9__.calcLength)(this.layout.layoutBox.x);
                 target.x.min = lead.target.x.min;
                 target.x.max = target.x.min + xLength;
-                const yLength = (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_14__.calcLength)(this.layout.layoutBox.y);
+                const yLength = (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_9__.calcLength)(this.layout.layoutBox.y);
                 target.y.min = lead.target.y.min;
                 target.y.max = target.y.min + yLength;
             }
-            (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_18__.copyBoxInto)(targetWithTransforms, target);
+            (0,_geometry_copy_mjs__WEBPACK_IMPORTED_MODULE_13__.copyBoxInto)(targetWithTransforms, target);
             /**
              * Apply the latest user-set transforms to the targetBox to produce the targetBoxFinal.
              * This is the final box that we will then project into by calculating a transform delta and
              * applying it to the corrected box.
              */
-            (0,_geometry_delta_apply_mjs__WEBPACK_IMPORTED_MODULE_17__.transformBox)(targetWithTransforms, latestValues);
+            (0,_geometry_delta_apply_mjs__WEBPACK_IMPORTED_MODULE_12__.transformBox)(targetWithTransforms, latestValues);
             /**
              * Update the delta between the corrected box and the final target box, after
              * user-set transforms are applied to it. This will be used by the renderer to
              * create a transform style that will reproject the element from its layout layout
              * into the desired bounding box.
              */
-            (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_14__.calcBoxDelta)(this.projectionDeltaWithTransform, this.layoutCorrected, targetWithTransforms, latestValues);
+            (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_9__.calcBoxDelta)(this.projectionDeltaWithTransform, this.layoutCorrected, targetWithTransforms, latestValues);
         }
         registerSharedNode(layoutId, node) {
             if (!this.sharedNodes.has(layoutId)) {
-                this.sharedNodes.set(layoutId, new _shared_stack_mjs__WEBPACK_IMPORTED_MODULE_23__.NodeStack());
+                this.sharedNodes.set(layoutId, new _shared_stack_mjs__WEBPACK_IMPORTED_MODULE_17__.NodeStack());
             }
             const stack = this.sharedNodes.get(layoutId);
             stack.add(node);
@@ -8046,7 +7681,7 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
                 this.needsReset = false;
                 styles.opacity = "";
                 styles.pointerEvents =
-                    (0,_value_utils_resolve_motion_value_mjs__WEBPACK_IMPORTED_MODULE_24__.resolveMotionValue)(styleProp === null || styleProp === void 0 ? void 0 : styleProp.pointerEvents) || "";
+                    (0,_value_utils_resolve_motion_value_mjs__WEBPACK_IMPORTED_MODULE_18__.resolveMotionValue)(styleProp === null || styleProp === void 0 ? void 0 : styleProp.pointerEvents) || "";
                 styles.transform = transformTemplate
                     ? transformTemplate(this.latestValues, "")
                     : "none";
@@ -8061,9 +7696,9 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
                             ? this.latestValues.opacity
                             : 1;
                     emptyStyles.pointerEvents =
-                        (0,_value_utils_resolve_motion_value_mjs__WEBPACK_IMPORTED_MODULE_24__.resolveMotionValue)(styleProp === null || styleProp === void 0 ? void 0 : styleProp.pointerEvents) || "";
+                        (0,_value_utils_resolve_motion_value_mjs__WEBPACK_IMPORTED_MODULE_18__.resolveMotionValue)(styleProp === null || styleProp === void 0 ? void 0 : styleProp.pointerEvents) || "";
                 }
-                if (this.hasProjected && !(0,_utils_has_transform_mjs__WEBPACK_IMPORTED_MODULE_16__.hasTransform)(this.latestValues)) {
+                if (this.hasProjected && !(0,_utils_has_transform_mjs__WEBPACK_IMPORTED_MODULE_11__.hasTransform)(this.latestValues)) {
                     emptyStyles.transform = transformTemplate
                         ? transformTemplate({}, "")
                         : "none";
@@ -8073,7 +7708,7 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
             }
             const valuesToRender = lead.animationValues || lead.latestValues;
             this.applyTransformsToTarget();
-            styles.transform = (0,_styles_transform_mjs__WEBPACK_IMPORTED_MODULE_25__.buildProjectionTransform)(this.projectionDeltaWithTransform, this.treeScale, valuesToRender);
+            styles.transform = (0,_styles_transform_mjs__WEBPACK_IMPORTED_MODULE_19__.buildProjectionTransform)(this.projectionDeltaWithTransform, this.treeScale, valuesToRender);
             if (transformTemplate) {
                 styles.transform = transformTemplate(valuesToRender, styles.transform);
             }
@@ -8108,10 +7743,10 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
             /**
              * Apply scale correction
              */
-            for (const key in _styles_scale_correction_mjs__WEBPACK_IMPORTED_MODULE_26__.scaleCorrectors) {
+            for (const key in _styles_scale_correction_mjs__WEBPACK_IMPORTED_MODULE_20__.scaleCorrectors) {
                 if (valuesToRender[key] === undefined)
                     continue;
-                const { correct, applyTo, isCSSVariable } = _styles_scale_correction_mjs__WEBPACK_IMPORTED_MODULE_26__.scaleCorrectors[key];
+                const { correct, applyTo, isCSSVariable } = _styles_scale_correction_mjs__WEBPACK_IMPORTED_MODULE_20__.scaleCorrectors[key];
                 /**
                  * Only apply scale correction to the value if we have an
                  * active projection transform. Otherwise these values become
@@ -8147,7 +7782,7 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
             if (this.options.layoutId) {
                 styles.pointerEvents =
                     lead === this
-                        ? (0,_value_utils_resolve_motion_value_mjs__WEBPACK_IMPORTED_MODULE_24__.resolveMotionValue)(styleProp === null || styleProp === void 0 ? void 0 : styleProp.pointerEvents) || ""
+                        ? (0,_value_utils_resolve_motion_value_mjs__WEBPACK_IMPORTED_MODULE_18__.resolveMotionValue)(styleProp === null || styleProp === void 0 ? void 0 : styleProp.pointerEvents) || ""
                         : "none";
             }
             return styles;
@@ -8179,21 +7814,21 @@ function notifyLayoutUpdate(node) {
         // TODO Maybe we want to also resize the layout snapshot so we don't trigger
         // animations for instance if layout="size" and an element has only changed position
         if (animationType === "size") {
-            (0,_utils_each_axis_mjs__WEBPACK_IMPORTED_MODULE_27__.eachAxis)((axis) => {
+            (0,_utils_each_axis_mjs__WEBPACK_IMPORTED_MODULE_21__.eachAxis)((axis) => {
                 const axisSnapshot = isShared
                     ? snapshot.measuredBox[axis]
                     : snapshot.layoutBox[axis];
-                const length = (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_14__.calcLength)(axisSnapshot);
+                const length = (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_9__.calcLength)(axisSnapshot);
                 axisSnapshot.min = layout[axis].min;
                 axisSnapshot.max = axisSnapshot.min + length;
             });
         }
         else if (shouldAnimatePositionOnly(animationType, snapshot.layoutBox, layout)) {
-            (0,_utils_each_axis_mjs__WEBPACK_IMPORTED_MODULE_27__.eachAxis)((axis) => {
+            (0,_utils_each_axis_mjs__WEBPACK_IMPORTED_MODULE_21__.eachAxis)((axis) => {
                 const axisSnapshot = isShared
                     ? snapshot.measuredBox[axis]
                     : snapshot.layoutBox[axis];
-                const length = (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_14__.calcLength)(layout[axis]);
+                const length = (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_9__.calcLength)(layout[axis]);
                 axisSnapshot.max = axisSnapshot.min + length;
                 /**
                  * Ensure relative target gets resized and rerendererd
@@ -8205,16 +7840,16 @@ function notifyLayoutUpdate(node) {
                 }
             });
         }
-        const layoutDelta = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_15__.createDelta)();
-        (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_14__.calcBoxDelta)(layoutDelta, layout, snapshot.layoutBox);
-        const visualDelta = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_15__.createDelta)();
+        const layoutDelta = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_10__.createDelta)();
+        (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_9__.calcBoxDelta)(layoutDelta, layout, snapshot.layoutBox);
+        const visualDelta = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_10__.createDelta)();
         if (isShared) {
-            (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_14__.calcBoxDelta)(visualDelta, node.applyTransform(measuredLayout, true), snapshot.measuredBox);
+            (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_9__.calcBoxDelta)(visualDelta, node.applyTransform(measuredLayout, true), snapshot.measuredBox);
         }
         else {
-            (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_14__.calcBoxDelta)(visualDelta, layout, snapshot.layoutBox);
+            (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_9__.calcBoxDelta)(visualDelta, layout, snapshot.layoutBox);
         }
-        const hasLayoutChanged = !(0,_geometry_utils_mjs__WEBPACK_IMPORTED_MODULE_10__.isDeltaZero)(layoutDelta);
+        const hasLayoutChanged = !(0,_geometry_utils_mjs__WEBPACK_IMPORTED_MODULE_7__.isDeltaZero)(layoutDelta);
         let hasRelativeLayoutChanged = false;
         if (!node.resumeFrom) {
             const relativeParent = node.getClosestProjectingParent();
@@ -8225,11 +7860,11 @@ function notifyLayoutUpdate(node) {
             if (relativeParent && !relativeParent.resumeFrom) {
                 const { snapshot: parentSnapshot, layout: parentLayout } = relativeParent;
                 if (parentSnapshot && parentLayout) {
-                    const relativeSnapshot = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_15__.createBox)();
-                    (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_14__.calcRelativePosition)(relativeSnapshot, snapshot.layoutBox, parentSnapshot.layoutBox);
-                    const relativeLayout = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_15__.createBox)();
-                    (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_14__.calcRelativePosition)(relativeLayout, layout, parentLayout.layoutBox);
-                    if (!(0,_geometry_utils_mjs__WEBPACK_IMPORTED_MODULE_10__.boxEqualsRounded)(relativeSnapshot, relativeLayout)) {
+                    const relativeSnapshot = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_10__.createBox)();
+                    (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_9__.calcRelativePosition)(relativeSnapshot, snapshot.layoutBox, parentSnapshot.layoutBox);
+                    const relativeLayout = (0,_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_10__.createBox)();
+                    (0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_9__.calcRelativePosition)(relativeLayout, layout, parentLayout.layoutBox);
+                    if (!(0,_geometry_utils_mjs__WEBPACK_IMPORTED_MODULE_7__.boxEqualsRounded)(relativeSnapshot, relativeLayout)) {
                         hasRelativeLayoutChanged = true;
                     }
                     if (relativeParent.options.layoutRoot) {
@@ -8264,7 +7899,7 @@ function propagateDirtyNodes(node) {
     /**
      * Increase debug counter for nodes encountered this frame
      */
-    if (_stats_buffer_mjs__WEBPACK_IMPORTED_MODULE_4__.statsBuffer.value) {
+    if (motion_dom__WEBPACK_IMPORTED_MODULE_0__.statsBuffer.value) {
         metrics.nodes++;
     }
     if (!node.parent)
@@ -8328,14 +7963,14 @@ function removeLeadSnapshots(stack) {
     stack.removeLeadSnapshot();
 }
 function mixAxisDelta(output, delta, p) {
-    output.translate = (0,_utils_mix_number_mjs__WEBPACK_IMPORTED_MODULE_28__.mixNumber)(delta.translate, 0, p);
-    output.scale = (0,_utils_mix_number_mjs__WEBPACK_IMPORTED_MODULE_28__.mixNumber)(delta.scale, 1, p);
+    output.translate = (0,_utils_mix_number_mjs__WEBPACK_IMPORTED_MODULE_22__.mixNumber)(delta.translate, 0, p);
+    output.scale = (0,_utils_mix_number_mjs__WEBPACK_IMPORTED_MODULE_22__.mixNumber)(delta.scale, 1, p);
     output.origin = delta.origin;
     output.originPoint = delta.originPoint;
 }
 function mixAxis(output, from, to, p) {
-    output.min = (0,_utils_mix_number_mjs__WEBPACK_IMPORTED_MODULE_28__.mixNumber)(from.min, to.min, p);
-    output.max = (0,_utils_mix_number_mjs__WEBPACK_IMPORTED_MODULE_28__.mixNumber)(from.max, to.max, p);
+    output.min = (0,_utils_mix_number_mjs__WEBPACK_IMPORTED_MODULE_22__.mixNumber)(from.min, to.min, p);
+    output.max = (0,_utils_mix_number_mjs__WEBPACK_IMPORTED_MODULE_22__.mixNumber)(from.max, to.max, p);
 }
 function mixBox(output, from, to, p) {
     mixAxis(output.x, from.x, to.x, p);
@@ -8371,7 +8006,7 @@ function roundBox(box) {
 function shouldAnimatePositionOnly(animationType, snapshot, layout) {
     return (animationType === "position" ||
         (animationType === "preserve-aspect" &&
-            !(0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_14__.isNear)((0,_geometry_utils_mjs__WEBPACK_IMPORTED_MODULE_10__.aspectRatio)(snapshot), (0,_geometry_utils_mjs__WEBPACK_IMPORTED_MODULE_10__.aspectRatio)(layout), 0.2)));
+            !(0,_geometry_delta_calc_mjs__WEBPACK_IMPORTED_MODULE_9__.isNear)((0,_geometry_utils_mjs__WEBPACK_IMPORTED_MODULE_7__.aspectRatio)(snapshot), (0,_geometry_utils_mjs__WEBPACK_IMPORTED_MODULE_7__.aspectRatio)(layout), 0.2)));
 }
 function checkNodeWasScrollRoot(node) {
     var _a;
@@ -8428,7 +8063,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   NodeStack: () => (/* binding */ NodeStack)
 /* harmony export */ });
-/* harmony import */ var _utils_array_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils/array.mjs */ "./node_modules/framer-motion/dist/es/utils/array.mjs");
+/* harmony import */ var motion_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-utils */ "./node_modules/motion-utils/dist/es/index.mjs");
 
 
 class NodeStack {
@@ -8436,11 +8071,11 @@ class NodeStack {
         this.members = [];
     }
     add(node) {
-        (0,_utils_array_mjs__WEBPACK_IMPORTED_MODULE_0__.addUniqueItem)(this.members, node);
+        (0,motion_utils__WEBPACK_IMPORTED_MODULE_0__.addUniqueItem)(this.members, node);
         node.scheduleRender();
     }
     remove(node) {
-        (0,_utils_array_mjs__WEBPACK_IMPORTED_MODULE_0__.removeItem)(this.members, node);
+        (0,motion_utils__WEBPACK_IMPORTED_MODULE_0__.removeItem)(this.members, node);
         if (node === this.prevLead) {
             this.prevLead = undefined;
         }
@@ -8858,30 +8493,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   VisualElement: () => (/* binding */ VisualElement)
 /* harmony export */ });
-/* harmony import */ var _frameloop_sync_time_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../frameloop/sync-time.mjs */ "./node_modules/framer-motion/dist/es/frameloop/sync-time.mjs");
-/* harmony import */ var _motion_features_definitions_mjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../motion/features/definitions.mjs */ "./node_modules/framer-motion/dist/es/motion/features/definitions.mjs");
-/* harmony import */ var _projection_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../projection/geometry/models.mjs */ "./node_modules/framer-motion/dist/es/projection/geometry/models.mjs");
-/* harmony import */ var _utils_is_numerical_string_mjs__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/is-numerical-string.mjs */ "./node_modules/framer-motion/dist/es/utils/is-numerical-string.mjs");
-/* harmony import */ var _utils_is_zero_value_string_mjs__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../utils/is-zero-value-string.mjs */ "./node_modules/framer-motion/dist/es/utils/is-zero-value-string.mjs");
+/* harmony import */ var motion_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-dom */ "./node_modules/motion-dom/dist/es/index.mjs");
+/* harmony import */ var motion_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! motion-utils */ "./node_modules/motion-utils/dist/es/index.mjs");
+/* harmony import */ var _motion_features_definitions_mjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../motion/features/definitions.mjs */ "./node_modules/framer-motion/dist/es/motion/features/definitions.mjs");
+/* harmony import */ var _projection_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../projection/geometry/models.mjs */ "./node_modules/framer-motion/dist/es/projection/geometry/models.mjs");
+/* harmony import */ var _utils_is_numerical_string_mjs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/is-numerical-string.mjs */ "./node_modules/framer-motion/dist/es/utils/is-numerical-string.mjs");
+/* harmony import */ var _utils_is_zero_value_string_mjs__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/is-zero-value-string.mjs */ "./node_modules/framer-motion/dist/es/utils/is-zero-value-string.mjs");
 /* harmony import */ var _utils_reduced_motion_index_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/reduced-motion/index.mjs */ "./node_modules/framer-motion/dist/es/utils/reduced-motion/index.mjs");
 /* harmony import */ var _utils_reduced_motion_state_mjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/reduced-motion/state.mjs */ "./node_modules/framer-motion/dist/es/utils/reduced-motion/state.mjs");
-/* harmony import */ var _utils_subscription_manager_mjs__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../utils/subscription-manager.mjs */ "./node_modules/framer-motion/dist/es/utils/subscription-manager.mjs");
-/* harmony import */ var _utils_warn_once_mjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/warn-once.mjs */ "./node_modules/framer-motion/dist/es/utils/warn-once.mjs");
-/* harmony import */ var _value_index_mjs__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../value/index.mjs */ "./node_modules/framer-motion/dist/es/value/index.mjs");
-/* harmony import */ var _value_types_complex_index_mjs__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../value/types/complex/index.mjs */ "./node_modules/framer-motion/dist/es/value/types/complex/index.mjs");
+/* harmony import */ var _value_types_complex_index_mjs__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../value/types/complex/index.mjs */ "./node_modules/framer-motion/dist/es/value/types/complex/index.mjs");
 /* harmony import */ var _value_utils_is_motion_value_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../value/utils/is-motion-value.mjs */ "./node_modules/framer-motion/dist/es/value/utils/is-motion-value.mjs");
-/* harmony import */ var _dom_value_types_animatable_none_mjs__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./dom/value-types/animatable-none.mjs */ "./node_modules/framer-motion/dist/es/render/dom/value-types/animatable-none.mjs");
-/* harmony import */ var _dom_value_types_find_mjs__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./dom/value-types/find.mjs */ "./node_modules/framer-motion/dist/es/render/dom/value-types/find.mjs");
-/* harmony import */ var _html_utils_keys_transform_mjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./html/utils/keys-transform.mjs */ "./node_modules/framer-motion/dist/es/render/html/utils/keys-transform.mjs");
+/* harmony import */ var _dom_value_types_animatable_none_mjs__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./dom/value-types/animatable-none.mjs */ "./node_modules/framer-motion/dist/es/render/dom/value-types/animatable-none.mjs");
+/* harmony import */ var _dom_value_types_find_mjs__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./dom/value-types/find.mjs */ "./node_modules/framer-motion/dist/es/render/dom/value-types/find.mjs");
+/* harmony import */ var _html_utils_keys_transform_mjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./html/utils/keys-transform.mjs */ "./node_modules/framer-motion/dist/es/render/html/utils/keys-transform.mjs");
 /* harmony import */ var _store_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./store.mjs */ "./node_modules/framer-motion/dist/es/render/store.mjs");
 /* harmony import */ var _utils_is_controlling_variants_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils/is-controlling-variants.mjs */ "./node_modules/framer-motion/dist/es/render/utils/is-controlling-variants.mjs");
-/* harmony import */ var _utils_KeyframesResolver_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils/KeyframesResolver.mjs */ "./node_modules/framer-motion/dist/es/render/utils/KeyframesResolver.mjs");
-/* harmony import */ var _utils_motion_values_mjs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./utils/motion-values.mjs */ "./node_modules/framer-motion/dist/es/render/utils/motion-values.mjs");
-/* harmony import */ var _utils_resolve_variants_mjs__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./utils/resolve-variants.mjs */ "./node_modules/framer-motion/dist/es/render/utils/resolve-variants.mjs");
-/* harmony import */ var _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../frameloop/frame.mjs */ "./node_modules/framer-motion/dist/es/frameloop/frame.mjs");
-
-
-
+/* harmony import */ var _utils_KeyframesResolver_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/KeyframesResolver.mjs */ "./node_modules/framer-motion/dist/es/render/utils/KeyframesResolver.mjs");
+/* harmony import */ var _utils_motion_values_mjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./utils/motion-values.mjs */ "./node_modules/framer-motion/dist/es/render/utils/motion-values.mjs");
+/* harmony import */ var _utils_resolve_variants_mjs__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./utils/resolve-variants.mjs */ "./node_modules/framer-motion/dist/es/render/utils/resolve-variants.mjs");
 
 
 
@@ -8954,7 +8583,7 @@ class VisualElement {
          * value might be provided externally by the component via props.
          */
         this.values = new Map();
-        this.KeyframeResolver = _utils_KeyframesResolver_mjs__WEBPACK_IMPORTED_MODULE_0__.KeyframeResolver;
+        this.KeyframeResolver = _utils_KeyframesResolver_mjs__WEBPACK_IMPORTED_MODULE_2__.KeyframeResolver;
         /**
          * Cleanup functions for active features (hover/tap/exit etc)
          */
@@ -8989,10 +8618,10 @@ class VisualElement {
         };
         this.renderScheduledAt = 0.0;
         this.scheduleRender = () => {
-            const now = _frameloop_sync_time_mjs__WEBPACK_IMPORTED_MODULE_1__.time.now();
+            const now = motion_dom__WEBPACK_IMPORTED_MODULE_0__.time.now();
             if (this.renderScheduledAt < now) {
                 this.renderScheduledAt = now;
-                _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_2__.frame.render(this.render, false, true);
+                motion_dom__WEBPACK_IMPORTED_MODULE_0__.frame.render(this.render, false, true);
             }
         };
         const { latestValues, renderState, onUpdate } = visualState;
@@ -9052,7 +8681,7 @@ class VisualElement {
                     ? true
                     : _utils_reduced_motion_state_mjs__WEBPACK_IMPORTED_MODULE_6__.prefersReducedMotion.current;
         if (true) {
-            (0,_utils_warn_once_mjs__WEBPACK_IMPORTED_MODULE_8__.warnOnce)(this.shouldReduceMotion !== true, "You have Reduced Motion enabled on your device. Animations may not appear as expected.");
+            (0,motion_utils__WEBPACK_IMPORTED_MODULE_1__.warnOnce)(this.shouldReduceMotion !== true, "You have Reduced Motion enabled on your device. Animations may not appear as expected.");
         }
         if (this.parent)
             this.parent.children.add(this);
@@ -9060,8 +8689,8 @@ class VisualElement {
     }
     unmount() {
         this.projection && this.projection.unmount();
-        (0,_frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_2__.cancelFrame)(this.notifyUpdate);
-        (0,_frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_2__.cancelFrame)(this.render);
+        (0,motion_dom__WEBPACK_IMPORTED_MODULE_0__.cancelFrame)(this.notifyUpdate);
+        (0,motion_dom__WEBPACK_IMPORTED_MODULE_0__.cancelFrame)(this.render);
         this.valueSubscriptions.forEach((remove) => remove());
         this.valueSubscriptions.clear();
         this.removeFromVariantTree && this.removeFromVariantTree();
@@ -9082,13 +8711,13 @@ class VisualElement {
         if (this.valueSubscriptions.has(key)) {
             this.valueSubscriptions.get(key)();
         }
-        const valueIsTransform = _html_utils_keys_transform_mjs__WEBPACK_IMPORTED_MODULE_9__.transformProps.has(key);
+        const valueIsTransform = _html_utils_keys_transform_mjs__WEBPACK_IMPORTED_MODULE_8__.transformProps.has(key);
         if (valueIsTransform && this.onBindTransform) {
             this.onBindTransform();
         }
         const removeOnChange = value.on("change", (latestValue) => {
             this.latestValues[key] = latestValue;
-            this.props.onUpdate && _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_2__.frame.preRender(this.notifyUpdate);
+            this.props.onUpdate && motion_dom__WEBPACK_IMPORTED_MODULE_0__.frame.preRender(this.notifyUpdate);
             if (valueIsTransform && this.projection) {
                 this.projection.isTransformDirty = true;
             }
@@ -9120,8 +8749,8 @@ class VisualElement {
     }
     updateFeatures() {
         let key = "animation";
-        for (key in _motion_features_definitions_mjs__WEBPACK_IMPORTED_MODULE_10__.featureDefinitions) {
-            const featureDefinition = _motion_features_definitions_mjs__WEBPACK_IMPORTED_MODULE_10__.featureDefinitions[key];
+        for (key in _motion_features_definitions_mjs__WEBPACK_IMPORTED_MODULE_9__.featureDefinitions) {
+            const featureDefinition = _motion_features_definitions_mjs__WEBPACK_IMPORTED_MODULE_9__.featureDefinitions[key];
             if (!featureDefinition)
                 continue;
             const { isEnabled, Feature: FeatureConstructor } = featureDefinition;
@@ -9159,7 +8788,7 @@ class VisualElement {
     measureViewportBox() {
         return this.current
             ? this.measureInstanceViewportBox(this.current, this.props)
-            : (0,_projection_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_11__.createBox)();
+            : (0,_projection_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_10__.createBox)();
     }
     getStaticValue(key) {
         return this.latestValues[key];
@@ -9194,7 +8823,7 @@ class VisualElement {
                 this.propEventSubscriptions[key] = this.on(key, listener);
             }
         }
-        this.prevMotionValues = (0,_utils_motion_values_mjs__WEBPACK_IMPORTED_MODULE_12__.updateMotionValuesFromProps)(this, this.scrapeMotionValuesFromProps(props, this.prevProps, this), this.prevMotionValues);
+        this.prevMotionValues = (0,_utils_motion_values_mjs__WEBPACK_IMPORTED_MODULE_11__.updateMotionValuesFromProps)(this, this.scrapeMotionValuesFromProps(props, this.prevProps, this), this.prevMotionValues);
         if (this.handleChildMotionValue) {
             this.handleChildMotionValue();
         }
@@ -9275,7 +8904,7 @@ class VisualElement {
         }
         let value = this.values.get(key);
         if (value === undefined && defaultValue !== undefined) {
-            value = (0,_value_index_mjs__WEBPACK_IMPORTED_MODULE_13__.motionValue)(defaultValue === null ? undefined : defaultValue, { owner: this });
+            value = (0,motion_dom__WEBPACK_IMPORTED_MODULE_0__.motionValue)(defaultValue === null ? undefined : defaultValue, { owner: this });
             this.addValue(key, value);
         }
         return value;
@@ -9292,12 +8921,12 @@ class VisualElement {
             : (_a = this.getBaseTargetFromProps(this.props, key)) !== null && _a !== void 0 ? _a : this.readValueFromInstance(this.current, key, this.options);
         if (value !== undefined && value !== null) {
             if (typeof value === "string" &&
-                ((0,_utils_is_numerical_string_mjs__WEBPACK_IMPORTED_MODULE_14__.isNumericalString)(value) || (0,_utils_is_zero_value_string_mjs__WEBPACK_IMPORTED_MODULE_15__.isZeroValueString)(value))) {
+                ((0,_utils_is_numerical_string_mjs__WEBPACK_IMPORTED_MODULE_12__.isNumericalString)(value) || (0,_utils_is_zero_value_string_mjs__WEBPACK_IMPORTED_MODULE_13__.isZeroValueString)(value))) {
                 // If this is a number read as a string, ie "0" or "200", convert it to a number
                 value = parseFloat(value);
             }
-            else if (!(0,_dom_value_types_find_mjs__WEBPACK_IMPORTED_MODULE_16__.findValueType)(value) && _value_types_complex_index_mjs__WEBPACK_IMPORTED_MODULE_17__.complex.test(target)) {
-                value = (0,_dom_value_types_animatable_none_mjs__WEBPACK_IMPORTED_MODULE_18__.getAnimatableNone)(key, target);
+            else if (!(0,_dom_value_types_find_mjs__WEBPACK_IMPORTED_MODULE_14__.findValueType)(value) && _value_types_complex_index_mjs__WEBPACK_IMPORTED_MODULE_15__.complex.test(target)) {
+                value = (0,_dom_value_types_animatable_none_mjs__WEBPACK_IMPORTED_MODULE_16__.getAnimatableNone)(key, target);
             }
             this.setBaseTarget(key, (0,_value_utils_is_motion_value_mjs__WEBPACK_IMPORTED_MODULE_4__.isMotionValue)(value) ? value.get() : value);
         }
@@ -9319,7 +8948,7 @@ class VisualElement {
         const { initial } = this.props;
         let valueFromInitial;
         if (typeof initial === "string" || typeof initial === "object") {
-            const variant = (0,_utils_resolve_variants_mjs__WEBPACK_IMPORTED_MODULE_19__.resolveVariantFromProps)(this.props, initial, (_a = this.presenceContext) === null || _a === void 0 ? void 0 : _a.custom);
+            const variant = (0,_utils_resolve_variants_mjs__WEBPACK_IMPORTED_MODULE_17__.resolveVariantFromProps)(this.props, initial, (_a = this.presenceContext) === null || _a === void 0 ? void 0 : _a.custom);
             if (variant) {
                 valueFromInitial = variant[key];
             }
@@ -9348,7 +8977,7 @@ class VisualElement {
     }
     on(eventName, callback) {
         if (!this.events[eventName]) {
-            this.events[eventName] = new _utils_subscription_manager_mjs__WEBPACK_IMPORTED_MODULE_20__.SubscriptionManager();
+            this.events[eventName] = new motion_utils__WEBPACK_IMPORTED_MODULE_1__.SubscriptionManager();
         }
         return this.events[eventName].add(callback);
     }
@@ -9418,7 +9047,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   createDOMMotionComponentProxy: () => (/* binding */ createDOMMotionComponentProxy)
 /* harmony export */ });
-/* harmony import */ var _utils_warn_once_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils/warn-once.mjs */ "./node_modules/framer-motion/dist/es/utils/warn-once.mjs");
+/* harmony import */ var motion_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-utils */ "./node_modules/motion-utils/dist/es/index.mjs");
 
 
 function createDOMMotionComponentProxy(componentFactory) {
@@ -9432,7 +9061,7 @@ function createDOMMotionComponentProxy(componentFactory) {
     const componentCache = new Map();
     const deprecatedFactoryFunction = (...args) => {
         if (true) {
-            (0,_utils_warn_once_mjs__WEBPACK_IMPORTED_MODULE_0__.warnOnce)(false, "motion() is deprecated. Use motion.create() instead.");
+            (0,motion_utils__WEBPACK_IMPORTED_MODULE_0__.warnOnce)(false, "motion() is deprecated. Use motion.create() instead.");
         }
         return componentFactory(...args);
     };
@@ -9685,9 +9314,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   DOMVisualElement: () => (/* binding */ DOMVisualElement)
 /* harmony export */ });
+/* harmony import */ var _value_utils_is_motion_value_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../value/utils/is-motion-value.mjs */ "./node_modules/framer-motion/dist/es/value/utils/is-motion-value.mjs");
 /* harmony import */ var _VisualElement_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../VisualElement.mjs */ "./node_modules/framer-motion/dist/es/render/VisualElement.mjs");
 /* harmony import */ var _DOMKeyframesResolver_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DOMKeyframesResolver.mjs */ "./node_modules/framer-motion/dist/es/render/dom/DOMKeyframesResolver.mjs");
-/* harmony import */ var _value_utils_is_motion_value_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../value/utils/is-motion-value.mjs */ "./node_modules/framer-motion/dist/es/value/utils/is-motion-value.mjs");
 
 
 
@@ -10093,29 +9722,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _value_types_numbers_index_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../value/types/numbers/index.mjs */ "./node_modules/framer-motion/dist/es/value/types/numbers/index.mjs");
 /* harmony import */ var _value_types_numbers_units_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../value/types/numbers/units.mjs */ "./node_modules/framer-motion/dist/es/value/types/numbers/units.mjs");
 /* harmony import */ var _html_utils_keys_transform_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../html/utils/keys-transform.mjs */ "./node_modules/framer-motion/dist/es/render/html/utils/keys-transform.mjs");
+/* harmony import */ var _html_utils_parse_transform_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../html/utils/parse-transform.mjs */ "./node_modules/framer-motion/dist/es/render/html/utils/parse-transform.mjs");
+
 
 
 
 
 const isNumOrPxType = (v) => v === _value_types_numbers_index_mjs__WEBPACK_IMPORTED_MODULE_0__.number || v === _value_types_numbers_units_mjs__WEBPACK_IMPORTED_MODULE_1__.px;
-const getPosFromMatrix = (matrix, pos) => parseFloat(matrix.split(", ")[pos]);
-const getTranslateFromMatrix = (pos2, pos3) => (_bbox, { transform }) => {
-    if (transform === "none" || !transform)
-        return 0;
-    const matrix3d = transform.match(/^matrix3d\((.+)\)$/u);
-    if (matrix3d) {
-        return getPosFromMatrix(matrix3d[1], pos3);
-    }
-    else {
-        const matrix = transform.match(/^matrix\((.+)\)$/u);
-        if (matrix) {
-            return getPosFromMatrix(matrix[1], pos2);
-        }
-        else {
-            return 0;
-        }
-    }
-};
 const transformKeys = new Set(["x", "y", "z"]);
 const nonTranslationalTransformKeys = _html_utils_keys_transform_mjs__WEBPACK_IMPORTED_MODULE_2__.transformPropOrder.filter((key) => !transformKeys.has(key));
 function removeNonTranslationalTransform(visualElement) {
@@ -10138,8 +9751,8 @@ const positionalValues = {
     bottom: ({ y }, { top }) => parseFloat(top) + (y.max - y.min),
     right: ({ x }, { left }) => parseFloat(left) + (x.max - x.min),
     // Transform
-    x: getTranslateFromMatrix(4, 13),
-    y: getTranslateFromMatrix(5, 14),
+    x: (_bbox, { transform }) => (0,_html_utils_parse_transform_mjs__WEBPACK_IMPORTED_MODULE_3__.parseValueFromTransform)(transform, "x"),
+    y: (_bbox, { transform }) => (0,_html_utils_parse_transform_mjs__WEBPACK_IMPORTED_MODULE_3__.parseValueFromTransform)(transform, "y"),
 };
 // Alias translate longform names
 positionalValues.translateX = positionalValues.x;
@@ -10553,9 +10166,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _projection_utils_measure_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../projection/utils/measure.mjs */ "./node_modules/framer-motion/dist/es/projection/utils/measure.mjs");
 /* harmony import */ var _dom_DOMVisualElement_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../dom/DOMVisualElement.mjs */ "./node_modules/framer-motion/dist/es/render/dom/DOMVisualElement.mjs");
 /* harmony import */ var _dom_utils_is_css_variable_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../dom/utils/is-css-variable.mjs */ "./node_modules/framer-motion/dist/es/render/dom/utils/is-css-variable.mjs");
-/* harmony import */ var _dom_value_types_defaults_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../dom/value-types/defaults.mjs */ "./node_modules/framer-motion/dist/es/render/dom/value-types/defaults.mjs");
 /* harmony import */ var _utils_build_styles_mjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./utils/build-styles.mjs */ "./node_modules/framer-motion/dist/es/render/html/utils/build-styles.mjs");
 /* harmony import */ var _utils_keys_transform_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/keys-transform.mjs */ "./node_modules/framer-motion/dist/es/render/html/utils/keys-transform.mjs");
+/* harmony import */ var _utils_parse_transform_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils/parse-transform.mjs */ "./node_modules/framer-motion/dist/es/render/html/utils/parse-transform.mjs");
 /* harmony import */ var _utils_render_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils/render.mjs */ "./node_modules/framer-motion/dist/es/render/html/utils/render.mjs");
 /* harmony import */ var _utils_scrape_motion_values_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./utils/scrape-motion-values.mjs */ "./node_modules/framer-motion/dist/es/render/html/utils/scrape-motion-values.mjs");
 
@@ -10578,8 +10191,7 @@ class HTMLVisualElement extends _dom_DOMVisualElement_mjs__WEBPACK_IMPORTED_MODU
     }
     readValueFromInstance(instance, key) {
         if (_utils_keys_transform_mjs__WEBPACK_IMPORTED_MODULE_2__.transformProps.has(key)) {
-            const defaultType = (0,_dom_value_types_defaults_mjs__WEBPACK_IMPORTED_MODULE_3__.getDefaultValueType)(key);
-            return defaultType ? defaultType.default || 0 : 0;
+            return (0,_utils_parse_transform_mjs__WEBPACK_IMPORTED_MODULE_3__.readTransformValue)(instance, key);
         }
         else {
             const computedStyle = getComputedStyle(instance);
@@ -11021,6 +10633,105 @@ function makeNoneKeyframesAnimatable(unresolvedKeyframes, noneKeyframeIndexes, n
 
 /***/ }),
 
+/***/ "./node_modules/framer-motion/dist/es/render/html/utils/parse-transform.mjs":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/framer-motion/dist/es/render/html/utils/parse-transform.mjs ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   parseValueFromTransform: () => (/* binding */ parseValueFromTransform),
+/* harmony export */   readTransformValue: () => (/* binding */ readTransformValue)
+/* harmony export */ });
+const radToDeg = (rad) => (rad * 180) / Math.PI;
+const rotate = (v) => {
+    const angle = radToDeg(Math.atan2(v[1], v[0]));
+    return rebaseAngle(angle);
+};
+const matrix2dParsers = {
+    x: 4,
+    y: 5,
+    translateX: 4,
+    translateY: 5,
+    scaleX: 0,
+    scaleY: 3,
+    scale: (v) => (Math.abs(v[0]) + Math.abs(v[3])) / 2,
+    rotate,
+    rotateZ: rotate,
+    skewX: (v) => radToDeg(Math.atan(v[1])),
+    skewY: (v) => radToDeg(Math.atan(v[2])),
+    skew: (v) => (Math.abs(v[1]) + Math.abs(v[2])) / 2,
+};
+const rebaseAngle = (angle) => {
+    angle = angle % 360;
+    if (angle < 0)
+        angle += 360;
+    return angle;
+};
+const rotateZ = rotate;
+const scaleX = (v) => Math.sqrt(v[0] * v[0] + v[1] * v[1]);
+const scaleY = (v) => Math.sqrt(v[4] * v[4] + v[5] * v[5]);
+const matrix3dParsers = {
+    x: 12,
+    y: 13,
+    z: 14,
+    translateX: 12,
+    translateY: 13,
+    translateZ: 14,
+    scaleX,
+    scaleY,
+    scale: (v) => (scaleX(v) + scaleY(v)) / 2,
+    rotateX: (v) => rebaseAngle(radToDeg(Math.atan2(v[6], v[5]))),
+    rotateY: (v) => rebaseAngle(radToDeg(Math.atan2(-v[2], v[0]))),
+    rotateZ,
+    rotate: rotateZ,
+    skewX: (v) => radToDeg(Math.atan(v[4])),
+    skewY: (v) => radToDeg(Math.atan(v[1])),
+    skew: (v) => (Math.abs(v[1]) + Math.abs(v[4])) / 2,
+};
+function defaultTransformValue(name) {
+    return name.includes("scale") ? 1 : 0;
+}
+function parseValueFromTransform(transform, name) {
+    if (!transform || transform === "none") {
+        return defaultTransformValue(name);
+    }
+    const matrix3dMatch = transform.match(/^matrix3d\(([-\d.e\s,]+)\)$/u);
+    let parsers;
+    let match;
+    if (matrix3dMatch) {
+        parsers = matrix3dParsers;
+        match = matrix3dMatch;
+    }
+    else {
+        const matrix2dMatch = transform.match(/^matrix\(([-\d.e\s,]+)\)$/u);
+        parsers = matrix2dParsers;
+        match = matrix2dMatch;
+    }
+    if (!match) {
+        return defaultTransformValue(name);
+    }
+    const valueParser = parsers[name];
+    const values = match[1].split(",").map(convertTransformToNumber);
+    return typeof valueParser === "function"
+        ? valueParser(values)
+        : values[valueParser];
+}
+const readTransformValue = (instance, name) => {
+    const { transform = "none" } = getComputedStyle(instance);
+    return parseValueFromTransform(transform, name);
+};
+function convertTransformToNumber(value) {
+    return parseFloat(value.trim());
+}
+
+
+
+
+/***/ }),
+
 /***/ "./node_modules/framer-motion/dist/es/render/html/utils/render.mjs":
 /*!*************************************************************************!*\
   !*** ./node_modules/framer-motion/dist/es/render/html/utils/render.mjs ***!
@@ -11111,18 +10822,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   SVGVisualElement: () => (/* binding */ SVGVisualElement)
 /* harmony export */ });
-/* harmony import */ var _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../frameloop/frame.mjs */ "./node_modules/framer-motion/dist/es/frameloop/frame.mjs");
-/* harmony import */ var _projection_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../projection/geometry/models.mjs */ "./node_modules/framer-motion/dist/es/projection/geometry/models.mjs");
-/* harmony import */ var _dom_DOMVisualElement_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../dom/DOMVisualElement.mjs */ "./node_modules/framer-motion/dist/es/render/dom/DOMVisualElement.mjs");
-/* harmony import */ var _dom_utils_camel_to_dash_mjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../dom/utils/camel-to-dash.mjs */ "./node_modules/framer-motion/dist/es/render/dom/utils/camel-to-dash.mjs");
-/* harmony import */ var _dom_value_types_defaults_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../dom/value-types/defaults.mjs */ "./node_modules/framer-motion/dist/es/render/dom/value-types/defaults.mjs");
-/* harmony import */ var _html_utils_keys_transform_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../html/utils/keys-transform.mjs */ "./node_modules/framer-motion/dist/es/render/html/utils/keys-transform.mjs");
+/* harmony import */ var motion_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-dom */ "./node_modules/motion-dom/dist/es/index.mjs");
+/* harmony import */ var _projection_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../projection/geometry/models.mjs */ "./node_modules/framer-motion/dist/es/projection/geometry/models.mjs");
+/* harmony import */ var _dom_DOMVisualElement_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../dom/DOMVisualElement.mjs */ "./node_modules/framer-motion/dist/es/render/dom/DOMVisualElement.mjs");
+/* harmony import */ var _dom_utils_camel_to_dash_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../dom/utils/camel-to-dash.mjs */ "./node_modules/framer-motion/dist/es/render/dom/utils/camel-to-dash.mjs");
+/* harmony import */ var _dom_value_types_defaults_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../dom/value-types/defaults.mjs */ "./node_modules/framer-motion/dist/es/render/dom/value-types/defaults.mjs");
+/* harmony import */ var _html_utils_keys_transform_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../html/utils/keys-transform.mjs */ "./node_modules/framer-motion/dist/es/render/html/utils/keys-transform.mjs");
 /* harmony import */ var _utils_build_attrs_mjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./utils/build-attrs.mjs */ "./node_modules/framer-motion/dist/es/render/svg/utils/build-attrs.mjs");
-/* harmony import */ var _utils_camel_case_attrs_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./utils/camel-case-attrs.mjs */ "./node_modules/framer-motion/dist/es/render/svg/utils/camel-case-attrs.mjs");
+/* harmony import */ var _utils_camel_case_attrs_mjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./utils/camel-case-attrs.mjs */ "./node_modules/framer-motion/dist/es/render/svg/utils/camel-case-attrs.mjs");
 /* harmony import */ var _utils_is_svg_tag_mjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./utils/is-svg-tag.mjs */ "./node_modules/framer-motion/dist/es/render/svg/utils/is-svg-tag.mjs");
-/* harmony import */ var _utils_measure_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/measure.mjs */ "./node_modules/framer-motion/dist/es/render/svg/utils/measure.mjs");
+/* harmony import */ var _utils_measure_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils/measure.mjs */ "./node_modules/framer-motion/dist/es/render/svg/utils/measure.mjs");
 /* harmony import */ var _utils_render_mjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./utils/render.mjs */ "./node_modules/framer-motion/dist/es/render/svg/utils/render.mjs");
-/* harmony import */ var _utils_scrape_motion_values_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./utils/scrape-motion-values.mjs */ "./node_modules/framer-motion/dist/es/render/svg/utils/scrape-motion-values.mjs");
+/* harmony import */ var _utils_scrape_motion_values_mjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./utils/scrape-motion-values.mjs */ "./node_modules/framer-motion/dist/es/render/svg/utils/scrape-motion-values.mjs");
 
 
 
@@ -11136,15 +10847,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-class SVGVisualElement extends _dom_DOMVisualElement_mjs__WEBPACK_IMPORTED_MODULE_0__.DOMVisualElement {
+class SVGVisualElement extends _dom_DOMVisualElement_mjs__WEBPACK_IMPORTED_MODULE_1__.DOMVisualElement {
     constructor() {
         super(...arguments);
         this.type = "svg";
         this.isSVGTag = false;
-        this.measureInstanceViewportBox = _projection_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_1__.createBox;
+        this.measureInstanceViewportBox = _projection_geometry_models_mjs__WEBPACK_IMPORTED_MODULE_2__.createBox;
         this.updateDimensions = () => {
             if (this.current && !this.renderState.dimensions) {
-                (0,_utils_measure_mjs__WEBPACK_IMPORTED_MODULE_2__.updateSVGDimensions)(this.current, this.renderState);
+                (0,_utils_measure_mjs__WEBPACK_IMPORTED_MODULE_3__.updateSVGDimensions)(this.current, this.renderState);
             }
         };
     }
@@ -11152,19 +10863,19 @@ class SVGVisualElement extends _dom_DOMVisualElement_mjs__WEBPACK_IMPORTED_MODUL
         return props[key];
     }
     readValueFromInstance(instance, key) {
-        if (_html_utils_keys_transform_mjs__WEBPACK_IMPORTED_MODULE_3__.transformProps.has(key)) {
-            const defaultType = (0,_dom_value_types_defaults_mjs__WEBPACK_IMPORTED_MODULE_4__.getDefaultValueType)(key);
+        if (_html_utils_keys_transform_mjs__WEBPACK_IMPORTED_MODULE_4__.transformProps.has(key)) {
+            const defaultType = (0,_dom_value_types_defaults_mjs__WEBPACK_IMPORTED_MODULE_5__.getDefaultValueType)(key);
             return defaultType ? defaultType.default || 0 : 0;
         }
-        key = !_utils_camel_case_attrs_mjs__WEBPACK_IMPORTED_MODULE_5__.camelCaseAttributes.has(key) ? (0,_dom_utils_camel_to_dash_mjs__WEBPACK_IMPORTED_MODULE_6__.camelToDash)(key) : key;
+        key = !_utils_camel_case_attrs_mjs__WEBPACK_IMPORTED_MODULE_6__.camelCaseAttributes.has(key) ? (0,_dom_utils_camel_to_dash_mjs__WEBPACK_IMPORTED_MODULE_7__.camelToDash)(key) : key;
         return instance.getAttribute(key);
     }
     scrapeMotionValuesFromProps(props, prevProps, visualElement) {
-        return (0,_utils_scrape_motion_values_mjs__WEBPACK_IMPORTED_MODULE_7__.scrapeMotionValuesFromProps)(props, prevProps, visualElement);
+        return (0,_utils_scrape_motion_values_mjs__WEBPACK_IMPORTED_MODULE_8__.scrapeMotionValuesFromProps)(props, prevProps, visualElement);
     }
     onBindTransform() {
         if (this.current && !this.renderState.dimensions) {
-            _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_8__.frame.postRender(this.updateDimensions);
+            motion_dom__WEBPACK_IMPORTED_MODULE_0__.frame.postRender(this.updateDimensions);
         }
     }
     build(renderState, latestValues, props) {
@@ -11195,15 +10906,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   svgMotionConfig: () => (/* binding */ svgMotionConfig)
 /* harmony export */ });
-/* harmony import */ var _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../frameloop/frame.mjs */ "./node_modules/framer-motion/dist/es/frameloop/frame.mjs");
-/* harmony import */ var _motion_utils_use_visual_state_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../motion/utils/use-visual-state.mjs */ "./node_modules/framer-motion/dist/es/motion/utils/use-visual-state.mjs");
-/* harmony import */ var _html_utils_keys_transform_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../html/utils/keys-transform.mjs */ "./node_modules/framer-motion/dist/es/render/html/utils/keys-transform.mjs");
+/* harmony import */ var motion_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-dom */ "./node_modules/motion-dom/dist/es/index.mjs");
+/* harmony import */ var _motion_utils_use_visual_state_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../motion/utils/use-visual-state.mjs */ "./node_modules/framer-motion/dist/es/motion/utils/use-visual-state.mjs");
+/* harmony import */ var _html_utils_keys_transform_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../html/utils/keys-transform.mjs */ "./node_modules/framer-motion/dist/es/render/html/utils/keys-transform.mjs");
 /* harmony import */ var _utils_build_attrs_mjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./utils/build-attrs.mjs */ "./node_modules/framer-motion/dist/es/render/svg/utils/build-attrs.mjs");
-/* harmony import */ var _utils_create_render_state_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/create-render-state.mjs */ "./node_modules/framer-motion/dist/es/render/svg/utils/create-render-state.mjs");
+/* harmony import */ var _utils_create_render_state_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils/create-render-state.mjs */ "./node_modules/framer-motion/dist/es/render/svg/utils/create-render-state.mjs");
 /* harmony import */ var _utils_is_svg_tag_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./utils/is-svg-tag.mjs */ "./node_modules/framer-motion/dist/es/render/svg/utils/is-svg-tag.mjs");
 /* harmony import */ var _utils_measure_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./utils/measure.mjs */ "./node_modules/framer-motion/dist/es/render/svg/utils/measure.mjs");
 /* harmony import */ var _utils_render_mjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./utils/render.mjs */ "./node_modules/framer-motion/dist/es/render/svg/utils/render.mjs");
-/* harmony import */ var _utils_scrape_motion_values_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils/scrape-motion-values.mjs */ "./node_modules/framer-motion/dist/es/render/svg/utils/scrape-motion-values.mjs");
+/* harmony import */ var _utils_scrape_motion_values_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/scrape-motion-values.mjs */ "./node_modules/framer-motion/dist/es/render/svg/utils/scrape-motion-values.mjs");
 
 
 
@@ -11216,16 +10927,16 @@ __webpack_require__.r(__webpack_exports__);
 
 const layoutProps = ["x", "y", "width", "height", "cx", "cy", "r"];
 const svgMotionConfig = {
-    useVisualState: (0,_motion_utils_use_visual_state_mjs__WEBPACK_IMPORTED_MODULE_0__.makeUseVisualState)({
-        scrapeMotionValuesFromProps: _utils_scrape_motion_values_mjs__WEBPACK_IMPORTED_MODULE_1__.scrapeMotionValuesFromProps,
-        createRenderState: _utils_create_render_state_mjs__WEBPACK_IMPORTED_MODULE_2__.createSvgRenderState,
+    useVisualState: (0,_motion_utils_use_visual_state_mjs__WEBPACK_IMPORTED_MODULE_1__.makeUseVisualState)({
+        scrapeMotionValuesFromProps: _utils_scrape_motion_values_mjs__WEBPACK_IMPORTED_MODULE_2__.scrapeMotionValuesFromProps,
+        createRenderState: _utils_create_render_state_mjs__WEBPACK_IMPORTED_MODULE_3__.createSvgRenderState,
         onUpdate: ({ props, prevProps, current, renderState, latestValues, }) => {
             if (!current)
                 return;
             let hasTransform = !!props.drag;
             if (!hasTransform) {
                 for (const key in latestValues) {
-                    if (_html_utils_keys_transform_mjs__WEBPACK_IMPORTED_MODULE_3__.transformProps.has(key)) {
+                    if (_html_utils_keys_transform_mjs__WEBPACK_IMPORTED_MODULE_4__.transformProps.has(key)) {
                         hasTransform = true;
                         break;
                     }
@@ -11249,9 +10960,9 @@ const svgMotionConfig = {
             }
             if (!needsMeasure)
                 return;
-            _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_4__.frame.read(() => {
+            motion_dom__WEBPACK_IMPORTED_MODULE_0__.frame.read(() => {
                 (0,_utils_measure_mjs__WEBPACK_IMPORTED_MODULE_5__.updateSVGDimensions)(current, renderState);
-                _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_4__.frame.render(() => {
+                motion_dom__WEBPACK_IMPORTED_MODULE_0__.frame.render(() => {
                     (0,_utils_build_attrs_mjs__WEBPACK_IMPORTED_MODULE_6__.buildSVGAttrs)(renderState, latestValues, (0,_utils_is_svg_tag_mjs__WEBPACK_IMPORTED_MODULE_7__.isSVGTag)(current.tagName), props.transformTemplate);
                     (0,_utils_render_mjs__WEBPACK_IMPORTED_MODULE_8__.renderSVG)(current, renderState);
                 });
@@ -11709,8 +11420,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   KeyframeResolver: () => (/* binding */ KeyframeResolver),
 /* harmony export */   flushKeyframeResolvers: () => (/* binding */ flushKeyframeResolvers)
 /* harmony export */ });
-/* harmony import */ var _dom_utils_unit_conversion_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../dom/utils/unit-conversion.mjs */ "./node_modules/framer-motion/dist/es/render/dom/utils/unit-conversion.mjs");
-/* harmony import */ var _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../frameloop/frame.mjs */ "./node_modules/framer-motion/dist/es/frameloop/frame.mjs");
+/* harmony import */ var motion_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-dom */ "./node_modules/motion-dom/dist/es/index.mjs");
+/* harmony import */ var _dom_utils_unit_conversion_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../dom/utils/unit-conversion.mjs */ "./node_modules/framer-motion/dist/es/render/dom/utils/unit-conversion.mjs");
 
 
 
@@ -11727,7 +11438,7 @@ function measureAllKeyframes() {
          * If we're measuring elements we want to remove bounding box-changing transforms.
          */
         elementsToMeasure.forEach((element) => {
-            const removedTransforms = (0,_dom_utils_unit_conversion_mjs__WEBPACK_IMPORTED_MODULE_0__.removeNonTranslationalTransform)(element);
+            const removedTransforms = (0,_dom_utils_unit_conversion_mjs__WEBPACK_IMPORTED_MODULE_1__.removeNonTranslationalTransform)(element);
             if (!removedTransforms.length)
                 return;
             transformsToRestore.set(element, removedTransforms);
@@ -11808,8 +11519,8 @@ class KeyframeResolver {
             toResolve.add(this);
             if (!isScheduled) {
                 isScheduled = true;
-                _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_1__.frame.read(readAllKeyframes);
-                _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_1__.frame.resolveKeyframes(measureAllKeyframes);
+                motion_dom__WEBPACK_IMPORTED_MODULE_0__.frame.read(readAllKeyframes);
+                motion_dom__WEBPACK_IMPORTED_MODULE_0__.frame.resolveKeyframes(measureAllKeyframes);
             }
         }
         else {
@@ -12276,7 +11987,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   FlatTree: () => (/* binding */ FlatTree)
 /* harmony export */ });
-/* harmony import */ var _utils_array_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils/array.mjs */ "./node_modules/framer-motion/dist/es/utils/array.mjs");
+/* harmony import */ var motion_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-utils */ "./node_modules/motion-utils/dist/es/index.mjs");
 /* harmony import */ var _compare_by_depth_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./compare-by-depth.mjs */ "./node_modules/framer-motion/dist/es/render/utils/compare-by-depth.mjs");
 
 
@@ -12287,11 +11998,11 @@ class FlatTree {
         this.isDirty = false;
     }
     add(child) {
-        (0,_utils_array_mjs__WEBPACK_IMPORTED_MODULE_0__.addUniqueItem)(this.children, child);
+        (0,motion_utils__WEBPACK_IMPORTED_MODULE_0__.addUniqueItem)(this.children, child);
         this.isDirty = true;
     }
     remove(child) {
-        (0,_utils_array_mjs__WEBPACK_IMPORTED_MODULE_0__.removeItem)(this.children, child);
+        (0,motion_utils__WEBPACK_IMPORTED_MODULE_0__.removeItem)(this.children, child);
         this.isDirty = true;
     }
     forEach(callback) {
@@ -12417,9 +12128,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   updateMotionValuesFromProps: () => (/* binding */ updateMotionValuesFromProps)
 /* harmony export */ });
-/* harmony import */ var _utils_warn_once_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/warn-once.mjs */ "./node_modules/framer-motion/dist/es/utils/warn-once.mjs");
-/* harmony import */ var _value_index_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../value/index.mjs */ "./node_modules/framer-motion/dist/es/value/index.mjs");
-/* harmony import */ var _value_utils_is_motion_value_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../value/utils/is-motion-value.mjs */ "./node_modules/framer-motion/dist/es/value/utils/is-motion-value.mjs");
+/* harmony import */ var motion_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-dom */ "./node_modules/motion-dom/dist/es/index.mjs");
+/* harmony import */ var motion_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! motion-utils */ "./node_modules/motion-utils/dist/es/index.mjs");
+/* harmony import */ var _value_utils_is_motion_value_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../value/utils/is-motion-value.mjs */ "./node_modules/framer-motion/dist/es/value/utils/is-motion-value.mjs");
 
 
 
@@ -12428,7 +12139,7 @@ function updateMotionValuesFromProps(element, next, prev) {
     for (const key in next) {
         const nextValue = next[key];
         const prevValue = prev[key];
-        if ((0,_value_utils_is_motion_value_mjs__WEBPACK_IMPORTED_MODULE_0__.isMotionValue)(nextValue)) {
+        if ((0,_value_utils_is_motion_value_mjs__WEBPACK_IMPORTED_MODULE_2__.isMotionValue)(nextValue)) {
             /**
              * If this is a motion value found in props or style, we want to add it
              * to our visual element's motion value map.
@@ -12439,15 +12150,15 @@ function updateMotionValuesFromProps(element, next, prev) {
              * and warn against mismatches.
              */
             if (true) {
-                (0,_utils_warn_once_mjs__WEBPACK_IMPORTED_MODULE_1__.warnOnce)(nextValue.version === "12.4.10", `Attempting to mix Motion versions ${nextValue.version} with 12.4.10 may not work as expected.`);
+                (0,motion_utils__WEBPACK_IMPORTED_MODULE_1__.warnOnce)(nextValue.version === "12.5.0", `Attempting to mix Motion versions ${nextValue.version} with 12.5.0 may not work as expected.`);
             }
         }
-        else if ((0,_value_utils_is_motion_value_mjs__WEBPACK_IMPORTED_MODULE_0__.isMotionValue)(prevValue)) {
+        else if ((0,_value_utils_is_motion_value_mjs__WEBPACK_IMPORTED_MODULE_2__.isMotionValue)(prevValue)) {
             /**
              * If we're swapping from a motion value to a static value,
              * create a new motion value from that
              */
-            element.addValue(key, (0,_value_index_mjs__WEBPACK_IMPORTED_MODULE_2__.motionValue)(nextValue, { owner: element }));
+            element.addValue(key, (0,motion_dom__WEBPACK_IMPORTED_MODULE_0__.motionValue)(nextValue, { owner: element }));
         }
         else if (prevValue !== nextValue) {
             /**
@@ -12466,7 +12177,7 @@ function updateMotionValuesFromProps(element, next, prev) {
             }
             else {
                 const latestValue = element.getStaticValue(key);
-                element.addValue(key, (0,_value_index_mjs__WEBPACK_IMPORTED_MODULE_2__.motionValue)(latestValue !== undefined ? latestValue : nextValue, { owner: element }));
+                element.addValue(key, (0,motion_dom__WEBPACK_IMPORTED_MODULE_0__.motionValue)(latestValue !== undefined ? latestValue : nextValue, { owner: element }));
             }
         }
     }
@@ -12569,8 +12280,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   setTarget: () => (/* binding */ setTarget)
 /* harmony export */ });
+/* harmony import */ var motion_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-dom */ "./node_modules/motion-dom/dist/es/index.mjs");
 /* harmony import */ var _utils_resolve_value_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/resolve-value.mjs */ "./node_modules/framer-motion/dist/es/utils/resolve-value.mjs");
-/* harmony import */ var _value_index_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../value/index.mjs */ "./node_modules/framer-motion/dist/es/value/index.mjs");
 /* harmony import */ var _resolve_dynamic_variants_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./resolve-dynamic-variants.mjs */ "./node_modules/framer-motion/dist/es/render/utils/resolve-dynamic-variants.mjs");
 
 
@@ -12585,7 +12296,7 @@ function setMotionValue(visualElement, key, value) {
         visualElement.getValue(key).set(value);
     }
     else {
-        visualElement.addValue(key, (0,_value_index_mjs__WEBPACK_IMPORTED_MODULE_0__.motionValue)(value));
+        visualElement.addValue(key, (0,motion_dom__WEBPACK_IMPORTED_MODULE_0__.motionValue)(value));
     }
 }
 function setTarget(visualElement, definition) {
@@ -12631,108 +12342,6 @@ const variantProps = ["initial", ...variantPriorityOrder];
 
 /***/ }),
 
-/***/ "./node_modules/framer-motion/dist/es/stats/animation-count.mjs":
-/*!**********************************************************************!*\
-  !*** ./node_modules/framer-motion/dist/es/stats/animation-count.mjs ***!
-  \**********************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   activeAnimations: () => (/* binding */ activeAnimations)
-/* harmony export */ });
-const activeAnimations = {
-    layout: 0,
-    mainThread: 0,
-    waapi: 0,
-};
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/framer-motion/dist/es/stats/buffer.mjs":
-/*!*************************************************************!*\
-  !*** ./node_modules/framer-motion/dist/es/stats/buffer.mjs ***!
-  \*************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   statsBuffer: () => (/* binding */ statsBuffer)
-/* harmony export */ });
-const statsBuffer = {
-    value: null,
-    addProjectionMetrics: null,
-};
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/framer-motion/dist/es/utils/GlobalConfig.mjs":
-/*!*******************************************************************!*\
-  !*** ./node_modules/framer-motion/dist/es/utils/GlobalConfig.mjs ***!
-  \*******************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   MotionGlobalConfig: () => (/* binding */ MotionGlobalConfig)
-/* harmony export */ });
-const MotionGlobalConfig = {
-    skipAnimations: false,
-    useManualTiming: false,
-};
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/framer-motion/dist/es/utils/array.mjs":
-/*!************************************************************!*\
-  !*** ./node_modules/framer-motion/dist/es/utils/array.mjs ***!
-  \************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   addUniqueItem: () => (/* binding */ addUniqueItem),
-/* harmony export */   moveItem: () => (/* binding */ moveItem),
-/* harmony export */   removeItem: () => (/* binding */ removeItem)
-/* harmony export */ });
-function addUniqueItem(arr, item) {
-    if (arr.indexOf(item) === -1)
-        arr.push(item);
-}
-function removeItem(arr, item) {
-    const index = arr.indexOf(item);
-    if (index > -1)
-        arr.splice(index, 1);
-}
-// Adapted from array-move
-function moveItem([...arr], fromIndex, toIndex) {
-    const startIndex = fromIndex < 0 ? arr.length + fromIndex : fromIndex;
-    if (startIndex >= 0 && startIndex < arr.length) {
-        const endIndex = toIndex < 0 ? arr.length + toIndex : toIndex;
-        const [item] = arr.splice(fromIndex, 1);
-        arr.splice(endIndex, 0, item);
-    }
-    return arr;
-}
-
-
-
-
-/***/ }),
-
 /***/ "./node_modules/framer-motion/dist/es/utils/clamp.mjs":
 /*!************************************************************!*\
   !*** ./node_modules/framer-motion/dist/es/utils/clamp.mjs ***!
@@ -12769,10 +12378,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   delay: () => (/* binding */ delay),
 /* harmony export */   delayInSeconds: () => (/* binding */ delayInSeconds)
 /* harmony export */ });
-/* harmony import */ var motion_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-utils */ "./node_modules/motion-utils/dist/es/index.mjs");
-/* harmony import */ var _frameloop_sync_time_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../frameloop/sync-time.mjs */ "./node_modules/framer-motion/dist/es/frameloop/sync-time.mjs");
-/* harmony import */ var _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../frameloop/frame.mjs */ "./node_modules/framer-motion/dist/es/frameloop/frame.mjs");
-
+/* harmony import */ var motion_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-dom */ "./node_modules/motion-dom/dist/es/index.mjs");
+/* harmony import */ var motion_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! motion-utils */ "./node_modules/motion-utils/dist/es/index.mjs");
 
 
 
@@ -12780,19 +12387,19 @@ __webpack_require__.r(__webpack_exports__);
  * Timeout defined in ms
  */
 function delay(callback, timeout) {
-    const start = _frameloop_sync_time_mjs__WEBPACK_IMPORTED_MODULE_1__.time.now();
+    const start = motion_dom__WEBPACK_IMPORTED_MODULE_0__.time.now();
     const checkElapsed = ({ timestamp }) => {
         const elapsed = timestamp - start;
         if (elapsed >= timeout) {
-            (0,_frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_2__.cancelFrame)(checkElapsed);
+            (0,motion_dom__WEBPACK_IMPORTED_MODULE_0__.cancelFrame)(checkElapsed);
             callback(elapsed - timeout);
         }
     };
-    _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_2__.frame.read(checkElapsed, true);
-    return () => (0,_frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_2__.cancelFrame)(checkElapsed);
+    motion_dom__WEBPACK_IMPORTED_MODULE_0__.frame.read(checkElapsed, true);
+    return () => (0,motion_dom__WEBPACK_IMPORTED_MODULE_0__.cancelFrame)(checkElapsed);
 }
 function delayInSeconds(callback, timeout) {
-    return delay(callback, (0,motion_utils__WEBPACK_IMPORTED_MODULE_0__.secondsToMilliseconds)(timeout));
+    return delay(callback, (0,motion_utils__WEBPACK_IMPORTED_MODULE_1__.secondsToMilliseconds)(timeout));
 }
 
 
@@ -12819,6 +12426,27 @@ function distance2D(a, b) {
     const yDelta = distance(a.y, b.y);
     return Math.sqrt(xDelta ** 2 + yDelta ** 2);
 }
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/framer-motion/dist/es/utils/get-context-window.mjs":
+/*!*************************************************************************!*\
+  !*** ./node_modules/framer-motion/dist/es/utils/get-context-window.mjs ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getContextWindow: () => (/* binding */ getContextWindow)
+/* harmony export */ });
+// Fixes https://github.com/motiondivision/motion/issues/2270
+const getContextWindow = ({ current }) => {
+    return current ? current.ownerDocument.defaultView : null;
+};
 
 
 
@@ -13588,62 +13216,6 @@ function shallowCompare(next, prev) {
 
 /***/ }),
 
-/***/ "./node_modules/framer-motion/dist/es/utils/subscription-manager.mjs":
-/*!***************************************************************************!*\
-  !*** ./node_modules/framer-motion/dist/es/utils/subscription-manager.mjs ***!
-  \***************************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   SubscriptionManager: () => (/* binding */ SubscriptionManager)
-/* harmony export */ });
-/* harmony import */ var _array_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./array.mjs */ "./node_modules/framer-motion/dist/es/utils/array.mjs");
-
-
-class SubscriptionManager {
-    constructor() {
-        this.subscriptions = [];
-    }
-    add(handler) {
-        (0,_array_mjs__WEBPACK_IMPORTED_MODULE_0__.addUniqueItem)(this.subscriptions, handler);
-        return () => (0,_array_mjs__WEBPACK_IMPORTED_MODULE_0__.removeItem)(this.subscriptions, handler);
-    }
-    notify(a, b, c) {
-        const numSubscriptions = this.subscriptions.length;
-        if (!numSubscriptions)
-            return;
-        if (numSubscriptions === 1) {
-            /**
-             * If there's only a single handler we can just call it without invoking a loop.
-             */
-            this.subscriptions[0](a, b, c);
-        }
-        else {
-            for (let i = 0; i < numSubscriptions; i++) {
-                /**
-                 * Check whether the handler exists before firing as it's possible
-                 * the subscriptions were modified during this loop running.
-                 */
-                const handler = this.subscriptions[i];
-                handler && handler(a, b, c);
-            }
-        }
-    }
-    getSize() {
-        return this.subscriptions.length;
-    }
-    clear() {
-        this.subscriptions.length = 0;
-    }
-}
-
-
-
-
-/***/ }),
-
 /***/ "./node_modules/framer-motion/dist/es/utils/use-constant.mjs":
 /*!*******************************************************************!*\
   !*** ./node_modules/framer-motion/dist/es/utils/use-constant.mjs ***!
@@ -13715,399 +13287,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const useIsomorphicLayoutEffect = _is_browser_mjs__WEBPACK_IMPORTED_MODULE_1__.isBrowser ? react__WEBPACK_IMPORTED_MODULE_0__.useLayoutEffect : react__WEBPACK_IMPORTED_MODULE_0__.useEffect;
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/framer-motion/dist/es/utils/velocity-per-second.mjs":
-/*!**************************************************************************!*\
-  !*** ./node_modules/framer-motion/dist/es/utils/velocity-per-second.mjs ***!
-  \**************************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   velocityPerSecond: () => (/* binding */ velocityPerSecond)
-/* harmony export */ });
-/*
-  Convert velocity into velocity per second
-
-  @param [number]: Unit per frame
-  @param [number]: Frame duration in ms
-*/
-function velocityPerSecond(velocity, frameDuration) {
-    return frameDuration ? velocity * (1000 / frameDuration) : 0;
-}
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/framer-motion/dist/es/utils/warn-once.mjs":
-/*!****************************************************************!*\
-  !*** ./node_modules/framer-motion/dist/es/utils/warn-once.mjs ***!
-  \****************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   warnOnce: () => (/* binding */ warnOnce)
-/* harmony export */ });
-const warned = new Set();
-function warnOnce(condition, message, element) {
-    if (condition || warned.has(message))
-        return;
-    console.warn(message);
-    if (element)
-        console.warn(element);
-    warned.add(message);
-}
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/framer-motion/dist/es/value/index.mjs":
-/*!************************************************************!*\
-  !*** ./node_modules/framer-motion/dist/es/value/index.mjs ***!
-  \************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   MotionValue: () => (/* binding */ MotionValue),
-/* harmony export */   collectMotionValues: () => (/* binding */ collectMotionValues),
-/* harmony export */   motionValue: () => (/* binding */ motionValue)
-/* harmony export */ });
-/* harmony import */ var _frameloop_sync_time_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../frameloop/sync-time.mjs */ "./node_modules/framer-motion/dist/es/frameloop/sync-time.mjs");
-/* harmony import */ var _utils_subscription_manager_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/subscription-manager.mjs */ "./node_modules/framer-motion/dist/es/utils/subscription-manager.mjs");
-/* harmony import */ var _utils_velocity_per_second_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/velocity-per-second.mjs */ "./node_modules/framer-motion/dist/es/utils/velocity-per-second.mjs");
-/* harmony import */ var _utils_warn_once_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/warn-once.mjs */ "./node_modules/framer-motion/dist/es/utils/warn-once.mjs");
-/* harmony import */ var _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../frameloop/frame.mjs */ "./node_modules/framer-motion/dist/es/frameloop/frame.mjs");
-
-
-
-
-
-
-/**
- * Maximum time between the value of two frames, beyond which we
- * assume the velocity has since been 0.
- */
-const MAX_VELOCITY_DELTA = 30;
-const isFloat = (value) => {
-    return !isNaN(parseFloat(value));
-};
-const collectMotionValues = {
-    current: undefined,
-};
-/**
- * `MotionValue` is used to track the state and velocity of motion values.
- *
- * @public
- */
-class MotionValue {
-    /**
-     * @param init - The initiating value
-     * @param config - Optional configuration options
-     *
-     * -  `transformer`: A function to transform incoming values with.
-     *
-     * @internal
-     */
-    constructor(init, options = {}) {
-        /**
-         * This will be replaced by the build step with the latest version number.
-         * When MotionValues are provided to motion components, warn if versions are mixed.
-         */
-        this.version = "12.4.10";
-        /**
-         * Tracks whether this value can output a velocity. Currently this is only true
-         * if the value is numerical, but we might be able to widen the scope here and support
-         * other value types.
-         *
-         * @internal
-         */
-        this.canTrackVelocity = null;
-        /**
-         * An object containing a SubscriptionManager for each active event.
-         */
-        this.events = {};
-        this.updateAndNotify = (v, render = true) => {
-            const currentTime = _frameloop_sync_time_mjs__WEBPACK_IMPORTED_MODULE_0__.time.now();
-            /**
-             * If we're updating the value during another frame or eventloop
-             * than the previous frame, then the we set the previous frame value
-             * to current.
-             */
-            if (this.updatedAt !== currentTime) {
-                this.setPrevFrameValue();
-            }
-            this.prev = this.current;
-            this.setCurrent(v);
-            // Update update subscribers
-            if (this.current !== this.prev && this.events.change) {
-                this.events.change.notify(this.current);
-            }
-            // Update render subscribers
-            if (render && this.events.renderRequest) {
-                this.events.renderRequest.notify(this.current);
-            }
-        };
-        this.hasAnimated = false;
-        this.setCurrent(init);
-        this.owner = options.owner;
-    }
-    setCurrent(current) {
-        this.current = current;
-        this.updatedAt = _frameloop_sync_time_mjs__WEBPACK_IMPORTED_MODULE_0__.time.now();
-        if (this.canTrackVelocity === null && current !== undefined) {
-            this.canTrackVelocity = isFloat(this.current);
-        }
-    }
-    setPrevFrameValue(prevFrameValue = this.current) {
-        this.prevFrameValue = prevFrameValue;
-        this.prevUpdatedAt = this.updatedAt;
-    }
-    /**
-     * Adds a function that will be notified when the `MotionValue` is updated.
-     *
-     * It returns a function that, when called, will cancel the subscription.
-     *
-     * When calling `onChange` inside a React component, it should be wrapped with the
-     * `useEffect` hook. As it returns an unsubscribe function, this should be returned
-     * from the `useEffect` function to ensure you don't add duplicate subscribers..
-     *
-     * ```jsx
-     * export const MyComponent = () => {
-     *   const x = useMotionValue(0)
-     *   const y = useMotionValue(0)
-     *   const opacity = useMotionValue(1)
-     *
-     *   useEffect(() => {
-     *     function updateOpacity() {
-     *       const maxXY = Math.max(x.get(), y.get())
-     *       const newOpacity = transform(maxXY, [0, 100], [1, 0])
-     *       opacity.set(newOpacity)
-     *     }
-     *
-     *     const unsubscribeX = x.on("change", updateOpacity)
-     *     const unsubscribeY = y.on("change", updateOpacity)
-     *
-     *     return () => {
-     *       unsubscribeX()
-     *       unsubscribeY()
-     *     }
-     *   }, [])
-     *
-     *   return <motion.div style={{ x }} />
-     * }
-     * ```
-     *
-     * @param subscriber - A function that receives the latest value.
-     * @returns A function that, when called, will cancel this subscription.
-     *
-     * @deprecated
-     */
-    onChange(subscription) {
-        if (true) {
-            (0,_utils_warn_once_mjs__WEBPACK_IMPORTED_MODULE_1__.warnOnce)(false, `value.onChange(callback) is deprecated. Switch to value.on("change", callback).`);
-        }
-        return this.on("change", subscription);
-    }
-    on(eventName, callback) {
-        if (!this.events[eventName]) {
-            this.events[eventName] = new _utils_subscription_manager_mjs__WEBPACK_IMPORTED_MODULE_2__.SubscriptionManager();
-        }
-        const unsubscribe = this.events[eventName].add(callback);
-        if (eventName === "change") {
-            return () => {
-                unsubscribe();
-                /**
-                 * If we have no more change listeners by the start
-                 * of the next frame, stop active animations.
-                 */
-                _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_3__.frame.read(() => {
-                    if (!this.events.change.getSize()) {
-                        this.stop();
-                    }
-                });
-            };
-        }
-        return unsubscribe;
-    }
-    clearListeners() {
-        for (const eventManagers in this.events) {
-            this.events[eventManagers].clear();
-        }
-    }
-    /**
-     * Attaches a passive effect to the `MotionValue`.
-     *
-     * @internal
-     */
-    attach(passiveEffect, stopPassiveEffect) {
-        this.passiveEffect = passiveEffect;
-        this.stopPassiveEffect = stopPassiveEffect;
-    }
-    /**
-     * Sets the state of the `MotionValue`.
-     *
-     * @remarks
-     *
-     * ```jsx
-     * const x = useMotionValue(0)
-     * x.set(10)
-     * ```
-     *
-     * @param latest - Latest value to set.
-     * @param render - Whether to notify render subscribers. Defaults to `true`
-     *
-     * @public
-     */
-    set(v, render = true) {
-        if (!render || !this.passiveEffect) {
-            this.updateAndNotify(v, render);
-        }
-        else {
-            this.passiveEffect(v, this.updateAndNotify);
-        }
-    }
-    setWithVelocity(prev, current, delta) {
-        this.set(current);
-        this.prev = undefined;
-        this.prevFrameValue = prev;
-        this.prevUpdatedAt = this.updatedAt - delta;
-    }
-    /**
-     * Set the state of the `MotionValue`, stopping any active animations,
-     * effects, and resets velocity to `0`.
-     */
-    jump(v, endAnimation = true) {
-        this.updateAndNotify(v);
-        this.prev = v;
-        this.prevUpdatedAt = this.prevFrameValue = undefined;
-        endAnimation && this.stop();
-        if (this.stopPassiveEffect)
-            this.stopPassiveEffect();
-    }
-    /**
-     * Returns the latest state of `MotionValue`
-     *
-     * @returns - The latest state of `MotionValue`
-     *
-     * @public
-     */
-    get() {
-        if (collectMotionValues.current) {
-            collectMotionValues.current.push(this);
-        }
-        return this.current;
-    }
-    /**
-     * @public
-     */
-    getPrevious() {
-        return this.prev;
-    }
-    /**
-     * Returns the latest velocity of `MotionValue`
-     *
-     * @returns - The latest velocity of `MotionValue`. Returns `0` if the state is non-numerical.
-     *
-     * @public
-     */
-    getVelocity() {
-        const currentTime = _frameloop_sync_time_mjs__WEBPACK_IMPORTED_MODULE_0__.time.now();
-        if (!this.canTrackVelocity ||
-            this.prevFrameValue === undefined ||
-            currentTime - this.updatedAt > MAX_VELOCITY_DELTA) {
-            return 0;
-        }
-        const delta = Math.min(this.updatedAt - this.prevUpdatedAt, MAX_VELOCITY_DELTA);
-        // Casts because of parseFloat's poor typing
-        return (0,_utils_velocity_per_second_mjs__WEBPACK_IMPORTED_MODULE_4__.velocityPerSecond)(parseFloat(this.current) -
-            parseFloat(this.prevFrameValue), delta);
-    }
-    /**
-     * Registers a new animation to control this `MotionValue`. Only one
-     * animation can drive a `MotionValue` at one time.
-     *
-     * ```jsx
-     * value.start()
-     * ```
-     *
-     * @param animation - A function that starts the provided animation
-     *
-     * @internal
-     */
-    start(startAnimation) {
-        this.stop();
-        return new Promise((resolve) => {
-            this.hasAnimated = true;
-            this.animation = startAnimation(resolve);
-            if (this.events.animationStart) {
-                this.events.animationStart.notify();
-            }
-        }).then(() => {
-            if (this.events.animationComplete) {
-                this.events.animationComplete.notify();
-            }
-            this.clearAnimation();
-        });
-    }
-    /**
-     * Stop the currently active animation.
-     *
-     * @public
-     */
-    stop() {
-        if (this.animation) {
-            this.animation.stop();
-            if (this.events.animationCancel) {
-                this.events.animationCancel.notify();
-            }
-        }
-        this.clearAnimation();
-    }
-    /**
-     * Returns `true` if this value is currently animating.
-     *
-     * @public
-     */
-    isAnimating() {
-        return !!this.animation;
-    }
-    clearAnimation() {
-        delete this.animation;
-    }
-    /**
-     * Destroy and clean up subscribers to this `MotionValue`.
-     *
-     * The `MotionValue` hooks like `useMotionValue` and `useTransform` automatically
-     * handle the lifecycle of the returned `MotionValue`, so this method is only necessary if you've manually
-     * created a `MotionValue` via the `motionValue` function.
-     *
-     * @public
-     */
-    destroy() {
-        this.clearListeners();
-        this.stop();
-        if (this.stopPassiveEffect) {
-            this.stopPassiveEffect();
-        }
-    }
-}
-function motionValue(init, options) {
-    return new MotionValue(init, options);
-}
 
 
 
@@ -25973,10 +25152,10 @@ class NativeAnimationControls {
         this.cancel();
     }
     flatten() {
-        var _a;
-        if (!this.animation)
+        var _a, _b;
+        if (!this.animation || !((_a = this.options) === null || _a === void 0 ? void 0 : _a.allowFlatten))
             return;
-        (_a = this.animation.effect) === null || _a === void 0 ? void 0 : _a.updateTiming({ easing: "linear" });
+        (_b = this.animation.effect) === null || _b === void 0 ? void 0 : _b.updateTiming({ easing: "linear" });
     }
     attachTimeline(timeline) {
         if (this.animation)
@@ -26216,6 +25395,323 @@ resolution = 10 // as milliseconds
         points += easing((0,motion_utils__WEBPACK_IMPORTED_MODULE_0__.progress)(0, numPoints - 1, i)) + ", ";
     }
     return `linear(${points.substring(0, points.length - 2)})`;
+};
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/motion-dom/dist/es/frameloop/batcher.mjs":
+/*!***************************************************************!*\
+  !*** ./node_modules/motion-dom/dist/es/frameloop/batcher.mjs ***!
+  \***************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createRenderBatcher: () => (/* binding */ createRenderBatcher)
+/* harmony export */ });
+/* harmony import */ var motion_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-utils */ "./node_modules/motion-utils/dist/es/index.mjs");
+/* harmony import */ var _order_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./order.mjs */ "./node_modules/motion-dom/dist/es/frameloop/order.mjs");
+/* harmony import */ var _render_step_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./render-step.mjs */ "./node_modules/motion-dom/dist/es/frameloop/render-step.mjs");
+
+
+
+
+const maxElapsed = 40;
+function createRenderBatcher(scheduleNextBatch, allowKeepAlive) {
+    let runNextFrame = false;
+    let useDefaultElapsed = true;
+    const state = {
+        delta: 0.0,
+        timestamp: 0.0,
+        isProcessing: false,
+    };
+    const flagRunNextFrame = () => (runNextFrame = true);
+    const steps = _order_mjs__WEBPACK_IMPORTED_MODULE_1__.stepsOrder.reduce((acc, key) => {
+        acc[key] = (0,_render_step_mjs__WEBPACK_IMPORTED_MODULE_2__.createRenderStep)(flagRunNextFrame, allowKeepAlive ? key : undefined);
+        return acc;
+    }, {});
+    const { read, resolveKeyframes, update, preRender, render, postRender } = steps;
+    const processBatch = () => {
+        const timestamp = motion_utils__WEBPACK_IMPORTED_MODULE_0__.MotionGlobalConfig.useManualTiming
+            ? state.timestamp
+            : performance.now();
+        runNextFrame = false;
+        if (!motion_utils__WEBPACK_IMPORTED_MODULE_0__.MotionGlobalConfig.useManualTiming) {
+            state.delta = useDefaultElapsed
+                ? 1000 / 60
+                : Math.max(Math.min(timestamp - state.timestamp, maxElapsed), 1);
+        }
+        state.timestamp = timestamp;
+        state.isProcessing = true;
+        // Unrolled render loop for better per-frame performance
+        read.process(state);
+        resolveKeyframes.process(state);
+        update.process(state);
+        preRender.process(state);
+        render.process(state);
+        postRender.process(state);
+        state.isProcessing = false;
+        if (runNextFrame && allowKeepAlive) {
+            useDefaultElapsed = false;
+            scheduleNextBatch(processBatch);
+        }
+    };
+    const wake = () => {
+        runNextFrame = true;
+        useDefaultElapsed = true;
+        if (!state.isProcessing) {
+            scheduleNextBatch(processBatch);
+        }
+    };
+    const schedule = _order_mjs__WEBPACK_IMPORTED_MODULE_1__.stepsOrder.reduce((acc, key) => {
+        const step = steps[key];
+        acc[key] = (process, keepAlive = false, immediate = false) => {
+            if (!runNextFrame)
+                wake();
+            return step.schedule(process, keepAlive, immediate);
+        };
+        return acc;
+    }, {});
+    const cancel = (process) => {
+        for (let i = 0; i < _order_mjs__WEBPACK_IMPORTED_MODULE_1__.stepsOrder.length; i++) {
+            steps[_order_mjs__WEBPACK_IMPORTED_MODULE_1__.stepsOrder[i]].cancel(process);
+        }
+    };
+    return { schedule, cancel, state, steps };
+}
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/motion-dom/dist/es/frameloop/frame.mjs":
+/*!*************************************************************!*\
+  !*** ./node_modules/motion-dom/dist/es/frameloop/frame.mjs ***!
+  \*************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   cancelFrame: () => (/* binding */ cancelFrame),
+/* harmony export */   frame: () => (/* binding */ frame),
+/* harmony export */   frameData: () => (/* binding */ frameData),
+/* harmony export */   frameSteps: () => (/* binding */ frameSteps)
+/* harmony export */ });
+/* harmony import */ var motion_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-utils */ "./node_modules/motion-utils/dist/es/index.mjs");
+/* harmony import */ var _batcher_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./batcher.mjs */ "./node_modules/motion-dom/dist/es/frameloop/batcher.mjs");
+
+
+
+const { schedule: frame, cancel: cancelFrame, state: frameData, steps: frameSteps, } = /* @__PURE__ */ (0,_batcher_mjs__WEBPACK_IMPORTED_MODULE_1__.createRenderBatcher)(typeof requestAnimationFrame !== "undefined" ? requestAnimationFrame : motion_utils__WEBPACK_IMPORTED_MODULE_0__.noop, true);
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/motion-dom/dist/es/frameloop/microtask.mjs":
+/*!*****************************************************************!*\
+  !*** ./node_modules/motion-dom/dist/es/frameloop/microtask.mjs ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   cancelMicrotask: () => (/* binding */ cancelMicrotask),
+/* harmony export */   microtask: () => (/* binding */ microtask)
+/* harmony export */ });
+/* harmony import */ var _batcher_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./batcher.mjs */ "./node_modules/motion-dom/dist/es/frameloop/batcher.mjs");
+
+
+const { schedule: microtask, cancel: cancelMicrotask } = 
+/* @__PURE__ */ (0,_batcher_mjs__WEBPACK_IMPORTED_MODULE_0__.createRenderBatcher)(queueMicrotask, false);
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/motion-dom/dist/es/frameloop/order.mjs":
+/*!*************************************************************!*\
+  !*** ./node_modules/motion-dom/dist/es/frameloop/order.mjs ***!
+  \*************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   stepsOrder: () => (/* binding */ stepsOrder)
+/* harmony export */ });
+const stepsOrder = [
+    "read", // Read
+    "resolveKeyframes", // Write/Read/Write/Read
+    "update", // Compute
+    "preRender", // Compute
+    "render", // Write
+    "postRender", // Compute
+];
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/motion-dom/dist/es/frameloop/render-step.mjs":
+/*!*******************************************************************!*\
+  !*** ./node_modules/motion-dom/dist/es/frameloop/render-step.mjs ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createRenderStep: () => (/* binding */ createRenderStep)
+/* harmony export */ });
+/* harmony import */ var _stats_buffer_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../stats/buffer.mjs */ "./node_modules/motion-dom/dist/es/stats/buffer.mjs");
+
+
+function createRenderStep(runNextFrame, stepName) {
+    /**
+     * We create and reuse two queues, one to queue jobs for the current frame
+     * and one for the next. We reuse to avoid triggering GC after x frames.
+     */
+    let thisFrame = new Set();
+    let nextFrame = new Set();
+    /**
+     * Track whether we're currently processing jobs in this step. This way
+     * we can decide whether to schedule new jobs for this frame or next.
+     */
+    let isProcessing = false;
+    let flushNextFrame = false;
+    /**
+     * A set of processes which were marked keepAlive when scheduled.
+     */
+    const toKeepAlive = new WeakSet();
+    let latestFrameData = {
+        delta: 0.0,
+        timestamp: 0.0,
+        isProcessing: false,
+    };
+    let numCalls = 0;
+    function triggerCallback(callback) {
+        if (toKeepAlive.has(callback)) {
+            step.schedule(callback);
+            runNextFrame();
+        }
+        numCalls++;
+        callback(latestFrameData);
+    }
+    const step = {
+        /**
+         * Schedule a process to run on the next frame.
+         */
+        schedule: (callback, keepAlive = false, immediate = false) => {
+            const addToCurrentFrame = immediate && isProcessing;
+            const queue = addToCurrentFrame ? thisFrame : nextFrame;
+            if (keepAlive)
+                toKeepAlive.add(callback);
+            if (!queue.has(callback))
+                queue.add(callback);
+            return callback;
+        },
+        /**
+         * Cancel the provided callback from running on the next frame.
+         */
+        cancel: (callback) => {
+            nextFrame.delete(callback);
+            toKeepAlive.delete(callback);
+        },
+        /**
+         * Execute all schedule callbacks.
+         */
+        process: (frameData) => {
+            latestFrameData = frameData;
+            /**
+             * If we're already processing we've probably been triggered by a flushSync
+             * inside an existing process. Instead of executing, mark flushNextFrame
+             * as true and ensure we flush the following frame at the end of this one.
+             */
+            if (isProcessing) {
+                flushNextFrame = true;
+                return;
+            }
+            isProcessing = true;
+            [thisFrame, nextFrame] = [nextFrame, thisFrame];
+            // Execute this frame
+            thisFrame.forEach(triggerCallback);
+            /**
+             * If we're recording stats then
+             */
+            if (stepName && _stats_buffer_mjs__WEBPACK_IMPORTED_MODULE_0__.statsBuffer.value) {
+                _stats_buffer_mjs__WEBPACK_IMPORTED_MODULE_0__.statsBuffer.value.frameloop[stepName].push(numCalls);
+            }
+            numCalls = 0;
+            // Clear the frame so no callbacks remain. This is to avoid
+            // memory leaks should this render step not run for a while.
+            thisFrame.clear();
+            isProcessing = false;
+            if (flushNextFrame) {
+                flushNextFrame = false;
+                step.process(frameData);
+            }
+        },
+    };
+    return step;
+}
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/motion-dom/dist/es/frameloop/sync-time.mjs":
+/*!*****************************************************************!*\
+  !*** ./node_modules/motion-dom/dist/es/frameloop/sync-time.mjs ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   time: () => (/* binding */ time)
+/* harmony export */ });
+/* harmony import */ var motion_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-utils */ "./node_modules/motion-utils/dist/es/index.mjs");
+/* harmony import */ var _frame_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./frame.mjs */ "./node_modules/motion-dom/dist/es/frameloop/frame.mjs");
+
+
+
+let now;
+function clearTime() {
+    now = undefined;
+}
+/**
+ * An eventloop-synchronous alternative to performance.now().
+ *
+ * Ensures that time measurements remain consistent within a synchronous context.
+ * Usually calling performance.now() twice within the same synchronous context
+ * will return different values which isn't useful for animations when we're usually
+ * trying to sync animations to the same frame.
+ */
+const time = {
+    now: () => {
+        if (now === undefined) {
+            time.set(_frame_mjs__WEBPACK_IMPORTED_MODULE_1__.frameData.isProcessing || motion_utils__WEBPACK_IMPORTED_MODULE_0__.MotionGlobalConfig.useManualTiming
+                ? _frame_mjs__WEBPACK_IMPORTED_MODULE_1__.frameData.timestamp
+                : performance.now());
+        }
+        return now;
+    },
+    set: (newTime) => {
+        now = newTime;
+        queueMicrotask(clearTime);
+    },
 };
 
 
@@ -26713,33 +26209,47 @@ function setupGesture(elementOrSelector, options) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   GroupPlaybackControls: () => (/* reexport safe */ _animation_controls_Group_mjs__WEBPACK_IMPORTED_MODULE_0__.GroupPlaybackControls),
+/* harmony export */   MotionValue: () => (/* reexport safe */ _value_index_mjs__WEBPACK_IMPORTED_MODULE_28__.MotionValue),
 /* harmony export */   NativeAnimationControls: () => (/* reexport safe */ _animation_waapi_NativeAnimationControls_mjs__WEBPACK_IMPORTED_MODULE_5__.NativeAnimationControls),
-/* harmony export */   ViewTransitionBuilder: () => (/* reexport safe */ _view_index_mjs__WEBPACK_IMPORTED_MODULE_17__.ViewTransitionBuilder),
+/* harmony export */   ViewTransitionBuilder: () => (/* reexport safe */ _view_index_mjs__WEBPACK_IMPORTED_MODULE_29__.ViewTransitionBuilder),
+/* harmony export */   activeAnimations: () => (/* reexport safe */ _stats_animation_count_mjs__WEBPACK_IMPORTED_MODULE_21__.activeAnimations),
 /* harmony export */   attachTimeline: () => (/* reexport safe */ _animation_waapi_utils_attach_timeline_mjs__WEBPACK_IMPORTED_MODULE_6__.attachTimeline),
 /* harmony export */   calcGeneratorDuration: () => (/* reexport safe */ _animation_generators_utils_calc_duration_mjs__WEBPACK_IMPORTED_MODULE_2__.calcGeneratorDuration),
-/* harmony export */   capturePointer: () => (/* reexport safe */ _gestures_utils_capture_pointer_mjs__WEBPACK_IMPORTED_MODULE_11__.capturePointer),
+/* harmony export */   cancelFrame: () => (/* reexport safe */ _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_9__.cancelFrame),
+/* harmony export */   cancelMicrotask: () => (/* reexport safe */ _frameloop_microtask_mjs__WEBPACK_IMPORTED_MODULE_11__.cancelMicrotask),
+/* harmony export */   capturePointer: () => (/* reexport safe */ _gestures_utils_capture_pointer_mjs__WEBPACK_IMPORTED_MODULE_17__.capturePointer),
+/* harmony export */   collectMotionValues: () => (/* reexport safe */ _value_index_mjs__WEBPACK_IMPORTED_MODULE_28__.collectMotionValues),
 /* harmony export */   createGeneratorEasing: () => (/* reexport safe */ _animation_generators_utils_create_generator_easing_mjs__WEBPACK_IMPORTED_MODULE_3__.createGeneratorEasing),
+/* harmony export */   createRenderBatcher: () => (/* reexport safe */ _frameloop_batcher_mjs__WEBPACK_IMPORTED_MODULE_10__.createRenderBatcher),
 /* harmony export */   cubicBezierAsString: () => (/* reexport safe */ _animation_waapi_utils_easing_mjs__WEBPACK_IMPORTED_MODULE_7__.cubicBezierAsString),
+/* harmony export */   frame: () => (/* reexport safe */ _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_9__.frame),
+/* harmony export */   frameData: () => (/* reexport safe */ _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_9__.frameData),
+/* harmony export */   frameSteps: () => (/* reexport safe */ _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_9__.frameSteps),
 /* harmony export */   generateLinearEasing: () => (/* reexport safe */ _animation_waapi_utils_linear_mjs__WEBPACK_IMPORTED_MODULE_8__.generateLinearEasing),
 /* harmony export */   getValueTransition: () => (/* reexport safe */ _animation_utils_get_value_transition_mjs__WEBPACK_IMPORTED_MODULE_1__.getValueTransition),
-/* harmony export */   hover: () => (/* reexport safe */ _gestures_hover_mjs__WEBPACK_IMPORTED_MODULE_9__.hover),
-/* harmony export */   isBezierDefinition: () => (/* reexport safe */ _utils_is_bezier_definition_mjs__WEBPACK_IMPORTED_MODULE_12__.isBezierDefinition),
-/* harmony export */   isDragActive: () => (/* reexport safe */ _gestures_drag_state_is_active_mjs__WEBPACK_IMPORTED_MODULE_18__.isDragActive),
-/* harmony export */   isDragging: () => (/* reexport safe */ _gestures_drag_state_is_active_mjs__WEBPACK_IMPORTED_MODULE_18__.isDragging),
+/* harmony export */   hover: () => (/* reexport safe */ _gestures_hover_mjs__WEBPACK_IMPORTED_MODULE_15__.hover),
+/* harmony export */   isBezierDefinition: () => (/* reexport safe */ _utils_is_bezier_definition_mjs__WEBPACK_IMPORTED_MODULE_23__.isBezierDefinition),
+/* harmony export */   isDragActive: () => (/* reexport safe */ _gestures_drag_state_is_active_mjs__WEBPACK_IMPORTED_MODULE_13__.isDragActive),
+/* harmony export */   isDragging: () => (/* reexport safe */ _gestures_drag_state_is_active_mjs__WEBPACK_IMPORTED_MODULE_13__.isDragging),
 /* harmony export */   isGenerator: () => (/* reexport safe */ _animation_generators_utils_is_generator_mjs__WEBPACK_IMPORTED_MODULE_4__.isGenerator),
-/* harmony export */   isNodeOrChild: () => (/* reexport safe */ _gestures_utils_is_node_or_child_mjs__WEBPACK_IMPORTED_MODULE_20__.isNodeOrChild),
-/* harmony export */   isPrimaryPointer: () => (/* reexport safe */ _gestures_utils_is_primary_pointer_mjs__WEBPACK_IMPORTED_MODULE_21__.isPrimaryPointer),
+/* harmony export */   isNodeOrChild: () => (/* reexport safe */ _gestures_utils_is_node_or_child_mjs__WEBPACK_IMPORTED_MODULE_18__.isNodeOrChild),
+/* harmony export */   isPrimaryPointer: () => (/* reexport safe */ _gestures_utils_is_primary_pointer_mjs__WEBPACK_IMPORTED_MODULE_19__.isPrimaryPointer),
 /* harmony export */   isWaapiSupportedEasing: () => (/* reexport safe */ _animation_waapi_utils_easing_mjs__WEBPACK_IMPORTED_MODULE_7__.isWaapiSupportedEasing),
 /* harmony export */   mapEasingToNativeEasing: () => (/* reexport safe */ _animation_waapi_utils_easing_mjs__WEBPACK_IMPORTED_MODULE_7__.mapEasingToNativeEasing),
 /* harmony export */   maxGeneratorDuration: () => (/* reexport safe */ _animation_generators_utils_calc_duration_mjs__WEBPACK_IMPORTED_MODULE_2__.maxGeneratorDuration),
-/* harmony export */   press: () => (/* reexport safe */ _gestures_press_index_mjs__WEBPACK_IMPORTED_MODULE_10__.press),
-/* harmony export */   resolveElements: () => (/* reexport safe */ _utils_resolve_elements_mjs__WEBPACK_IMPORTED_MODULE_13__.resolveElements),
-/* harmony export */   setDragLock: () => (/* reexport safe */ _gestures_drag_state_set_active_mjs__WEBPACK_IMPORTED_MODULE_19__.setDragLock),
+/* harmony export */   microtask: () => (/* reexport safe */ _frameloop_microtask_mjs__WEBPACK_IMPORTED_MODULE_11__.microtask),
+/* harmony export */   motionValue: () => (/* reexport safe */ _value_index_mjs__WEBPACK_IMPORTED_MODULE_28__.motionValue),
+/* harmony export */   press: () => (/* reexport safe */ _gestures_press_index_mjs__WEBPACK_IMPORTED_MODULE_16__.press),
+/* harmony export */   recordStats: () => (/* reexport safe */ _stats_index_mjs__WEBPACK_IMPORTED_MODULE_20__.recordStats),
+/* harmony export */   resolveElements: () => (/* reexport safe */ _utils_resolve_elements_mjs__WEBPACK_IMPORTED_MODULE_24__.resolveElements),
+/* harmony export */   setDragLock: () => (/* reexport safe */ _gestures_drag_state_set_active_mjs__WEBPACK_IMPORTED_MODULE_14__.setDragLock),
+/* harmony export */   statsBuffer: () => (/* reexport safe */ _stats_buffer_mjs__WEBPACK_IMPORTED_MODULE_22__.statsBuffer),
 /* harmony export */   supportedWaapiEasing: () => (/* reexport safe */ _animation_waapi_utils_easing_mjs__WEBPACK_IMPORTED_MODULE_7__.supportedWaapiEasing),
-/* harmony export */   supportsFlags: () => (/* reexport safe */ _utils_supports_flags_mjs__WEBPACK_IMPORTED_MODULE_14__.supportsFlags),
-/* harmony export */   supportsLinearEasing: () => (/* reexport safe */ _utils_supports_linear_easing_mjs__WEBPACK_IMPORTED_MODULE_15__.supportsLinearEasing),
-/* harmony export */   supportsScrollTimeline: () => (/* reexport safe */ _utils_supports_scroll_timeline_mjs__WEBPACK_IMPORTED_MODULE_16__.supportsScrollTimeline),
-/* harmony export */   view: () => (/* reexport safe */ _view_index_mjs__WEBPACK_IMPORTED_MODULE_17__.view)
+/* harmony export */   supportsFlags: () => (/* reexport safe */ _utils_supports_flags_mjs__WEBPACK_IMPORTED_MODULE_25__.supportsFlags),
+/* harmony export */   supportsLinearEasing: () => (/* reexport safe */ _utils_supports_linear_easing_mjs__WEBPACK_IMPORTED_MODULE_26__.supportsLinearEasing),
+/* harmony export */   supportsScrollTimeline: () => (/* reexport safe */ _utils_supports_scroll_timeline_mjs__WEBPACK_IMPORTED_MODULE_27__.supportsScrollTimeline),
+/* harmony export */   time: () => (/* reexport safe */ _frameloop_sync_time_mjs__WEBPACK_IMPORTED_MODULE_12__.time),
+/* harmony export */   view: () => (/* reexport safe */ _view_index_mjs__WEBPACK_IMPORTED_MODULE_29__.view)
 /* harmony export */ });
 /* harmony import */ var _animation_controls_Group_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./animation/controls/Group.mjs */ "./node_modules/motion-dom/dist/es/animation/controls/Group.mjs");
 /* harmony import */ var _animation_utils_get_value_transition_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./animation/utils/get-value-transition.mjs */ "./node_modules/motion-dom/dist/es/animation/utils/get-value-transition.mjs");
@@ -26750,19 +26260,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _animation_waapi_utils_attach_timeline_mjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./animation/waapi/utils/attach-timeline.mjs */ "./node_modules/motion-dom/dist/es/animation/waapi/utils/attach-timeline.mjs");
 /* harmony import */ var _animation_waapi_utils_easing_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./animation/waapi/utils/easing.mjs */ "./node_modules/motion-dom/dist/es/animation/waapi/utils/easing.mjs");
 /* harmony import */ var _animation_waapi_utils_linear_mjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./animation/waapi/utils/linear.mjs */ "./node_modules/motion-dom/dist/es/animation/waapi/utils/linear.mjs");
-/* harmony import */ var _gestures_hover_mjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./gestures/hover.mjs */ "./node_modules/motion-dom/dist/es/gestures/hover.mjs");
-/* harmony import */ var _gestures_press_index_mjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./gestures/press/index.mjs */ "./node_modules/motion-dom/dist/es/gestures/press/index.mjs");
-/* harmony import */ var _gestures_utils_capture_pointer_mjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./gestures/utils/capture-pointer.mjs */ "./node_modules/motion-dom/dist/es/gestures/utils/capture-pointer.mjs");
-/* harmony import */ var _utils_is_bezier_definition_mjs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./utils/is-bezier-definition.mjs */ "./node_modules/motion-dom/dist/es/utils/is-bezier-definition.mjs");
-/* harmony import */ var _utils_resolve_elements_mjs__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./utils/resolve-elements.mjs */ "./node_modules/motion-dom/dist/es/utils/resolve-elements.mjs");
-/* harmony import */ var _utils_supports_flags_mjs__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./utils/supports/flags.mjs */ "./node_modules/motion-dom/dist/es/utils/supports/flags.mjs");
-/* harmony import */ var _utils_supports_linear_easing_mjs__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./utils/supports/linear-easing.mjs */ "./node_modules/motion-dom/dist/es/utils/supports/linear-easing.mjs");
-/* harmony import */ var _utils_supports_scroll_timeline_mjs__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./utils/supports/scroll-timeline.mjs */ "./node_modules/motion-dom/dist/es/utils/supports/scroll-timeline.mjs");
-/* harmony import */ var _view_index_mjs__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./view/index.mjs */ "./node_modules/motion-dom/dist/es/view/index.mjs");
-/* harmony import */ var _gestures_drag_state_is_active_mjs__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./gestures/drag/state/is-active.mjs */ "./node_modules/motion-dom/dist/es/gestures/drag/state/is-active.mjs");
-/* harmony import */ var _gestures_drag_state_set_active_mjs__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./gestures/drag/state/set-active.mjs */ "./node_modules/motion-dom/dist/es/gestures/drag/state/set-active.mjs");
-/* harmony import */ var _gestures_utils_is_node_or_child_mjs__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./gestures/utils/is-node-or-child.mjs */ "./node_modules/motion-dom/dist/es/gestures/utils/is-node-or-child.mjs");
-/* harmony import */ var _gestures_utils_is_primary_pointer_mjs__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./gestures/utils/is-primary-pointer.mjs */ "./node_modules/motion-dom/dist/es/gestures/utils/is-primary-pointer.mjs");
+/* harmony import */ var _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./frameloop/frame.mjs */ "./node_modules/motion-dom/dist/es/frameloop/frame.mjs");
+/* harmony import */ var _frameloop_batcher_mjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./frameloop/batcher.mjs */ "./node_modules/motion-dom/dist/es/frameloop/batcher.mjs");
+/* harmony import */ var _frameloop_microtask_mjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./frameloop/microtask.mjs */ "./node_modules/motion-dom/dist/es/frameloop/microtask.mjs");
+/* harmony import */ var _frameloop_sync_time_mjs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./frameloop/sync-time.mjs */ "./node_modules/motion-dom/dist/es/frameloop/sync-time.mjs");
+/* harmony import */ var _gestures_drag_state_is_active_mjs__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./gestures/drag/state/is-active.mjs */ "./node_modules/motion-dom/dist/es/gestures/drag/state/is-active.mjs");
+/* harmony import */ var _gestures_drag_state_set_active_mjs__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./gestures/drag/state/set-active.mjs */ "./node_modules/motion-dom/dist/es/gestures/drag/state/set-active.mjs");
+/* harmony import */ var _gestures_hover_mjs__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./gestures/hover.mjs */ "./node_modules/motion-dom/dist/es/gestures/hover.mjs");
+/* harmony import */ var _gestures_press_index_mjs__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./gestures/press/index.mjs */ "./node_modules/motion-dom/dist/es/gestures/press/index.mjs");
+/* harmony import */ var _gestures_utils_capture_pointer_mjs__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./gestures/utils/capture-pointer.mjs */ "./node_modules/motion-dom/dist/es/gestures/utils/capture-pointer.mjs");
+/* harmony import */ var _gestures_utils_is_node_or_child_mjs__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./gestures/utils/is-node-or-child.mjs */ "./node_modules/motion-dom/dist/es/gestures/utils/is-node-or-child.mjs");
+/* harmony import */ var _gestures_utils_is_primary_pointer_mjs__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./gestures/utils/is-primary-pointer.mjs */ "./node_modules/motion-dom/dist/es/gestures/utils/is-primary-pointer.mjs");
+/* harmony import */ var _stats_index_mjs__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./stats/index.mjs */ "./node_modules/motion-dom/dist/es/stats/index.mjs");
+/* harmony import */ var _stats_animation_count_mjs__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./stats/animation-count.mjs */ "./node_modules/motion-dom/dist/es/stats/animation-count.mjs");
+/* harmony import */ var _stats_buffer_mjs__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./stats/buffer.mjs */ "./node_modules/motion-dom/dist/es/stats/buffer.mjs");
+/* harmony import */ var _utils_is_bezier_definition_mjs__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./utils/is-bezier-definition.mjs */ "./node_modules/motion-dom/dist/es/utils/is-bezier-definition.mjs");
+/* harmony import */ var _utils_resolve_elements_mjs__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./utils/resolve-elements.mjs */ "./node_modules/motion-dom/dist/es/utils/resolve-elements.mjs");
+/* harmony import */ var _utils_supports_flags_mjs__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./utils/supports/flags.mjs */ "./node_modules/motion-dom/dist/es/utils/supports/flags.mjs");
+/* harmony import */ var _utils_supports_linear_easing_mjs__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./utils/supports/linear-easing.mjs */ "./node_modules/motion-dom/dist/es/utils/supports/linear-easing.mjs");
+/* harmony import */ var _utils_supports_scroll_timeline_mjs__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./utils/supports/scroll-timeline.mjs */ "./node_modules/motion-dom/dist/es/utils/supports/scroll-timeline.mjs");
+/* harmony import */ var _value_index_mjs__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./value/index.mjs */ "./node_modules/motion-dom/dist/es/value/index.mjs");
+/* harmony import */ var _view_index_mjs__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./view/index.mjs */ "./node_modules/motion-dom/dist/es/view/index.mjs");
 
 
 
@@ -26783,6 +26301,188 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/motion-dom/dist/es/stats/animation-count.mjs":
+/*!*******************************************************************!*\
+  !*** ./node_modules/motion-dom/dist/es/stats/animation-count.mjs ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   activeAnimations: () => (/* binding */ activeAnimations)
+/* harmony export */ });
+const activeAnimations = {
+    layout: 0,
+    mainThread: 0,
+    waapi: 0,
+};
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/motion-dom/dist/es/stats/buffer.mjs":
+/*!**********************************************************!*\
+  !*** ./node_modules/motion-dom/dist/es/stats/buffer.mjs ***!
+  \**********************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   statsBuffer: () => (/* binding */ statsBuffer)
+/* harmony export */ });
+const statsBuffer = {
+    value: null,
+    addProjectionMetrics: null,
+};
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/motion-dom/dist/es/stats/index.mjs":
+/*!*********************************************************!*\
+  !*** ./node_modules/motion-dom/dist/es/stats/index.mjs ***!
+  \*********************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   recordStats: () => (/* binding */ recordStats)
+/* harmony export */ });
+/* harmony import */ var _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../frameloop/frame.mjs */ "./node_modules/motion-dom/dist/es/frameloop/frame.mjs");
+/* harmony import */ var _animation_count_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./animation-count.mjs */ "./node_modules/motion-dom/dist/es/stats/animation-count.mjs");
+/* harmony import */ var _buffer_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./buffer.mjs */ "./node_modules/motion-dom/dist/es/stats/buffer.mjs");
+
+
+
+
+function record() {
+    const { value } = _buffer_mjs__WEBPACK_IMPORTED_MODULE_2__.statsBuffer;
+    if (value === null) {
+        (0,_frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_0__.cancelFrame)(record);
+        return;
+    }
+    value.frameloop.rate.push(_frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_0__.frameData.delta);
+    value.animations.mainThread.push(_animation_count_mjs__WEBPACK_IMPORTED_MODULE_1__.activeAnimations.mainThread);
+    value.animations.waapi.push(_animation_count_mjs__WEBPACK_IMPORTED_MODULE_1__.activeAnimations.waapi);
+    value.animations.layout.push(_animation_count_mjs__WEBPACK_IMPORTED_MODULE_1__.activeAnimations.layout);
+}
+function mean(values) {
+    return values.reduce((acc, value) => acc + value, 0) / values.length;
+}
+function summarise(values, calcAverage = mean) {
+    if (values.length === 0) {
+        return {
+            min: 0,
+            max: 0,
+            avg: 0,
+        };
+    }
+    return {
+        min: Math.min(...values),
+        max: Math.max(...values),
+        avg: calcAverage(values),
+    };
+}
+const msToFps = (ms) => Math.round(1000 / ms);
+function clearStatsBuffer() {
+    _buffer_mjs__WEBPACK_IMPORTED_MODULE_2__.statsBuffer.value = null;
+    _buffer_mjs__WEBPACK_IMPORTED_MODULE_2__.statsBuffer.addProjectionMetrics = null;
+}
+function reportStats() {
+    const { value } = _buffer_mjs__WEBPACK_IMPORTED_MODULE_2__.statsBuffer;
+    if (!value) {
+        throw new Error("Stats are not being measured");
+    }
+    clearStatsBuffer();
+    (0,_frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_0__.cancelFrame)(record);
+    const summary = {
+        frameloop: {
+            rate: summarise(value.frameloop.rate),
+            read: summarise(value.frameloop.read),
+            resolveKeyframes: summarise(value.frameloop.resolveKeyframes),
+            update: summarise(value.frameloop.update),
+            preRender: summarise(value.frameloop.preRender),
+            render: summarise(value.frameloop.render),
+            postRender: summarise(value.frameloop.postRender),
+        },
+        animations: {
+            mainThread: summarise(value.animations.mainThread),
+            waapi: summarise(value.animations.waapi),
+            layout: summarise(value.animations.layout),
+        },
+        layoutProjection: {
+            nodes: summarise(value.layoutProjection.nodes),
+            calculatedTargetDeltas: summarise(value.layoutProjection.calculatedTargetDeltas),
+            calculatedProjections: summarise(value.layoutProjection.calculatedProjections),
+        },
+    };
+    /**
+     * Convert the rate to FPS
+     */
+    const { rate } = summary.frameloop;
+    rate.min = msToFps(rate.min);
+    rate.max = msToFps(rate.max);
+    rate.avg = msToFps(rate.avg);
+    [rate.min, rate.max] = [rate.max, rate.min];
+    return summary;
+}
+function recordStats() {
+    if (_buffer_mjs__WEBPACK_IMPORTED_MODULE_2__.statsBuffer.value) {
+        clearStatsBuffer();
+        throw new Error("Stats are already being measured");
+    }
+    const newStatsBuffer = _buffer_mjs__WEBPACK_IMPORTED_MODULE_2__.statsBuffer;
+    newStatsBuffer.value = {
+        frameloop: {
+            rate: [],
+            read: [],
+            resolveKeyframes: [],
+            update: [],
+            preRender: [],
+            render: [],
+            postRender: [],
+        },
+        animations: {
+            mainThread: [],
+            waapi: [],
+            layout: [],
+        },
+        layoutProjection: {
+            nodes: [],
+            calculatedTargetDeltas: [],
+            calculatedProjections: [],
+        },
+    };
+    newStatsBuffer.addProjectionMetrics = (metrics) => {
+        const { layoutProjection } = newStatsBuffer.value;
+        layoutProjection.nodes.push(metrics.nodes);
+        layoutProjection.calculatedTargetDeltas.push(metrics.calculatedTargetDeltas);
+        layoutProjection.calculatedProjections.push(metrics.calculatedProjections);
+    };
+    _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_0__.frame.postRender(record, true);
+    return reportStats;
+}
 
 
 
@@ -26939,7 +26639,338 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var motion_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-utils */ "./node_modules/motion-utils/dist/es/index.mjs");
 
 
-const supportsScrollTimeline = (0,motion_utils__WEBPACK_IMPORTED_MODULE_0__.memo)(() => window.ScrollTimeline !== undefined);
+const supportsScrollTimeline = /* @__PURE__ */ (0,motion_utils__WEBPACK_IMPORTED_MODULE_0__.memo)(() => window.ScrollTimeline !== undefined);
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/motion-dom/dist/es/value/index.mjs":
+/*!*********************************************************!*\
+  !*** ./node_modules/motion-dom/dist/es/value/index.mjs ***!
+  \*********************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   MotionValue: () => (/* binding */ MotionValue),
+/* harmony export */   collectMotionValues: () => (/* binding */ collectMotionValues),
+/* harmony export */   motionValue: () => (/* binding */ motionValue)
+/* harmony export */ });
+/* harmony import */ var motion_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! motion-utils */ "./node_modules/motion-utils/dist/es/index.mjs");
+/* harmony import */ var _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../frameloop/frame.mjs */ "./node_modules/motion-dom/dist/es/frameloop/frame.mjs");
+/* harmony import */ var _frameloop_sync_time_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../frameloop/sync-time.mjs */ "./node_modules/motion-dom/dist/es/frameloop/sync-time.mjs");
+
+
+
+
+/**
+ * Maximum time between the value of two frames, beyond which we
+ * assume the velocity has since been 0.
+ */
+const MAX_VELOCITY_DELTA = 30;
+const isFloat = (value) => {
+    return !isNaN(parseFloat(value));
+};
+const collectMotionValues = {
+    current: undefined,
+};
+/**
+ * `MotionValue` is used to track the state and velocity of motion values.
+ *
+ * @public
+ */
+class MotionValue {
+    /**
+     * @param init - The initiating value
+     * @param config - Optional configuration options
+     *
+     * -  `transformer`: A function to transform incoming values with.
+     */
+    constructor(init, options = {}) {
+        /**
+         * This will be replaced by the build step with the latest version number.
+         * When MotionValues are provided to motion components, warn if versions are mixed.
+         */
+        this.version = "12.5.0";
+        /**
+         * Tracks whether this value can output a velocity. Currently this is only true
+         * if the value is numerical, but we might be able to widen the scope here and support
+         * other value types.
+         *
+         * @internal
+         */
+        this.canTrackVelocity = null;
+        /**
+         * An object containing a SubscriptionManager for each active event.
+         */
+        this.events = {};
+        this.updateAndNotify = (v, render = true) => {
+            const currentTime = _frameloop_sync_time_mjs__WEBPACK_IMPORTED_MODULE_2__.time.now();
+            /**
+             * If we're updating the value during another frame or eventloop
+             * than the previous frame, then the we set the previous frame value
+             * to current.
+             */
+            if (this.updatedAt !== currentTime) {
+                this.setPrevFrameValue();
+            }
+            this.prev = this.current;
+            this.setCurrent(v);
+            // Update update subscribers
+            if (this.current !== this.prev && this.events.change) {
+                this.events.change.notify(this.current);
+            }
+            // Update render subscribers
+            if (render && this.events.renderRequest) {
+                this.events.renderRequest.notify(this.current);
+            }
+        };
+        this.hasAnimated = false;
+        this.setCurrent(init);
+        this.owner = options.owner;
+    }
+    setCurrent(current) {
+        this.current = current;
+        this.updatedAt = _frameloop_sync_time_mjs__WEBPACK_IMPORTED_MODULE_2__.time.now();
+        if (this.canTrackVelocity === null && current !== undefined) {
+            this.canTrackVelocity = isFloat(this.current);
+        }
+    }
+    setPrevFrameValue(prevFrameValue = this.current) {
+        this.prevFrameValue = prevFrameValue;
+        this.prevUpdatedAt = this.updatedAt;
+    }
+    /**
+     * Adds a function that will be notified when the `MotionValue` is updated.
+     *
+     * It returns a function that, when called, will cancel the subscription.
+     *
+     * When calling `onChange` inside a React component, it should be wrapped with the
+     * `useEffect` hook. As it returns an unsubscribe function, this should be returned
+     * from the `useEffect` function to ensure you don't add duplicate subscribers..
+     *
+     * ```jsx
+     * export const MyComponent = () => {
+     *   const x = useMotionValue(0)
+     *   const y = useMotionValue(0)
+     *   const opacity = useMotionValue(1)
+     *
+     *   useEffect(() => {
+     *     function updateOpacity() {
+     *       const maxXY = Math.max(x.get(), y.get())
+     *       const newOpacity = transform(maxXY, [0, 100], [1, 0])
+     *       opacity.set(newOpacity)
+     *     }
+     *
+     *     const unsubscribeX = x.on("change", updateOpacity)
+     *     const unsubscribeY = y.on("change", updateOpacity)
+     *
+     *     return () => {
+     *       unsubscribeX()
+     *       unsubscribeY()
+     *     }
+     *   }, [])
+     *
+     *   return <motion.div style={{ x }} />
+     * }
+     * ```
+     *
+     * @param subscriber - A function that receives the latest value.
+     * @returns A function that, when called, will cancel this subscription.
+     *
+     * @deprecated
+     */
+    onChange(subscription) {
+        if (true) {
+            (0,motion_utils__WEBPACK_IMPORTED_MODULE_0__.warnOnce)(false, `value.onChange(callback) is deprecated. Switch to value.on("change", callback).`);
+        }
+        return this.on("change", subscription);
+    }
+    on(eventName, callback) {
+        if (!this.events[eventName]) {
+            this.events[eventName] = new motion_utils__WEBPACK_IMPORTED_MODULE_0__.SubscriptionManager();
+        }
+        const unsubscribe = this.events[eventName].add(callback);
+        if (eventName === "change") {
+            return () => {
+                unsubscribe();
+                /**
+                 * If we have no more change listeners by the start
+                 * of the next frame, stop active animations.
+                 */
+                _frameloop_frame_mjs__WEBPACK_IMPORTED_MODULE_1__.frame.read(() => {
+                    if (!this.events.change.getSize()) {
+                        this.stop();
+                    }
+                });
+            };
+        }
+        return unsubscribe;
+    }
+    clearListeners() {
+        for (const eventManagers in this.events) {
+            this.events[eventManagers].clear();
+        }
+    }
+    /**
+     * Attaches a passive effect to the `MotionValue`.
+     */
+    attach(passiveEffect, stopPassiveEffect) {
+        this.passiveEffect = passiveEffect;
+        this.stopPassiveEffect = stopPassiveEffect;
+    }
+    /**
+     * Sets the state of the `MotionValue`.
+     *
+     * @remarks
+     *
+     * ```jsx
+     * const x = useMotionValue(0)
+     * x.set(10)
+     * ```
+     *
+     * @param latest - Latest value to set.
+     * @param render - Whether to notify render subscribers. Defaults to `true`
+     *
+     * @public
+     */
+    set(v, render = true) {
+        if (!render || !this.passiveEffect) {
+            this.updateAndNotify(v, render);
+        }
+        else {
+            this.passiveEffect(v, this.updateAndNotify);
+        }
+    }
+    setWithVelocity(prev, current, delta) {
+        this.set(current);
+        this.prev = undefined;
+        this.prevFrameValue = prev;
+        this.prevUpdatedAt = this.updatedAt - delta;
+    }
+    /**
+     * Set the state of the `MotionValue`, stopping any active animations,
+     * effects, and resets velocity to `0`.
+     */
+    jump(v, endAnimation = true) {
+        this.updateAndNotify(v);
+        this.prev = v;
+        this.prevUpdatedAt = this.prevFrameValue = undefined;
+        endAnimation && this.stop();
+        if (this.stopPassiveEffect)
+            this.stopPassiveEffect();
+    }
+    /**
+     * Returns the latest state of `MotionValue`
+     *
+     * @returns - The latest state of `MotionValue`
+     *
+     * @public
+     */
+    get() {
+        if (collectMotionValues.current) {
+            collectMotionValues.current.push(this);
+        }
+        return this.current;
+    }
+    /**
+     * @public
+     */
+    getPrevious() {
+        return this.prev;
+    }
+    /**
+     * Returns the latest velocity of `MotionValue`
+     *
+     * @returns - The latest velocity of `MotionValue`. Returns `0` if the state is non-numerical.
+     *
+     * @public
+     */
+    getVelocity() {
+        const currentTime = _frameloop_sync_time_mjs__WEBPACK_IMPORTED_MODULE_2__.time.now();
+        if (!this.canTrackVelocity ||
+            this.prevFrameValue === undefined ||
+            currentTime - this.updatedAt > MAX_VELOCITY_DELTA) {
+            return 0;
+        }
+        const delta = Math.min(this.updatedAt - this.prevUpdatedAt, MAX_VELOCITY_DELTA);
+        // Casts because of parseFloat's poor typing
+        return (0,motion_utils__WEBPACK_IMPORTED_MODULE_0__.velocityPerSecond)(parseFloat(this.current) -
+            parseFloat(this.prevFrameValue), delta);
+    }
+    /**
+     * Registers a new animation to control this `MotionValue`. Only one
+     * animation can drive a `MotionValue` at one time.
+     *
+     * ```jsx
+     * value.start()
+     * ```
+     *
+     * @param animation - A function that starts the provided animation
+     */
+    start(startAnimation) {
+        this.stop();
+        return new Promise((resolve) => {
+            this.hasAnimated = true;
+            this.animation = startAnimation(resolve);
+            if (this.events.animationStart) {
+                this.events.animationStart.notify();
+            }
+        }).then(() => {
+            if (this.events.animationComplete) {
+                this.events.animationComplete.notify();
+            }
+            this.clearAnimation();
+        });
+    }
+    /**
+     * Stop the currently active animation.
+     *
+     * @public
+     */
+    stop() {
+        if (this.animation) {
+            this.animation.stop();
+            if (this.events.animationCancel) {
+                this.events.animationCancel.notify();
+            }
+        }
+        this.clearAnimation();
+    }
+    /**
+     * Returns `true` if this value is currently animating.
+     *
+     * @public
+     */
+    isAnimating() {
+        return !!this.animation;
+    }
+    clearAnimation() {
+        delete this.animation;
+    }
+    /**
+     * Destroy and clean up subscribers to this `MotionValue`.
+     *
+     * The `MotionValue` hooks like `useMotionValue` and `useTransform` automatically
+     * handle the lifecycle of the returned `MotionValue`, so this method is only necessary if you've manually
+     * created a `MotionValue` via the `motionValue` function.
+     *
+     * @public
+     */
+    destroy() {
+        this.clearListeners();
+        this.stop();
+        if (this.stopPassiveEffect) {
+            this.stopPassiveEffect();
+        }
+    }
+}
+function motionValue(init, options) {
+    return new MotionValue(init, options);
+}
 
 
 
@@ -27348,6 +27379,44 @@ function hasTarget(target, targets) {
 
 /***/ }),
 
+/***/ "./node_modules/motion-utils/dist/es/array.mjs":
+/*!*****************************************************!*\
+  !*** ./node_modules/motion-utils/dist/es/array.mjs ***!
+  \*****************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   addUniqueItem: () => (/* binding */ addUniqueItem),
+/* harmony export */   moveItem: () => (/* binding */ moveItem),
+/* harmony export */   removeItem: () => (/* binding */ removeItem)
+/* harmony export */ });
+function addUniqueItem(arr, item) {
+    if (arr.indexOf(item) === -1)
+        arr.push(item);
+}
+function removeItem(arr, item) {
+    const index = arr.indexOf(item);
+    if (index > -1)
+        arr.splice(index, 1);
+}
+// Adapted from array-move
+function moveItem([...arr], fromIndex, toIndex) {
+    const startIndex = fromIndex < 0 ? arr.length + fromIndex : fromIndex;
+    if (startIndex >= 0 && startIndex < arr.length) {
+        const endIndex = toIndex < 0 ? arr.length + toIndex : toIndex;
+        const [item] = arr.splice(fromIndex, 1);
+        arr.splice(endIndex, 0, item);
+    }
+    return arr;
+}
+
+
+
+
+/***/ }),
+
 /***/ "./node_modules/motion-utils/dist/es/errors.mjs":
 /*!******************************************************!*\
   !*** ./node_modules/motion-utils/dist/es/errors.mjs ***!
@@ -27383,6 +27452,27 @@ if (true) {
 
 /***/ }),
 
+/***/ "./node_modules/motion-utils/dist/es/global-config.mjs":
+/*!*************************************************************!*\
+  !*** ./node_modules/motion-utils/dist/es/global-config.mjs ***!
+  \*************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   MotionGlobalConfig: () => (/* binding */ MotionGlobalConfig)
+/* harmony export */ });
+const MotionGlobalConfig = {
+    skipAnimations: false,
+    useManualTiming: false,
+};
+
+
+
+
+/***/ }),
+
 /***/ "./node_modules/motion-utils/dist/es/index.mjs":
 /*!*****************************************************!*\
   !*** ./node_modules/motion-utils/dist/es/index.mjs ***!
@@ -27392,19 +27482,37 @@ if (true) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   invariant: () => (/* reexport safe */ _errors_mjs__WEBPACK_IMPORTED_MODULE_0__.invariant),
-/* harmony export */   memo: () => (/* reexport safe */ _memo_mjs__WEBPACK_IMPORTED_MODULE_1__.memo),
-/* harmony export */   millisecondsToSeconds: () => (/* reexport safe */ _time_conversion_mjs__WEBPACK_IMPORTED_MODULE_4__.millisecondsToSeconds),
-/* harmony export */   noop: () => (/* reexport safe */ _noop_mjs__WEBPACK_IMPORTED_MODULE_2__.noop),
-/* harmony export */   progress: () => (/* reexport safe */ _progress_mjs__WEBPACK_IMPORTED_MODULE_3__.progress),
-/* harmony export */   secondsToMilliseconds: () => (/* reexport safe */ _time_conversion_mjs__WEBPACK_IMPORTED_MODULE_4__.secondsToMilliseconds),
-/* harmony export */   warning: () => (/* reexport safe */ _errors_mjs__WEBPACK_IMPORTED_MODULE_0__.warning)
+/* harmony export */   MotionGlobalConfig: () => (/* reexport safe */ _global_config_mjs__WEBPACK_IMPORTED_MODULE_2__.MotionGlobalConfig),
+/* harmony export */   SubscriptionManager: () => (/* reexport safe */ _subscription_manager_mjs__WEBPACK_IMPORTED_MODULE_6__.SubscriptionManager),
+/* harmony export */   addUniqueItem: () => (/* reexport safe */ _array_mjs__WEBPACK_IMPORTED_MODULE_0__.addUniqueItem),
+/* harmony export */   hasWarned: () => (/* reexport safe */ _warn_once_mjs__WEBPACK_IMPORTED_MODULE_9__.hasWarned),
+/* harmony export */   invariant: () => (/* reexport safe */ _errors_mjs__WEBPACK_IMPORTED_MODULE_1__.invariant),
+/* harmony export */   memo: () => (/* reexport safe */ _memo_mjs__WEBPACK_IMPORTED_MODULE_3__.memo),
+/* harmony export */   millisecondsToSeconds: () => (/* reexport safe */ _time_conversion_mjs__WEBPACK_IMPORTED_MODULE_7__.millisecondsToSeconds),
+/* harmony export */   moveItem: () => (/* reexport safe */ _array_mjs__WEBPACK_IMPORTED_MODULE_0__.moveItem),
+/* harmony export */   noop: () => (/* reexport safe */ _noop_mjs__WEBPACK_IMPORTED_MODULE_4__.noop),
+/* harmony export */   progress: () => (/* reexport safe */ _progress_mjs__WEBPACK_IMPORTED_MODULE_5__.progress),
+/* harmony export */   removeItem: () => (/* reexport safe */ _array_mjs__WEBPACK_IMPORTED_MODULE_0__.removeItem),
+/* harmony export */   secondsToMilliseconds: () => (/* reexport safe */ _time_conversion_mjs__WEBPACK_IMPORTED_MODULE_7__.secondsToMilliseconds),
+/* harmony export */   velocityPerSecond: () => (/* reexport safe */ _velocity_per_second_mjs__WEBPACK_IMPORTED_MODULE_8__.velocityPerSecond),
+/* harmony export */   warnOnce: () => (/* reexport safe */ _warn_once_mjs__WEBPACK_IMPORTED_MODULE_9__.warnOnce),
+/* harmony export */   warning: () => (/* reexport safe */ _errors_mjs__WEBPACK_IMPORTED_MODULE_1__.warning)
 /* harmony export */ });
-/* harmony import */ var _errors_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./errors.mjs */ "./node_modules/motion-utils/dist/es/errors.mjs");
-/* harmony import */ var _memo_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./memo.mjs */ "./node_modules/motion-utils/dist/es/memo.mjs");
-/* harmony import */ var _noop_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./noop.mjs */ "./node_modules/motion-utils/dist/es/noop.mjs");
-/* harmony import */ var _progress_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./progress.mjs */ "./node_modules/motion-utils/dist/es/progress.mjs");
-/* harmony import */ var _time_conversion_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./time-conversion.mjs */ "./node_modules/motion-utils/dist/es/time-conversion.mjs");
+/* harmony import */ var _array_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./array.mjs */ "./node_modules/motion-utils/dist/es/array.mjs");
+/* harmony import */ var _errors_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./errors.mjs */ "./node_modules/motion-utils/dist/es/errors.mjs");
+/* harmony import */ var _global_config_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./global-config.mjs */ "./node_modules/motion-utils/dist/es/global-config.mjs");
+/* harmony import */ var _memo_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./memo.mjs */ "./node_modules/motion-utils/dist/es/memo.mjs");
+/* harmony import */ var _noop_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./noop.mjs */ "./node_modules/motion-utils/dist/es/noop.mjs");
+/* harmony import */ var _progress_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./progress.mjs */ "./node_modules/motion-utils/dist/es/progress.mjs");
+/* harmony import */ var _subscription_manager_mjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./subscription-manager.mjs */ "./node_modules/motion-utils/dist/es/subscription-manager.mjs");
+/* harmony import */ var _time_conversion_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./time-conversion.mjs */ "./node_modules/motion-utils/dist/es/time-conversion.mjs");
+/* harmony import */ var _velocity_per_second_mjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./velocity-per-second.mjs */ "./node_modules/motion-utils/dist/es/velocity-per-second.mjs");
+/* harmony import */ var _warn_once_mjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./warn-once.mjs */ "./node_modules/motion-utils/dist/es/warn-once.mjs");
+
+
+
+
+
 
 
 
@@ -27493,6 +27601,62 @@ const progress = (from, to, value) => {
 
 /***/ }),
 
+/***/ "./node_modules/motion-utils/dist/es/subscription-manager.mjs":
+/*!********************************************************************!*\
+  !*** ./node_modules/motion-utils/dist/es/subscription-manager.mjs ***!
+  \********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SubscriptionManager: () => (/* binding */ SubscriptionManager)
+/* harmony export */ });
+/* harmony import */ var _array_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./array.mjs */ "./node_modules/motion-utils/dist/es/array.mjs");
+
+
+class SubscriptionManager {
+    constructor() {
+        this.subscriptions = [];
+    }
+    add(handler) {
+        (0,_array_mjs__WEBPACK_IMPORTED_MODULE_0__.addUniqueItem)(this.subscriptions, handler);
+        return () => (0,_array_mjs__WEBPACK_IMPORTED_MODULE_0__.removeItem)(this.subscriptions, handler);
+    }
+    notify(a, b, c) {
+        const numSubscriptions = this.subscriptions.length;
+        if (!numSubscriptions)
+            return;
+        if (numSubscriptions === 1) {
+            /**
+             * If there's only a single handler we can just call it without invoking a loop.
+             */
+            this.subscriptions[0](a, b, c);
+        }
+        else {
+            for (let i = 0; i < numSubscriptions; i++) {
+                /**
+                 * Check whether the handler exists before firing as it's possible
+                 * the subscriptions were modified during this loop running.
+                 */
+                const handler = this.subscriptions[i];
+                handler && handler(a, b, c);
+            }
+        }
+    }
+    getSize() {
+        return this.subscriptions.length;
+    }
+    clear() {
+        this.subscriptions.length = 0;
+    }
+}
+
+
+
+
+/***/ }),
+
 /***/ "./node_modules/motion-utils/dist/es/time-conversion.mjs":
 /*!***************************************************************!*\
   !*** ./node_modules/motion-utils/dist/es/time-conversion.mjs ***!
@@ -27515,6 +27679,62 @@ __webpack_require__.r(__webpack_exports__);
 const secondsToMilliseconds = (seconds) => seconds * 1000;
 /*#__NO_SIDE_EFFECTS__*/
 const millisecondsToSeconds = (milliseconds) => milliseconds / 1000;
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/motion-utils/dist/es/velocity-per-second.mjs":
+/*!*******************************************************************!*\
+  !*** ./node_modules/motion-utils/dist/es/velocity-per-second.mjs ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   velocityPerSecond: () => (/* binding */ velocityPerSecond)
+/* harmony export */ });
+/*
+  Convert velocity into velocity per second
+
+  @param [number]: Unit per frame
+  @param [number]: Frame duration in ms
+*/
+function velocityPerSecond(velocity, frameDuration) {
+    return frameDuration ? velocity * (1000 / frameDuration) : 0;
+}
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/motion-utils/dist/es/warn-once.mjs":
+/*!*********************************************************!*\
+  !*** ./node_modules/motion-utils/dist/es/warn-once.mjs ***!
+  \*********************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   hasWarned: () => (/* binding */ hasWarned),
+/* harmony export */   warnOnce: () => (/* binding */ warnOnce)
+/* harmony export */ });
+const warned = new Set();
+function hasWarned(message) {
+    return warned.has(message);
+}
+function warnOnce(condition, message, element) {
+    if (condition || warned.has(message))
+        return;
+    console.warn(message);
+    if (element)
+        console.warn(element);
+    warned.add(message);
+}
 
 
 

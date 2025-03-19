@@ -6,8 +6,8 @@ import { sendEmail } from "../utils/sendEmail";
 
 //console.log("🔑 Supabase URL:", process.env.GATSBY_SUPABASE_URL);
 //console.log("🔑 Supabase Service Role Key:", process.env.SUPABASE_SERVICE_ROLE_KEY ? "✔️ Loaded" : "❌ Not Loaded");
-//console.log("🔑 TURNSTILE_SECRET:", process.env.TURNSTILE_SECRET ? "✔️ Loaded" : "❌ Not Loaded");
-//console.log("🔑 GATSBY_TURNSTILE_SITE_KEY:", process.env.GATSBY_TURNSTILE_SITE_KEY);
+console.log("🔑 TURNSTILE_SECRET:", process.env.TURNSTILE_SECRET ? "✔️ Loaded" : "❌ Not Loaded");
+console.log("🔑 GATSBY_TURNSTILE_SITE_KEY:", process.env.GATSBY_TURNSTILE_SITE_KEY);
 //console.log("🔑 Kickbox API Key:", process.env.KICKBOX_API_KEY);
 //console.log("🔑 Redis URL:", process.env.REDIS_URL);
 //console.log("🔍 Verbinding maken met Redis...");
@@ -90,7 +90,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({ secret: process.env.TURNSTILE_SECRET, response: turnstileToken }),
     });
     const turnstileData = await turnstileRes.json();
-    console.log("✅ Cloudflare Turnstile API-respons:", turnstileData);
+    console.log("✅ Cloudflare Turnstile API-respons:", JSON.stringify(turnstileData, null, 2));
 
     if (!turnstileData.success) {
       console.warn("❌ Turnstile verificatie mislukt!", turnstileData);
@@ -155,7 +155,7 @@ export default async function handler(req, res) {
       email,
       "Verify your email",
       `Click the link to verify your email: ${process.env.GATSBY_SITE_URL}/complete-profile?token=${verificationToken}`,
-      `<p>Click the link to verify your email:</p>
+      `<p>Click the link to verify your email (via register):</p>
        <a href="${process.env.GATSBY_SITE_URL}/complete-profile?token=${verificationToken}">
        Verify Email</a>`
     );

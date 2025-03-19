@@ -54,7 +54,7 @@ export default async function handler(req, res) {
       email,
       "Resend: Verify your email",
       `Click the link to verify your email: ${process.env.GATSBY_SITE_URL}/complete-profile?token=${verificationToken}`,
-      `<p>Click the link to verify your email:</p>
+      `<p>Click the link to verify your email (via send):</p>
        <a href="${process.env.GATSBY_SITE_URL}/complete-profile?token=${verificationToken}">
        Verify Email</a>`
     );
