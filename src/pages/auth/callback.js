@@ -52,8 +52,8 @@ const AuthCallback = () => {
   
         // ✅ Detecteer de taal uit de URL en stuur gebruiker door
         const currentLang = window.location.pathname.split("/")[1] || "en";
-        console.log(`🌍 Gebruiker wordt doorgestuurd naar: /${currentLang}/dashboard`);
-        navigate(`/${currentLang}/dashboard`);
+        console.log(`🌍 Gebruiker wordt doorgestuurd naar: /${currentLang}/profile`);
+        navigate(`/${currentLang}/profile`);
       } catch (err) {
         console.error("❌ Algemene fout:", err.message);
         alert("OAuth login mislukt, probeer opnieuw.");

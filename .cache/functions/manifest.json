@@ -9,22 +9,49 @@
         "functionId": "auth-social-login-js"
     },
     {
-        "functionRoute": "cleanupUsers",
+        "functionRoute": "CompareApi1",
         "pluginName": "default-site-plugin",
-        "originalAbsoluteFilePath": "/Users/johan/CRstudio/CRstudio/src/api/cleanupUsers.js",
-        "originalRelativeFilePath": "cleanupUsers.js",
-        "relativeCompiledFilePath": "cleanupUsers.js",
-        "absoluteCompiledFilePath": "/Users/johan/CRstudio/CRstudio/.cache/functions/cleanupUsers.js",
-        "functionId": "cleanup-users-js"
+        "originalAbsoluteFilePath": "/Users/johan/CRstudio/CRstudio/src/api/CompareApi1.js",
+        "originalRelativeFilePath": "CompareApi1.js",
+        "relativeCompiledFilePath": "CompareApi1.js",
+        "absoluteCompiledFilePath": "/Users/johan/CRstudio/CRstudio/.cache/functions/CompareApi1.js",
+        "functionId": "compare-api-1-js"
     },
     {
-        "functionRoute": "complete-profile",
+        "functionRoute": "CompareApi2",
         "pluginName": "default-site-plugin",
-        "originalAbsoluteFilePath": "/Users/johan/CRstudio/CRstudio/src/api/complete-profile.js",
-        "originalRelativeFilePath": "complete-profile.js",
-        "relativeCompiledFilePath": "complete-profile.js",
-        "absoluteCompiledFilePath": "/Users/johan/CRstudio/CRstudio/.cache/functions/complete-profile.js",
-        "functionId": "complete-profile-js"
+        "originalAbsoluteFilePath": "/Users/johan/CRstudio/CRstudio/src/api/CompareApi2.js",
+        "originalRelativeFilePath": "CompareApi2.js",
+        "relativeCompiledFilePath": "CompareApi2.js",
+        "absoluteCompiledFilePath": "/Users/johan/CRstudio/CRstudio/.cache/functions/CompareApi2.js",
+        "functionId": "compare-api-2-js"
+    },
+    {
+        "functionRoute": "CompareApi3",
+        "pluginName": "default-site-plugin",
+        "originalAbsoluteFilePath": "/Users/johan/CRstudio/CRstudio/src/api/CompareApi3.js",
+        "originalRelativeFilePath": "CompareApi3.js",
+        "relativeCompiledFilePath": "CompareApi3.js",
+        "absoluteCompiledFilePath": "/Users/johan/CRstudio/CRstudio/.cache/functions/CompareApi3.js",
+        "functionId": "compare-api-3-js"
+    },
+    {
+        "functionRoute": "CompareApi4",
+        "pluginName": "default-site-plugin",
+        "originalAbsoluteFilePath": "/Users/johan/CRstudio/CRstudio/src/api/CompareApi4.js",
+        "originalRelativeFilePath": "CompareApi4.js",
+        "relativeCompiledFilePath": "CompareApi4.js",
+        "absoluteCompiledFilePath": "/Users/johan/CRstudio/CRstudio/.cache/functions/CompareApi4.js",
+        "functionId": "compare-api-4-js"
+    },
+    {
+        "functionRoute": "profile",
+        "pluginName": "default-site-plugin",
+        "originalAbsoluteFilePath": "/Users/johan/CRstudio/CRstudio/src/api/profile.js",
+        "originalRelativeFilePath": "profile.js",
+        "relativeCompiledFilePath": "profile.js",
+        "absoluteCompiledFilePath": "/Users/johan/CRstudio/CRstudio/.cache/functions/profile.js",
+        "functionId": "profile-js"
     },
     {
         "functionRoute": "register",
@@ -43,33 +70,6 @@
         "relativeCompiledFilePath": "resendVerificationEmail.js",
         "absoluteCompiledFilePath": "/Users/johan/CRstudio/CRstudio/.cache/functions/resendVerificationEmail.js",
         "functionId": "resend-verification-email-js"
-    },
-    {
-        "functionRoute": "sendVerificationEmail",
-        "pluginName": "default-site-plugin",
-        "originalAbsoluteFilePath": "/Users/johan/CRstudio/CRstudio/src/api/sendVerificationEmail.js",
-        "originalRelativeFilePath": "sendVerificationEmail.js",
-        "relativeCompiledFilePath": "sendVerificationEmail.js",
-        "absoluteCompiledFilePath": "/Users/johan/CRstudio/CRstudio/.cache/functions/sendVerificationEmail.js",
-        "functionId": "send-verification-email-js"
-    },
-    {
-        "functionRoute": "toCompare1",
-        "pluginName": "default-site-plugin",
-        "originalAbsoluteFilePath": "/Users/johan/CRstudio/CRstudio/src/api/toCompare1.js",
-        "originalRelativeFilePath": "toCompare1.js",
-        "relativeCompiledFilePath": "toCompare1.js",
-        "absoluteCompiledFilePath": "/Users/johan/CRstudio/CRstudio/.cache/functions/toCompare1.js",
-        "functionId": "to-compare-1-js"
-    },
-    {
-        "functionRoute": "toCompare2",
-        "pluginName": "default-site-plugin",
-        "originalAbsoluteFilePath": "/Users/johan/CRstudio/CRstudio/src/api/toCompare2.js",
-        "originalRelativeFilePath": "toCompare2.js",
-        "relativeCompiledFilePath": "toCompare2.js",
-        "absoluteCompiledFilePath": "/Users/johan/CRstudio/CRstudio/.cache/functions/toCompare2.js",
-        "functionId": "to-compare-2-js"
     },
     {
         "functionRoute": "verify-email",

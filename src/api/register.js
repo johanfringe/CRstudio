@@ -3,6 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 import Redis from "ioredis";
 import crypto from "crypto";
 import { sendEmail } from "../utils/sendEmail";
+import { validateTurnstile } from "../utils/validateTurnstile.js";
 
 //console.log("🔑 Supabase URL:", process.env.GATSBY_SUPABASE_URL);
 //console.log("🔑 Supabase Service Role Key:", process.env.SUPABASE_SERVICE_ROLE_KEY ? "✔️ Loaded" : "❌ Not Loaded");
@@ -59,6 +60,11 @@ export default async function handler(req, res) {
 
   try {
     const { email, turnstileToken } = req.body;
+    console.log(`📩 Ontvangen e-mail voor verificatie: ${email}`);
+    if (!email || !turnstileToken) {
+      console.warn("⚠️ Turnstile: Ontbrekende velden:", { email, turnstileToken });
+      return res.status(400).json({ message: "Turnstile: Missing fields" });
+    }
     console.log("📩 Turnstile: Ontvangen aanvraag:", req.body);
 
     if (!email || !turnstileToken) {
@@ -83,22 +89,15 @@ export default async function handler(req, res) {
 
     console.log(`🔄 Redis: Poging #${attempts} voor IP:`, redisKey);
 
-    // 2️⃣ **Cloudflare Turnstile-verificatie**
-    const turnstileRes = await fetch(`https://challenges.cloudflare.com/turnstile/v0/siteverify`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ secret: process.env.TURNSTILE_SECRET, response: turnstileToken }),
-    });
-    const turnstileData = await turnstileRes.json();
-    console.log("✅ Cloudflare Turnstile API-respons:", JSON.stringify(turnstileData, null, 2));
-
-    if (!turnstileData.success) {
-      console.warn("❌ Turnstile verificatie mislukt!", turnstileData);
-      return res.status(403).json({ message: "Turnstile: Security check failed" });
+    // 2️⃣ **Cloudflare Turnstile-verificatie - Gebruik de helperfunctie**
+    const turnstileResult = await validateTurnstile(turnstileToken);
+    if (!turnstileResult.success) {
+        return res.status(403).json({ message: turnstileResult.message });
     }
 
     console.log("✅ Turnstile verificatie geslaagd!");
-
+    
+    console.log(`🚀 Kickbox wordt aangeroepen voor: ${email}`);
     // 3️⃣ **Kickbox Disposable E-mail Check**
     let kickboxData;
     try {
@@ -108,27 +107,40 @@ export default async function handler(req, res) {
       if (!kickboxRes.ok) {
         const errorText = await kickboxRes.text();
         console.error("❌ Kickbox API-fout:", errorText);
-        return res.status(500).json({ message: "Kickbox: Email validation service failed" });
+        throw new Error(`🚨 Kickbox request failed! Status: ${kickboxRes.status} - ${kickboxRes.statusText} - Error: ${errorText}`);
       }
 
       kickboxData = await kickboxRes.json();
-      console.log("📬 Kickbox validatieresultaat voor", email, ":", kickboxData);
+      console.log("📬 Kickbox validatieresultaat voor", email, ":", JSON.stringify(kickboxData, null, 2));
+      console.log("🔎 Kickbox result:", kickboxData.result);
+      console.log("🔎 Kickbox reason:", kickboxData.reason);
+      console.log("🔎 Kickbox disposable:", kickboxData.disposable);
+      console.log("🔎 Kickbox accept_all:", kickboxData.accept_all);
+      console.log("🔎 Kickbox free:", kickboxData.free);
+      console.log("🔎 Kickbox sendex score:", kickboxData.sendex);
+
     } catch (err) {
       console.error("❌ Kickbox API-fout:", err);
       return res.status(500).json({ message: "Kickbox: Email validation service failed" });
     }
+    console.log(`✅ Kickbox API-aanroep voltooid voor: ${email}`);
 
-    if (kickboxData.result !== "deliverable" || kickboxData.disposable) {
-      console.log("❌ Kickbox: Disposable of ongeldige e-mail gedetecteerd:", email);
+    if (kickboxData.result === "undeliverable" || kickboxData.disposable) {
+      console.log("❌ Kickbox: Ongeldig of disposable e-mail gedetecteerd:", email);
       return res.status(400).json({ message: "Kickbox: Invalid or disposable emails are not allowed" });
     }
+    
+    if (kickboxData.result === "risky" && kickboxData.reason === "low_deliverability") {
+      console.warn("⚠️ Kickbox waarschuwing: E-mail heeft lage afleverkans, maar wordt geaccepteerd:", email);
+    }
+    
 
     // 4️⃣ **Controleren of e-mail al bestaat in de database**
     const existingUser = await checkIfUserExists(email);
 
     if (existingUser) {
       console.log("⚠️ Supabase: E-mail bestaat al in temp_users:", email);
-      return res.status(400).json({ message: "Supabase: Email already registered. Check your inbox!" });
+      return res.status(400).json({ message: "Supabase: Email already registered." });
     }
 
     // 5️⃣ **Unieke verificatietoken genereren**
@@ -151,13 +163,27 @@ export default async function handler(req, res) {
 
     // 📧 **Nieuwe verificatiemail wordt direct verstuurd**
     console.log("📧 Versturen van verificatiemail...");
+    let lang = "en"; // fallback
+    try {
+      const ref = req.headers.referer || "";
+      const parts = new URL(ref).pathname.split("/").filter(Boolean); // ['nl', 'register']
+      if (parts[0] && parts[0].length === 2) {
+        lang = parts[0];
+      }
+      console.log("🌐 Afgeleide taalcode uit URL:", lang);
+    } catch (err) {
+      console.warn("⚠️ Fout bij afleiden van taal uit referer:", err.message);
+    }
+
+    const profileUrl = `${process.env.SITE_URL}/${lang}/profile?token=${verificationToken}`;
+    console.log("📧 Verificatielink gegenereerd:", profileUrl);
+
     const emailResult = await sendEmail(
       email,
       "Verify your email",
-      `Click the link to verify your email: ${process.env.GATSBY_SITE_URL}/complete-profile?token=${verificationToken}`,
-      `<p>Click the link to verify your email (via register):</p>
-       <a href="${process.env.GATSBY_SITE_URL}/complete-profile?token=${verificationToken}">
-       Verify Email</a>`
+      `Click the link to verify your email: ${profileUrl}`,
+      `<p>Click the link to verify your email:</p>
+      <a href="${profileUrl}">Verify Email</a>`
     );
 
     if (!emailResult.success) {

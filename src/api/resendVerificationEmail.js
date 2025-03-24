@@ -1,7 +1,8 @@
-//src/api/resendVerificationEmail.js
+// src/api/resendVerificationEmail.js
 import { createClient } from "@supabase/supabase-js";
 import Redis from "ioredis";
 import crypto from "crypto";
+import { rateLimit } from "../utils/rateLimiter.js";
 
 const supabase = createClient(
   process.env.GATSBY_SUPABASE_URL,
@@ -16,20 +17,19 @@ export default async function handler(req, res) {
 
   try {
     const { email } = req.body;
+    
     if (!email || !email.includes("@")) {
       return res.status(400).json({ message: "Invalid email address" });
     }
 
     console.log("🔄 Opnieuw verzenden van verificatiemail voor:", email);
 
-    // 🛑 **Rate limiting met Redis**
+    // 🛑 **Rate limiting met Redis helperfunctie**
     const redisKey = `resendVerificationEmail:${email}`;
-    const attempts = await redis.incr(redisKey);
-    if (attempts > 3) {
+    if (await rateLimit(redisKey, 3, 300)) { // ⏳ Limiet: 3 verzoeken per 5 minuten
       console.warn("⏳ Te veel verificatie-aanvragen voor:", email);
       return res.status(429).json({ message: "Too many verification requests. Try again later." });
     }
-    await redis.expire(redisKey, 300); // 5 minuten limiet
 
     // 🔑 **Genereer een nieuw verificatietoken**
     const verificationToken = crypto.randomBytes(32).toString("hex");
@@ -51,9 +51,9 @@ export default async function handler(req, res) {
     const emailResult = await sendEmail(
       email,
       "Resend: Verify your email",
-      `Click the link to verify your email: ${process.env.GATSBY_SITE_URL}/complete-profile?token=${verificationToken}`,
+      `Click the link to verify your email: ${process.env.SITE_URL}/profile?token=${verificationToken}`,
       `<p>Click the link to verify your email (via resend):</p>
-       <a href="${process.env.GATSBY_SITE_URL}/complete-profile?token=${verificationToken}">
+       <a href="${process.env.SITE_URL}/profile?token=${verificationToken}">
        Verify Email</a>`
     );
 

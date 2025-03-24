@@ -177,6 +177,11 @@
     "title": "Probeer het \ngratis",
     "text": "Toon je oeuvre aan de wereld en bewaar het voor de volgende generaties. \nProbeer de volledige site."
   },
+  
+  "overview": {
+    "title": "Uw oeuvre / CR\n voor altijd online",
+    "description": "Spotgemakkelijk en spotgoedkoop\nZonder technische kennis\nContinu aan te vullen\nIn 3 talen uit 30 beschikbare talen\nIn een gepersonaliseerde layout"
+  },
 
   "pricing": {
     "title": "Start vandaag jouw catalogue raisonné",
@@ -211,9 +216,16 @@
     "email_body": "Beste team, ik ben geïnteresseerd in jullie gepersonaliseerde diensten. Kunnen jullie me meer info sturen?"
   },
   
-  "overview": {
-    "title": "Uw oeuvre / CR\n voor altijd online",
-    "description": "Spotgemakkelijk en spotgoedkoop\nZonder technische kennis\nContinu aan te vullen\nIn 3 talen uit 30 beschikbare talen\nIn een gepersonaliseerde layout"
+  "profile": {
+    "email_verified_title": "Uw e-mailadres is bevestigd",
+    "email_verified_subtitle": "Vul de onderstaande gegevens in om jouw site direct aan te maken.",
+    "verify_error": {
+      "TOKEN_REQUIRED": "Geen token meegegeven.",
+      "TOKEN_INVALID": "Deze verificatielink is ongeldig.",
+      "TOKEN_EXPIRED": "De verificatielink is verlopen. Vraag een nieuwe aan.",
+      "INTERNAL_ERROR": "Er is iets misgegaan. Probeer het opnieuw.",
+      "NO_TOKEN": "Geen verificatietoken gevonden in de URL."
+    }
   },
   
   "subscription-signup": {

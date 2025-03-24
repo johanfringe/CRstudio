@@ -1,6 +1,6 @@
 // src/LoginModal2.js :
 // dit is de login van /pages/dashoard2. Kijk naar /pages/login voor uitgebreide versie
-// Dit moeten in de kunstenaaarsite komen
+// Dit moet in de kunstenaaarsite komen
 import React, { useState } from "react";
 import { supabase } from "../utils/supabaseClient";
 
