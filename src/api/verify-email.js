@@ -75,7 +75,7 @@ export default async function handler(req, res) {
       .from("temp_users")
       .delete()
       .eq("email", user.email)
-      .select(); // toont de verwijderde rij (debug)
+      .select(); // toont de verwijderde rij(en) (debug)
 
     if (deleteError) {
       console.error("❌ Gebruiker niet verwijderen uit temp_users:", deleteError.message);
