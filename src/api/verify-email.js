@@ -1,6 +1,8 @@
-// src/api/verify-email.js :
+// src/api/verify-email.js
 import { createClient } from "@supabase/supabase-js";
-import crypto from "crypto";
+
+console.log("🔑 Supabase URL:", process.env.GATSBY_SUPABASE_URL);
+console.log("🔑 Supabase Service Role Key:", process.env.SUPABASE_SERVICE_ROLE_KEY ? "✔️ Loaded" : "❌ Not Loaded");
 
 const supabase = createClient(
   process.env.GATSBY_SUPABASE_URL,
@@ -8,7 +10,9 @@ const supabase = createClient(
 );
 
 export default async function handler(req, res) {
+  // ✅ Verbetering 1: Method-check header
   if (req.method !== "POST") {
+    res.setHeader("Allow", ["POST"]);
     return res.status(405).json({ message: "Method Not Allowed" });
   }
 
@@ -16,81 +20,83 @@ export default async function handler(req, res) {
     const { token } = req.body;
 
     if (!token) {
+      console.warn("⚠️ Geen token meegegeven.");
       return res.status(400).json({ success: false, code: "TOKEN_REQUIRED" });
     }
 
-    console.log("🔍 Verificatie gestart met token:", token);
+    console.log("🔍 Start verificatieproces voor token:", token);
 
-    // 1️⃣ **Token ophalen en checken op geldigheid**
-    const { data: user, error } = await supabase
-      .from("temp_users")
-      .select("*")
-      .eq("verification_token", token)
-      .single();
+    // 🚀 Aanroep van RPC-functie verify_user_token
+    const { data, error } = await supabase.rpc("verify_user_token", { _token: token });
 
-    if (!user || error) {
-      console.warn("❌ Ongeldig of verlopen token!");
-      return res.status(400).json({ success: false, code: "TOKEN_INVALID" });
+    console.log("↩️ Supabase RPC response – data:", data);
+    console.log("↩️ Supabase RPC response – error:", error);
+
+    if (error) {
+      console.error("❌ RPC-call mislukt:", error.message);
+      return res.status(500).json({
+        success: false,
+        code: "RPC_FAILED",
+        details: error.message,
+      });
     }
 
-    console.log("🔎 Token ontvangen voor verificatie:", token);
-    console.log("📅 created_at (Supabase):", user.created_at);
-    console.log("📅 created_at getTime:", new Date(user.created_at).getTime());
-    console.log("📅 Date.now():", Date.now());
-    console.log("⏳ Verschil in minuten:", (Date.now() - new Date(user.created_at).getTime()) / 60000);
-
-    // 2️⃣ **Token verlopen? Controleer of 30 minuten verstreken zijn**
-    const tokenCreatedAt = new Date(user.created_at).getTime();
-    const now = Date.now();
-    const diffMinutes = (now - tokenCreatedAt) / 60000;
-
-    console.log("🕒 Token timestamp (UTC):", new Date(tokenCreatedAt).toISOString());
-    console.log("🕒 Now (UTC):", new Date(now).toISOString());
-    console.log("🕓 Verschil in minuten:", diffMinutes);
-
-    if (diffMinutes > 30) {
-      console.warn("❌ Verificatielink verlopen voor e-mail:", user.email);
-      return res.status(400).json({ success: false, code: "TOKEN_EXPIRED" });
-    }
-    // 3️⃣ **Voeg gebruiker toe aan `users`-tabel**
-    const { error: insertError } = await supabase
-      .from("users")
-      .insert([{
-        id: crypto.randomUUID(),
-        email: user.email,
-        confirmed_at: new Date().toISOString(),
-      }]);
-
-    if (insertError) {
-      console.error("❌ Fout bij toevoegen aan 'users':", JSON.stringify(insertError, null, 2));
-      return res.status(500).json({ success: false, code: "INSERT_FAILED", details: insertError.message });
+    if (data === null && error === null) {
+      console.error("🚨 Geen data of foutmelding uit Supabase: mogelijk silent fail in SQL function");
+      return res.status(500).json({
+        success: false,
+        code: "NO_RESPONSE_FROM_RPC",
+        details: "De functie verify_user_token gaf geen data of foutmelding terug.",
+      });
     }
 
-    console.log("✅ Gebruiker toegevoegd aan users:", user.email);
-
-    // 4️⃣ **Verwijder tijdelijke gebruiker uit `temp_users`**
-    console.log("🧹 Verwijder gebruiker uit temp_users:", user.email);
-
-    const { data: deleted, error: deleteError } = await supabase
-      .from("temp_users")
-      .delete()
-      .eq("email", user.email)
-      .select(); // toont de verwijderde rij(en) (debug)
-
-    if (deleteError) {
-      console.error("❌ Gebruiker niet verwijderen uit temp_users:", deleteError.message);
-    } else {
-      console.log("🗑️ Gebruiker succesvol verwijderd uit temp_users:", deleted);
+    if (!data || typeof data !== "object" || !data.code) {
+      console.error("⚠️ Ongeldige response van verify_user_token:", data);
+      return res.status(500).json({
+        success: false,
+        code: "INVALID_RPC_RESPONSE",
+        details: data,
+      });
     }
 
-    return res.status(200).json({
-      success: true,
-      code: "EMAIL_VERIFIED",
-      email: user.email
+    const { success, code, email, details } = data;
+
+    switch (code) {
+      case "EMAIL_VERIFIED":
+        // ✅ Meer logging
+        console.log(`✅ E-mail geverifieerd: ${email} om ${new Date().toISOString()}`);
+        return res.status(200).json({ success: true, code, email });
+
+      case "TOKEN_NOT_FOUND":
+      case "TOKEN_EXPIRED":
+      case "TOKEN_INVALID": // fallback case
+        console.warn(`⚠️ Ongeldig/verlopen token (${code})`);
+        return res.status(400).json({ success: false, code });
+
+      case "DUPLICATE_EMAIL":
+        console.warn("⚠️ E-mail bestaat al:", email);
+        return res.status(409).json({ success: false, code });
+
+      case "INTERNAL_ERROR":
+        console.error("🧨 Interne fout in verify_user_token:", details);
+        return res.status(500).json({ success: false, code, details });
+
+      // ✅ Extra default fallback
+      default:
+        console.warn("⚠️ Onbekende foutcode uit RPC:", code);
+        return res.status(500).json({
+          success: false,
+          code: "UNKNOWN_CODE",
+          details: code,
+        });
+    }
+
+  } catch (err) {
+    console.error("🔥 Onverwachte fout tijdens verificatie:", err);
+    return res.status(500).json({
+      success: false,
+      code: "INTERNAL_EXCEPTION",
+      details: err.message,
     });
-
-  } catch (error) {
-    console.error("❌ Fout in verificatieproces:", error);
-    return res.status(500).json({ success: false, code: "INTERNAL_ERROR" });
   }
 }
