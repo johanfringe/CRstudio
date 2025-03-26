@@ -6,7 +6,13 @@ import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
   process.env.GATSBY_SUPABASE_URL,
-  process.env.GATSBY_SUPABASE_ANON_KEY
+  process.env.GATSBY_SUPABASE_ANON_KEY,
+  {
+    auth: {
+      flowType: "pkce",
+      detectSessionInUrl: true
+    }
+  }
 );
 
 const AuthCallback = () => {
@@ -24,6 +30,18 @@ const AuthCallback = () => {
   
         console.log("🛠 OAuth-code ontvangen:", code);
         console.log("🛡️ Ontvangen state:", receivedState);
+
+        // 🔎 Extra debug om fallback te controleren
+        console.log("🔍 window.location.search:", window.location.search);
+        console.log("🔍 window.location.hash:", window.location.hash);
+
+        // ⛔️ Fallbackcontrole: is Supabase toch nog in Implicit Flow?
+        if (!code && window.location.hash.includes("access_token")) {
+          console.error("⚠️ Supabase gebruikte Implicit Flow i.p.v. PKCE.");
+          alert("OAuth login faalde: Supabase viel terug op oude flow.");
+          navigate("/register");
+          return;
+        }
   
         // ✅ Controleer of de ontvangen state overeenkomt met de oorspronkelijke
         const storedState = sessionStorage.getItem("oauth_state");
