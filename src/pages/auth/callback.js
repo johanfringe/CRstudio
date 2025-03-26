@@ -20,20 +20,13 @@ const AuthCallback = () => {
         const urlParams = new URLSearchParams(window.location.search);
         console.log("🔍 URL Parameters:", [...urlParams.entries()]);
         const code = urlParams.get("code");
-        const receivedState = urlParams.get("state");
-  
-        console.log("🛠 OAuth-code ontvangen:", code);
-        console.log("🛡️ Ontvangen state:", receivedState);
-  
-        // ✅ Controleer of de ontvangen state overeenkomt met de oorspronkelijke
-        const storedState = sessionStorage.getItem("oauth_state");
-  
-        if (!code || !receivedState || receivedState !== storedState) {
-          console.error("❌ OAuth state mismatch! Mogelijke CSRF-aanval.");
-          alert("OAuth fout: Ongeldige state. Probeer opnieuw.");
+        
+        if (!code) {
+          console.error("❌ Geen OAuth-code ontvangen.");
+          alert("OAuth fout: Ontbrekende code. Probeer opnieuw.");
           navigate("/register");
           return;
-        }
+        }        
   
         // 🚀 Verstuur code naar Supabase voor sessie-uitwisseling
         console.log("📡 Versturen code naar Supabase...");
