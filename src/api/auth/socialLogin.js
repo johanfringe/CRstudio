@@ -14,21 +14,23 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { provider, state } = req.body;
+    const { provider, state, lang } = req.body;
 
     if (!provider || !["google", "apple"].includes(provider)) {
       return res.status(400).json({ message: "Invalid provider" });
     }
 
+    const safeLang = lang?.length === 2 ? lang : "en";
+
     console.log(`🔗 OAuth gestart met ${provider}`);
     console.log(`🛡️ Ontvangen state: ${state}`);
+    console.log(`🌐 Doelredirect met taal: ${safeLang}`);
 
-    // ✅ OAuth Flow starten met correcte redirect inclusief ontvangen state
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: `${siteUrl}/auth/callback?state=${state}`, // ✅ Correcte redirectTo
-        state, // ✅ Voeg state toe
+        redirectTo: `${siteUrl}/${safeLang}/auth/callback?state=${state}`,
+        state,
       }
     });
 
