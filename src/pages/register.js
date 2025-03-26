@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { graphql } from "gatsby";
 import { useTranslation } from "gatsby-plugin-react-i18next";
+import { useI18next } from "gatsby-plugin-react-i18next";
 import { validateEmail } from "../utils/emailValidator";
 import { Button, Input } from "../components/ui";
 import Seo from "../components/Seo";
@@ -9,6 +10,7 @@ import SectionWrapper from "../components/SectionWrapper";
 
 const Register = () => {
   const { t } = useTranslation();
+  const { language } = useI18next(); // ✅ actieve taal
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -51,7 +53,7 @@ const handleSocialLogin = async (provider) => {
   try {
     console.log(`🔗 OAuth login starten met ${provider}`);
 
-    // 🔐 **State genereren en opslaan in sessionStorage**
+    // 🔐 State genereren en opslaan in sessionStorage
     const state = Math.random().toString(36).substring(2);
     sessionStorage.setItem("oauth_state", state);
     console.log(`🛡️ State opgeslagen: ${state}`);
@@ -60,14 +62,14 @@ const handleSocialLogin = async (provider) => {
     const response = await fetch("/api/auth/socialLogin", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ provider, state }), // Stuur state mee naar de server
+      body: JSON.stringify({ provider, state }),
     });
 
     const data = await response.json();
     if (!response.ok) throw new Error(data.message);
 
     console.log(`✅ OAuth redirect naar ${data.url}`);
-    window.location.href = data.url; // Start de login flow
+    window.location.href = data.url;
   } catch (err) {
     console.error("❌ Social login fout:", err.message);
     setError(err.message);
@@ -95,7 +97,7 @@ const handleSocialLogin = async (provider) => {
       const response = await fetch("/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, turnstileToken }),
+        body: JSON.stringify({ email, turnstileToken, lang: language }),
       });
 
       const data = await response.json();
@@ -129,7 +131,9 @@ const handleSocialLogin = async (provider) => {
             />
             <h1 className="text-xl font-semibold mt-16">{t("register.heading")}</h1>
       </div>
-      {/* <h2 className="text-2xl font-bold mb-4 text-center">{t("register.subheading")}</h2> */}
+      <p className="text-sm text-center text-gray-600 mb-6">
+        {t("register.intro_text")}
+      </p>
 
       {/* 🟢 Social Login Sectie */}
       <div className="flex flex-col space-y-3">

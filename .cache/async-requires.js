@@ -6,7 +6,6 @@ exports.components = {
   "component---src-pages-compare-pages-1-js": () => import("./../../../src/pages/ComparePages1.js?export=default" /* webpackChunkName: "component---src-pages-compare-pages-1-js" */),
   "component---src-pages-dashboard-2-js": () => import("./../../../src/pages/dashboard2.js?export=default" /* webpackChunkName: "component---src-pages-dashboard-2-js" */),
   "component---src-pages-forgot-js": () => import("./../../../src/pages/forgot.js?export=default" /* webpackChunkName: "component---src-pages-forgot-js" */),
-  "component---src-pages-index-2-js": () => import("./../../../src/pages/index2.js?export=default" /* webpackChunkName: "component---src-pages-index-2-js" */),
   "component---src-pages-index-js": () => import("./../../../src/pages/index.js?export=default" /* webpackChunkName: "component---src-pages-index-js" */),
   "component---src-pages-login-js": () => import("./../../../src/pages/login.js?export=default" /* webpackChunkName: "component---src-pages-login-js" */),
   "component---src-pages-privacy-js": () => import("./../../../src/pages/privacy.js?export=default" /* webpackChunkName: "component---src-pages-privacy-js" */),

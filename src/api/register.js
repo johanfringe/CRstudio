@@ -4,6 +4,7 @@ import Redis from "ioredis";
 import crypto from "crypto";
 import { sendEmail } from "../utils/sendEmail";
 import { validateTurnstile } from "../utils/validateTurnstile.js";
+import { emailTemplate } from "../utils/emailTemplate.js";
 
 //console.log("🔑 Supabase URL:", process.env.GATSBY_SUPABASE_URL);
 //console.log("🔑 Supabase Service Role Key:", process.env.SUPABASE_SERVICE_ROLE_KEY ? "✔️ Loaded" : "❌ Not Loaded");
@@ -36,9 +37,9 @@ const checkIfUserExists = async (email) => {
 
     const { data, error } = await supabase
       .from("temp_users")
-      .select("id") // Haal alleen ID op voor minimale data-overdracht
+      .select("id")
       .eq("email", email)
-      .maybeSingle(); // 🔧 Voorkomt 406-fouten als er geen gebruiker is
+      .maybeSingle();
 
     if (error) {
       console.error("❌ Supabase Query Error:", error.message);
@@ -49,7 +50,7 @@ const checkIfUserExists = async (email) => {
     return !!data;
   } catch (error) {
     console.error("❌ Supabase API-fout:", error.message);
-    throw error; // Gooit de fout door zodat de caller deze correct kan verwerken,
+    throw error;
   }
 };
 
@@ -59,7 +60,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { email, turnstileToken } = req.body;
+    const { email, turnstileToken, lang } = req.body;
     console.log(`📩 Ontvangen e-mail voor verificatie: ${email}`);
     if (!email || !turnstileToken) {
       console.warn("⚠️ Turnstile: Ontbrekende velden:", { email, turnstileToken });
@@ -86,17 +87,17 @@ export default async function handler(req, res) {
     }
 
     await redis.expire(redisKey, 60);
-
+    
     console.log(`🔄 Redis: Poging #${attempts} voor IP:`, redisKey);
 
-    // 2️⃣ **Cloudflare Turnstile-verificatie - Gebruik de helperfunctie**
+    // 2️⃣ **Cloudflare Turnstile-verificatie**
     const turnstileResult = await validateTurnstile(turnstileToken);
     if (!turnstileResult.success) {
-        return res.status(403).json({ message: turnstileResult.message });
+      return res.status(403).json({ message: turnstileResult.message });
     }
 
     console.log("✅ Turnstile verificatie geslaagd!");
-    
+
     console.log(`🚀 Kickbox wordt aangeroepen voor: ${email}`);
     // 3️⃣ **Kickbox Disposable E-mail Check**
     let kickboxData;
@@ -111,33 +112,26 @@ export default async function handler(req, res) {
       }
 
       kickboxData = await kickboxRes.json();
-      console.log("📬 Kickbox validatieresultaat voor", email, ":", JSON.stringify(kickboxData, null, 2));
-      console.log("🔎 Kickbox result:", kickboxData.result);
-      console.log("🔎 Kickbox reason:", kickboxData.reason);
-      console.log("🔎 Kickbox disposable:", kickboxData.disposable);
-      console.log("🔎 Kickbox accept_all:", kickboxData.accept_all);
-      console.log("🔎 Kickbox free:", kickboxData.free);
-      console.log("🔎 Kickbox sendex score:", kickboxData.sendex);
+      console.log("📬 Kickbox validatieresultaat:", JSON.stringify(kickboxData, null, 2));
 
     } catch (err) {
       console.error("❌ Kickbox API-fout:", err);
-      return res.status(500).json({ message: "Kickbox: Email validation service failed" });
+      return res.status(500).json({ message: "Kickbox: Email validation failed" });
     }
     console.log(`✅ Kickbox API-aanroep voltooid voor: ${email}`);
 
     if (kickboxData.result === "undeliverable" || kickboxData.disposable) {
-      console.log("❌ Kickbox: Ongeldig of disposable e-mail gedetecteerd:", email);
-      return res.status(400).json({ message: "Kickbox: Invalid or disposable emails are not allowed" });
+      console.log("❌ Kickbox: Ongeldig of disposable e-mail:", email);
+      return res.status(400).json({ message: "Kickbox: Invalid or disposable emails not allowed" });
     }
-    
+
     if (kickboxData.result === "risky" && kickboxData.reason === "low_deliverability") {
-      console.warn("⚠️ Kickbox waarschuwing: E-mail heeft lage afleverkans, maar wordt geaccepteerd:", email);
+        console.warn("⚠️ Kickbox: E-mail heeft lage afleverkans, maar wordt geaccepteerd:", email);
     }
-    
 
     // 4️⃣ **Controleren of e-mail al bestaat in de database**
     const existingUser = await checkIfUserExists(email);
-
+    
     if (existingUser) {
       console.log("⚠️ Supabase: E-mail bestaat al in temp_users:", email);
       return res.status(400).json({ message: "Supabase: Email already registered." });
@@ -159,36 +153,44 @@ export default async function handler(req, res) {
       return res.status(500).json({ message: "Supabase: Database error: Could not insert user." });
     }
 
-    console.log("✅ Supabase: E-mail succesvol opgeslagen in `temp_users`:", email);
+    // 7️⃣ **Taal bepalen** (op basis van body.lang)
+    let language = lang && lang.length === 2 ? lang : "en";
+    console.log("🌐 Geselecteerde taal:", language);
 
-    // 📧 **Nieuwe verificatiemail wordt direct verstuurd**
-    console.log("📧 Versturen van verificatiemail...");
-    let lang = "en"; // fallback
+    // 8️⃣ **Email vertaling laden**
+    let t;
     try {
-      const ref = req.headers.referer || "";
-      const parts = new URL(ref).pathname.split("/").filter(Boolean); // ['nl', 'register']
-      if (parts[0] && parts[0].length === 2) {
-        lang = parts[0];
-      }
-      console.log("🌐 Afgeleide taalcode uit URL:", lang);
+      t = (await import(`../locales/${language}/translationemails.js`)).default;
     } catch (err) {
-      console.warn("⚠️ Fout bij afleiden van taal uit referer:", err.message);
+      console.warn(`⚠️ Geen e-mailvertaling voor taal ${language}, fallback naar Engels`);
+      t = (await import(`../locales/en/translationemails.js`)).default;
     }
 
-    const profileUrl = `${process.env.SITE_URL}/${lang}/profile?token=${verificationToken}`;
+    const profileUrl = `${process.env.SITE_URL}/${language}/profile?token=${verificationToken}`;
     console.log("📧 Verificatielink gegenereerd:", profileUrl);
 
+    // 9️⃣ **HTML template genereren**
+    const html = emailTemplate({
+      logoSrc: `${process.env.SITE_URL}/images/CRlogo.jpg`,
+      logoAlt: t.verify_email.logo_alt || "CR Studio logo",
+      title: t.verify_email.title,
+      intro: t.verify_email.intro,
+      ctaUrl: profileUrl,
+      ctaLabel: t.verify_email.cta,
+      footer: t.verify_email.footer
+    });
+
+    // 🔟 **E-mail versturen**
     const emailResult = await sendEmail(
       email,
-      "Verify your email",
-      `Click the link to verify your email: ${profileUrl}`,
-      `<p>Click the link to verify your email:</p>
-      <a href="${profileUrl}">Verify Email</a>`
+      t.verify_email.subject,
+      `${t.verify_email.intro}\n${profileUrl}`,
+      html
     );
 
     if (!emailResult.success) {
-      console.error("❌ Fout bij verzenden verificatiemail:", emailResult.error);
-      return res.status(500).json({ message: "Could not send verification email. Try again later." });
+        console.error("❌ Fout bij verzenden verificatiemail:", emailResult.error);
+        return res.status(500).json({ message: "Could not send verification email. Try again later." });
     }
 
     console.log("✅ Verificatiemail verzonden naar:", email);

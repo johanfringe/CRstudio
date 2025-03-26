@@ -11,7 +11,6 @@ exports.components = {
   "component---src-pages-compare-pages-1-js": preferDefault(require("/Users/johan/CRstudio/CRstudio/src/pages/ComparePages1.js")),
   "component---src-pages-dashboard-2-js": preferDefault(require("/Users/johan/CRstudio/CRstudio/src/pages/dashboard2.js")),
   "component---src-pages-forgot-js": preferDefault(require("/Users/johan/CRstudio/CRstudio/src/pages/forgot.js")),
-  "component---src-pages-index-2-js": preferDefault(require("/Users/johan/CRstudio/CRstudio/src/pages/index2.js")),
   "component---src-pages-index-js": preferDefault(require("/Users/johan/CRstudio/CRstudio/src/pages/index.js")),
   "component---src-pages-login-js": preferDefault(require("/Users/johan/CRstudio/CRstudio/src/pages/login.js")),
   "component---src-pages-privacy-js": preferDefault(require("/Users/johan/CRstudio/CRstudio/src/pages/privacy.js")),
