@@ -29,10 +29,12 @@ export default async function handler(req, res) {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: `${siteUrl}/${safeLang}/auth/callback?state=${state}`,
+        redirectTo: `${siteUrl}/${safeLang}/auth/callback`,
         state,
-      }
-    });
+        queryParams: { access_type: "offline", prompt: "consent" },
+        pkce: true
+      },
+    });    
 
     if (error) {
       console.error("❌ OAuth fout:", error.message);

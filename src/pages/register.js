@@ -62,7 +62,7 @@ const handleSocialLogin = async (provider) => {
     const response = await fetch("/api/auth/socialLogin", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ provider, state }),
+      body: JSON.stringify({ provider, state, lang: language }),
     });
 
     const data = await response.json();
