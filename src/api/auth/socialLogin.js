@@ -1,7 +1,7 @@
 // src/api/auth/sociallogin.js :
 import { createClient } from "@supabase/supabase-js";
 
-const siteUrl = process.env.SITE_URL || "http://localhost:8000";
+const siteUrl = process.env.SITE_URL
 
 const supabase = createClient(
   process.env.GATSBY_SUPABASE_URL,
@@ -20,21 +20,27 @@ export default async function handler(req, res) {
       return res.status(400).json({ message: "Invalid provider" });
     }
 
-    const safeLang = lang?.length === 2 ? lang : "en";
+    const safeLang = lang || "en";
+    const redirectTo = `${siteUrl}/${safeLang}/auth/callback`;
 
+    console.log("🌍 redirectTo URL:", redirectTo);
     console.log(`🔗 OAuth gestart met ${provider}`);
     console.log(`🛡️ Ontvangen state: ${state}`);
-    console.log(`🌐 Doelredirect met taal: ${safeLang}`);
+    console.log(`🌐 Doelredirect met taal: ${lang}`);
 
+    // ✅ OAuth Flow starten met correcte redirect inclusief ontvangen state
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: `${siteUrl}/${safeLang}/auth/callback`,
+        redirectTo,
         state,
-        queryParams: { access_type: "offline", prompt: "consent" },
-        pkce: true
-      },
-    });    
+        pkce: true,
+        queryParams: {
+          access_type: "offline",
+          prompt: "consent"
+        }
+      }
+    });
 
     if (error) {
       console.error("❌ OAuth fout:", error.message);
