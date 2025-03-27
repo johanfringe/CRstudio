@@ -4,33 +4,33 @@
 // ✔ Notificatie-instellingen wijzigen
 // ✔ Tweestapsverificatie (2FA) activeren
 // ✔ API-keys genereren (indien nodig)
+
 import React, { useState, useEffect, useMemo } from "react";
 import { graphql } from "gatsby";
 import { useTranslation } from "gatsby-plugin-react-i18next";
 import Seo from "../components/Seo";
 import SectionWrapper from "../components/SectionWrapper";
-import { supabase } from "../lib/supabaseClient"; // ✅ Nodig voor social login sessiecontrole
+import { supabase } from "../lib/supabaseClient";
 
 const Profile = () => {
   const { t } = useTranslation();
   const [statusCode, setStatusCode] = useState(null);
   const [tokenValid, setTokenValid] = useState(false);
+  const [session, setSession] = useState(null);
 
   // ✅ Token ophalen uit de URL
-  const searchParams = new URLSearchParams(typeof window !== "undefined" ? window.location.search : "");
-  const token = searchParams.get("token");
+  const searchParams = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
+  const token = searchParams?.get("token");
 
   const wasVerified = useMemo(() => {
     return typeof window !== "undefined" && localStorage.getItem("verified") === "true";
   }, []);
 
-  // ✅ Nieuw: detecteer actieve Supabase sessie (voor social login)
+  // ✅ Haal Supabase sessie vooraf op en bewaar in state
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        console.log("🔐 Gebruiker is ingelogd via social login.");
-        setTokenValid(true);
-      }
+    supabase.auth.getSession().then(({ data }) => {
+      console.log("🧠 Supabase sessie opgehaald:", data?.session);
+      setSession(data?.session || null);
     });
   }, []);
 
@@ -62,17 +62,20 @@ const Profile = () => {
             setStatusCode("INTERNAL_ERROR");
           }
         })
-        .catch(() => setStatusCode("INTERNAL_ERROR"));
+        .catch((err) => {
+          console.error("❌ Fout bij e-mailverificatie:", err);
+          setStatusCode("INTERNAL_ERROR");
+        });
     } else {
-      // ✅ Nieuw: geef alleen fout als er ook geen sessie is
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        if (!session) {
-          console.warn("⚠️ Geen token én geen sessie.");
-          setStatusCode("NO_TOKEN");
-        }
-      });
+      if (session) {
+        console.log("✅ Supabase sessie gevonden, gebruiker is ingelogd.");
+        setTokenValid(true);
+      } else {
+        console.warn("⚠️ Geen token én geen actieve Supabase sessie.");
+        setStatusCode("NO_TOKEN");
+      }
     }
-  }, [token, wasVerified]);
+  }, [token, wasVerified, session]);
 
   return (
     <>

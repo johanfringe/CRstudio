@@ -1,9 +1,15 @@
+//src/pages/profile.js:
+// Moet nog volledig gemaakt worden
+// ✔ Naam, voornaam, wachtwoord en subdomein invoeren en wijzigen
+// ✔ Notificatie-instellingen wijzigen
+// ✔ Tweestapsverificatie (2FA) activeren
+// ✔ API-keys genereren (indien nodig)
 import React, { useState, useEffect, useMemo } from "react";
 import { graphql } from "gatsby";
 import { useTranslation } from "gatsby-plugin-react-i18next";
 import Seo from "../components/Seo";
 import SectionWrapper from "../components/SectionWrapper";
-import { supabase } from "../lib/supabaseClient"; // ✅ Nodig voor social login sessiecontrole
+import { supabase } from "../lib/supabaseClient";
 
 const Profile = () => {
   const { t } = useTranslation();
