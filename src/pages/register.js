@@ -1,9 +1,10 @@
 // /src/pages/register.js:
 import React, { useState, useEffect } from "react";
-import { graphql } from "gatsby";
+import { graphql, navigate } from "gatsby";
 import { useTranslation } from "gatsby-plugin-react-i18next";
 import { useI18next } from "gatsby-plugin-react-i18next";
 import { validateEmail } from "../utils/emailValidator";
+import { supabase } from "../lib/supabaseClient";
 import { Button, Input } from "../components/ui";
 import Seo from "../components/Seo";
 import SectionWrapper from "../components/SectionWrapper";
@@ -48,31 +49,61 @@ const Register = () => {
     loadTurnstileScript();
   }, []);
 
-  // 🌍 Social Login handler
+// 🌍 Social Login handler
 const handleSocialLogin = async (provider) => {
   try {
-    console.log(`🔗 OAuth login starten met ${provider}`);
+    console.log(`🔗 Start social login met provider: ${provider}`);
+    setLoading(true);
+    setError("");
 
-    // 🔐 State genereren en opslaan in sessionStorage
-    const state = Math.random().toString(36).substring(2);
-    sessionStorage.setItem("oauth_state", state);
-    console.log(`🛡️ State opgeslagen: ${state}`);
+    const redirectTo = `${window.location.origin}/${language}/profile`;
 
-    // ✅ Stuur de state mee naar de backend
-    const response = await fetch("/api/auth/socialLogin", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ provider, state, lang: language }),
+    console.log("🔁 Instellen redirectTo voor fallback:", redirectTo);
+
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider,
+      options: {
+        popup: true,
+        pkce: true,
+        redirectTo,
+        queryParams: {
+          access_type: "offline",
+          prompt: "consent",
+        },
+      },
     });
 
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.message);
+    console.log("📦 OAuth data:", data);
 
-    console.log(`✅ OAuth redirect naar ${data.url}`);
-    window.location.href = data.url;
+    if (error) {
+      console.error("❌ Social login fout:", error.message);
+
+      // ⛔️ Speciale check voor popup-blokkades of sluiting
+      if (error.message.toLowerCase().includes("popup")) {
+        setError("Popup werd geblokkeerd of gesloten. Probeer opnieuw.");
+      } else {
+        setError(error.message);
+      }
+
+      return;
+    }
+
+    const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+
+    if (sessionError || !sessionData.session) {
+      console.error("❌ Geen sessie gevonden na social login:", sessionError?.message);
+      setError("Er is een fout opgetreden bij het ophalen van de sessie.");
+      return;
+    }
+
+    console.log("✅ Supabase sessie succesvol:", sessionData.session);
+
+    navigate(`/${language}/profile`);
   } catch (err) {
-    console.error("❌ Social login fout:", err.message);
-    setError(err.message);
+    console.error("❌ Onverwachte fout bij social login:", err.message);
+    // setError() hier is overbodig en wordt bewust weggelaten
+  } finally {
+    setLoading(false);
   }
 };
 
@@ -141,7 +172,8 @@ const handleSocialLogin = async (provider) => {
           onClick={() => handleSocialLogin("google")}
           className="flex items-center justify-center w-full border border-black input"
         >
-          <img src="/icons/google.svg" alt="Google Logo" className="h-5 w-5 mr-2" />{t("register.google_placeholder")}
+        <img src="/icons/google.svg" alt="Google Logo" className="h-5 w-5 mr-2" />
+        {t("register.google_placeholder")}
         </Button>
       </div>
 
@@ -191,4 +223,4 @@ export const query = graphql`
       }
     }
   }
-`;
+`;  

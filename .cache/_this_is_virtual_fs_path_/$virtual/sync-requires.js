@@ -7,7 +7,6 @@ exports.components = {
   "component---cache-dev-404-page-js": preferDefault(require("/Users/johan/CRstudio/CRstudio/.cache/dev-404-page.js")),
   "component---src-pages-404-js": preferDefault(require("/Users/johan/CRstudio/CRstudio/src/pages/404.js")),
   "component---src-pages-admin-panel-js": preferDefault(require("/Users/johan/CRstudio/CRstudio/src/pages/admin-panel.js")),
-  "component---src-pages-auth-callback-js": preferDefault(require("/Users/johan/CRstudio/CRstudio/src/pages/auth/callback.js")),
   "component---src-pages-compare-pages-1-js": preferDefault(require("/Users/johan/CRstudio/CRstudio/src/pages/ComparePages1.js")),
   "component---src-pages-dashboard-2-js": preferDefault(require("/Users/johan/CRstudio/CRstudio/src/pages/dashboard2.js")),
   "component---src-pages-forgot-js": preferDefault(require("/Users/johan/CRstudio/CRstudio/src/pages/forgot.js")),

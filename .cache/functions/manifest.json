@@ -1,14 +1,5 @@
 [
     {
-        "functionRoute": "auth/socialLogin",
-        "pluginName": "default-site-plugin",
-        "originalAbsoluteFilePath": "/Users/johan/CRstudio/CRstudio/src/api/auth/socialLogin.js",
-        "originalRelativeFilePath": "auth/socialLogin.js",
-        "relativeCompiledFilePath": "auth/socialLogin.js",
-        "absoluteCompiledFilePath": "/Users/johan/CRstudio/CRstudio/.cache/functions/auth/socialLogin.js",
-        "functionId": "auth-social-login-js"
-    },
-    {
         "functionRoute": "CompareApi1",
         "pluginName": "default-site-plugin",
         "originalAbsoluteFilePath": "/Users/johan/CRstudio/CRstudio/src/api/CompareApi1.js",

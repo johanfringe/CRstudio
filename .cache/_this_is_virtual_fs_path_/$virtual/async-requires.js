@@ -2,7 +2,6 @@ exports.components = {
   "component---cache-dev-404-page-js": () => import("./../../dev-404-page.js?export=default" /* webpackChunkName: "component---cache-dev-404-page-js" */),
   "component---src-pages-404-js": () => import("./../../../src/pages/404.js?export=default" /* webpackChunkName: "component---src-pages-404-js" */),
   "component---src-pages-admin-panel-js": () => import("./../../../src/pages/admin-panel.js?export=default" /* webpackChunkName: "component---src-pages-admin-panel-js" */),
-  "component---src-pages-auth-callback-js": () => import("./../../../src/pages/auth/callback.js?export=default" /* webpackChunkName: "component---src-pages-auth-callback-js" */),
   "component---src-pages-compare-pages-1-js": () => import("./../../../src/pages/ComparePages1.js?export=default" /* webpackChunkName: "component---src-pages-compare-pages-1-js" */),
   "component---src-pages-dashboard-2-js": () => import("./../../../src/pages/dashboard2.js?export=default" /* webpackChunkName: "component---src-pages-dashboard-2-js" */),
   "component---src-pages-forgot-js": () => import("./../../../src/pages/forgot.js?export=default" /* webpackChunkName: "component---src-pages-forgot-js" */),

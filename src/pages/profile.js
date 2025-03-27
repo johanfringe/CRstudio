@@ -4,12 +4,12 @@
 // ✔ Notificatie-instellingen wijzigen
 // ✔ Tweestapsverificatie (2FA) activeren
 // ✔ API-keys genereren (indien nodig)
-
 import React, { useState, useEffect, useMemo } from "react";
 import { graphql } from "gatsby";
 import { useTranslation } from "gatsby-plugin-react-i18next";
 import Seo from "../components/Seo";
 import SectionWrapper from "../components/SectionWrapper";
+import { supabase } from "../lib/supabaseClient"; // ✅ Nodig voor social login sessiecontrole
 
 const Profile = () => {
   const { t } = useTranslation();
@@ -23,14 +23,24 @@ const Profile = () => {
   const wasVerified = useMemo(() => {
     return typeof window !== "undefined" && localStorage.getItem("verified") === "true";
   }, []);
-  
+
+  // ✅ Nieuw: detecteer actieve Supabase sessie (voor social login)
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        console.log("🔐 Gebruiker is ingelogd via social login.");
+        setTokenValid(true);
+      }
+    });
+  }, []);
+
   useEffect(() => {
     if (wasVerified) {
       console.log("🔁 Gebruiker is reeds geverifieerd via localStorage.");
       setTokenValid(true);
       return;
     }
-  
+
     if (token) {
       console.log("📡 Verificatie gestart voor token:", token);
       fetch("/api/verify-email", {
@@ -43,7 +53,7 @@ const Profile = () => {
           if (data.success && data.code === "EMAIL_VERIFIED") {
             console.log("✅ Token geldig, gebruiker is geverifieerd!");
             setTokenValid(true);
-  
+
             // 🧠 Status bijhouden voor refresh
             localStorage.setItem("verified", "true");
             localStorage.setItem("verifiedEmail", data.email);
@@ -54,7 +64,13 @@ const Profile = () => {
         })
         .catch(() => setStatusCode("INTERNAL_ERROR"));
     } else {
-      setStatusCode("NO_TOKEN");
+      // ✅ Nieuw: geef alleen fout als er ook geen sessie is
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (!session) {
+          console.warn("⚠️ Geen token én geen sessie.");
+          setStatusCode("NO_TOKEN");
+        }
+      });
     }
   }, [token, wasVerified]);
 

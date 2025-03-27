@@ -64,7 +64,7 @@
       "description": "Dit is de FAQ-sectie."
     }
   },
-
+  
   "cta": {
     "text": "Start gratis een proefperiode van 30 dagen\nGeen creditcard vereist"
   },
@@ -74,8 +74,8 @@
     "subtitle_1": "Alles in één abonnement",
     "description_1": "Met CRstudio is het ontzettend gemakkelijk om een CR te maken. En je spaart veel tijd en geld uit.\nBekijk onze demo’s om te zien hoe CRstudio werkt,\nhoe eenvoudig en toch uiterst krachtig en professioneel het is.",
     "title_2": "Eenvoudig, geen technische kennis ",
-    "subtitle_2": "Alles in één abonnement",
-    "description_2": "Met CRstudio is het ontzettend gemakkelijk om een CR te maken. En je spaart veel tijd en geld uit.\nBekijk onze demo’s om te zien hoe CRstudio werkt,\nhoe eenvoudig en toch uiterst krachtig en professioneel het is.",
+    "subtitle_2": "Wees aanwezig op de kunstmarkt",
+    "description_2": "Presenteer jouw oeuvre aan kunstliefhebbers, verzamelaars en galeriehouders.",
     "title_3": "Eenvoudig, geen technische kennis ",
     "subtitle_3": "Alles in één abonnement",
     "description_3": "Met CRstudio is het ontzettend gemakkelijk om een CR te maken. En je spaart veel tijd en geld uit.\nBekijk onze demo’s om te zien hoe CRstudio werkt,\nhoe eenvoudig en toch uiterst krachtig en professioneel het is."
@@ -217,8 +217,8 @@
   },
   
   "profile": {
-    "email_verified_title": "Uw e-mailadres is bevestigd",
-    "email_verified_subtitle": "Vul de onderstaande gegevens in om jouw site direct aan te maken.",
+    "email_verified_title": "Uw registratie is bevestigd",
+    "email_verified_subtitle": "Vul de onderstaande gegevens in om onmiddellijk jouw site aan te maken.",
     "verify_error": {
       "TOKEN_REQUIRED": "Geen token meegegeven.",
       "TOKEN_INVALID": "Deze verificatielink is ongeldig.",

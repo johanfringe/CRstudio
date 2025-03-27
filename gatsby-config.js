@@ -85,7 +85,7 @@ module.exports = {
           interpolation: i18nConfig.interpolation,
           detection: i18nConfig.detection,
         },
-        redirect: true, // 🟢 Forceer dat Gatsby de juiste taal-prefixen toepast
+        redirect: true,
       },
     },
     {
