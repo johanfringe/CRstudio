@@ -93,7 +93,7 @@ html {
   @apply focus:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-300;
 }
 .input-error {
-  @apply focus:bg-red-100 focus:ring-red-300;
+  @apply border-red-500 focus:bg-red-100 focus:ring-red-300;
 }
 .select {
   @apply input appearance-none  text-gray-500 text-sm md:text-base;

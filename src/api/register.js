@@ -31,9 +31,9 @@ try {
 redis.on("connect", () => console.log("✅ Verbonden met Redis!"));
 redis.on("error", (err) => console.error("❌ Redis-verbinding mislukt:", err));
 
-const checkIfUserExists = async (email) => {
+const checkIfTempUserExists = async (email) => {
   try {
-    console.log(`🔍 Supabase: Controle op bestaand e-mailaccount voor ${email}`);
+    console.log(`🔍 Supabase: Controle op bestaand e-mailaccount in temp_users voor ${email}`);
 
     const { data, error } = await supabase
       .from("temp_users")
@@ -46,7 +46,7 @@ const checkIfUserExists = async (email) => {
       throw new Error("Database query failed");
     }
 
-    console.log(`🔎 Supabase: E-mail ${email} ${data ? "bestaat al" : "bestaat niet"}`);
+    console.log(`🔎 Supabase: E-mail ${email} ${data ? "bestaat al" : "bestaat niet"} in temp_users`);
     return !!data;
   } catch (error) {
     console.error("❌ Supabase API-fout:", error.message);
@@ -75,7 +75,7 @@ export default async function handler(req, res) {
 
     console.log("📩 Turnstile: Registratie gestart voor e-mail:", email);
 
-    // 1️⃣ **Rate Limiting met exponentiële backoff**
+    // 1️⃣ Rate Limiting met exponentiële backoff
     const redisKey = `register:${req.headers["x-forwarded-for"] || req.ip}`;
     const attempts = await redis.incr(redisKey);
     console.log(`🔄 Redis: Poging #${attempts} voor IP: ${redisKey}`);
@@ -90,7 +90,7 @@ export default async function handler(req, res) {
     
     console.log(`🔄 Redis: Poging #${attempts} voor IP:`, redisKey);
 
-    // 2️⃣ **Cloudflare Turnstile-verificatie**
+    // 2️⃣ Cloudflare Turnstile-verificatie
     const turnstileResult = await validateTurnstile(turnstileToken);
     if (!turnstileResult.success) {
       return res.status(403).json({ message: turnstileResult.message });
@@ -99,7 +99,7 @@ export default async function handler(req, res) {
     console.log("✅ Turnstile verificatie geslaagd!");
 
     console.log(`🚀 Kickbox wordt aangeroepen voor: ${email}`);
-    // 3️⃣ **Kickbox Disposable E-mail Check**
+    // 3️⃣ Kickbox Disposable E-mail Check
     let kickboxData;
     try {
       const kickboxRes = await fetch(`https://api.kickbox.com/v2/verify?email=${email}&apikey=${process.env.KICKBOX_API_KEY}`);
@@ -125,22 +125,31 @@ export default async function handler(req, res) {
       return res.status(400).json({ message: "Kickbox: Invalid or disposable emails not allowed" });
     }
 
-    if (kickboxData.result === "risky" && kickboxData.reason === "low_deliverability") {
-        console.warn("⚠️ Kickbox: E-mail heeft lage afleverkans, maar wordt geaccepteerd:", email);
+    // 4️⃣ Check op e-mail in auth.users via RPC
+    const { data: existsInAuthUsers, error: existsError } = await supabase.rpc("user_email_exists", {
+      _email: email,
+    });
+
+    if (existsError) {
+      console.error("❌ Fout bij RPC user_email_exists:", existsError.message);
+      return res.status(500).json({ message: "Internal error while checking existing users." });
     }
 
-    // 4️⃣ **Controleren of e-mail al bestaat in de database**
-    const existingUser = await checkIfUserExists(email);
-    
-    if (existingUser) {
-      console.log("⚠️ Supabase: E-mail bestaat al in temp_users:", email);
-      return res.status(400).json({ message: "Supabase: Email already registered." });
+    if (existsInAuthUsers === true) {
+      console.warn("⚠️ E-mail bestaat al in auth.users:", email);
+      return res.status(400).json({ message: "DUPLICATE_EMAIL" });
     }
 
-    // 5️⃣ **Unieke verificatietoken genereren**
+    // 5️⃣ Check op bestaande registratie in temp_users
+    const existingTempUser = await checkIfTempUserExists(email);
+    if (existingTempUser) {
+      return res.status(400).json({ message: "Supabase: Email already registered. Check your email." });
+    }
+
+    // 6️⃣ Unieke verificatietoken genereren
     const verificationToken = crypto.randomBytes(32).toString("hex");
 
-    // 6️⃣ **E-mail opslaan in `temp_users`**
+    // 7️⃣ E-mail opslaan in `temp_users`
     console.log("📥 Supabase: E-mail wordt opgeslagen in temp_users:", email);
     const { data, error } = await supabase.from("temp_users").insert([
       { email, verification_token: verificationToken, created_at: new Date().toISOString() }
@@ -153,23 +162,20 @@ export default async function handler(req, res) {
       return res.status(500).json({ message: "Supabase: Database error: Could not insert user." });
     }
 
-    // 7️⃣ **Taal bepalen** (op basis van body.lang)
+    // 8️⃣ Taal bepalen + vertaling laden
     let language = lang && lang.length === 2 ? lang : "en";
     console.log("🌐 Geselecteerde taal:", language);
-
-    // 8️⃣ **Email vertaling laden**
     let t;
     try {
       t = (await import(`../locales/${language}/translationemails.js`)).default;
     } catch (err) {
-      console.warn(`⚠️ Geen e-mailvertaling voor taal ${language}, fallback naar Engels`);
       t = (await import(`../locales/en/translationemails.js`)).default;
     }
 
     const profileUrl = `${process.env.SITE_URL}/${language}/profile?token=${verificationToken}`;
     console.log("📧 Verificatielink gegenereerd:", profileUrl);
 
-    // 9️⃣ **HTML template genereren**
+    // 9️⃣ HTML template genereren
     const html = emailTemplate({
       logoSrc: `${process.env.SITE_URL}/images/CRlogo.jpg`,
       logoAlt: t.verify_email.logo_alt || "CR Studio logo",
@@ -180,7 +186,7 @@ export default async function handler(req, res) {
       footer: t.verify_email.footer
     });
 
-    // 🔟 **E-mail versturen**
+    // 🔟 Verificatie-e-mail versturen
     const emailResult = await sendEmail(
       email,
       t.verify_email.subject,

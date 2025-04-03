@@ -11,7 +11,8 @@ exports.components = {
   "component---cache-dev-404-page-js": () => __webpack_require__.e(/*! import() | component---cache-dev-404-page-js */ "component---cache-dev-404-page-js").then(__webpack_require__.bind(__webpack_require__, /*! ./../../dev-404-page.js?export=default */ "./.cache/dev-404-page.js?export=default")),
   "component---src-pages-404-js": () => __webpack_require__.e(/*! import() | component---src-pages-404-js */ "component---src-pages-404-js").then(__webpack_require__.bind(__webpack_require__, /*! ./../../../src/pages/404.js?export=default */ "./src/pages/404.js?export=default")),
   "component---src-pages-admin-panel-js": () => __webpack_require__.e(/*! import() | component---src-pages-admin-panel-js */ "component---src-pages-admin-panel-js").then(__webpack_require__.bind(__webpack_require__, /*! ./../../../src/pages/admin-panel.js?export=default */ "./src/pages/admin-panel.js?export=default")),
-  "component---src-pages-compare-pages-1-js": () => __webpack_require__.e(/*! import() | component---src-pages-compare-pages-1-js */ "component---src-pages-compare-pages-1-js").then(__webpack_require__.bind(__webpack_require__, /*! ./../../../src/pages/ComparePages1.js?export=default */ "./src/pages/ComparePages1.js?export=default")),
+  "component---src-pages-compare-pages-1-js": () => __webpack_require__.e(/*! import() | component---src-pages-compare-pages-1-js */ "component---src-pages-compare-pages-1-js").then(__webpack_require__.t.bind(__webpack_require__, /*! ./../../../src/pages/ComparePages1.js?export=default */ "./src/pages/ComparePages1.js?export=default", 23)),
+  "component---src-pages-compare-pages-2-js": () => __webpack_require__.e(/*! import() | component---src-pages-compare-pages-2-js */ "component---src-pages-compare-pages-2-js").then(__webpack_require__.t.bind(__webpack_require__, /*! ./../../../src/pages/ComparePages2.js?export=default */ "./src/pages/ComparePages2.js?export=default", 23)),
   "component---src-pages-dashboard-2-js": () => __webpack_require__.e(/*! import() | component---src-pages-dashboard-2-js */ "component---src-pages-dashboard-2-js").then(__webpack_require__.bind(__webpack_require__, /*! ./../../../src/pages/dashboard2.js?export=default */ "./src/pages/dashboard2.js?export=default")),
   "component---src-pages-forgot-js": () => __webpack_require__.e(/*! import() | component---src-pages-forgot-js */ "component---src-pages-forgot-js").then(__webpack_require__.bind(__webpack_require__, /*! ./../../../src/pages/forgot.js?export=default */ "./src/pages/forgot.js?export=default")),
   "component---src-pages-index-js": () => __webpack_require__.e(/*! import() | component---src-pages-index-js */ "component---src-pages-index-js").then(__webpack_require__.bind(__webpack_require__, /*! ./../../../src/pages/index.js?export=default */ "./src/pages/index.js?export=default")),
@@ -56784,6 +56785,11 @@ module.exports = require("zlib");
 /******/ 	__webpack_require__.m = __webpack_modules__;
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/amd options */
+/******/ 	(() => {
+/******/ 		__webpack_require__.amdO = {};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules

@@ -69,19 +69,6 @@
     "text": "Start gratis een proefperiode van 30 dagen\nGeen creditcard vereist"
   },
   
-  "feature": {
-    "title_1": "Eenvoudig, geen technische kennis ",
-    "subtitle_1": "Alles in één abonnement",
-    "description_1": "Met CRstudio is het ontzettend gemakkelijk om een CR te maken. En je spaart veel tijd en geld uit.\nBekijk onze demo’s om te zien hoe CRstudio werkt,\nhoe eenvoudig en toch uiterst krachtig en professioneel het is.",
-    "title_2": "Eenvoudig, geen technische kennis ",
-    "subtitle_2": "Wees aanwezig op de kunstmarkt",
-    "description_2": "Presenteer jouw oeuvre aan kunstliefhebbers, verzamelaars en galeriehouders.",
-    "title_3": "Eenvoudig, geen technische kennis ",
-    "subtitle_3": "Alles in één abonnement",
-    "description_3": "Met CRstudio is het ontzettend gemakkelijk om een CR te maken. En je spaart veel tijd en geld uit.\nBekijk onze demo’s om te zien hoe CRstudio werkt,\nhoe eenvoudig en toch uiterst krachtig en professioneel het is."
-    
-  },
-  
   "faq": {
     "title": "Vind de antwoorden die je nodig hebt",
     "expand_all": "Alles uitvouwen",
@@ -116,6 +103,19 @@
     "a14": "Ja, jouw site wordt gehost bij Netlify...",
     "q15": "Ik heb nog een vraag",
     "a15": "Stuur ze ons per mail: info@crstudio.online"
+  },
+  
+  "feature": {
+    "title_1": "Eenvoudig, geen technische kennis ",
+    "subtitle_1": "Alles in één abonnement",
+    "description_1": "Met CRstudio is het ontzettend gemakkelijk om een CR te maken. En je spaart veel tijd en geld uit.\nBekijk onze demo’s om te zien hoe CRstudio werkt,\nhoe eenvoudig en toch uiterst krachtig en professioneel het is.",
+    "title_2": "Eenvoudig, geen technische kennis ",
+    "subtitle_2": "Wees aanwezig op de kunstmarkt",
+    "description_2": "Presenteer jouw oeuvre aan kunstliefhebbers, verzamelaars en galeriehouders.",
+    "title_3": "Eenvoudig, geen technische kennis ",
+    "subtitle_3": "Alles in één abonnement",
+    "description_3": "Met CRstudio is het ontzettend gemakkelijk om een CR te maken. En je spaart veel tijd en geld uit.\nBekijk onze demo’s om te zien hoe CRstudio werkt,\nhoe eenvoudig en toch uiterst krachtig en professioneel het is."
+    
   },
 
   "forgot": {
@@ -156,26 +156,10 @@
     "error_required_fields": "Vul zowel je e-mailadres als wachtwoord in."
   },
 
-  "register": {
-    "seo_title": "Gratis proberen bij CRstudio",
-    "seo_description": "Gratis CRstudio proberen voor een maand.",
-    "page_description": "xxxxxxxxx",
-    "logo_alt": "CRstudio Logo",
-    "heading": "Welkom bij CRstudio",
-    "intro_text": "Start nu gratis. Geen creditcard nodig. Je kunt later altijd upgraden naar een betaald abonnement.",
-    "google_placeholder": "Doorgaan met Google",
-    "or": "OF",
-    "email_placeholder": "E-mailadres",
-    "button_busy": "Registeren ...",
-    "button_register": "Registreren",
-    "invalid_mail": "Ongeldig e-mailformaat",
-    "check": "Gelieve de beveiligingscontrole te voltooien",
-    "succes": "Succes! Controleer uw e-mail voor de verificatielink!"
-  },
-
-  "try": {
-    "title": "Probeer het \ngratis",
-    "text": "Toon je oeuvre aan de wereld en bewaar het voor de volgende generaties. \nProbeer de volledige site."
+  "notfound": {
+    "title": "Het spijt ons, de pagina die u hebt opgevraagd kan niet worden gevonden.",
+    "message": "De URL is mogelijk verkeerd gespeld of de pagina die u zoekt is niet langer beschikbaar.",
+    "homeLink": "Ga naar de Homepage"
   },
   
   "overview": {
@@ -217,61 +201,76 @@
   },
   
   "profile": {
-    "email_verified_title": "Uw registratie is bevestigd",
-    "email_verified_subtitle": "Vul de onderstaande gegevens in om onmiddellijk jouw site aan te maken.",
+    "seo_title": "Gratis proberen bij CRstudio",
+    "seo_description": "Gratis CRstudio proberen voor een maand.",
+    "page_description": "xxxxxxxxx",
+    "logo_alt": "CRstudio Logo",
+    "heading": "Uw registratie is bevestigd",
+    "intro_text": "Vervolledig jouw registratie en maak onmiddellijk jouw site aan.",
+    "first_name_placeholder": "Jouw voornaam",
+    "first_name_invalid": "Ongeldige voornaam : 2 tot 50 karakters, geen cijfers of symbolen.",
+    "last_name_placeholder": "Jouw achternaam",
+    "last_name_invalid": "Ongeldige familienaam : 2 tot 50 karakters, geen cijfers of symbolen.",
+    "password_placeholder": "Wachtwoord",
+    "subdomain_heading": "Subdomein",
+    "subdomain_intro_text": "Het subdomein is wellicht voornaam+naam zoals pablopicasso of pablo-picasso. Je kunt later een eigen domeinnaam aan de site koppelen zoals pablopicasso.com.",
+    "subdomain_placeholder": "Subdomein",
+    "button_busy": "Aanmaken ...",
+    "button_submit": "Jouw site aanmaken",
+    "session_error": "Je sessie is verlopen of ongeldig.",
+    "checkingPassword": "Wachtwoord wordt gecontroleerd",
     "verify_error": {
+      "CREATE_USER_FAILED": "Er is iets fout gegaan bij het aanmaken van je account.",
+      "DUPLICATE_EMAIL": "Dit e-mailadres is al geregistreerd.",
+      "INTERNAL_ERROR": "Er is iets misgegaan. Probeer het opnieuw.",
+      "INTERNAL_EXCEPTION": "Er is een onverwachte fout opgetreden.",
+      "INVALID_RPC_RESPONSE": "Ongeldig antwoord van de server.",
+      "METHOD_NOT_ALLOWED": "Deze methode is niet toegestaan.",
+      "NO_TOKEN": "Geen verificatietoken gevonden in de URL.",
+      "RPC_FAILED": "Er ging iets fout bij de serververificatie.",
       "TOKEN_REQUIRED": "Geen token meegegeven.",
       "TOKEN_INVALID": "Deze verificatielink is ongeldig.",
       "TOKEN_EXPIRED": "De verificatielink is verlopen. Vraag een nieuwe aan.",
-      "INTERNAL_ERROR": "Er is iets misgegaan. Probeer het opnieuw.",
-      "NO_TOKEN": "Geen verificatietoken gevonden in de URL."
+      "UNKNOWN_CODE": "Onbekende foutcode ontvangen van de server."
     }
+  },
+
+  "auth": {
+    "subdomainTaken": "Dit subdomein is al in gebruik",
+    "passwordTooShort": "Je wachtwoord moet tussen 12 en 64 tekens bevatten",
+    "passwordOnlySpaces": "Je wachtwoord mag niet enkel uit spaties bestaan",
+    "passwordInvalidChars": "Je wachtwoord bevat ongeldige tekens",
+    "passwordTooWeak": "Je wachtwoord is te zwak, gebruik een langere zin of emoji",
+    "passwordLeaked": "Dit wachtwoord is eerder gelekt. Kies iets unieks.",
+    "passwordIncludesPersonalInfo": "Je wachtwoord mag je naam, e-mailadres of subdomein niet bevatten",
+    "strength_very_weak": "Zeer zwak",
+    "strength_weak": "Zwak",
+    "strength_fair": "Matig",
+    "strength_good": "Goed",
+    "strength_strong": "Sterk"
+  },
+
+  "register": {
+    "seo_title": "Gratis proberen bij CRstudio",
+    "seo_description": "Gratis CRstudio proberen voor een maand.",
+    "page_description": "xxxxxxxxx",
+    "logo_alt": "CRstudio Logo",
+    "heading": "Welkom bij CRstudio",
+    "intro_text": "Maak gratis jouw site. Geen creditcard nodig. Je kunt later altijd upgraden naar een betaald abonnement.",
+    "google_placeholder": "Doorgaan met Google",
+    "or": "OF",
+    "email_placeholder": "E-mailadres",
+    "email_invalid": "Ongeldig e-mailformaat",
+    "button_busy": "Registeren ...",
+    "button_register": "Registreren",
+    "check": "Gelieve de beveiligingscontrole te voltooien",
+    "succes": "Succes! Controleer uw e-mail voor de verificatielink!"
   },
   
   "subscription-signup": {
     "seo_title": "Inschrijven bij CRstudio",
     "seo_description": "Een abonnement kopen op CRstudio.",
     "page_description": "xxxxxxxxx"
-  },
-
-  "registration_form": {
-    "logo_alt": "CRstudio Logo",
-    "heading": "Welkom bij CRstudio",
-    "sub_heading": "Start nu je gratis trial. Geen creditcard nodig. Je kunt later altijd upgraden naar een betaald abonnement. De veiligheid van jouw site is onze hoogste prioriteit. Na het registreren ontvang je een e-mail met een verificatie-knop die 10 minuten geldig is. Kijk zeker ook in jouw spam-map.",
-    "i_am_a": "Ik ben",
-    "consumer": "Consument",
-    "business": "Zakelijk",
-    "role_label": "Kies je rol",
-    "role_placeholder": "Selecteer een rol",
-    "artist": "Kunstenaar",
-    "heir": "Erfgenaam",
-    "gallery_owner": "Galerijhouder",
-    "researcher": "Onderzoeker",
-    "curator": "Curator",
-    "email_address": "E-mailadres",
-    "invalid_email": "Ongeldig e-mailadres",
-    "password": "Wachtwoord",
-    "password_criteria": "Minimaal 8 karakters, waarvan 1 hoofdletter, 1 cijfer en 1 speciaal teken.",
-    "first_name": "Voornaam",
-    "last_name": "Achternaam",
-    "company_name": "Bedrijfsnaam",
-    "vat": "BTW-nummer",
-    "street": "Straatnaam",
-    "zip_code": "Postcode",
-    "city": "Stad",
-    "country_label": "Selecteer een land",
-    "country_placeholder": "Kies een land",
-    "sub_domain_name": "Subdomeinnaam",
-    "choose_sub_domain_name": "Kies een unieke subdomeinnaam voor je pagina.",
-    "checking": "Controle uitvoeren...",
-    "available": "Beschikbaar!",
-    "fill_all_fields": "Vul alle velden in",
-    "subdomain_unavailable": "Het gekozen subdomein is al bezet",
-    "success_message": "Registratie gelukt! Controleer je e-mail om je account te activeren",
-    "not_available": "Niet beschikbaar, kies een andere naam.",
-    "custom_domain_name": "Eigen domeinnaam (optioneel)",
-    "agree_to_conditions": "Door verder te gaan, ga je akkoord met onze Privacy Policy and Terms of Service.",
-    "cta_submit": "Registreren"
   },
   
   "testi": {
@@ -286,9 +285,8 @@
     "client_4": "Marcel, galeriehouder"
   },
 
-  "notfound": {
-    "title": "Het spijt ons, de pagina die u hebt opgevraagd kan niet worden gevonden.",
-    "message": "De URL is mogelijk verkeerd gespeld of de pagina die u zoekt is niet langer beschikbaar.",
-    "homeLink": "Ga naar de Homepage"
+  "try": {
+    "title": "Probeer het \ngratis",
+    "text": "Toon je oeuvre aan de wereld en bewaar het voor de volgende generaties. \nProbeer de volledige site."
   }
 }

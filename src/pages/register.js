@@ -11,7 +11,7 @@ import SectionWrapper from "../components/SectionWrapper";
 
 const Register = () => {
   const { t } = useTranslation();
-  const { language } = useI18next(); // ✅ actieve taal
+  const { language } = useI18next();
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -113,7 +113,7 @@ const handleSocialLogin = async (provider) => {
     setError("");
 
     if (!validateEmail(email)) {
-      setError(t("register.invalid_mail"));
+      setError(t("register.email_invalid"));
       return;
     }
 

@@ -47,6 +47,7 @@
     "i18next-http-backend": "^3.0.1",
     "instantsearch.js": "^4.75.6",
     "ioredis": "^5.6.0",
+    "js-sha1": "^0.7.0",
     "path-to-regexp": "^8.2.0",
     "postcss": "^8.4.49",
     "react": "^18.3.1",
@@ -57,7 +58,8 @@
     "react-instantsearch-hooks-web": "^6.47.3",
     "react-scroll": "^1.9.0",
     "tailwindcss": "^3.4.17",
-    "utf-8-validate": "^6.0.5"
+    "utf-8-validate": "^6.0.5",
+    "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
     "@sentry/cli": "^2.42.1",
