@@ -212,6 +212,7 @@
     "last_name_placeholder": "Jouw achternaam",
     "last_name_invalid": "Ongeldige familienaam : 2 tot 50 karakters, geen cijfers of symbolen.",
     "password_placeholder": "Wachtwoord",
+    "password_update_failed": "Wachtwoord instellen mislukt",
     "subdomain_heading": "Subdomein",
     "subdomain_intro_text": "Het subdomein is wellicht voornaam+naam zoals pablopicasso of pablo-picasso. Je kunt later een eigen domeinnaam aan de site koppelen zoals pablopicasso.com.",
     "subdomain_placeholder": "Subdomein",

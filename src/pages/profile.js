@@ -2,46 +2,59 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { graphql } from "gatsby";
 import { useTranslation } from "gatsby-plugin-react-i18next";
+
 import Seo from "../components/Seo";
 import SectionWrapper from "../components/SectionWrapper";
-import { supabase } from "../lib/supabaseClient";
 import { Input, Button } from "../components/ui";
-import { preloadZxcvbn, validatePassword } from "../utils/validatePassword";
 import PasswordStrengthMeter from "../components/PasswordStrengthMeter";
+
+import { supabase } from "../lib/supabaseClient";
+import { preloadZxcvbn, validatePassword } from "../utils/validatePassword";
 
 const Profile = () => {
   const { t } = useTranslation();
+
+  // 🌐 Token & sessie
+  const [session, setSession] = useState(null);
+  const [provider, setProvider] = useState(null);
+  const searchParams = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
+  const token = searchParams?.get("token");
+  const wasVerified = useMemo(() => typeof window !== "undefined" && localStorage.getItem("verified") === "true", []);
+
+  // ✅ Status & validatie
   const [statusCode, setStatusCode] = useState(null);
   const [tokenValid, setTokenValid] = useState(false);
-  const [session, setSession] = useState(null);
+
+  // 👤 Profielvelden
   const [firstName, setFirstName] = useState("");
-  const [firstNameError, setFirstNameError] = useState("");
   const [lastName, setLastName] = useState("");
-  const [lastNameError, setLastNameError] = useState("");
+  const [subdomain, setSubdomain] = useState("");
   const [password, setPassword] = useState("");
+
+  // ⚠️ Validatie & fouten
+  const [firstNameError, setFirstNameError] = useState("");
+  const [lastNameError, setLastNameError] = useState("");
   const [passwordScore, setPasswordScore] = useState(0);
   const [passwordError, setPasswordError] = useState(null);
   const [checkingPassword, setCheckingPassword] = useState(false);
-  const [subdomain, setSubdomain] = useState("");
-  const [loading, setLoading] = useState(false);
   const [formError, setFormError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // ✅ Token ophalen uit de URL
-  const searchParams = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
-  const token = searchParams?.get("token");
+  // 🔍 Afgeleide provider
+  const isEmailUser = useMemo(() => provider === "email", [provider]);
 
-  const wasVerified = useMemo(() => {
-    return typeof window !== "undefined" && localStorage.getItem("verified") === "true";
-  }, []);
-
-  // ✅ Haal Supabase sessie vooraf op en bewaar in state
+  // 🧠 Haal sessie op
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
       console.log("🧠 Supabase sessie opgehaald:", data?.session);
       setSession(data?.session || null);
+      const userProvider = data?.session?.user?.app_metadata?.provider;
+      console.log("🔍 Gebruiker provider:", userProvider);
+      setProvider(userProvider);
     });
   }, []);
 
+  // 🧪 Verifieer token of sessie
   useEffect(() => {
     if (wasVerified) {
       console.log("🔁 Gebruiker is reeds geverifieerd via localStorage.");
@@ -61,8 +74,6 @@ const Profile = () => {
           if (data.success && data.code === "EMAIL_VERIFIED") {
             console.log("✅ Token geldig, gebruiker is geverifieerd!");
             setTokenValid(true);
-
-            // 🧠 Status bijhouden voor refresh
             localStorage.setItem("verified", "true");
             localStorage.setItem("verifiedEmail", data.email);
           } else {
@@ -85,7 +96,7 @@ const Profile = () => {
     }
   }, [token, wasVerified, session]);
 
-  // 🧼 Naamvalidatie helpers
+  // 🧼 Validatie helpers
   const nameRegex = /^[\p{L}\p{M}](?!.*[-'\s]{2})[\p{L}\p{M}\s'-]{0,38}[\p{L}\p{M}]$/u;
   const emojiRegex = /\p{Extended_Pictographic}/u;
 
@@ -106,47 +117,59 @@ const Profile = () => {
     );
   };
 
+  // 📤 Form submit
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (loading) return;
     setFormError("");
-  
+
     const cleanedFirstName = cleanName(firstName);
     const cleanedLastName = cleanName(lastName);
-  
+
     if (!validateName(firstName)) {
       setFirstNameError(t("profile.first_name_invalid"));
       return;
     }
-  
+
     if (!validateName(lastName)) {
       setLastNameError(t("profile.last_name_invalid"));
       return;
     }
-  
+
     setFirstName(cleanedFirstName);
     setLastName(cleanedLastName);
     setLoading(true);
-  
+
     console.log("✍️ Verzenden profielgegevens:", {
       firstName: cleanedFirstName,
       lastName: cleanedLastName,
       password,
       subdomain,
     });
-  
+
     try {
       const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
-  
+
       if (sessionError || !sessionData?.session?.access_token) {
         console.error("❌ Geen geldige sessie gevonden:", sessionError);
         setFormError(t("profile.session_error"));
         setLoading(false);
         return;
       }
-  
+
       const accessToken = sessionData.session.access_token;
-  
+
+      if (isEmailUser) {
+        const { error: passwordError } = await supabase.auth.updateUser({ password });
+        if (passwordError) {
+          console.error("❌ Wachtwoord instellen mislukt:", passwordError.message);
+          setFormError(t("profile.password_update_failed"));
+          setLoading(false);
+          return;
+        }
+        console.log("✅ Wachtwoord succesvol opgeslagen in auth.users");
+      }
+
       const response = await fetch("/api/profile", {
         method: "POST",
         headers: {
@@ -160,25 +183,22 @@ const Profile = () => {
           language: session?.user?.user_metadata?.lang || "en",
         }),
       });
-  
+
       const result = await response.json();
-  
+
       if (!response.ok) {
         throw new Error(result.message || "Onbekende fout bij profielaanmaak.");
       }
-  
+
       console.log("✅ Artist aangemaakt:", result);
-  
-      // 🔁 Redirect naar eigen subdomein/dashboard
       window.location.href = `https://${subdomain}.crstudio.online/dashboard`;
-  
     } catch (err) {
       console.error("❌ Profielcreatie mislukt:", err.message);
       setFormError(err.message);
     } finally {
       setLoading(false);
     }
-  };  
+  };
 
   return (
     <>
@@ -197,14 +217,11 @@ const Profile = () => {
               />
               <h1 className="text-xl font-semibold mt-16">{t("profile.heading")}</h1>
             </div>
-            <p className="text-sm text-center text-gray-600 mb-6">
-              {t("profile.intro_text")}
-            </p>
+            <p className="text-sm text-center text-gray-600 mb-6">{t("profile.intro_text")}</p>
 
             {tokenValid ? (
               <form onSubmit={handleFormSubmit} className="space-y-4">
-                
-                {/* 🟢 Voornaam */}
+                {/* Voornaam */}
                 <div className="relative">
                   <Input
                     type="text"
@@ -215,9 +232,7 @@ const Profile = () => {
                     onChange={(e) => {
                       const value = e.target.value;
                       setFirstName(value);
-                      setFirstNameError(
-                        !validateName(value) ? t("profile.first_name_invalid") : ""
-                      );
+                      setFirstNameError(!validateName(value) ? t("profile.first_name_invalid") : "");
                       console.log("🧪 Voornaam input:", value);
                     }}
                     aria-invalid={firstNameError ? "true" : "false"}
@@ -225,13 +240,11 @@ const Profile = () => {
                     className={`input ${firstNameError ? "input-error" : ""}`}
                   />
                   {firstNameError && (
-                    <p id="firstName-error" className="text-red-500 text-sm mt-1">
-                      {firstNameError}
-                    </p>
+                    <p id="firstName-error" className="text-red-500 text-sm mt-1">{firstNameError}</p>
                   )}
                 </div>
 
-                {/* 🟢 Familienaam */}
+                {/* Familienaam */}
                 <div className="relative">
                   <Input
                     type="text"
@@ -242,9 +255,7 @@ const Profile = () => {
                     onChange={(e) => {
                       const value = e.target.value;
                       setLastName(value);
-                      setLastNameError(
-                        !validateName(value) ? t("profile.last_name_invalid") : ""
-                      );
+                      setLastNameError(!validateName(value) ? t("profile.last_name_invalid") : "");
                       console.log("🧪 Familienaam input:", value);
                     }}
                     aria-invalid={lastNameError ? "true" : "false"}
@@ -252,68 +263,55 @@ const Profile = () => {
                     className={`input ${lastNameError ? "input-error" : ""}`}
                   />
                   {lastNameError && (
-                    <p id="lastName-error" className="text-red-500 text-sm mt-1">
-                      {lastNameError}
-                    </p>
+                    <p id="lastName-error" className="text-red-500 text-sm mt-1">{lastNameError}</p>
                   )}
                 </div>
 
+                {/* Wachtwoord, Alleen voor e-mailgebruikers*/}
+                {isEmailUser && (
                 <div className="relative">
-  <Input
-    type="password"
-    name="password"
-    placeholder={t("profile.password_placeholder")}
-    value={password}
-    onFocus={preloadZxcvbn}
-    onChange={async (e) => {
-      const value = e.target.value;
-      setPassword(value);
-      setCheckingPassword(true);
-    
-      const zxcvbnLib = await import("zxcvbn");
-      const { score } = zxcvbnLib.default(value);
-      setPasswordScore(score);
-    
-      const error = await validatePassword(value, {
-        email: session?.user?.email,
-        name: firstName + lastName,
-        subdomain,
-      });
-      setPasswordError(error);
-      setCheckingPassword(false);
-    }}
-    className={`input w-full ${passwordError ? "border-red-500" : ""}`}
-    aria-invalid={passwordError ? "true" : "false"}
-    aria-describedby="password-error"
-  />
+                  <Input
+                    type="password"
+                    name="password"
+                    placeholder={t("profile.password_placeholder")}
+                    value={password}
+                    onFocus={preloadZxcvbn}
+                    onChange={async (e) => {
+                      const value = e.target.value;
+                      setPassword(value);
+                      setCheckingPassword(true);
 
-  {password && (
-    <div className="mt-1">
-      <PasswordStrengthMeter score={passwordScore} />
-    </div>
-  )}
+                      const zxcvbnLib = await import("zxcvbn");
+                      const { score } = zxcvbnLib.default(value);
+                      setPasswordScore(score);
 
-  {checkingPassword && (
-    <p className="text-sm text-gray-500 mt-1">
-      {t("profile.checkingPassword")}...
-    </p>
-  )}
-  {passwordError && (
-    <p id="password-error" className="text-red-500 text-sm mt-1">
-      {t(passwordError)}
-    </p>
-  )}
-</div>
+                      const error = await validatePassword(value, {
+                        email: session?.user?.email,
+                        name: firstName + lastName,
+                        subdomain,
+                      });
+                      setPasswordError(error);
+                      setCheckingPassword(false);
+                    }}
+                    className={`input w-full ${passwordError ? "border-red-500" : ""}`}
+                    aria-invalid={passwordError ? "true" : "false"}
+                    aria-describedby="password-error"
+                  />
+                  {password && <div className="mt-1"><PasswordStrengthMeter score={passwordScore} /></div>}
+                  {checkingPassword && <p className="text-sm text-gray-500 mt-1">{t("profile.checkingPassword")}...</p>}
+                  {passwordError && (
+                    <p id="password-error" className="text-red-500 text-sm mt-1">{t(passwordError)}</p>
+                  )}
+                </div>
+                )}
 
+                {/* Subdomein */}
                 <div className="my-6 flex items-center">
                   <hr className="flex-grow border-gray-300" />
                   <span className="px-3 text-gray-700">{t("profile.subdomain_heading")}</span>
                   <hr className="flex-grow border-gray-300" />
                 </div>
-                <p className="text-sm text-center text-gray-600 mb-6">
-                  {t("profile.subdomain_intro_text")}
-                </p>
-                
+                <p className="text-sm text-center text-gray-600 mb-6">{t("profile.subdomain_intro_text")}</p>
                 <div className="relative">
                   <Input
                     type="text"
@@ -327,7 +325,6 @@ const Profile = () => {
                 </div>
 
                 {formError && <p className="text-red-500 text-sm">{formError}</p>}
-
                 <Button type="submit" disabled={loading} className="btn btn-primary w-full">
                   {loading ? t("profile.button_busy") : t("profile.button_submit")}
                 </Button>
