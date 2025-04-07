@@ -16,7 +16,6 @@ const Profile = () => {
 
   // 🌐 Token & sessie
   const [session, setSession] = useState(null);
-  const [provider, setProvider] = useState(null);
   const searchParams = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
   const token = searchParams?.get("token");
   const wasVerified = useMemo(() => typeof window !== "undefined" && localStorage.getItem("verified") === "true", []);
@@ -41,16 +40,23 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
 
   // 🔍 Afgeleide provider
-  const isEmailUser = useMemo(() => provider === "email", [provider]);
+  const [isEmailUser, setIsEmailUser] = useState(false);
 
   // 🧠 Haal sessie op
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      console.log("🧠 Supabase sessie opgehaald:", data?.session);
+    supabase.auth.getSession().then(async ({ data }) => {
+      const sessionUser = data?.session?.user;
+      let userProvider = sessionUser?.app_metadata?.provider;
+  
+      // 🔁 Fallback indien provider ontbreekt in sessie
+      if (!userProvider && sessionUser?.id) {
+        const { data: userData } = await supabase.auth.getUser();
+        userProvider = userData?.user?.app_metadata?.provider;
+      }
+  
+      console.log("🔍 Gedetecteerde provider:", userProvider);
       setSession(data?.session || null);
-      const userProvider = data?.session?.user?.app_metadata?.provider;
-      console.log("🔍 Gebruiker provider:", userProvider);
-      setProvider(userProvider);
+      setIsEmailUser(userProvider === "email");
     });
   }, []);
 
