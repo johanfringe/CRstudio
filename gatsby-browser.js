@@ -2,7 +2,7 @@
 import "./src/styles/global.css";
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/browser";
-import Replay from "@sentry/replay";
+import { Replay } from "@sentry/replay";
 
 import { wrapPageElement as wrap } from "./src/i18n/wrapPageElement";
 import i18n from "./src/i18n/i18n";
@@ -27,10 +27,10 @@ if (typeof window !== "undefined") {
         replaysOnErrorSampleRate: 1.0, // ❗ Alleen op errors in prod
         release: process.env.SENTRY_RELEASE || "unknown",
         beforeSend(event) {
-            if (isDev) {
-              return null; // ⛔️ Geen errors in dev
+            if (isDev) { // null=niets, event=alles doorlaten
+              return event; // ... in dev
             }
-            return event; // ✅ Laat alles door in productie
+            return event; // ... in productie
           },
           environment: isDev ? "development" : "production",
           debug: isDev,
