@@ -64,6 +64,21 @@
       "description": "Dit is de FAQ-sectie."
     }
   },
+
+  "auth": {
+    "subdomainTaken": "Dit subdomein is al in gebruik",
+    "passwordTooShort": "Je wachtwoord moet tussen 12 en 64 tekens bevatten",
+    "passwordOnlySpaces": "Je wachtwoord mag niet enkel uit spaties bestaan",
+    "passwordInvalidChars": "Je wachtwoord bevat ongeldige tekens",
+    "passwordTooWeak": "Je wachtwoord is te zwak, gebruik een langere zin of emoji",
+    "passwordLeaked": "Dit wachtwoord is eerder gelekt. Kies iets unieks.",
+    "passwordIncludesPersonalInfo": "Je wachtwoord mag je naam, e-mailadres of subdomein niet bevatten",
+    "strength_very_weak": "Zeer zwak",
+    "strength_weak": "Zwak",
+    "strength_fair": "Matig",
+    "strength_good": "Goed",
+    "strength_strong": "Sterk"
+  },
   
   "cta": {
     "text": "Start gratis een proefperiode van 30 dagen\nGeen creditcard vereist"
@@ -200,6 +215,65 @@
     "email_body": "Beste team, ik ben geïnteresseerd in jullie gepersonaliseerde diensten. Kunnen jullie me meer info sturen?"
   },
   
+    "privacy": {
+      "seoTitle": "Privacyverklaring",
+      "seoDescription": "Lees hier hoe CRstudio jouw gegevens verwerkt en beveiligt.",
+      "pageDescription": "Pagina met privacybeleid",
+      "lastUpdated": "Laatste update: 10 april 2025",
+      "title": "Privacybeleid",
+      "intro": "In dit beleid leggen we uit hoe CRstudio omgaat met jouw persoonsgegevens, zowel als klant als eindgebruiker.",
+      "points": {
+        "1": {
+          "title": "1. Inleiding",
+          "text": "CRstudio hecht veel belang aan jouw privacy. We verwerken persoonsgegevens in overeenstemming met de GDPR en andere toepasselijke wetgeving."
+        },
+        "2": {
+          "title": "2. Verantwoordelijke",
+          "text": "CRstudio is de verwerkingsverantwoordelijke voor de persoonsgegevens die je via onze platformen verstrekt of aanmaakt."
+        },
+        "3": {
+          "title": "3. Doeleinden van verwerking",
+          "text": "We verzamelen enkel gegevens die nodig zijn voor het leveren van onze diensten, facturatie, support, veiligheid en verbetering van onze producten."
+        },
+        "4": {
+          "title": "4. Welke gegevens we verzamelen",
+          "text": "We verzamelen o.a. naam, e-mailadres, IP-adres, browsergegevens, CMS-gebruik, loginlogs, en gebruikersinteractie."
+        },
+        "5": {
+          "title": "5. Grondslagen voor verwerking",
+          "text": "We verwerken gegevens op basis van overeenkomst, toestemming, wettelijke verplichting en gerechtvaardigd belang."
+        },
+        "6": {
+          "title": "6. Delen met derden",
+          "text": "We delen geen persoonsgegevens met derden, tenzij dit nodig is voor de dienstverlening (bv. hosting, betalingen) of wettelijk vereist."
+        },
+        "7": {
+          "title": "7. Bewaartermijn",
+          "text": "We bewaren gegevens niet langer dan nodig. Verwijderde accounts worden binnen 90 dagen volledig gewist."
+        },
+        "8": {
+          "title": "8. Cookies en tracking",
+          "text": "We gebruiken alleen essentiële cookies en geanonimiseerde analytics. Geen trackingcookies van derden."
+        },
+        "9": {
+          "title": "9. Beveiliging",
+          "text": "We nemen passende technische en organisatorische maatregelen om jouw gegevens te beschermen tegen verlies, diefstal of misbruik."
+        },
+        "10": {
+          "title": "10. Jouw rechten",
+          "text": "Je hebt recht op inzage, correctie, verwijdering, beperking van verwerking, bezwaar en overdraagbaarheid van je gegevens."
+        },
+        "11": {
+          "title": "11. Internationale gegevensoverdracht",
+          "text": "CRstudio gebruikt uitsluitend datacenters binnen de EU of aanbieders met een adequaatheidsbesluit volgens GDPR."
+        },
+        "12": {
+          "title": "12. Contact & klachten",
+          "text": "Heb je vragen of klachten? Contacteer ons via privacy@crstudio.online of de Gegevensbeschermingsautoriteit."
+        }
+      }
+    },  
+  
   "profile": {
     "seo_title": "Gratis proberen bij CRstudio",
     "seo_description": "Gratis CRstudio proberen voor een maand.",
@@ -236,21 +310,6 @@
     }
   },
 
-  "auth": {
-    "subdomainTaken": "Dit subdomein is al in gebruik",
-    "passwordTooShort": "Je wachtwoord moet tussen 12 en 64 tekens bevatten",
-    "passwordOnlySpaces": "Je wachtwoord mag niet enkel uit spaties bestaan",
-    "passwordInvalidChars": "Je wachtwoord bevat ongeldige tekens",
-    "passwordTooWeak": "Je wachtwoord is te zwak, gebruik een langere zin of emoji",
-    "passwordLeaked": "Dit wachtwoord is eerder gelekt. Kies iets unieks.",
-    "passwordIncludesPersonalInfo": "Je wachtwoord mag je naam, e-mailadres of subdomein niet bevatten",
-    "strength_very_weak": "Zeer zwak",
-    "strength_weak": "Zwak",
-    "strength_fair": "Matig",
-    "strength_good": "Goed",
-    "strength_strong": "Sterk"
-  },
-
   "register": {
     "seo_title": "Gratis proberen bij CRstudio",
     "seo_description": "Gratis CRstudio proberen voor een maand.",
@@ -273,6 +332,73 @@
     "seo_description": "Een abonnement kopen op CRstudio.",
     "page_description": "xxxxxxxxx"
   },
+
+    "terms": {
+      "seoTitle": "Algemene Voorwaarden",
+      "seoDescription": "Lees hier onze algemene voorwaarden.",
+      "pageDescription": "Algemene Voorwaarden Pagina",
+      "lastUpdated": "Laatst bijgewerkt: 10 april 2025",
+      "title": "Algemene Voorwaarden",
+      "intro": "Deze voorwaarden zijn van toepassing op alle producten en diensten van CRstudio. Door gebruik te maken van onze diensten, ga je akkoord met deze voorwaarden.",
+      "points": {
+        "1": {
+          "title": "1. Introductie",
+          "text": "Deze algemene voorwaarden (\"Voorwaarden\") regelen het gebruik van alle producten en diensten van CRstudio. Door gebruik te maken van onze diensten, ga je akkoord met deze Voorwaarden, de bijlagen (Productvoorwaarden), en de Verwerkersovereenkomst (DPA)."
+        },
+        "2": {
+          "title": "2. Begripsbepalingen",
+          "text": "CRstudio verwijst naar de SaaS-dienstverlener die het CMS, hosting, preview tools en e-commerce-oplossingen aanbiedt. Een Product is een abonnementsgebaseerde dienst (bijv. website, database, preview, e-commerce). Content = materiaal (afbeeldingen, tekst, bestanden) dat door de klant of eindgebruikers wordt toegevoegd. Gebruiker = klant van CRstudio of diens eindgebruikers."
+        },
+        "3": {
+          "title": "3. Toegang en registratie",
+          "text": "Om gebruik te maken van bepaalde diensten moet je je registreren en correcte, actuele informatie verstrekken. Je bent verantwoordelijk voor de veiligheid van je account."
+        },
+        "4": {
+          "title": "4. Gebruik van de diensten",
+          "text": "Je mag onze diensten niet gebruiken voor illegale of ongepaste doeleinden. Je bent verantwoordelijk voor de inhoud die je toevoegt en beheert."
+        },
+        "5": {
+          "title": "5. Verantwoordelijkheid van de gebruiker",
+          "text": "Jij bent verantwoordelijk voor jouw eigen gegevens, gebruikers en inhoud. Wij behouden ons het recht voor om inhoud die in strijd is met onze richtlijnen te verwijderen."
+        },
+        "6": {
+          "title": "6. Betaling en abonnementen",
+          "text": "CRstudio werkt met maandelijkse of jaarlijkse abonnementen. Betalingen verlopen via Stripe. Bij laattijdige betaling kan toegang tot de dienst worden opgeschort."
+        },
+        "7": {
+          "title": "7. Proefperiode",
+          "text": "Nieuwe gebruikers krijgen toegang tot een proefperiode van 30 dagen. Bij het einde van de proefperiode is betaling vereist om verder gebruik te maken van het platform."
+        },
+        "8": {
+          "title": "8. Beëindiging",
+          "text": "Zowel jij als CRstudio kunnen het gebruik van de diensten beëindigen. In geval van misbruik of schending van de voorwaarden kan je account onmiddellijk worden beëindigd."
+        },
+        "9": {
+          "title": "9. Privacy en gegevensbescherming",
+          "text": "Je gegevens worden verwerkt conform onze Privacyverklaring en de Verwerkersovereenkomst (DPA)."
+        },
+        "10": {
+          "title": "10. Intellectuele eigendom",
+          "text": "De broncode, ontwerpen en templates blijven eigendom van CRstudio. Je krijgt een gebruikslicentie zolang je een geldig abonnement hebt."
+        },
+        "11": {
+          "title": "11. Beperkingen van aansprakelijkheid",
+          "text": "CRstudio is niet aansprakelijk voor indirecte schade, verlies van gegevens of winst, tenzij dwingend wettelijk bepaald."
+        },
+        "12": {
+          "title": "12. Wijzigingen van voorwaarden",
+          "text": "CRstudio mag deze voorwaarden aanpassen. Je wordt hiervan op de hoogte gebracht en bij voortgezet gebruik ga je akkoord met de aangepaste voorwaarden."
+        },
+        "13": {
+          "title": "13. Toepasselijk recht",
+          "text": "Deze voorwaarden vallen onder het Belgisch recht. Geschillen worden behandeld door de rechtbanken van Gent, België."
+        },
+        "14": {
+          "title": "14. Contact",
+          "text": "Voor vragen over deze voorwaarden kan je ons contacteren via legal@crstudio.online."
+        }
+      }
+    },
   
   "testi": {
     "testimonial_title": "Zij vertrouwen op CRstudio om kunstwerken te behouden en te beschermen",

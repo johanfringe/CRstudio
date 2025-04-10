@@ -1,9 +1,13 @@
 {
     "Policy": [
       {
-        "User-agent": ["Googlebot", "Bingbot", "YandexBot", "DuckDuckBot", "BaiduSpider", "Sogou", "Slurp", "Applebot", "facebookexternalhit", "Twitterbot", "archive.org_bot"],
+        "User-agent": ["Googlebot", "Bingbot", "YandexBot", "BaiduSpider", "Sogou", "Slurp", "PetalBot", 
+        "AhrefsBot", "SemrushBot", "rogerbot", "dotbot", "MJ12bot", "AhrefsSiteAudit", "SemrushSiteAuditBot", "SiteAuditBot", "ZoominfoBot", "Bytespider", "Qwantify", "SeznamBot", 
+        "GtmetrixBot", "PingdomBot", "UptimeRobot", "Google PageSpeed Insights", 
+        "archive.org_bot", "CCBot", 
+        "facebookexternalhit", "Twitterbot", "LinkedInBot", "Applebot", "WhatsApp", "SkypeUriPreview", "TelegramBot", "Discordbot"],
         "Allow": "/",
-        "Disallow": ["/admin/", "/drafts/", "/preview/", "/private/", "/404/", "/404.html"]
+        "Disallow": ["/admin/", "/drafts/", "/preview/", "/private/", "/test-alerts/", "/test-sentry/", "/404/", "/404.html"]
       },
       {
         "User-agent": "*",
