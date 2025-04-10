@@ -26,11 +26,9 @@ if (SENTRY_DSN) {
 
 exports.wrapPageElement = wrap;
 
-exports.onRenderBody = ({ setHtmlAttributes }) => {
+exports.onRenderBody = ({ setHtmlAttributes, setHeadComponents }) => {
   setHtmlAttributes({ lang: "en", xmlns: "http://www.w3.org/1999/xhtml" });
-};
 
-exports.onRenderBody = ({ setHeadComponents }) => {
   const fonts = [
     { key: "inter-regular", href: "/fonts/Inter-Regular.woff2", weight: "400", style: "normal" },
     { key: "inter-bold", href: "/fonts/Inter-Bold.woff2", weight: "700", style: "normal" },
@@ -46,8 +44,8 @@ exports.onRenderBody = ({ setHeadComponents }) => {
         as: "font",
         type: "font/woff2",
         crossOrigin: "anonymous",
-        "fontWeight": weight,
-        "fontStyle": style,
+        fontWeight: weight,
+        fontStyle: style,
       })
     )
   );

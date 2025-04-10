@@ -22,6 +22,7 @@ exports.components = {
   "component---src-pages-register-js": () => __webpack_require__.e(/*! import() | component---src-pages-register-js */ "component---src-pages-register-js").then(__webpack_require__.bind(__webpack_require__, /*! ./../../../src/pages/register.js?export=default */ "./src/pages/register.js?export=default")),
   "component---src-pages-template-js": () => __webpack_require__.e(/*! import() | component---src-pages-template-js */ "component---src-pages-template-js").then(__webpack_require__.bind(__webpack_require__, /*! ./../../../src/pages/template.js?export=default */ "./src/pages/template.js?export=default")),
   "component---src-pages-terms-js": () => __webpack_require__.e(/*! import() | component---src-pages-terms-js */ "component---src-pages-terms-js").then(__webpack_require__.bind(__webpack_require__, /*! ./../../../src/pages/terms.js?export=default */ "./src/pages/terms.js?export=default")),
+  "component---src-pages-test-sentry-js": () => __webpack_require__.e(/*! import() | component---src-pages-test-sentry-js */ "component---src-pages-test-sentry-js").then(__webpack_require__.bind(__webpack_require__, /*! ./../../../src/pages/test-sentry.js?export=default */ "./src/pages/test-sentry.js?export=default")),
   "component---src-pages-upgrade-js": () => __webpack_require__.e(/*! import() | component---src-pages-upgrade-js */ "component---src-pages-upgrade-js").then(__webpack_require__.bind(__webpack_require__, /*! ./../../../src/pages/upgrade.js?export=default */ "./src/pages/upgrade.js?export=default"))
 };
 exports.head = {};
@@ -2162,7 +2163,7 @@ const {
 
 // ✅ SENTRY INITIALISATIE
 const Sentry = __webpack_require__(/*! @sentry/react */ "./node_modules/@sentry/react/build/cjs/index.js");
-const SENTRY_DSN = ({}).SENTRY_DSN;
+const SENTRY_DSN = "https://86312fc3076242b523789d67dd8ebdeb@o4508861802872832.ingest.de.sentry.io/4508861808443472";
 const IS_PRODUCTION = "development" === "production";
 if (SENTRY_DSN) {
   try {
@@ -2180,16 +2181,13 @@ if (SENTRY_DSN) {
 }
 exports.wrapPageElement = wrap;
 exports.onRenderBody = ({
-  setHtmlAttributes
+  setHtmlAttributes,
+  setHeadComponents
 }) => {
   setHtmlAttributes({
     lang: "en",
     xmlns: "http://www.w3.org/1999/xhtml"
   });
-};
-exports.onRenderBody = ({
-  setHeadComponents
-}) => {
   const fonts = [{
     key: "inter-regular",
     href: "/fonts/Inter-Regular.woff2",
@@ -2218,8 +2216,8 @@ exports.onRenderBody = ({
     as: "font",
     type: "font/woff2",
     crossOrigin: "anonymous",
-    "fontWeight": weight,
-    "fontStyle": style
+    fontWeight: weight,
+    fontStyle: style
   })));
 };
 

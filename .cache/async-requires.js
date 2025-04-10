@@ -13,6 +13,7 @@ exports.components = {
   "component---src-pages-register-js": () => import("./../../../src/pages/register.js?export=default" /* webpackChunkName: "component---src-pages-register-js" */),
   "component---src-pages-template-js": () => import("./../../../src/pages/template.js?export=default" /* webpackChunkName: "component---src-pages-template-js" */),
   "component---src-pages-terms-js": () => import("./../../../src/pages/terms.js?export=default" /* webpackChunkName: "component---src-pages-terms-js" */),
+  "component---src-pages-test-sentry-js": () => import("./../../../src/pages/test-sentry.js?export=default" /* webpackChunkName: "component---src-pages-test-sentry-js" */),
   "component---src-pages-upgrade-js": () => import("./../../../src/pages/upgrade.js?export=default" /* webpackChunkName: "component---src-pages-upgrade-js" */)
 }
 

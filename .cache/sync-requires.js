@@ -18,6 +18,7 @@ exports.components = {
   "component---src-pages-register-js": preferDefault(require("/Users/johan/CRstudio/CRstudio/src/pages/register.js")),
   "component---src-pages-template-js": preferDefault(require("/Users/johan/CRstudio/CRstudio/src/pages/template.js")),
   "component---src-pages-terms-js": preferDefault(require("/Users/johan/CRstudio/CRstudio/src/pages/terms.js")),
+  "component---src-pages-test-sentry-js": preferDefault(require("/Users/johan/CRstudio/CRstudio/src/pages/test-sentry.js")),
   "component---src-pages-upgrade-js": preferDefault(require("/Users/johan/CRstudio/CRstudio/src/pages/upgrade.js"))
 }
 

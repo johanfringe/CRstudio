@@ -18,8 +18,7 @@ console.log("🔑 Supabase Service Role Key:", process.env.SUPABASE_SERVICE_ROLE
 
 const Sentry = require("@sentry/gatsby");
 
-const SENTRY_DSN = process.env.SENTRY_DSN || ""; // ✅ Zorgt voor fallback als DSN ontbreekt
-const IS_PRODUCTION = process.env.NODE_ENV === "production";
+const ENABLE_SENTRY = !!process.env.SENTRY_DSN;
 
 const i18nConfig = require("./src/i18n/i18nConfig");
 const languages = require('./src/locales/languages');
@@ -33,20 +32,22 @@ module.exports = {
     siteUrl: `https://crstudio.online/`,
   },
   plugins: [
-    SENTRY_DSN && {
+    ENABLE_SENTRY && {
       resolve: "@sentry/gatsby",
       options: {
-        dsn: SENTRY_DSN,
-        environment: process.env.NODE_ENV,
-        tracesSampleRate: IS_PRODUCTION ? 1.0 : 0.1, // ✅ 100% tracing in productie, 10% in development
-        release: process.env.COMMIT_REF || "unknown", // ✅ Gebruik Netlify's commit hash voor debugging
-        debug: !IS_PRODUCTION, // ✅ Debug alleen inschakelen in development
+        dsn: process.env.SENTRY_DSN,
+        environment: "development", // 👈 expliciet en consistent
+        tracesSampleRate: 0.1,
+        debug: true,
+        release: process.env.SENTRY_RELEASE || "unknown",
         sourceMapsUploadOptions: {
           include: [
-            "./public", // ✅ Upload de minified build en originele source maps
-            "./.cache"  // ✅ Upload Gatsby’s cache voor debugging
+            "./public",   // ✔️ sourcemaps van build
+            "./.cache"    // ✔️ gatsby cache & page-data
           ],
-          ignore: ["node_modules"], // ✅ Vermijd onnodige bestanden
+          ignore: ["node_modules", ".cache/dev-404-page"],
+          validate: true,
+          rewrite: true,
         },
       },
     },

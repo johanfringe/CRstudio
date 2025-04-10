@@ -12,27 +12,30 @@ const supabase = createClient(
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
+    console.warn("⛔️ Verkeerde methode:", req.method);
     res.setHeader("Allow", ["POST"]);
     return res.status(405).json({ success: false, code: "METHOD_NOT_ALLOWED" });
   }
 
   const { token } = req.body;
 
+  console.log("📥 Ontvangen body:", req.body);
+
   if (!token) {
     console.warn("⚠️ Geen token meegegeven.");
     return res.status(400).json({ success: false, code: "TOKEN_REQUIRED" });
   }
 
-  console.log("🔍 Start verificatieproces voor token:", token);
+  console.log("🔍 Start verificatieproces voor token:", token, "| lengte:", token.length);
 
   try {
     const { data, error } = await supabase.rpc("verify_user_token", { _token: token });
 
-    console.log("↩️ Supabase RPC response – data:", data);
+    console.log("↩️ Supabase RPC response – data:", JSON.stringify(data, null, 2));
     console.log("↩️ Supabase RPC response – error:", error);
 
     if (error) {
-      console.error("❌ RPC-call mislukt:", error.message);
+      console.error("❌ RPC-call mislukt:", error.message, error);
       return res.status(500).json({ success: false, code: "RPC_FAILED", details: error.message });
     }
 
@@ -43,18 +46,28 @@ export default async function handler(req, res) {
 
     const { code, email, details } = data;
 
+    console.log("🧾 Ontvangen verificatieresultaat:", { code, email, details });
+
     switch (code) {
       case "EMAIL_VERIFIED":
-        console.log(`✅ E-mail geverifieerd: ${email}`);
+        console.log(`✅ E-mail geverifieerd voor: ${email}`);
+        console.log("🔐 Willekeurig wachtwoord gegenereerd voor Supabase:", randomPassword);
+
         const { data: createdUser, error: createError } = await supabase.auth.admin.createUser({
           email,
           password: crypto.randomBytes(12).toString("base64"),
           email_confirm: true,
         });
 
+        console.log("📦 createUser() response – data:", createdUser);
+        console.log("📦 createUser() response – error:", createError);
+
         if (createError) {
           const isDuplicate = createError.message?.toLowerCase().includes("duplicate");
+          console.warn("⚠️ createUser foutmelding:", createError.message);
+
           if (isDuplicate) {
+            console.warn("🟡 Dubbele e-mail gedetecteerd tijdens createUser:", email);
             return res.status(409).json({ success: false, code: "DUPLICATE_EMAIL" });
           }
 
@@ -65,21 +78,31 @@ export default async function handler(req, res) {
           });
         }
 
-        console.log("✅ Supabase user aangemaakt:", createdUser);
+        console.log("✅ Supabase user succesvol aangemaakt:", createdUser);
         return res.status(200).json({ success: true, code, email });
 
       case "TOKEN_NOT_FOUND":
+        console.warn("🔍 Token niet gevonden.");
+        return res.status(400).json({ success: false, code });
+
       case "TOKEN_EXPIRED":
+        console.warn("⏰ Token is verlopen.");
+        return res.status(400).json({ success: false, code });
+
       case "TOKEN_INVALID":
+        console.warn("🚫 Token is ongeldig.");
         return res.status(400).json({ success: false, code });
 
       case "DUPLICATE_EMAIL":
+        console.warn("⚠️ Dubbele e-mail gedetecteerd in RPC-response.");
         return res.status(409).json({ success: false, code });
 
       case "INTERNAL_ERROR":
+        console.error("💥 Interne fout in RPC:", details);
         return res.status(500).json({ success: false, code, details });
 
       default:
+        console.error("❓ Onbekende RPC-response code:", code);
         return res.status(500).json({
           success: false,
           code: "UNKNOWN_CODE",
@@ -87,7 +110,7 @@ export default async function handler(req, res) {
         });
     }
   } catch (err) {
-    console.error("🔥 Onverwachte fout:", err);
+    console.error("🔥 Onverwachte fout in handler:", err);
     return res.status(500).json({
       success: false,
       code: "INTERNAL_EXCEPTION",

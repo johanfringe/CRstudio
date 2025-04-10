@@ -1,5 +1,5 @@
 [build]
-  command = "yarn build"
+  command = "export SENTRY_RELEASE=crstudio@$(git rev-parse --short HEAD) && echo \"📦 Release: $SENTRY_RELEASE\" && yarn sentry:release"
   publish = "public"
 
 [dev]
