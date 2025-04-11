@@ -51,11 +51,12 @@ export default async function handler(req, res) {
     switch (code) {
       case "EMAIL_VERIFIED":
         console.log(`✅ E-mail geverifieerd voor: ${email}`);
-        console.log("🔐 Willekeurig wachtwoord gegenereerd voor Supabase:", randomPassword);
+        const randomPassword = crypto.randomBytes(12).toString("base64");
+        console.log("🔐 Willekeurig wachtwoord gegenereerd voor Supabase:", randomPassword); // in productie verwijderen
 
         const { data: createdUser, error: createError } = await supabase.auth.admin.createUser({
           email,
-          password: crypto.randomBytes(12).toString("base64"),
+          password: randomPassword,
           email_confirm: true,
         });
 

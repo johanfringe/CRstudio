@@ -295,18 +295,18 @@
     "session_error": "Je sessie is verlopen of ongeldig.",
     "checkingPassword": "Wachtwoord wordt gecontroleerd",
     "verify_error": {
-      "CREATE_USER_FAILED": "Er is iets fout gegaan bij het aanmaken van je account.",
-      "DUPLICATE_EMAIL": "Dit e-mailadres is al geregistreerd.",
-      "INTERNAL_ERROR": "Er is iets misgegaan. Probeer het opnieuw.",
-      "INTERNAL_EXCEPTION": "Er is een onverwachte fout opgetreden.",
-      "INVALID_RPC_RESPONSE": "Ongeldig antwoord van de server.",
-      "METHOD_NOT_ALLOWED": "Deze methode is niet toegestaan.",
-      "NO_TOKEN": "Geen verificatietoken gevonden in de URL.",
-      "RPC_FAILED": "Er ging iets fout bij de serververificatie.",
-      "TOKEN_REQUIRED": "Geen token meegegeven.",
-      "TOKEN_INVALID": "Deze verificatielink is ongeldig.",
-      "TOKEN_EXPIRED": "De verificatielink is verlopen. Vraag een nieuwe aan.",
-      "UNKNOWN_CODE": "Onbekende foutcode ontvangen van de server."
+      "CREATE_USER_FAILED": "CREATE_USER_FAILED: Er is iets fout gegaan bij het aanmaken van je account.",
+      "DUPLICATE_EMAIL": "DUPLICATE_EMAIL: Dit e-mailadres is al geregistreerd.",
+      "INTERNAL_ERROR": "INTERNAL_ERROR: Er is iets misgegaan. Probeer het opnieuw.",
+      "INTERNAL_EXCEPTION": "INTERNAL_EXCEPTION: Er is een onverwachte fout opgetreden.",
+      "INVALID_RPC_RESPONSE": "INVALID_RPC_RESPONSE: Ongeldig antwoord van de server.",
+      "METHOD_NOT_ALLOWED": "METHOD_NOT_ALLOWED: Deze methode is niet toegestaan.",
+      "NO_TOKEN": "NO_TOKEN: Geen verificatietoken gevonden in de URL.",
+      "RPC_FAILED": "RPC_FAILED: Er ging iets fout bij de serververificatie.",
+      "TOKEN_REQUIRED": "TOKEN_REQUIRED: Geen token meegegeven.",
+      "TOKEN_INVALID": "TOKEN_INVALID: Deze verificatielink is ongeldig.",
+      "TOKEN_EXPIRED": "TOKEN_EXPIRED: De verificatielink is verlopen. Vraag een nieuwe aan.",
+      "UNKNOWN_CODE": "UNKNOWN_CODE: Onbekende foutcode ontvangen van de server."
     }
   },
 
