@@ -56,7 +56,8 @@ const Profile = () => {
   
       console.log("🔍 Gedetecteerde provider:", userProvider);
       setSession(data?.session || null);
-      setIsEmailUser(userProvider === "email");
+      // setIsEmailUser(userProvider === "email");
+      setIsEmailUser(userProvider !== "google");
     });
   }, []);
 
