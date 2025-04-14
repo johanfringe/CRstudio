@@ -1,5 +1,5 @@
 // src/utils/validateSubdomain.js :
-import { subdomainBlocklist } from "@/utils/subdomainBlocklist";
+import { subdomainBlocklist } from "./subdomainBlocklist";
 
 export const MIN_LENGTH = 5;
 export const MAX_LENGTH = 63;

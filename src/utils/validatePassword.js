@@ -1,6 +1,6 @@
 // src/utils/validatePassword.js :
-import { leakedPasswords } from "@/utils/leakedPasswords";
-import { checkHIBPPassword } from "@/utils/checkHIBPPassword";
+import { leakedPasswords } from "./leakedPasswords";
+import { checkHIBPPassword } from "./checkHIBPPassword";
 
 const MIN_LENGTH = 12;
 const MAX_LENGTH = 64;

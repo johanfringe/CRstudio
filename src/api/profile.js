@@ -1,6 +1,6 @@
 // src/api/profile.js :
 import { createClient } from "@supabase/supabase-js";
-import { validateSubdomain } from "@/utils/validateSubdomain";
+import { validateSubdomain } from "../utils/validateSubdomain";
 
 const supabase = createClient(
   process.env.GATSBY_SUPABASE_URL,
