@@ -62,10 +62,12 @@ export default async function handler(req, res) {
   try {
     const { email, turnstileToken, lang } = req.body;
     console.log(`📩 Ontvangen e-mail voor verificatie: ${email}`);
+
     if (!email || !turnstileToken) {
       console.warn("⚠️ Turnstile: Ontbrekende velden:", { email, turnstileToken });
       return res.status(400).json({ message: "Turnstile: Missing fields" });
     }
+
     console.log("📩 Turnstile: Ontvangen aanvraag:", req.body);
 
     if (!email || !turnstileToken) {
@@ -87,7 +89,6 @@ export default async function handler(req, res) {
     }
 
     await redis.expire(redisKey, 60);
-    
     console.log(`🔄 Redis: Poging #${attempts} voor IP:`, redisKey);
 
     // 2️⃣ Cloudflare Turnstile-verificatie
@@ -97,12 +98,14 @@ export default async function handler(req, res) {
     }
 
     console.log("✅ Turnstile verificatie geslaagd!");
-
     console.log(`🚀 Kickbox wordt aangeroepen voor: ${email}`);
+
     // 3️⃣ Kickbox Disposable E-mail Check
     let kickboxData;
     try {
-      const kickboxRes = await fetch(`https://api.kickbox.com/v2/verify?email=${email}&apikey=${process.env.KICKBOX_API_KEY}`);
+      const kickboxRes = await fetch(
+        `https://api.kickbox.com/v2/verify?email=${email}&apikey=${process.env.KICKBOX_API_KEY}`
+      );
       console.log("📡 Kickbox API-aanroep:", kickboxRes.status, kickboxRes.statusText);
 
       if (!kickboxRes.ok) {
@@ -113,11 +116,11 @@ export default async function handler(req, res) {
 
       kickboxData = await kickboxRes.json();
       console.log("📬 Kickbox validatieresultaat:", JSON.stringify(kickboxData, null, 2));
-
     } catch (err) {
       console.error("❌ Kickbox API-fout:", err);
       return res.status(500).json({ message: "Kickbox: Email validation failed" });
     }
+
     console.log(`✅ Kickbox API-aanroep voltooid voor: ${email}`);
 
     if (kickboxData.result === "undeliverable" || kickboxData.disposable) {
@@ -152,7 +155,11 @@ export default async function handler(req, res) {
     // 7️⃣ E-mail opslaan in `temp_users`
     console.log("📥 Supabase: E-mail wordt opgeslagen in temp_users:", email);
     const { data, error } = await supabase.from("temp_users").insert([
-      { email, verification_token: verificationToken, created_at: new Date().toISOString() }
+      {
+        email,
+        verification_token: verificationToken,
+        created_at: new Date().toISOString()
+      }
     ]);
 
     console.log("📥 Supabase insert response:", { data, error });
@@ -165,6 +172,7 @@ export default async function handler(req, res) {
     // 8️⃣ Taal bepalen + vertaling laden
     let language = lang && lang.length === 2 ? lang : "en";
     console.log("🌐 Geselecteerde taal:", language);
+
     let t;
     try {
       t = (await import(`../locales/${language}/translationemails.js`)).default;
@@ -195,8 +203,8 @@ export default async function handler(req, res) {
     );
 
     if (!emailResult.success) {
-        console.error("❌ Fout bij verzenden verificatiemail:", emailResult.error);
-        return res.status(500).json({ message: "Could not send verification email. Try again later." });
+      console.error("❌ Fout bij verzenden verificatiemail:", emailResult.error);
+      return res.status(500).json({ message: "Could not send verification email. Try again later." });
     }
 
     console.log("✅ Verificatiemail verzonden naar:", email);

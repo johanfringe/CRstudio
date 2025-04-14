@@ -1,5 +1,6 @@
 // src/api/profile.js :
 import { createClient } from "@supabase/supabase-js";
+import { validateSubdomain } from "@/utils/validateSubdomain";
 
 const supabase = createClient(
   process.env.GATSBY_SUPABASE_URL,
@@ -24,6 +25,13 @@ export default async function handler(req, res) {
   );
 
   const { firstName, lastName, subdomain, language } = req.body;
+
+  // ✅ Server-side subdomeinvalidatie (regex + blocklist)
+  const subError = validateSubdomain(subdomain);
+  if (subError) {
+    console.warn("⛔ Ongeldig subdomein via API:", subdomain);
+    return res.status(400).json({ code: subError });
+  }
 
   try {
     const { data: user, error: userError } = await client.auth.getUser();
@@ -50,7 +58,13 @@ export default async function handler(req, res) {
     }
 
     const { error } = await client.from("artists").insert([
-      { user_id, first_name: firstName, last_name: lastName, subdomain, language }
+      {
+        user_id,
+        first_name: firstName,
+        last_name: lastName,
+        subdomain: normalizedSubdomain,
+        language
+      }
     ]);
 
     if (error) {

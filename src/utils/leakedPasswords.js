@@ -1,5 +1,4 @@
 // src/utils/leakedPasswords.js :
-// ⚠️ AUTOMATISCH GEGENEREERD uit 100k-most-used-passwords.txt — wijzig dit bestand niet handmatig
 export const leakedPasswords = new Set([
   "q1w2e3r4t5y6",
   "pe#5gz29ptzmse",

@@ -66,7 +66,6 @@
   },
 
   "auth": {
-    "subdomainTaken": "Dit subdomein is al in gebruik",
     "passwordTooShort": "Je wachtwoord moet tussen 12 en 64 tekens bevatten",
     "passwordOnlySpaces": "Je wachtwoord mag niet enkel uit spaties bestaan",
     "passwordInvalidChars": "Je wachtwoord bevat ongeldige tekens",
@@ -77,7 +76,13 @@
     "strength_weak": "Zwak",
     "strength_fair": "Matig",
     "strength_good": "Goed",
-    "strength_strong": "Sterk"
+    "strength_strong": "Sterk",
+    "subdomainInvalidLength": "Het subdomein moet tussen 5 en 63 tekens lang zijn.",
+    "subdomainInvalidFormat": "Het subdomein bevat ongeldige tekens of structuur.",
+    "subdomainBlocklist": "Dit subdomein is niet toegestaan.",
+    "subdomainTaken": "Dit subdomein is al in gebruik.",
+    "subdomainCheckError": "Fout bij controleren van beschikbaarheid."
+
   },
   
   "cta": {
@@ -282,9 +287,9 @@
     "heading": "Uw registratie is bevestigd",
     "intro_text": "Vervolledig jouw registratie en maak onmiddellijk jouw site aan.",
     "first_name_placeholder": "Jouw voornaam",
-    "first_name_invalid": "Ongeldige voornaam : 2 tot 50 karakters, geen cijfers of symbolen.",
+    "first_name_invalid": "2 tot 50 karakters, geen cijfers of symbolen.",
     "last_name_placeholder": "Jouw achternaam",
-    "last_name_invalid": "Ongeldige familienaam : 2 tot 50 karakters, geen cijfers of symbolen.",
+    "last_name_invalid": "2 tot 50 karakters, geen cijfers of symbolen.",
     "password_placeholder": "Wachtwoord",
     "password_update_failed": "Wachtwoord instellen mislukt",
     "subdomain_heading": "Subdomein",
@@ -307,7 +312,14 @@
       "TOKEN_INVALID": "TOKEN_INVALID: Deze verificatielink is ongeldig.",
       "TOKEN_EXPIRED": "TOKEN_EXPIRED: De verificatielink is verlopen. Vraag een nieuwe aan.",
       "UNKNOWN_CODE": "UNKNOWN_CODE: Onbekende foutcode ontvangen van de server."
-    }
+    },
+    "subdomain_validation": {
+    "validChars": "Alleen kleine letters, cijfers of ‘-’",
+    "correctLength": "Tussen 5 en 63 tekens",
+    "startsCorrectly": "Begint met een letter of cijfer",
+    "endsCorrectly": "Eindigt met een letter of cijfer",
+    "notInBlocklist": "Geen gereserveerd of verboden subdomein"
+  }
   },
 
   "register": {

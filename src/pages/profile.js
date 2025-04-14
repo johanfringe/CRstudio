@@ -1,4 +1,4 @@
-// src/pages/profile.js:
+// src/pages/profile.js :
 import React, { useState, useEffect, useMemo } from "react";
 import { graphql } from "gatsby";
 import { useTranslation } from "gatsby-plugin-react-i18next";
@@ -10,6 +10,7 @@ import PasswordStrengthMeter from "../components/PasswordStrengthMeter";
 
 import { supabase } from "../lib/supabaseClient";
 import { preloadZxcvbn, validatePassword } from "../utils/validatePassword";
+import { validateSubdomain, getSubdomainValidationSteps } from "@/utils/validateSubdomain";
 
 const Profile = () => {
   const { t } = useTranslation();
@@ -41,22 +42,25 @@ const Profile = () => {
 
   // 🔍 Afgeleide provider
   const [isEmailUser, setIsEmailUser] = useState(false);
+  const [subdomainError, setSubdomainError] = useState("");
+  const [subdomainStatus, setSubdomainStatus] = useState(null);
+  const [validationSteps, setValidationSteps] = useState({});
+  const [showChecklist, setShowChecklist] = useState(false);
 
   // 🧠 Haal sessie op
   useEffect(() => {
     supabase.auth.getSession().then(async ({ data }) => {
       const sessionUser = data?.session?.user;
       let userProvider = sessionUser?.app_metadata?.provider;
-  
+
       // 🔁 Fallback indien provider ontbreekt in sessie
       if (!userProvider && sessionUser?.id) {
         const { data: userData } = await supabase.auth.getUser();
         userProvider = userData?.user?.app_metadata?.provider;
       }
-  
+
       console.log("🔍 Gedetecteerde provider:", userProvider);
       setSession(data?.session || null);
-      // setIsEmailUser(userProvider === "email");
       setIsEmailUser(userProvider !== "google");
     });
   }, []);
@@ -104,6 +108,33 @@ const Profile = () => {
   }, [token, wasVerified, session]);
 
   // 🧼 Validatie helpers
+  useEffect(() => {
+    const trimmed = subdomain.trim();
+
+    if (trimmed.length === 0) {
+      setSubdomainStatus(null);
+      setSubdomainError("");
+      return;
+    }
+
+    const validationError = validateSubdomain(trimmed);
+
+    if (validationError) {
+      setSubdomainStatus("invalid");
+      setSubdomainError(t(validationError));
+      return;
+    }
+
+    setSubdomainStatus("checking");
+    setSubdomainError("");
+    checkSubdomainAvailability(trimmed);
+  }, [subdomain, t]);
+
+  const checkSubdomainAvailability = async (sub) => {
+    console.log("🔍 Controleer beschikbaarheid voor:", sub);
+    setSubdomainStatus("available");
+  };
+
   const nameRegex = /^[\p{L}\p{M}](?!.*[-'\s]{2})[\p{L}\p{M}\s'-]{0,38}[\p{L}\p{M}]$/u;
   const emojiRegex = /\p{Extended_Pictographic}/u;
 
@@ -198,7 +229,7 @@ const Profile = () => {
       }
 
       console.log("✅ Artist aangemaakt:", result);
-      window.location.href = `https://${subdomain}.crstudio.online/dashboard`;
+      window.location.href = `https://${subdomain}.crstudio.online/account`;
     } catch (err) {
       console.error("❌ Profielcreatie mislukt:", err.message);
       setFormError(err.message);
@@ -222,10 +253,15 @@ const Profile = () => {
                 alt={t("register.logo_alt")}
                 className="h-8 mx-auto"
               />
-              <h1 className="text-xl font-semibold mt-16">{t("profile.heading")}</h1>
+              <h1 className="text-xl font-semibold mt-16">
+                {t("profile.heading")}
+              </h1>
             </div>
-            <p className="text-sm text-center text-gray-600 mb-6">{t("profile.intro_text")}</p>
-
+  
+            <p className="text-sm text-center text-gray-600 mb-6">
+              {t("profile.intro_text")}
+            </p>
+  
             {tokenValid ? (
               <form onSubmit={handleFormSubmit} className="space-y-4">
                 {/* Voornaam */}
@@ -247,10 +283,12 @@ const Profile = () => {
                     className={`input ${firstNameError ? "input-error" : ""}`}
                   />
                   {firstNameError && (
-                    <p id="firstName-error" className="text-red-500 text-sm mt-1">{firstNameError}</p>
+                    <p id="firstName-error" className="text-red-500 text-xs mt-1">
+                      {firstNameError}
+                    </p>
                   )}
                 </div>
-
+  
                 {/* Familienaam */}
                 <div className="relative">
                   <Input
@@ -270,94 +308,158 @@ const Profile = () => {
                     className={`input ${lastNameError ? "input-error" : ""}`}
                   />
                   {lastNameError && (
-                    <p id="lastName-error" className="text-red-500 text-sm mt-1">{lastNameError}</p>
+                    <p id="lastName-error" className="text-red-500 text-xs mt-1">
+                      {lastNameError}
+                    </p>
                   )}
                 </div>
-
-                {/* Wachtwoord, Alleen voor e-mailgebruikers*/}
+  
+                {/* Wachtwoord, Alleen voor e-mailgebruikers */}
                 {isEmailUser && (
-                <div className="relative">
-                  <Input
-                    type="password"
-                    name="password"
-                    placeholder={t("profile.password_placeholder")}
-                    value={password}
-                    onFocus={preloadZxcvbn}
-                    onChange={async (e) => {
-                      const value = e.target.value;
-                      setPassword(value);
-                      setCheckingPassword(true);
-
-                      const zxcvbnLib = await import("zxcvbn");
-                      const { score } = zxcvbnLib.default(value);
-                      setPasswordScore(score);
-
-                      const error = await validatePassword(value, {
-                        email: session?.user?.email,
-                        name: firstName + lastName,
-                        subdomain,
-                      });
-                      setPasswordError(error);
-                      setCheckingPassword(false);
-                    }}
-                    className={`input w-full ${passwordError ? "border-red-500" : ""}`}
-                    aria-invalid={passwordError ? "true" : "false"}
-                    aria-describedby="password-error"
-                  />
-                  {password && <div className="mt-1"><PasswordStrengthMeter score={passwordScore} /></div>}
-                  {checkingPassword && <p className="text-sm text-gray-500 mt-1">{t("profile.checkingPassword")}...</p>}
-                  {passwordError && (
-                    <p id="password-error" className="text-red-500 text-sm mt-1">{t(passwordError)}</p>
-                  )}
-                </div>
+                  <div className="relative">
+                    <Input
+                      type="password"
+                      name="password"
+                      placeholder={t("profile.password_placeholder")}
+                      value={password}
+                      onFocus={preloadZxcvbn}
+                      onChange={async (e) => {
+                        const value = e.target.value;
+                        setPassword(value);
+                        setCheckingPassword(true);
+  
+                        const zxcvbnLib = await import("zxcvbn");
+                        const { score } = zxcvbnLib.default(value);
+                        setPasswordScore(score);
+  
+                        const error = await validatePassword(value, {
+                          email: session?.user?.email,
+                          name: firstName + lastName,
+                          subdomain,
+                        });
+                        setPasswordError(error);
+                        setCheckingPassword(false);
+                      }}
+                      className={`input w-full ${passwordError ? "border-red-500" : ""}`}
+                      aria-invalid={passwordError ? "true" : "false"}
+                      aria-describedby="password-error"
+                    />
+                    {password && (
+                      <div className="mt-1">
+                        <PasswordStrengthMeter score={passwordScore} />
+                      </div>
+                    )}
+                    {checkingPassword && (
+                      <p className="text-xs text-gray-500 mt-1">
+                        {t("profile.checkingPassword")}...
+                      </p>
+                    )}
+                    {passwordError && (
+                      <p id="password-error" className="text-red-500 text-xs mt-1">
+                        {t(passwordError)}
+                      </p>
+                    )}
+                  </div>
                 )}
-
+  
                 {/* Subdomein */}
                 <div className="my-6 flex items-center">
                   <hr className="flex-grow border-gray-300" />
-                  <span className="px-3 text-gray-700">{t("profile.subdomain_heading")}</span>
+                  <span className="px-3 text-gray-700">
+                    {t("profile.subdomain_heading")}
+                  </span>
                   <hr className="flex-grow border-gray-300" />
                 </div>
-                <p className="text-sm text-center text-gray-600 mb-6">{t("profile.subdomain_intro_text")}</p>
-                <div className="relative">
-                  <Input
-                    type="text"
-                    name="subdomain"
-                    placeholder={t("profile.subdomain_placeholder")}
-                    value={subdomain}
-                    onChange={(e) => setSubdomain(e.target.value)}
-                    className="input w-full pr-24"
-                  />
-                  <span className="absolute inset-y-0 right-4 flex items-center text-gray-600 text-sm">/crstudio.online</span>
+  
+                <p className="text-sm text-center text-gray-600 mb-6">
+                  {t("profile.subdomain_intro_text")}
+                </p>
+  
+                <div className="space-y-1">
+                  <div className="relative">
+                    <Input
+                      type="text"
+                      name="subdomain"
+                      placeholder={t("profile.subdomain_placeholder")}
+                      value={subdomain}
+                      onChange={(e) => {
+                        const val = e.target.value.toLowerCase(); // ⬅️ Forceer lowercase
+                        setSubdomain(val);
+                        setValidationSteps(getSubdomainValidationSteps(val));
+  
+                        // 👉 Checklist tonen zodra gebruiker typt
+                        setShowChecklist(val.length > 0);
+  
+                        const error = validateSubdomain(val);
+                        if (error) {
+                          setSubdomainStatus("invalid");
+                          setSubdomainError(t(error));
+                        } else {
+                          setSubdomainError("");
+                          setSubdomainStatus(null);
+                          checkSubdomainAvailability(val);
+                        }
+                      }}
+                      className={`input w-full pr-28 ${subdomainStatus === "invalid" ? "border-red-500" : ""}`}
+                    />
+                    <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600 text-sm pointer-events-none">
+                      /crstudio.online
+                    </span>
+                  </div>
+  
+                  {/* ✅/❌ lijst met live feedback */}
+                  {showChecklist && (
+                    <ul className="text-xs text-gray-600 mt-2 space-y-1">
+                      <li className={validationSteps.validChars ? "text-gray-400" : "text-red-500"}>
+                        {validationSteps.validChars ? "✔" : "✖"} {t("profile.subdomain_validation.validChars")}
+                      </li>
+                      <li className={validationSteps.correctLength ? "text-gray-400" : "text-red-500"}>
+                        {validationSteps.correctLength ? "✔" : "✖"} {t("profile.subdomain_validation.correctLength")}
+                      </li>
+                      <li className={validationSteps.startsCorrectly ? "text-gray-400" : "text-red-500"}>
+                        {validationSteps.startsCorrectly ? "✔" : "✖"} {t("profile.subdomain_validation.startsCorrectly")}
+                      </li>
+                      <li className={validationSteps.endsCorrectly ? "text-gray-400" : "text-red-500"}>
+                        {validationSteps.endsCorrectly ? "✔" : "✖"} {t("profile.subdomain_validation.endsCorrectly")}
+                      </li>
+                      <li className={validationSteps.notInBlocklist ? "text-gray-400" : "text-red-500"}>
+                        {validationSteps.notInBlocklist ? "✔" : "✖"} {t("profile.subdomain_validation.notInBlocklist")}
+                      </li>
+                    </ul>
+                  )}
                 </div>
-
-                {formError && <p className="text-red-500 text-sm">{formError}</p>}
+  
+                {formError && (
+                  <p className="text-red-500 text-sm">{formError}</p>
+                )}
                 <Button type="submit" disabled={loading} className="btn btn-primary w-full">
                   {loading ? t("profile.button_busy") : t("profile.button_submit")}
                 </Button>
               </form>
-            ) : (
-              <p className="text-red-500 text-center">{t(`profile.verify_error.${statusCode}`)}</p>
-            )}
+            ) : statusCode ? (
+              <p className="text-red-500 text-center">
+                {t(`profile.verify_error.${statusCode}`)}
+              </p>
+            ) : null}
           </div>
         </div>
       </SectionWrapper>
     </>
   );
 };
-
-export default Profile;
-
-export const query = graphql`
-  query($language: String!) {
-    locales: allLocale(filter: { language: { eq: $language } }) {
-      edges {
-        node {
-          ns
-          data
-          language
+  export default Profile;
+  
+  export const query = graphql`
+    query($language: String!) {
+      locales: allLocale(filter: { language: { eq: $language } }) {
+        edges {
+          node {
+            ns
+            data
+            language
+          }
         }
       }
     }
-  }
-`;
+  `;
+  

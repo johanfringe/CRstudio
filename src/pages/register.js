@@ -12,6 +12,7 @@ import SectionWrapper from "../components/SectionWrapper";
 const Register = () => {
   const { t } = useTranslation();
   const { language } = useI18next();
+
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -49,63 +50,59 @@ const Register = () => {
     loadTurnstileScript();
   }, []);
 
-// 🌍 Social Login handler
-const handleSocialLogin = async (provider) => {
-  try {
-    console.log(`🔗 Start social login met provider: ${provider}`);
-    setLoading(true);
-    setError("");
+  // 🌍 Social Login handler
+  const handleSocialLogin = async (provider) => {
+    try {
+      console.log(`🔗 Start social login met provider: ${provider}`);
+      setLoading(true);
+      setError("");
 
-    const redirectTo = `${window.location.origin}/${language}/profile`;
+      const redirectTo = `${window.location.origin}/${language}/profile`;
+      console.log("🔁 Instellen redirectTo voor fallback:", redirectTo);
 
-    console.log("🔁 Instellen redirectTo voor fallback:", redirectTo);
-
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider,
-      options: {
-        popup: true,
-        pkce: true,
-        redirectTo,
-        queryParams: {
-          access_type: "offline",
-          prompt: "consent",
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: {
+          popup: true,
+          pkce: true,
+          redirectTo,
+          queryParams: {
+            access_type: "offline",
+            prompt: "consent",
+          },
         },
-      },
-    });
+      });
 
-    console.log("📦 OAuth data:", data);
+      console.log("📦 OAuth data:", data);
 
-    if (error) {
-      console.error("❌ Social login fout:", error.message);
+      if (error) {
+        console.error("❌ Social login fout:", error.message);
 
-      // ⛔️ Speciale check voor popup-blokkades of sluiting
-      if (error.message.toLowerCase().includes("popup")) {
-        setError("Popup werd geblokkeerd of gesloten. Probeer opnieuw.");
-      } else {
-        setError(error.message);
+        if (error.message.toLowerCase().includes("popup")) {
+          setError("Popup werd geblokkeerd of gesloten. Probeer opnieuw.");
+        } else {
+          setError(error.message);
+        }
+
+        return;
       }
 
-      return;
+      const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+
+      if (sessionError || !sessionData.session) {
+        console.error("❌ Geen sessie gevonden na social login:", sessionError?.message);
+        setError("Er is een fout opgetreden bij het ophalen van de sessie.");
+        return;
+      }
+
+      console.log("✅ Supabase sessie succesvol:", sessionData.session);
+      navigate(`/${language}/profile`);
+    } catch (err) {
+      console.error("❌ Onverwachte fout bij social login:", err.message);
+    } finally {
+      setLoading(false);
     }
-
-    const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
-
-    if (sessionError || !sessionData.session) {
-      console.error("❌ Geen sessie gevonden na social login:", sessionError?.message);
-      setError("Er is een fout opgetreden bij het ophalen van de sessie.");
-      return;
-    }
-
-    console.log("✅ Supabase sessie succesvol:", sessionData.session);
-
-    navigate(`/${language}/profile`);
-  } catch (err) {
-    console.error("❌ Onverwachte fout bij social login:", err.message);
-    // setError() hier is overbodig en wordt bewust weggelaten
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   // 📩 Formulier submit handler voor e-mailregistratie
   const handleSubmit = async (e) => {
@@ -123,6 +120,7 @@ const handleSocialLogin = async (provider) => {
     }
 
     setLoading(true);
+
     try {
       console.log("📡 Versturen van registratieverzoek voor e-mail:", email);
       const response = await fetch("/api/register", {
@@ -135,7 +133,6 @@ const handleSocialLogin = async (provider) => {
       if (!response.ok) throw new Error(data.message);
 
       console.log("✅ Registratie succesvol:", data);
-
       alert(t("register.succes"));
     } catch (err) {
       console.error("❌ Registratiefout:", err.message);
@@ -146,66 +143,69 @@ const handleSocialLogin = async (provider) => {
   };
 
   return (
-  <>
-    <Seo 
-        title={t("register.seo_title", { defaultValue: t("seo.title") })} 
+    <>
+      <Seo
+        title={t("register.seo_title", { defaultValue: t("seo.title") })}
         description={t("register.seo_description", { defaultValue: t("seo.description") })}
       />
-    <SectionWrapper bgColor="bg-white">
-    <div className="min-h-screen flex mt-20 justify-center">
-    <div className="max-w-xs w-full mx-auto">
-      <div className="text-center mb-6">
-            <img
-              src="/images/CRlogo.jpg"
-              alt={t("register.logo_alt")}
-              className="h-8 mx-auto"
-            />
-            <h1 className="text-xl font-semibold mt-16">{t("register.heading")}</h1>
-      </div>
-      <p className="text-sm text-center text-gray-600 mb-6">
-        {t("register.intro_text")}
-      </p>
 
-      {/* 🟢 Social Login Sectie */}
-      <div className="flex flex-col space-y-3">
-        <Button
-          onClick={() => handleSocialLogin("google")}
-          className="flex items-center justify-center w-full border border-black input"
-        >
-        <img src="/icons/google.svg" alt="Google Logo" className="h-5 w-5 mr-2" />
-        {t("register.google_placeholder")}
-        </Button>
-      </div>
+      <SectionWrapper bgColor="bg-white">
+        <div className="min-h-screen flex mt-20 justify-center">
+          <div className="max-w-xs w-full mx-auto">
+            <div className="text-center mb-6">
+              <img
+                src="/images/CRlogo.jpg"
+                alt={t("register.logo_alt")}
+                className="h-8 mx-auto"
+              />
+              <h1 className="text-xl font-semibold mt-16">{t("register.heading")}</h1>
+            </div>
 
-      <div className="my-6 flex items-center">
-        <hr className="flex-grow border-gray-300" />
-        <span className="px-3 text-gray-700">{t("register.or")}</span>
-        <hr className="flex-grow border-gray-300" />
-      </div>
+            <p className="text-sm text-center text-gray-600 mb-6">
+              {t("register.intro_text")}
+            </p>
 
-      {/* 📩 E-mail registratieformulier */}
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <Input
-          type="email"
-          id="email"
-          name="email"
-          placeholder={t("register.email_placeholder")}
-          value={email}
-          onChange={(e) => setEmail(e.target.value.trim().toLowerCase())}
-          className="input w-full"
-        />
-        {error && <p className="text-red-500 text-sm">{error}</p>}
+            {/* 🟢 Social Login Sectie */}
+            <div className="flex flex-col space-y-3">
+              <Button
+                onClick={() => handleSocialLogin("google")}
+                className="flex items-center justify-center w-full border border-black input"
+              >
+                <img src="/icons/google.svg" alt="Google Logo" className="h-5 w-5 mr-2" />
+                {t("register.google_placeholder")}
+              </Button>
+            </div>
 
-        <div id="turnstile-container" className="w-full flex justify-center mt-2"></div>
+            <div className="my-6 flex items-center">
+              <hr className="flex-grow border-gray-300" />
+              <span className="px-3 text-gray-700">{t("register.or")}</span>
+              <hr className="flex-grow border-gray-300" />
+            </div>
 
-        <Button type="submit" disabled={loading} className="btn btn-primary w-full">
-          {loading ? t("register.button_busy") : t("register.button_register")}
-        </Button>
-      </form>
-    </div>
-    </div>
-    </SectionWrapper>
-  </>
+            {/* 📩 E-mail registratieformulier */}
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <Input
+                type="email"
+                id="email"
+                name="email"
+                placeholder={t("register.email_placeholder")}
+                value={email}
+                onChange={(e) => setEmail(e.target.value.trim().toLowerCase())}
+                className="input w-full"
+              />
+
+              {error && <p className="text-red-500 text-sm">{error}</p>}
+
+              <div id="turnstile-container" className="w-full flex justify-center mt-2"></div>
+
+              <Button type="submit" disabled={loading} className="btn btn-primary w-full">
+                {loading ? t("register.button_busy") : t("register.button_register")}
+              </Button>
+            </form>
+          </div>
+        </div>
+      </SectionWrapper>
+    </>
   );
 };
 
@@ -223,4 +223,4 @@ export const query = graphql`
       }
     }
   }
-`;  
+`;

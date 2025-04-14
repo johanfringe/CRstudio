@@ -32,5 +32,4 @@ module.exports = [
   { code: "ko", label: "한국어" },
   { code: "vi", label: "tiếng Việt" },
   { code: "ur", label: "اُردُو" },
-  { code: "zu", label: "English", default: true },
 ];

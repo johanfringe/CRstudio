@@ -22,19 +22,21 @@ if (typeof window !== "undefined") {
       Sentry.init({
         dsn,
         integrations: [new BrowserTracing(), new Replay()],
-        tracesSampleRate: isDev ? 1.0 : 0.1,  // quota te hoog, dan isDev ? 0.1 : 0.05,
-        replaysSessionSampleRate: isDev ? 1.0 : 0.0,  // quota te hoog, dan isDev ? 0.0 : 0.0,
-        replaysOnErrorSampleRate: 1.0, // ❗ Alleen op errors in prod
+        tracesSampleRate: isDev ? 0.0 : 0.0, // quota te hoog, dan isDev ? 0.1 : 0.05,
+        replaysSessionSampleRate: isDev ? 0.0 : 0.0, // quota te hoog, dan isDev ? 0.0 : 0.0,
+        replaysOnErrorSampleRate: isDev ? 0.0 : 1.0, // ❗ Alleen op errors in prod
         release: process.env.SENTRY_RELEASE || "unknown",
         beforeSend(event) {
-            if (isDev) { // null=niets, event=alles doorlaten
-              return event; // ... in dev
-            }
-            return event; // ... in productie
-          },
-          environment: isDev ? "development" : "production",
-          debug: isDev,
+          if (isDev) {
+            // null=niets, event=alles doorlaten
+            return event; // ... in dev
+          }
+          return event; // ... in productie
+        },
+        environment: isDev ? "development" : "production",
+        debug: isDev,
       });
+
       console.log("✅ [DEBUG] Sentry.init() succesvol uitgevoerd");
     } catch (error) {
       console.error("❌ [FOUT] Fout bij initialisatie van Sentry:", error);
@@ -77,16 +79,18 @@ export const onInitialClientRender = () => {
     }
 
     const supportedLangs = i18nConfig.supportedLngs;
-    const browserLangs = (Array.isArray(navigator.languages) && navigator.languages.length 
-      ? navigator.languages 
-      : [navigator.language ?? i18nConfig.fallbackLng]
+    const browserLangs = (
+      Array.isArray(navigator.languages) && navigator.languages.length
+        ? navigator.languages
+        : [navigator.language ?? i18nConfig.fallbackLng]
     ).filter(Boolean);
 
     console.log("🌐 Gedetecteerde browsertalen:", browserLangs);
 
-    const detectedLang = browserLangs
-      .map(lang => lang?.split("-")[0])
-      .find(lang => supportedLangs.includes(lang)) || i18nConfig.fallbackLng;
+    const detectedLang =
+      browserLangs
+        .map((lang) => lang?.split("-")[0])
+        .find((lang) => supportedLangs.includes(lang)) || i18nConfig.fallbackLng;
 
     const validStoredLang = storedLang && supportedLangs.includes(storedLang) ? storedLang : null;
     const finalLang = validStoredLang || detectedLang;
@@ -97,6 +101,7 @@ export const onInitialClientRender = () => {
         console.log(`🌍 Taal opgeslagen: ${finalLang}`);
       } catch (error) {
         console.warn("⚠️ localStorage niet toegankelijk. Fallback ingeschakeld.", error);
+
         const fallbackLang = navigator.language?.split("-")[0] || i18nConfig.fallbackLng;
 
         if (fallbackLang !== i18n.language) {

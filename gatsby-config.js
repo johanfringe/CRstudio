@@ -1,28 +1,28 @@
 // gatsby-config.js :
-//console.log("🔍 Gatsby Functions worden geladen...");
+// console.log("🔍 Gatsby Functions worden geladen...");
 
 require("dotenv-flow").config({
   path: `${__dirname}/content/settings`,
   silent: false, // Zorgt ervoor dat fouten worden gelogd als variabelen niet worden geladen
 });
 
-//console.log("✅ .env-bestanden geladen uit:", `${__dirname}/content/settings`);
-//console.log("🔑 Supabase URL:", process.env.GATSBY_SUPABASE_URL);
+// console.log("✅ .env-bestanden geladen uit:", `${__dirname}/content/settings`);
+// console.log("🔑 Supabase URL:", process.env.GATSBY_SUPABASE_URL);
 console.log("🔑 Supabase Service Role Key:", process.env.SUPABASE_SERVICE_ROLE_KEY ? "✔️ Loaded" : "❌ Not Loaded");
-//console.log("🔑 Turnstile Secret Key:", process.env.TURNSTILE_SECRET ? "✔️ Loaded" : "❌ Not Loaded");
-//console.log("🔑 Turnstile Site Key:", process.env.GATSBY_TURNSTILE_SITE_KEY);
-//console.log("🔑 Kickbox API Key:", process.env.KICKBOX_API_KEY);
-//console.log("🔑 Redis URL:", process.env.REDIS_URL);
-//console.log("🔑 Postmark API Key:", process.env.POSTMARK_API_KEY);
-//console.log("🔍 Verbinding maken met Redis...");
+// console.log("🔑 Turnstile Secret Key:", process.env.TURNSTILE_SECRET ? "✔️ Loaded" : "❌ Not Loaded");
+// console.log("🔑 Turnstile Site Key:", process.env.GATSBY_TURNSTILE_SITE_KEY);
+// console.log("🔑 Kickbox API Key:", process.env.KICKBOX_API_KEY);
+// console.log("🔑 Redis URL:", process.env.REDIS_URL);
+// console.log("🔑 Postmark API Key:", process.env.POSTMARK_API_KEY);
+// console.log("🔍 Verbinding maken met Redis...");
 
 const Sentry = require("@sentry/gatsby");
 
 const ENABLE_SENTRY = !!process.env.SENTRY_DSN;
 
 const i18nConfig = require("./src/i18n/i18nConfig");
-const languages = require('./src/locales/languages');
-const robotsConfig = require('./src/config/robots-config.json');
+const languages = require("./src/locales/languages");
+const robotsConfig = require("./src/config/robots-config.json");
 
 module.exports = {
   siteMetadata: {
@@ -42,8 +42,8 @@ module.exports = {
         release: process.env.SENTRY_RELEASE || "unknown",
         sourceMapsUploadOptions: {
           include: [
-            "./public",   // ✔️ sourcemaps van build
-            "./.cache"    // ✔️ gatsby cache & page-data
+            "./public",    // ✔️ sourcemaps van build
+            "./.cache",    // ✔️ gatsby cache & page-data
           ],
           ignore: ["node_modules", ".cache/dev-404-page"],
           validate: true,
@@ -54,9 +54,9 @@ module.exports = {
 
     // Gecombineerde configuratie voor gatsby-source-filesystem voor verschillende bronnen
     ...[
-      { name: "locales", path: `${__dirname}/src/locales` }, // Meertalige JSON-bestanden
-      { name: "utils", path: `${__dirname}/src/utils` }, // Seo
-      { name: "images", path: `${__dirname}/content/images` }, // Afbeeldingen
+      { name: "locales", path: `${__dirname}/src/locales` },            // Meertalige JSON-bestanden
+      { name: "utils", path: `${__dirname}/src/utils` },                // Seo
+      { name: "images", path: `${__dirname}/content/images` },         // Afbeeldingen
       { name: "texts", path: `${__dirname}/content/texts` },
     ].map(({ name, path }) => {
       return {
@@ -89,17 +89,20 @@ module.exports = {
         redirect: true,
       },
     },
+
     {
       resolve: "gatsby-plugin-sitemap",
       options: {
         output: "/sitemap.xml",
-        excludes: ['/admin/*', '/drafts/*', '/preview/*', '/private/*'],
+        excludes: ["/admin/*", "/drafts/*", "/preview/*", "/private/*"],
       },
     },
+
     {
       resolve: "gatsby-plugin-robots-txt",
-      options: robotsConfig
+      options: robotsConfig,
     },
+
     {
       resolve: `gatsby-plugin-manifest`, // Genereert naam en icoontje in de browser
       options: {
