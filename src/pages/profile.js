@@ -10,7 +10,7 @@ import PasswordStrengthMeter from "../components/PasswordStrengthMeter";
 
 import { supabase } from "../lib/supabaseClient";
 import { preloadZxcvbn, validatePassword } from "../utils/validatePassword";
-import { validateSubdomain, getSubdomainValidationSteps } from "@/utils/validateSubdomain";
+import { validateSubdomain, getSubdomainValidationSteps } from "../utils/validateSubdomain";
 
 const Profile = () => {
   const { t } = useTranslation();
