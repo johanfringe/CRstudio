@@ -20,17 +20,7 @@
   "stheader": {
     "logo_label": "Ga naar de startpagina",
     "logo_alt": "CR Studio Logo",
-    "trial": "Probeer gratis",
-    "menu": {
-      "overview": "Overzicht",
-      "feature": "Demo's",
-      "pricing": "Prijzen",
-      "faq": "Veelgestelde vragen"
-    },
-    "language": {
-      "toggle": "Taal wijzigen",
-      "current": "Huidige taal"
-    }
+    "trial": "Probeer gratis"
   },
 
   "footer": {
@@ -46,47 +36,31 @@
     "faq": "Veelgestelde vragen"
   },
 
-  "sections": {
-    "overview": {
-      "title": "Overzicht",
-      "description": "Dit is de overzichtssectie."
-    },
-    "feature": {
-      "title": "Demo's",
-      "description": "Dit is de demo-sectie."
-    },
-    "pricing": {
-      "title": "Prijzen",
-      "description": "Dit is de prijzensectie."
-    },
-    "faq": {
-      "title": "Veelgestelde vragen",
-      "description": "Dit is de FAQ-sectie."
-    }
-  },
-
   "auth": {
-    "passwordTooShort": "Je wachtwoord moet tussen 12 en 64 tekens bevatten",
-    "passwordOnlySpaces": "Je wachtwoord mag niet enkel uit spaties bestaan",
-    "passwordInvalidChars": "Je wachtwoord bevat ongeldige tekens",
-    "passwordTooWeak": "Je wachtwoord is te zwak, gebruik een langere zin of emoji",
-    "passwordLeaked": "Dit wachtwoord is eerder gelekt. Kies iets unieks.",
+    "passwordCheckFailed": "Er is een fout opgetreden bij de wachtwoordcontrole. Probeer later opnieuw.",
     "passwordIncludesPersonalInfo": "Je wachtwoord mag je naam, e-mailadres of subdomein niet bevatten",
-    "strength_very_weak": "Zeer zwak",
-    "strength_weak": "Zwak",
+    "passwordInvalidChars": "Je wachtwoord bevat ongeldige tekens",
+    "passwordLeaked": "Dit wachtwoord is eerder gelekt. Kies iets unieks.",
+    "passwordOnlySpaces": "Je wachtwoord mag niet enkel uit spaties bestaan",
+    "passwordTooShort": "Je wachtwoord moet tussen 12 en 64 tekens bevatten",
+    "passwordTooWeak": "Je wachtwoord is te zwak, gebruik een langere zin of emoji",
+    "passwordValidationError": "Er is een interne fout opgetreden tijdens de wachtwoordvalidatie.",
     "strength_fair": "Matig",
     "strength_good": "Goed",
     "strength_strong": "Sterk",
-    "subdomainInvalidLength": "Het subdomein moet tussen 5 en 63 tekens lang zijn.",
-    "subdomainInvalidFormat": "Het subdomein bevat ongeldige tekens of structuur.",
+    "strength_very_weak": "Zeer zwak",
+    "strength_weak": "Zwak",
     "subdomainBlocklist": "Dit subdomein is niet toegestaan.",
-    "subdomainTaken": "Dit subdomein is al in gebruik.",
-    "subdomainCheckError": "Fout bij controleren van beschikbaarheid."
+    "subdomainCheckError": "Fout bij controleren van beschikbaarheid.",
+    "subdomainInvalidFormat": "Het subdomein bevat ongeldige tekens of structuur.",
+    "subdomainInvalidLength": "Het subdomein moet tussen 5 en 63 tekens lang zijn.",
+    "subdomainInvalidStructure": "Het subdomein heeft een ongeldige structuur.",
+    "subdomainTaken": "Dit subdomein is al in gebruik."
 
   },
   
   "cta": {
-    "text": "Start gratis een proefperiode van 30 dagen\nGeen creditcard vereist"
+    "text": "Probeer 30 dagen de complete site\nGeen creditcard vereist"
   },
   
   "faq": {
@@ -183,7 +157,7 @@
   },
   
   "overview": {
-    "title": "Uw oeuvre / CR\n voor altijd online",
+    "title": "Bewaar jouw volledig oeuvre\n voor iedereen en altijd online",
     "description": "Spotgemakkelijk en spotgoedkoop\nZonder technische kennis\nContinu aan te vullen\nIn 3 talen uit 30 beschikbare talen\nIn een gepersonaliseerde layout"
   },
 
@@ -199,7 +173,6 @@
     "billed_monthly": "Maandelijkse betaling",
     "billed_annually": "Jaarlijkse betaling",
     "more_than_4000": "Meer dan 4.000 kunstwerken?",
-    "basic_plan_description": "Tot 1.000 kunstwerken",
     "other_services": "Kunnen we je helpen?",
     "offering": "Wij bieden professioneel het volgende aan:",
     "taxes": "Prices shown are exclusive of any applicable taxes such as VAT, added at checkout.",
@@ -214,210 +187,255 @@
     "button_32": "Omzetten van jouw gedrukte CR naar CRstudio",
     "button_33": "Migreren van jouw online CR naar CRstudio",
     "buy_now": "Start gratis, upgrade later!",
-    "try_free": "Probeer het 30 dagen gratis uit",
+    "try_free": "Probeer 30 dagen de complete site",
     "contact_us": "Contacteer ons",
     "email_subject": "Aanvraag gepersonaliseerde diensten",
     "email_body": "Beste team, ik ben geïnteresseerd in jullie gepersonaliseerde diensten. Kunnen jullie me meer info sturen?"
   },
   
-    "privacy": {
-      "seoTitle": "Privacyverklaring",
-      "seoDescription": "Lees hier hoe CRstudio jouw gegevens verwerkt en beveiligt.",
-      "pageDescription": "Pagina met privacybeleid",
-      "lastUpdated": "Laatste update: 10 april 2025",
-      "title": "Privacybeleid",
-      "intro": "In dit beleid leggen we uit hoe CRstudio omgaat met jouw persoonsgegevens, zowel als klant als eindgebruiker.",
-      "points": {
-        "1": {
-          "title": "1. Inleiding",
-          "text": "CRstudio hecht veel belang aan jouw privacy. We verwerken persoonsgegevens in overeenstemming met de GDPR en andere toepasselijke wetgeving."
-        },
-        "2": {
-          "title": "2. Verantwoordelijke",
-          "text": "CRstudio is de verwerkingsverantwoordelijke voor de persoonsgegevens die je via onze platformen verstrekt of aanmaakt."
-        },
-        "3": {
-          "title": "3. Doeleinden van verwerking",
-          "text": "We verzamelen enkel gegevens die nodig zijn voor het leveren van onze diensten, facturatie, support, veiligheid en verbetering van onze producten."
-        },
-        "4": {
-          "title": "4. Welke gegevens we verzamelen",
-          "text": "We verzamelen o.a. naam, e-mailadres, IP-adres, browsergegevens, CMS-gebruik, loginlogs, en gebruikersinteractie."
-        },
-        "5": {
-          "title": "5. Grondslagen voor verwerking",
-          "text": "We verwerken gegevens op basis van overeenkomst, toestemming, wettelijke verplichting en gerechtvaardigd belang."
-        },
-        "6": {
-          "title": "6. Delen met derden",
-          "text": "We delen geen persoonsgegevens met derden, tenzij dit nodig is voor de dienstverlening (bv. hosting, betalingen) of wettelijk vereist."
-        },
-        "7": {
-          "title": "7. Bewaartermijn",
-          "text": "We bewaren gegevens niet langer dan nodig. Verwijderde accounts worden binnen 90 dagen volledig gewist."
-        },
-        "8": {
-          "title": "8. Cookies en tracking",
-          "text": "We gebruiken alleen essentiële cookies en geanonimiseerde analytics. Geen trackingcookies van derden."
-        },
-        "9": {
-          "title": "9. Beveiliging",
-          "text": "We nemen passende technische en organisatorische maatregelen om jouw gegevens te beschermen tegen verlies, diefstal of misbruik."
-        },
-        "10": {
-          "title": "10. Jouw rechten",
-          "text": "Je hebt recht op inzage, correctie, verwijdering, beperking van verwerking, bezwaar en overdraagbaarheid van je gegevens."
-        },
-        "11": {
-          "title": "11. Internationale gegevensoverdracht",
-          "text": "CRstudio gebruikt uitsluitend datacenters binnen de EU of aanbieders met een adequaatheidsbesluit volgens GDPR."
-        },
-        "12": {
-          "title": "12. Contact & klachten",
-          "text": "Heb je vragen of klachten? Contacteer ons via privacy@crstudio.online of de Gegevensbeschermingsautoriteit."
-        }
+  "privacy": {
+    "seoTitle": "Privacyverklaring",
+    "seoDescription": "Lees hier hoe CRstudio jouw gegevens verwerkt en beveiligt.",
+    "pageDescription": "Pagina met privacybeleid",
+    "intro": "In dit beleid leggen we uit hoe CRstudio omgaat met jouw persoonsgegevens, zowel als klant als eindgebruiker.",
+    "lastUpdated": "Laatste update: 10 april 2025",
+    "title": "Privacybeleid",
+    "points": {
+      "1": {
+        "title": "1. Inleiding",
+        "text": "CRstudio hecht veel belang aan jouw privacy. We verwerken persoonsgegevens in overeenstemming met de GDPR en andere toepasselijke wetgeving."
+      },
+      "2": {
+        "title": "2. Verantwoordelijke",
+        "text": "CRstudio is de verwerkingsverantwoordelijke voor de persoonsgegevens die je via onze platformen verstrekt of aanmaakt."
+      },
+      "3": {
+        "title": "3. Doeleinden van verwerking",
+        "text": "We verzamelen enkel gegevens die nodig zijn voor het leveren van onze diensten, facturatie, support, veiligheid en verbetering van onze producten."
+      },
+      "4": {
+        "title": "4. Welke gegevens we verzamelen",
+        "text": "We verzamelen o.a. naam, e-mailadres, IP-adres, browsergegevens, CMS-gebruik, loginlogs, en gebruikersinteractie."
+      },
+      "5": {
+        "title": "5. Grondslagen voor verwerking",
+        "text": "We verwerken gegevens op basis van overeenkomst, toestemming, wettelijke verplichting en gerechtvaardigd belang."
+      },
+      "6": {
+        "title": "6. Delen met derden",
+        "text": "We delen geen persoonsgegevens met derden, tenzij dit nodig is voor de dienstverlening (bv. hosting, betalingen) of wettelijk vereist."
+      },
+      "7": {
+        "title": "7. Bewaartermijn",
+        "text": "We bewaren gegevens niet langer dan nodig. Verwijderde accounts worden binnen 90 dagen volledig gewist."
+      },
+      "8": {
+        "title": "8. Cookies en tracking",
+        "text": "We gebruiken alleen essentiële cookies en geanonimiseerde analytics. Geen trackingcookies van derden."
+      },
+      "9": {
+        "title": "9. Beveiliging",
+        "text": "We nemen passende technische en organisatorische maatregelen om jouw gegevens te beschermen tegen verlies, diefstal of misbruik."
+      },
+      "10": {
+        "title": "10. Jouw rechten",
+        "text": "Je hebt recht op inzage, correctie, verwijdering, beperking van verwerking, bezwaar en overdraagbaarheid van je gegevens."
+      },
+      "11": {
+        "title": "11. Internationale gegevensoverdracht",
+        "text": "CRstudio gebruikt uitsluitend datacenters binnen de EU of aanbieders met een adequaatheidsbesluit volgens GDPR."
+      },
+      "12": {
+        "title": "12. Contact & klachten",
+        "text": "Heb je vragen of klachten? Contacteer ons via privacy@crstudio.online of de Gegevensbeschermingsautoriteit."
       }
-    },  
+    }
+  },  
   
   "profile": {
     "seo_title": "Gratis proberen bij CRstudio",
     "seo_description": "Gratis CRstudio proberen voor een maand.",
-    "page_description": "xxxxxxxxx",
-    "logo_alt": "CRstudio Logo",
-    "heading": "Uw registratie is bevestigd",
-    "intro_text": "Vervolledig jouw registratie en maak onmiddellijk jouw site aan.",
+    "page_description": "Pagina om je gratis te registreren bij CRstudio",
+    "button_busy": "Aanmaken ...",
+    "button_submit": "Jouw site aanmaken",
+    "checkingPassword": "Wachtwoord wordt gecontroleerd",
     "first_name_placeholder": "Jouw voornaam",
     "first_name_invalid": "2 tot 50 karakters, geen cijfers of symbolen.",
+    "heading": "Uw registratie is bevestigd",
+    "intro_text": "Vervolledig jouw registratie en maak onmiddellijk jouw site aan.",
     "last_name_placeholder": "Jouw achternaam",
     "last_name_invalid": "2 tot 50 karakters, geen cijfers of symbolen.",
+    "logo_alt": "CRstudio Logo",
     "password_placeholder": "Wachtwoord",
     "password_update_failed": "Wachtwoord instellen mislukt",
+    "session_error": "Je sessie is verlopen of ongeldig.",
     "subdomain_heading": "Subdomein",
     "subdomain_intro_text": "Het subdomein is wellicht voornaam+naam zoals pablopicasso of pablo-picasso. Je kunt later een eigen domeinnaam aan de site koppelen zoals pablopicasso.com.",
     "subdomain_placeholder": "Subdomein",
-    "button_busy": "Aanmaken ...",
-    "button_submit": "Jouw site aanmaken",
-    "session_error": "Je sessie is verlopen of ongeldig.",
-    "checkingPassword": "Wachtwoord wordt gecontroleerd",
-    "verify_error": {
-      "CREATE_USER_FAILED": "CREATE_USER_FAILED: Er is iets fout gegaan bij het aanmaken van je account.",
-      "DUPLICATE_EMAIL": "DUPLICATE_EMAIL: Dit e-mailadres is al geregistreerd.",
-      "INTERNAL_ERROR": "INTERNAL_ERROR: Er is iets misgegaan. Probeer het opnieuw.",
-      "INTERNAL_EXCEPTION": "INTERNAL_EXCEPTION: Er is een onverwachte fout opgetreden.",
-      "INVALID_RPC_RESPONSE": "INVALID_RPC_RESPONSE: Ongeldig antwoord van de server.",
-      "METHOD_NOT_ALLOWED": "METHOD_NOT_ALLOWED: Deze methode is niet toegestaan.",
-      "NO_TOKEN": "NO_TOKEN: Geen verificatietoken gevonden in de URL.",
-      "RPC_FAILED": "RPC_FAILED: Er ging iets fout bij de serververificatie.",
-      "TOKEN_REQUIRED": "TOKEN_REQUIRED: Geen token meegegeven.",
-      "TOKEN_INVALID": "TOKEN_INVALID: Deze verificatielink is ongeldig.",
-      "TOKEN_EXPIRED": "TOKEN_EXPIRED: De verificatielink is verlopen. Vraag een nieuwe aan.",
-      "UNKNOWN_CODE": "UNKNOWN_CODE: Onbekende foutcode ontvangen van de server."
+    "actions": {
+      "register": "Registreer opnieuw",
+      "login": "Log in"
+    },
+    "resend": {
+      "cooldown": "Wacht nog",
+      "cta": "Verzend verificatie-e-mail opnieuw",
+      "failed": "Het verzenden is mislukt. Probeer later opnieuw.",
+      "loading": "Verzenden...",
+      "success": "Een nieuwe verificatielink is verzonden naar je e-mail!",
+      "no_email": "E-mailadres onbekend. Registreer opnieuw."
     },
     "subdomain_validation": {
-    "validChars": "Alleen kleine letters, cijfers of ‘-’",
-    "correctLength": "Tussen 5 en 63 tekens",
-    "startsCorrectly": "Begint met een letter of cijfer",
-    "endsCorrectly": "Eindigt met een letter of cijfer",
-    "notInBlocklist": "Geen gereserveerd of verboden subdomein"
-  }
+      "validChars": "Alleen kleine letters, cijfers of ‘-’",
+      "correctLength": "Tussen 5 en 63 tekens",
+      "startsCorrectly": "Begint met een letter of cijfer",
+      "endsCorrectly": "Eindigt met een letter of cijfer",
+      "notInBlocklist": "Geen gereserveerd of verboden subdomein"
+    },
+    "verify_error": {
+      "EMAIL_DUPLICATE": "Je account bestaat al. Probeer in te loggen.",
+      "EMAIL_INVALID": "Ongeldig e-mailadres. Controleer je invoer.",
+      "EMAIL_SEND_AGAIN": "De verificatie-e-mail is opnieuw verzonden. Controleer je inbox.",
+      "EMAIL_SEND_FAILED_AGAIN": "De verificatie-e-mail kon finaal niet worden verzonden.",
+      "EMAIL_VERIFIED": "Je e-mailadres is succesvol geverifieerd!",
+      "FETCH_FAILED": "Er trad een fout op bij het ophalen van je gegevens. Probeer opnieuw.",
+      "INTERNAL_ERROR": "Interne fout. Probeer opnieuw.",
+      "INTERNAL_EXCEPTION": "Er is iets misgegaan aan onze kant. Probeer het later opnieuw.",
+      "INVALID_SESSION": "Je sessie is ongeldig of verlopen.",
+      "INSERT_FAILED": "Kon profiel niet opslaan.",
+      "METHOD_NOT_ALLOWED": "Deze actie is niet toegestaan.",
+      "PROFILE_CREATED": "Profiel succesvol aangemaakt!",
+      "RATE_LIMIT": "Je hebt te vaak geprobeerd. Wacht even voordat je het opnieuw probeert.",
+      "REDIS_UNAVAILABLE": "Tijdelijke fout. Probeer het later opnieuw.",
+      "RPC_FAILED": "De server kon de verificatiefunctie niet uitvoeren. Probeer later opnieuw.",
+      "RPC_RESPONSE_INVALID": "Er is een fout opgetreden bij het verwerken van de verificatie. contacteer ons supportteam.",
+      "SERVER_ERROR": "Er ging iets mis. Probeer het later opnieuw.",
+      "SUBDOMAIN_CHECK_FAILED": "Fout bij het controleren van het subdomein.",
+      "SUBDOMAIN_TAKEN": "Dit subdomein is al in gebruik.",
+      "TOKEN_EXPIRED": "Deze link is verlopen. Vraag een nieuwe verificatie aan.",
+      "TOKEN_INVALID": "Deze verificatielink is ongeldig.",
+      "TOKEN_MISSING": "Authenticatie token ontbreekt.",
+      "TOKEN_NOT_FOUND": "Geen token of sessie gevonden.",
+      "TOKEN_REQUIRED": "Geen token meegegeven.",
+      "TOKEN_UPDATE_FAILED": "Fout bij vernieuwen van token. Probeer opnieuw.",
+      "UNKNOWN_ERROR": "Er is een onbekende fout opgetreden. Probeer opnieuw of contacteer ons supportteam.",
+      "USER_CREATION_FAILED": "Er is iets fout gegaan bij het aanmaken van je account.",
+      "USER_NOT_FOUND": "E-mailadres onbekend. Registreer opnieuw."
+    }
   },
 
   "register": {
     "seo_title": "Gratis proberen bij CRstudio",
     "seo_description": "Gratis CRstudio proberen voor een maand.",
-    "page_description": "xxxxxxxxx",
-    "logo_alt": "CRstudio Logo",
-    "heading": "Welkom bij CRstudio",
-    "intro_text": "Maak gratis jouw site. Geen creditcard nodig. Je kunt later altijd upgraden naar een betaald abonnement.",
-    "google_placeholder": "Doorgaan met Google",
-    "or": "OF",
-    "email_placeholder": "E-mailadres",
-    "email_invalid": "Ongeldig e-mailformaat",
+    "page_description": "Pagina om je gratis te registreren bij CRstudio",
+    "account_exists_subdomain": "Je hebt al een subdomein-site.",
+    "account_exists_no_subdomain": "Je hebt al een account, maar moet je profiel nog vervolledigen.",
     "button_busy": "Registeren ...",
     "button_register": "Registreren",
     "check": "Gelieve de beveiligingscontrole te voltooien",
-    "succes": "Succes! Controleer uw e-mail voor de verificatielink!"
-  },
-  
-  "subscription-signup": {
-    "seo_title": "Inschrijven bij CRstudio",
-    "seo_description": "Een abonnement kopen op CRstudio.",
-    "page_description": "xxxxxxxxx"
+    "complete_profile": "Vervolledig je profiel",
+    "duplicate_needs_verification": "Je hebt al een account. Klik op de link in je e-mail om verder te gaan.",
+    "email_invalid": "Ongeldig e-mailformaat",
+    "email_placeholder": "E-mailadres",
+    "go_to_site": "Ga naar je site",
+    "google_placeholder": "Doorgaan met Google",
+    "heading": "Welkom bij CRstudio",
+    "intro_text": "Maak gratis jouw site. Geen creditcard nodig. Je kunt later altijd upgraden naar een betaald abonnement.",
+    "logo_alt": "CRstudio Logo",
+    "or": "OF",
+    "profile_check_failed": "Er is iets misgegaan bij het controleren van je profiel. Probeer het later opnieuw of contacteer ons supportteam.",
+    "resend_verification": "Verzend opnieuw verificatiemail",
+    "social_login_failed": "Er is iets misgegaan tijdens het aanmelden met Google. Probeer opnieuw of gebruik e-mailregistratie.",
+    "succes": "Succes! Controleer uw e-mail voor de verificatielink!",
+    "verify_error": {
+      "ALREADY_REGISTERED": "Je bent al geregistreerd, maar nog niet geverifieerd. Controleer je e-mail.",
+      "AUTH_CHECK_FAILED": "Er ging iets mis bij het controleren van je account.",
+      "EMAIL_DUPLICATE": "Dit e-mailadres bestaat al (in Supabase Auth). Je bent al geregistreerd.",
+      "EMAIL_INVALID": "Dit e-mailadres is ongeldig of niet leverbaar.",
+      "EMAIL_SEND": "De verificatie-e-mail is succesvol verzonden. Controleer je inbox.",
+      "EMAIL_SEND_FAILED": "De verificatiemail kon niet verzonden worden. Probeer opnieuw.",
+      "INSERT_FAILED": "Fout bij opslaan van je registratie. Probeer opnieuw.",
+      "KICKBOX_FAILED": "Fout bij het controleren van je e-mailadres. Probeer later opnieuw.",
+      "METHOD_NOT_ALLOWED": "Deze actie is niet toegestaan.",
+      "MISSING_FIELDS": "E-mailadres of beveiligingscontrole ontbreekt.",
+      "RATE_LIMIT": "Je hebt te vaak geprobeerd. Wacht even voordat je het opnieuw probeert.",
+      "TURNSTILE_FAILED": "De beveiligingscontrole is mislukt. Probeer opnieuw.",
+      "UNKNOWN_ERROR": "Er is een onbekende fout opgetreden. Probeer opnieuw of contacteer ons supportteam."
+    }
   },
 
-    "terms": {
-      "seoTitle": "Algemene Voorwaarden",
-      "seoDescription": "Lees hier onze algemene voorwaarden.",
-      "pageDescription": "Algemene Voorwaarden Pagina",
-      "lastUpdated": "Laatst bijgewerkt: 10 april 2025",
-      "title": "Algemene Voorwaarden",
-      "intro": "Deze voorwaarden zijn van toepassing op alle producten en diensten van CRstudio. Door gebruik te maken van onze diensten, ga je akkoord met deze voorwaarden.",
-      "points": {
-        "1": {
-          "title": "1. Introductie",
-          "text": "Deze algemene voorwaarden (\"Voorwaarden\") regelen het gebruik van alle producten en diensten van CRstudio. Door gebruik te maken van onze diensten, ga je akkoord met deze Voorwaarden, de bijlagen (Productvoorwaarden), en de Verwerkersovereenkomst (DPA)."
-        },
-        "2": {
-          "title": "2. Begripsbepalingen",
-          "text": "CRstudio verwijst naar de SaaS-dienstverlener die het CMS, hosting, preview tools en e-commerce-oplossingen aanbiedt. Een Product is een abonnementsgebaseerde dienst (bijv. website, database, preview, e-commerce). Content = materiaal (afbeeldingen, tekst, bestanden) dat door de klant of eindgebruikers wordt toegevoegd. Gebruiker = klant van CRstudio of diens eindgebruikers."
-        },
-        "3": {
-          "title": "3. Toegang en registratie",
-          "text": "Om gebruik te maken van bepaalde diensten moet je je registreren en correcte, actuele informatie verstrekken. Je bent verantwoordelijk voor de veiligheid van je account."
-        },
-        "4": {
-          "title": "4. Gebruik van de diensten",
-          "text": "Je mag onze diensten niet gebruiken voor illegale of ongepaste doeleinden. Je bent verantwoordelijk voor de inhoud die je toevoegt en beheert."
-        },
-        "5": {
-          "title": "5. Verantwoordelijkheid van de gebruiker",
-          "text": "Jij bent verantwoordelijk voor jouw eigen gegevens, gebruikers en inhoud. Wij behouden ons het recht voor om inhoud die in strijd is met onze richtlijnen te verwijderen."
-        },
-        "6": {
-          "title": "6. Betaling en abonnementen",
-          "text": "CRstudio werkt met maandelijkse of jaarlijkse abonnementen. Betalingen verlopen via Stripe. Bij laattijdige betaling kan toegang tot de dienst worden opgeschort."
-        },
-        "7": {
-          "title": "7. Proefperiode",
-          "text": "Nieuwe gebruikers krijgen toegang tot een proefperiode van 30 dagen. Bij het einde van de proefperiode is betaling vereist om verder gebruik te maken van het platform."
-        },
-        "8": {
-          "title": "8. Beëindiging",
-          "text": "Zowel jij als CRstudio kunnen het gebruik van de diensten beëindigen. In geval van misbruik of schending van de voorwaarden kan je account onmiddellijk worden beëindigd."
-        },
-        "9": {
-          "title": "9. Privacy en gegevensbescherming",
-          "text": "Je gegevens worden verwerkt conform onze Privacyverklaring en de Verwerkersovereenkomst (DPA)."
-        },
-        "10": {
-          "title": "10. Intellectuele eigendom",
-          "text": "De broncode, ontwerpen en templates blijven eigendom van CRstudio. Je krijgt een gebruikslicentie zolang je een geldig abonnement hebt."
-        },
-        "11": {
-          "title": "11. Beperkingen van aansprakelijkheid",
-          "text": "CRstudio is niet aansprakelijk voor indirecte schade, verlies van gegevens of winst, tenzij dwingend wettelijk bepaald."
-        },
-        "12": {
-          "title": "12. Wijzigingen van voorwaarden",
-          "text": "CRstudio mag deze voorwaarden aanpassen. Je wordt hiervan op de hoogte gebracht en bij voortgezet gebruik ga je akkoord met de aangepaste voorwaarden."
-        },
-        "13": {
-          "title": "13. Toepasselijk recht",
-          "text": "Deze voorwaarden vallen onder het Belgisch recht. Geschillen worden behandeld door de rechtbanken van Gent, België."
-        },
-        "14": {
-          "title": "14. Contact",
-          "text": "Voor vragen over deze voorwaarden kan je ons contacteren via legal@crstudio.online."
-        }
+  "terms": {
+    "seoTitle": "Algemene Voorwaarden",
+    "seoDescription": "Lees hier onze algemene voorwaarden.",
+    "pageDescription": "Algemene Voorwaarden Pagina",
+    "lastUpdated": "Laatst bijgewerkt: 10 april 2025",
+    "title": "Algemene Voorwaarden",
+    "intro": "Deze voorwaarden zijn van toepassing op alle producten en diensten van CRstudio. Door gebruik te maken van onze diensten, ga je akkoord met deze voorwaarden.",
+    "points": {
+      "1": {
+        "title": "1. Introductie",
+        "text": "Deze algemene voorwaarden (\"Voorwaarden\") regelen het gebruik van alle producten en diensten van CRstudio. Door gebruik te maken van onze diensten, ga je akkoord met deze Voorwaarden, de bijlagen (Productvoorwaarden), en de Verwerkersovereenkomst (DPA)."
+      },
+      "2": {
+        "title": "2. Begripsbepalingen",
+        "text": "CRstudio verwijst naar de SaaS-dienstverlener die het CMS, hosting, preview tools en e-commerce-oplossingen aanbiedt. Een Product is een abonnementsgebaseerde dienst (bijv. website, database, preview, e-commerce). Content = materiaal (afbeeldingen, tekst, bestanden) dat door de klant of eindgebruikers wordt toegevoegd. Gebruiker = klant van CRstudio of diens eindgebruikers."
+      },
+      "3": {
+        "title": "3. Toegang en registratie",
+        "text": "Om gebruik te maken van bepaalde diensten moet je je registreren en correcte, actuele informatie verstrekken. Je bent verantwoordelijk voor de veiligheid van je account."
+      },
+      "4": {
+        "title": "4. Gebruik van de diensten",
+        "text": "Je mag onze diensten niet gebruiken voor illegale of ongepaste doeleinden. Je bent verantwoordelijk voor de inhoud die je toevoegt en beheert."
+      },
+      "5": {
+        "title": "5. Verantwoordelijkheid van de gebruiker",
+        "text": "Jij bent verantwoordelijk voor jouw eigen gegevens, gebruikers en inhoud. Wij behouden ons het recht voor om inhoud die in strijd is met onze richtlijnen te verwijderen."
+      },
+      "6": {
+        "title": "6. Betaling en abonnementen",
+        "text": "CRstudio werkt met maandelijkse of jaarlijkse abonnementen. Betalingen verlopen via Stripe. Bij laattijdige betaling kan toegang tot de dienst worden opgeschort."
+      },
+      "7": {
+        "title": "7. Proefperiode",
+        "text": "Nieuwe gebruikers krijgen toegang tot een proefperiode van 30 dagen. Bij het einde van de proefperiode is betaling vereist om verder gebruik te maken van het platform."
+      },
+      "8": {
+        "title": "8. Beëindiging",
+        "text": "Zowel jij als CRstudio kunnen het gebruik van de diensten beëindigen. In geval van misbruik of schending van de voorwaarden kan je account onmiddellijk worden beëindigd."
+      },
+      "9": {
+        "title": "9. Privacy en gegevensbescherming",
+        "text": "Je gegevens worden verwerkt conform onze Privacyverklaring en de Verwerkersovereenkomst (DPA)."
+      },
+      "10": {
+        "title": "10. Intellectuele eigendom",
+        "text": "De broncode, ontwerpen en templates blijven eigendom van CRstudio. Je krijgt een gebruikslicentie zolang je een geldig abonnement hebt."
+      },
+      "11": {
+        "title": "11. Beperkingen van aansprakelijkheid",
+        "text": "CRstudio is niet aansprakelijk voor indirecte schade, verlies van gegevens of winst, tenzij dwingend wettelijk bepaald."
+      },
+      "12": {
+        "title": "12. Wijzigingen van voorwaarden",
+        "text": "CRstudio mag deze voorwaarden aanpassen. Je wordt hiervan op de hoogte gebracht en bij voortgezet gebruik ga je akkoord met de aangepaste voorwaarden."
+      },
+      "13": {
+        "title": "13. Toepasselijk recht",
+        "text": "Deze voorwaarden vallen onder het Belgisch recht. Geschillen worden behandeld door de rechtbanken van Gent, België."
+      },
+      "14": {
+        "title": "14. Contact",
+        "text": "Voor vragen over deze voorwaarden kan je ons contacteren via legal@crstudio.online."
       }
-    },
+    }
+  },
   
   "testi": {
     "testimonial_title": "Zij vertrouwen op CRstudio om kunstwerken te behouden en te beschermen",
-    "feature_1": "Een krachtige en eenvoudige tool om mijn volledig oeuvre te tonen aan verzamelaars, curatoren en kunsthistorici.",
+    "feature_1": "Een krachtige, eenvoudige en veilige tool om mijn volledig oeuvre te tonen aan verzamelaars, galeriehouders, curatoren en kunsthistorici.",
     "feature_2": "Eindelijk kan ik het werk van mijn grootvader goedkoop bewaren en bewaken voor toekomstige generaties",
-    "feature_3": "Een uiterst efficiënte manier om de nalatenschap van een kunstenaar te documenteren en te beschermen tegen vervalsingen.",
-    "feature_4": "Een zeer waardevol instrument die de reputatie en de waarde van een kunstenaar verhoogt.",
+    "feature_3": "Een uiterst efficiënte manier om de artistieke nalatenschap van een kunstenaar te documenteren en te archiveren.",
+    "feature_4": "Een zeer professioneel instrument dat de reputatie, waarde en erkenning van een kunstenaar verhoogt.",
     "client_1": "Paul, kunstenaar",
     "client_2": "Emma, erfgename van een beeldhouwer",
     "client_3": "Jean, kunstarchivaris",

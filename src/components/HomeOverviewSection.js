@@ -25,7 +25,7 @@ const OverviewSection = () => {
           end: "bottom top", // ✅ Verdwijnt volledig zodra het uit beeld is
           scrub: true,
           onUpdate: (self) => {
-            console.log(`🌍 Scroll progress: ${self.progress.toFixed(2)}`);
+            console.log("🌍 Scroll progress", { progress: self.progress.toFixed(2) });
           },
         },
       });

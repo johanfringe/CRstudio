@@ -39,7 +39,7 @@ const features = [
 ];
 
 const HomeFeatureSection = () => {
-  console.log("Rendering [componentnaam]", Date.now());  // 🚀 Debugging
+  console.log("Rendering [componentnaam]", Date.now());
 
   const { t } = useTranslation();
   const sectionsRef = useRef([]); // ✅ Array refs voor GSAP

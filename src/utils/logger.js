@@ -13,21 +13,22 @@ export const warn = (...args) => {
 // ✅ Altijd zichtbaar, logt naar console én Sentry indien actief
 export const error = (message, details = {}) => {
   console.error(message, details);
-  if (typeof Sentry?.captureException === "function") {
-    Sentry.captureException(new Error(message), {
-      extra: {
-        ...details,
-        lang: getLang(),
-        subdomain: getSubdomain(),
-      },
+
+  if (typeof Sentry !== "undefined" && Sentry?.captureMessage) {
+    Sentry.captureMessage(message, {
+      extra: details,
+      level: "error",
     });
   }
 };
 
-// ✅ Specifieke wrapper voor API-fouten
+// ✅ Specifieke wrapper voor API-fouten (valt veilig terug als response ontbreekt)
 export const captureApiError = (endpoint, response, extra = {}) => {
-  const message = `❌ API-fout bij ${endpoint}: ${response.status} ${response.statusText}`;
-  error(message, { response, ...extra });
+  const status = response?.status ?? "NO_RESPONSE";
+  const statusText = response?.statusText ?? "Geen response beschikbaar";
+
+  const message = `❌ API-fout bij ${endpoint}: ${status} ${statusText}`;
+  error(message, { response, ...extra, status, statusText });
 };
 
 // ✅ Manuele testfout voor Sentry-test

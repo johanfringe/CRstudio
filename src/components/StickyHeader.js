@@ -51,11 +51,11 @@ const StickyHeader = ({ sections }) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setActiveSection(entry.target.id);
-            console.log(`🌍 Actieve sectie: ${entry.target.id}`); // ✅ Debugging
+            console.log("🌍 Actieve sectie", { id: entry.target.id });
           }
         });
       },
-      { rootMargin: "-50% 0px -50% 0px", threshold: 0.3 } // ✅ Lagere threshold voor betere detectie
+      { rootMargin: "-50% 0px -50% 0px", threshold: 0.3 }
     );
 
     const observedSections = sections
@@ -166,7 +166,7 @@ const StickyHeader = ({ sections }) => {
             </li>
             <li className="py-2">
               <GatsbyLink to="/register" className="btn btn-primary" onClick={() => setIsMenuOpen(false)}>
-                {t("stheader.register")}
+                {t("stheader.trial")}
               </GatsbyLink>
             </li>
           </motion.ul>

@@ -1,9 +1,7 @@
 // src/api/verify-email.js :
 import { createClient } from "@supabase/supabase-js";
 import crypto from "crypto";
-
-console.log("🔑 Supabase URL:", process.env.GATSBY_SUPABASE_URL);
-console.log("🔑 Supabase Service Role Key:", process.env.SUPABASE_SERVICE_ROLE_KEY ? "✔️ Loaded" : "❌ Not Loaded");
+import { log, warn, error, captureApiError } from "../utils/logger";
 
 const supabase = createClient(
   process.env.GATSBY_SUPABASE_URL,
@@ -12,47 +10,37 @@ const supabase = createClient(
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    console.warn("⛔️ Verkeerde methode:", req.method);
-    res.setHeader("Allow", ["POST"]);
-    return res.status(405).json({ success: false, code: "METHOD_NOT_ALLOWED" });
+    warn("⛔ Onjuiste methode voor verify-email", { method: req.method });
+    return res.status(405).json({ code: "METHOD_NOT_ALLOWED" });
   }
 
   const { token } = req.body;
 
-  console.log("📥 Ontvangen body:", req.body);
-
   if (!token) {
-    console.warn("⚠️ Geen token meegegeven.");
-    return res.status(400).json({ success: false, code: "TOKEN_REQUIRED" });
+    warn("⚠️ Geen token ontvangen in body");
+    return res.status(400).json({ code: "TOKEN_REQUIRED" });
   }
 
-  console.log("🔍 Start verificatieproces voor token:", token, "| lengte:", token.length);
-
   try {
-    const { data, error } = await supabase.rpc("verify_user_token", { _token: token });
+    const { data, error: rpcError } = await supabase.rpc("verify_user_token", { _token: token });
 
-    console.log("↩️ Supabase RPC response – data:", JSON.stringify(data, null, 2));
-    console.log("↩️ Supabase RPC response – error:", error);
-
-    if (error) {
-      console.error("❌ RPC-call mislukt:", error.message, error);
-      return res.status(500).json({ success: false, code: "RPC_FAILED", details: error.message });
+    if (rpcError) {
+      error("❌ Supabase RPC 'verify_user_token' faalt", { rpcError });
+      return res.status(500).json({ code: "RPC_FAILED", details: rpcError.message });
     }
 
     if (!data || typeof data !== "object" || !data.code) {
-      console.error("⚠️ Ongeldige response van verify_user_token:", data);
-      return res.status(500).json({ success: false, code: "INVALID_RPC_RESPONSE", details: data });
+      error("⚠️ Ongeldig antwoord van RPC-functie", { data });
+      return res.status(500).json({ code: "RPC_RESPONSE_INVALID", details: data });
     }
 
     const { code, email, details } = data;
-
-    console.log("🧾 Ontvangen verificatieresultaat:", { code, email, details });
+    log("🔍 Verificatie status ontvangen", { code, email });
 
     switch (code) {
-      case "EMAIL_VERIFIED":
-        console.log(`✅ E-mail geverifieerd voor: ${email}`);
+      case "EMAIL_VERIFIED": {
         const randomPassword = crypto.randomBytes(12).toString("base64");
-        console.log("🔐 Willekeurig wachtwoord gegenereerd voor Supabase:", randomPassword); // in productie verwijderen
+        log("📧 Email geverifieerd, gebruiker wordt aangemaakt", { email });
 
         const { data: createdUser, error: createError } = await supabase.auth.admin.createUser({
           email,
@@ -60,62 +48,44 @@ export default async function handler(req, res) {
           email_confirm: true,
         });
 
-        console.log("📦 createUser() response – data:", createdUser);
-        console.log("📦 createUser() response – error:", createError);
-
         if (createError) {
           const isDuplicate = createError.message?.toLowerCase().includes("duplicate");
-          console.warn("⚠️ createUser foutmelding:", createError.message);
-
           if (isDuplicate) {
-            console.warn("🟡 Dubbele e-mail gedetecteerd tijdens createUser:", email);
-            return res.status(409).json({ success: false, code: "DUPLICATE_EMAIL" });
+            warn("⚠️ E-mailadres bestaat al in auth.users", { email });
+            return res.status(409).json({ code: "EMAIL_DUPLICATE" });
           }
-
-          return res.status(500).json({
-            success: false,
-            code: "CREATE_USER_FAILED",
-            details: createError.message,
-          });
+          error("❌ createUser() faalde", { createError });
+          return res.status(500).json({ code: "USER_CREATION_FAILED", details: createError.message });
         }
 
-        console.log("✅ Supabase user succesvol aangemaakt:", createdUser);
-        return res.status(200).json({ success: true, code, email });
+        log("✅ Gebruiker succesvol aangemaakt", {
+          id: createdUser?.user?.id,
+          email,
+        });        
+        return res.status(200).json({ code: "EMAIL_VERIFIED", email });
+      }
 
       case "TOKEN_NOT_FOUND":
-        console.warn("🔍 Token niet gevonden.");
-        return res.status(400).json({ success: false, code });
-
       case "TOKEN_EXPIRED":
-        console.warn("⏰ Token is verlopen.");
-        return res.status(400).json({ success: false, code });
-
       case "TOKEN_INVALID":
-        console.warn("🚫 Token is ongeldig.");
-        return res.status(400).json({ success: false, code });
+        warn("⚠️ Ongeldige of verlopen token", { code, token });
+         return res.status(400).json({ code });
 
-      case "DUPLICATE_EMAIL":
-        console.warn("⚠️ Dubbele e-mail gedetecteerd in RPC-response.");
-        return res.status(409).json({ success: false, code });
+      case "EMAIL_DUPLICATE":
+        warn("⚠️ Email bestaat al in auth.users", { email });
+        return res.status(409).json({ code });
 
       case "INTERNAL_ERROR":
-        console.error("💥 Interne fout in RPC:", details);
-        return res.status(500).json({ success: false, code, details });
+        error("❌ Interne fout in verify_user_token functie", { details });
+        return res.status(500).json({ code, details });
 
       default:
-        console.error("❓ Onbekende RPC-response code:", code);
-        return res.status(500).json({
-          success: false,
-          code: "UNKNOWN_CODE",
-          details: code,
-        });
+        error("❓ Onbekende code vanuit verify_user_token", { code });
+        captureApiError("verify_user_token", null, { unexpectedCode: code });
+        return res.status(500).json({ code });
     }
   } catch (err) {
-    console.error("🔥 Onverwachte fout in handler:", err);
-    return res.status(500).json({
-      success: false,
-      code: "INTERNAL_EXCEPTION",
-      details: err.message,
-    });
+    error("🔥 Onverwachte fout in verify-email handler", { err });
+    return res.status(500).json({ code: "INTERNAL_EXCEPTION", details: err.message });
   }
 }

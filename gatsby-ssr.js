@@ -1,6 +1,7 @@
 // gatsby-ssr.js :
 const React = require("react");
 const { wrapPageElement: wrap } = require("./src/i18n/wrapPageElement");
+const { warn } = require("./src/utils/logger");
 
 // ✅ SENTRY INITIALISATIE
 const Sentry = require("@sentry/react");
@@ -17,11 +18,11 @@ if (SENTRY_DSN) {
     });
 
     console.info("✅ Sentry SSR-initialisatie succesvol.");
-  } catch (error) {
-    console.warn("⚠️ Fout bij initialisatie van Sentry SSR:", error);
+  } catch (err) {
+    warn("⚠️ Fout bij initialisatie van Sentry SSR", { err });
   }
 } else {
-  console.warn("⚠️ Sentry DSN ontbreekt, monitoring is niet actief.");
+  warn("⚠️ Sentry DSN ontbreekt, monitoring is niet actief.");
 }
 
 exports.wrapPageElement = wrap;

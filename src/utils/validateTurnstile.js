@@ -1,33 +1,44 @@
-// src/utils/validateTurnstile.js
+// src/utils/validateTurnstile.js :
+import { log, warn, error, captureApiError } from "./logger";
+
 export const validateTurnstile = async (token) => {
-    if (!token) {
-        console.warn("⚠️ Turnstile: Geen token ontvangen!");
-        return { success: false, message: "Turnstile token is missing" };
+  const maskedToken = token ? token.slice(0, 6) + "... (masked)" : "undefined";
+  if (!token) {
+    warn("⚠️ Turnstile: Geen token ontvangen!", { token });
+    return { success: false, message: "Turnstile token is missing" };
+  }
+
+  if (!process.env.TURNSTILE_SECRET) {
+    error("❌ Turnstile secret ontbreekt in environment variabelen!");
+    return { success: false, message: "Internal config error" };
+  }
+
+  try {
+    log("📤 Turnstile validatie-request verstuurd", { token: maskedToken });
+    
+    const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        secret: process.env.TURNSTILE_SECRET,
+        response: token,
+      }),
+    });
+
+    const data = await response.json();
+    log("✅ Turnstile validatierespons", { token: maskedToken, data });
+
+    if (!data.success) {
+      warn("❌ Turnstile verificatie mislukt!", { token: maskedToken, cloudflareResponse: data });
+      captureApiError("turnstile.siteverify", response, { token: maskedToken, cloudflareResponse: data });
+      return { success: false, message: "Turnstile verification failed" };
     }
-
-    try {
-        console.log("🔍 Turnstile validatie gestart...");
-
-        const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                secret: process.env.TURNSTILE_SECRET,
-                response: token,
-            }),
-        });
-
-        const data = await response.json();
-        console.log("✅ Turnstile validatierespons:", data);
-
-        if (!data.success) {
-            console.warn("❌ Turnstile verificatie mislukt!", data);
-            return { success: false, message: "Turnstile verification failed" };
-        }
-
-        return { success: true };
-    } catch (error) {
-        console.error("❌ Turnstile API-fout:", error);
-        return { success: false, message: "Turnstile validation error" };
-    }
+    
+    log("✅ Turnstile validatie geslaagd", { token: maskedToken });
+    return { success: true };
+  } catch (err) {
+    error("❌ Turnstile netwerkfout of andere onverwachte fout", { err, token: maskedToken });
+    captureApiError("Turnstile siteverify", undefined, { err, token: maskedToken });
+    return { success: false, message: "Turnstile validation error" };
+  }
 };

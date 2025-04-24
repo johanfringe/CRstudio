@@ -1,5 +1,6 @@
 // src/utils/sendEmail.js :
 import fetch from "node-fetch";
+import { log, warn, error, captureApiError } from "./logger";
 
 /**
  * 📧 Herbruikbare e-mailfunctie met Postmark
@@ -10,8 +11,9 @@ import fetch from "node-fetch";
  */
 export const sendEmail = async (to, subject, textBody, htmlBody = "") => {
   try {
-    console.log(`📩 Verzenden van e-mail naar: ${to}`);
-
+    log("📩 Verzenden van e-mail naar", { to, subject });
+    log("📨 API-call naar Postmark wordt verstuurd", { endpoint: "https://api.postmarkapp.com/email", to, subject });
+    
     const response = await fetch("https://api.postmarkapp.com/email", {
       method: "POST",
       headers: {
@@ -28,13 +30,15 @@ export const sendEmail = async (to, subject, textBody, htmlBody = "") => {
     });
 
     if (!response.ok) {
-      throw new Error(`Postmark fout: ${response.statusText}`);
-    }
+        const responseText = await response.text();
+        captureApiError("/email (Postmark)", response, { to, subject, responseText });
+        return { success: false, error: responseText };
+      }      
 
-    console.log("✅ E-mail succesvol verzonden naar:", to);
+      log("✅ E-mail succesvol verzonden", { to, subject });
     return { success: true };
-  } catch (error) {
-    console.error("❌ Fout bij verzenden e-mail:", error);
-    return { success: false, error: error.message };
+  } catch (err) {
+    error("❌ Fout bij verzenden e-mail via Postmark", { to, subject, err });
+    return { success: false, error: err.message };
   }
 };

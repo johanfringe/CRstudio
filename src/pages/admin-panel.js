@@ -17,8 +17,8 @@ const deleteUser = async (userId) => {
     }
 
     console.log("✅ Gebruiker succesvol verwijderd.");
-  } catch (error) {
-    console.error("❌ Fout bij verwijderen gebruiker:", error.message);
+  } catch (err) {
+    console.error("❌ Fout bij verwijderen gebruiker", { err });
   }
 };
 

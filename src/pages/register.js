@@ -1,6 +1,6 @@
-// /src/pages/register.js:
+// /src/pages/register.js :
 import React, { useState, useEffect } from "react";
-import { graphql, navigate } from "gatsby";
+import { Link, graphql, navigate } from "gatsby";
 import { useTranslation } from "gatsby-plugin-react-i18next";
 import { useI18next } from "gatsby-plugin-react-i18next";
 import { validateEmail } from "../utils/emailValidator";
@@ -8,121 +8,134 @@ import { supabase } from "../lib/supabaseClient";
 import { Button, Input } from "../components/ui";
 import Seo from "../components/Seo";
 import SectionWrapper from "../components/SectionWrapper";
+import { log, warn, error, captureApiError } from "../utils/logger";
+import { waitForSession } from "../utils/session";
 
 const Register = () => {
   const { t } = useTranslation();
   const { language } = useI18next();
 
   const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState(null);
 
   // Laad Cloudflare Turnstile correct
-  useEffect(() => {
-    const loadTurnstileScript = () => {
-      if (!window.turnstile) {
-        const script = document.createElement("script");
-        script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js";
-        script.async = true;
-        script.onload = () => {
-          console.log("✅ Turnstile script geladen!");
-          window.turnstile.render("#turnstile-container", {
-            sitekey: process.env.GATSBY_TURNSTILE_SITE_KEY,
-            callback: (token) => {
-              console.log("✅ Turnstile Token ontvangen:", token);
-              setTurnstileToken(token);
-            },
-          });
-        };
-        document.body.appendChild(script);
-      } else {
+    useEffect(() => {
+      const renderTurnstile = () => {
         window.turnstile.render("#turnstile-container", {
           sitekey: process.env.GATSBY_TURNSTILE_SITE_KEY,
           callback: (token) => {
-            console.log("✅ Turnstile Token ontvangen:", token);
+            log("✅ Turnstile Token ontvangen", { token });
             setTurnstileToken(token);
           },
         });
-      }
-    };
-
-    loadTurnstileScript();
-  }, []);
-
-  // 🌍 Social Login handler
-  const handleSocialLogin = async (provider) => {
-    try {
-      console.log(`🔗 Start social login met provider: ${provider}`);
-      setLoading(true);
-      setError("");
-
-      const redirectTo = `${window.location.origin}/${language}/profile`;
-      console.log("🔁 Instellen redirectTo voor fallback:", redirectTo);
-
-      const { data, error } = await supabase.auth.signInWithOAuth({
-        provider,
-        options: {
-          popup: true,
-          pkce: true,
-          redirectTo,
-          queryParams: {
-            access_type: "offline",
-            prompt: "consent",
-          },
-        },
-      });
-
-      console.log("📦 OAuth data:", data);
-
-      if (error) {
-        console.error("❌ Social login fout:", error.message);
-
-        if (error.message.toLowerCase().includes("popup")) {
-          setError("Popup werd geblokkeerd of gesloten. Probeer opnieuw.");
+      };
+      
+      const loadTurnstileScript = () => {
+        if (!window.turnstile) {
+          const script = document.createElement("script");
+          script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+          script.async = true;
+          script.onload = () => {
+            log("✅ Turnstile script geladen!", { loaded: true });
+            renderTurnstile();
+          };
+          document.body.appendChild(script);
         } else {
-          setError(error.message);
+          renderTurnstile();
         }
+      };
+  
+      loadTurnstileScript();
+    }, []);
 
+    // 🌍 Social Login handler
+  const handleSocialLogin = async (provider) => {
+      try {
+        log("🔗 Start social login met provider", { provider });
+        setLoading(true);
+        setErrorMsg("");
+  
+        const redirectTo = `${window.location.origin}/${language}/profile`;
+        log("🔁 Instellen redirectTo voor fallback", { redirectTo });
+  
+        const { data, error: loginError } = await supabase.auth.signInWithOAuth({
+          provider,
+          options: {
+            popup: true,
+            pkce: true,
+            redirectTo,
+            queryParams: {
+              access_type: "offline",
+              prompt: "consent",
+            },
+          },
+        });
+  
+        log("📦 OAuth data", { data });
+  
+        if (loginError) {
+        error("❌ Social login fout", { loginError });
+        setErrorMsg(t("register.social_login_failed"));
         return;
       }
 
-      const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
-
-      if (sessionError || !sessionData.session) {
-        console.error("❌ Geen sessie gevonden na social login:", sessionError?.message);
-        setError("Er is een fout opgetreden bij het ophalen van de sessie.");
-        return;
+    // ⏳ Wacht kort tot de sessie effectief beschikbaar is
+    const session = await waitForSession();
+      if (session) {
+        log("✅ Supabase sessie succesvol", { session });
+        log("➡️ Navigeren naar profielpagina", { language });
+        navigate(`/${language}/profile`);
       }
-
-      console.log("✅ Supabase sessie succesvol:", sessionData.session);
-      navigate(`/${language}/profile`);
     } catch (err) {
-      console.error("❌ Onverwachte fout bij social login:", err.message);
+      error("❌ Onverwachte fout bij social login", { err });
     } finally {
       setLoading(false);
     }
   };
 
   // 📩 Formulier submit handler voor e-mailregistratie
+  const handleResendVerification = async (email) => {
+    try {
+      const res = await fetch("/api/resend-verification", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, lang: language }),
+      });
+      const result = await res.json();
+      if (result.code === "EMAIL_SEND_AGAIN") {
+        setErrorMsg(t("profile.verify_error.EMAIL_SEND_AGAIN"));
+      } else {
+        setErrorMsg(t("profile.verify_error.EMAIL_SEND_FAILED_AGAIN"));
+      }
+    } catch (err) {
+      error("❌ Fout bij opnieuw verzenden verificatiemail", { err });
+      setErrorMsg(t("profile.verify_error.INTERNAL_EXCEPTION"));
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setErrorMsg("");
 
     if (!validateEmail(email)) {
-      setError(t("register.email_invalid"));
+      warn("⚠️ Ongeldig e-mailadres bij registratie", { email });
+      setErrorMsg(t("register.email_invalid"));
       return;
     }
 
     if (!turnstileToken) {
-      setError(t("register.check"));
+      warn("⚠️ Geen Turnstile-token beschikbaar bij submit", { email });
+      setErrorMsg(t("register.check"));
       return;
     }
 
     setLoading(true);
 
     try {
-      console.log("📡 Versturen van registratieverzoek voor e-mail:", email);
+      log("📡 Versturen van registratieverzoek voor e-mail", { email });
+      log("📬 Verzenden fetch /api/register", { email, turnstileToken, lang: language });
       const response = await fetch("/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -130,15 +143,94 @@ const Register = () => {
       });
 
       const data = await response.json();
-      if (!response.ok) throw new Error(data.message);
+      const errorCode = data.code || "UNKNOWN_ERROR";
+      captureApiError("/api/register", response, { errorCode, data, email });
 
-      console.log("✅ Registratie succesvol:", data);
-      alert(t("register.succes"));
+      // 👇 Auth.user flow
+      if (errorCode === "EMAIL_DUPLICATE") {
+        try {
+          const { data: sessionData } = await supabase.auth.getSession();
+          const userId = sessionData?.session?.user?.id;
+        
+          if (userId) {
+            const { data: artist, error: artistError } = await supabase
+              .from("artists")
+              .select("subdomain")
+              .eq("user_id", userId)
+              .maybeSingle();
+        
+            if (artistError) {
+              warn("⚠️ Fout bij ophalen artist-record", { artistError });
+            }
+        
+            if (artist?.subdomain) {
+              setErrorMsg(
+                <>
+                  {t("register.account_exists_subdomain")}
+                  <a href={`https://${artist.subdomain}.crstudio.online/account`} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline ml-1">
+                    {t("register.go_to_site")}
+                  </a>
+                </>
+              );
+              return;
+            } else {
+              setErrorMsg(
+                <>
+                  {t("register.account_exists_no_subdomain")}
+                  <Link to={`/${language}/profile`} className="text-blue-600 underline ml-1">
+                    {t("register.complete_profile")}
+                  </Link>
+                </>
+              );
+              return;
+            }
+          } else {
+            setErrorMsg(
+              <>
+                {t("register.duplicate_needs_verification")}
+                <Button
+                  variant="link"
+                  className="text-blue-600 underline ml-1"
+                  onClick={() => handleResendVerification(email)}
+                >
+                  {t("register.resend_verification")}
+                </Button>
+              </>
+            );
+            return;
+          }
+        } catch (err) {
+          error("❌ Fout bij controleren op bestaande gebruiker/subdomein", { err });
+          setErrorMsg(t("register.profile_check_failed"));
+          return;
+        }
+      }
+
+      // Success, of fallback bij andere fouten
+      if (errorCode === "EMAIL_SEND") {
+        log("✅ Registratie succesvol", { data });
+        alert(t("register.succes"));
+        return;
+      } else {
+        setErrorMsg(
+          t(`register.verify_error.${errorCode}`, {
+            defaultValue: t("register.UNKNOWN_ERROR"),
+          })
+        );
+      }
+      
     } catch (err) {
-      console.error("❌ Registratiefout:", err.message);
-      setError(err.message);
+          error("❌ Registratiefout", { err, email });
+      setErrorMsg(err.message);
     } finally {
       setLoading(false);
+
+      // 🔁 Reset Turnstile na submit (zowel bij fout als succes)
+      if (window.turnstile) {
+              log("🔁 Turnstile wordt opnieuw gerenderd", { reset: true });
+        window.turnstile.reset("#turnstile-container");
+        setTurnstileToken(null);
+      }
     }
   };
 
@@ -148,28 +240,20 @@ const Register = () => {
         title={t("register.seo_title", { defaultValue: t("seo.title") })}
         description={t("register.seo_description", { defaultValue: t("seo.description") })}
       />
-
       <SectionWrapper bgColor="bg-white">
-        <div className="min-h-screen flex mt-20 justify-center">
+        <div className="min-h-screen flex justify-center items-start py-24" aria-label={t("register.page_description")}>
           <div className="max-w-xs w-full mx-auto">
             <div className="text-center mb-6">
-              <img
-                src="/images/CRlogo.jpg"
-                alt={t("register.logo_alt")}
-                className="h-8 mx-auto"
-              />
+              <img src="/images/CRlogo.jpg" alt={t("register.logo_alt")} className="h-8 mx-auto" />
               <h1 className="text-xl font-semibold mt-16">{t("register.heading")}</h1>
             </div>
-
-            <p className="text-sm text-center text-gray-600 mb-6">
-              {t("register.intro_text")}
-            </p>
+            <p className="intro-text">{t("register.intro_text")}</p>
 
             {/* 🟢 Social Login Sectie */}
             <div className="flex flex-col space-y-3">
               <Button
                 onClick={() => handleSocialLogin("google")}
-                className="flex items-center justify-center w-full border border-black input"
+                className="flex items-center justify-center w-full border border-black rounded-lg py-2 text-sm hover:bg-gray-50"
               >
                 <img src="/icons/google.svg" alt="Google Logo" className="h-5 w-5 mr-2" />
                 {t("register.google_placeholder")}
@@ -191,13 +275,16 @@ const Register = () => {
                 placeholder={t("register.email_placeholder")}
                 value={email}
                 onChange={(e) => setEmail(e.target.value.trim().toLowerCase())}
-                className="input w-full"
+                className={`input w-full ${errorMsg ? "input-error" : ""}`}
+                aria-invalid={errorMsg ? "true" : "false"}
+                aria-describedby={errorMsg ? "email-error" : undefined}
               />
-
-              {error && <p className="text-red-500 text-sm">{error}</p>}
-
+              {errorMsg && (
+                <p id="email-error" className="text-red-500 text-xs mt-1">
+                  {errorMsg}
+                </p>
+              )}
               <div id="turnstile-container" className="w-full flex justify-center mt-2"></div>
-
               <Button type="submit" disabled={loading} className="btn btn-primary w-full">
                 {loading ? t("register.button_busy") : t("register.button_register")}
               </Button>

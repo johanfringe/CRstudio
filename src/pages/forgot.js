@@ -40,9 +40,9 @@ const ForgotPage = () => {
       } else {
         throw new Error(result.message || "Onbekende fout");
       }
-    } catch (error) {
+    } catch (err) {
       setError(t("forgot.error_server"));
-      console.error("Fout bij wachtwoordherstel:", error);
+      console.error("Fout bij wachtwoordherstel", { err });
     }
   };
 

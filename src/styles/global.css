@@ -112,6 +112,9 @@ html {
 .radio-input {
   @apply w-4 h-4 text-blue-500 border-gray-300 rounded-full;
 }
+.intro-text {
+  @apply text-sm text-center text-gray-600 mb-6;
+}
 
 /* .textarea = Om opmderkingen in een invulformulier te schrijven */
 

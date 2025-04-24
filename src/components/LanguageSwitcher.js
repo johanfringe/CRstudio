@@ -30,21 +30,21 @@ const LanguageSwitcher = () => {
 
   // ✅ Taal wijzigen en opslaan
   const handleChangeLanguage = (lang) => {
-    console.log(`🌍 Probeer taal te wisselen naar: ${lang}`);
+    console.log("🌍 Probeer taal te wisselen naar", { lang });
 
     if (!languages.some((l) => l.code === lang)) {
-      console.warn(`⚠️ Ongeldige taal: ${lang}`);
+      console.warn("⚠️ Ongeldige taal", { lang });
       return;
     }
 
     changeLanguage(lang);
-    console.log(`✅ i18next heeft de taal gewijzigd naar: ${lang}`);
+    console.log("✅ i18next heeft de taal gewijzigd naar", { lang });
 
     try {
       window.localStorage.setItem("i18nextLng", lang);
-      console.log(`💾 LocalStorage bijgewerkt: ${window.localStorage.getItem("i18nextLng")}`);
-    } catch (error) {
-      console.warn("⚠️ Fout bij opslaan in localStorage", error);
+      console.log("💾 LocalStorage bijgewerkt", { lang: window.localStorage.getItem("i18nextLng") });
+    } catch (err) {
+      console.warn("⚠️ Fout bij opslaan in localStorage", { err });
     }
   };
 

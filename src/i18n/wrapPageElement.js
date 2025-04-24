@@ -13,7 +13,7 @@ const WrapPageElement = ({ element }) => {
       const htmlLang = document.documentElement.getAttribute("lang");
       if (htmlLang !== language) {
         document.documentElement.setAttribute("lang", language);
-        console.log(`🔄 Documenttaal geüpdatet naar: ${language}`);
+        console.log("🔄 Documenttaal geüpdatet naar", { language });
       }
     }
   }, [language]);

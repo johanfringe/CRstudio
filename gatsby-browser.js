@@ -3,10 +3,10 @@ import "./src/styles/global.css";
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/browser";
 import { Replay } from "@sentry/replay";
-
 import { wrapPageElement as wrap } from "./src/i18n/wrapPageElement";
 import i18n from "./src/i18n/i18n";
 import i18nConfig from "./src/i18n/i18nConfig";
+import { log, warn, error } from "./src/utils/logger";
 
 // ✅ SENTRY INITIALISATIE
 if (typeof window !== "undefined") {
@@ -14,58 +14,54 @@ if (typeof window !== "undefined") {
   const isDev = env === "development";
   const dsn = process.env.GATSBY_SENTRY_DSN;
 
-  console.log(`✅ [DEBUG] NODE_ENV: ${env}`);
-  console.log("✅ [DEBUG] GATSBY_SENTRY_DSN waarde:", dsn ?? "(undefined)");
+  log("📦 NODE_ENV:", env);
+  log("📦 GATSBY_SENTRY_DSN:", dsn ?? "(undefined)");
 
   if (dsn) {
     try {
       Sentry.init({
         dsn,
         integrations: [new BrowserTracing(), new Replay()],
-        tracesSampleRate: isDev ? 0.0 : 0.0, // quota te hoog, dan isDev ? 0.1 : 0.05,
-        replaysSessionSampleRate: isDev ? 0.0 : 0.0, // quota te hoog, dan isDev ? 0.0 : 0.0,
+        tracesSampleRate: isDev ? 0.0 : 0.0, // later: evt.  0.1 : 0.05,
+        replaysSessionSampleRate: isDev ? 0.0 : 0.0, // quota te hoog, dan ? 0.0 : 0.0,
         replaysOnErrorSampleRate: isDev ? 0.0 : 1.0, // ❗ Alleen op errors in prod
         release: process.env.SENTRY_RELEASE || "unknown",
         beforeSend(event) {
-          if (isDev) {
-            // null=niets, event=alles doorlaten
-            return event; // ... in dev
-          }
-          return event; // ... in productie
+          return event;
         },
         environment: isDev ? "development" : "production",
         debug: isDev,
       });
-
-      console.log("✅ [DEBUG] Sentry.init() succesvol uitgevoerd");
-    } catch (error) {
-      console.error("❌ [FOUT] Fout bij initialisatie van Sentry:", error);
+      log("✅ Sentry.init() succesvol uitgevoerd");
+    } catch (err) {
+        error("❌ Fout bij initialisatie van Sentry", { err });
     }
   } else {
-    console.warn("⚠️ [WAARSCHUWING] Geen geldige GATSBY_SENTRY_DSN gevonden. Sentry is NIET geactiveerd.");
+    warn("⚠️ Geen geldige GATSBY_SENTRY_DSN gevonden. Sentry is NIET geactiveerd.");
   }
 
   // ✅ Testfunctie beschikbaar maken in browser
   window.SENTRY_TEST = () => {
-    const error = new Error("🧪 Manueel getriggerde testfout via SENTRY_TEST()");
-    console.log("🧪 [TEST] SENTRY_TEST() werd uitgevoerd:", error.message);
-    Sentry.captureException(error);
+    const testError = new Error("🧪 Manueel getriggerde testfout via SENTRY_TEST()");
+    error("🧪 Manueel testfout gegenereerd via SENTRY_TEST()", { testError });
   };
 
   // ✅ Ongecontroleerde globale errors loggen
-  window.onerror = (message, source, lineno, colno, error) => {
-    console.warn("🛑 [UNHANDLED] Global error opgevangen:", message);
-    if (!isDev) {
-      Sentry.captureException(error || new Error(message));
+  window.onerror = (message, source, lineno, colno, err) => {
+    warn("🛑 Globale fout opgevangen:", message, { source, lineno, colno, err });
+    if (typeof Sentry?.captureException === "function" && err instanceof Error) {
+      Sentry.captureException(err, {
+        extra: { source, lineno, colno },
+      });
     }
-  };
+  };  
 }
 
-console.log("✅ [DEBUG] gatsby-browser.js werd volledig geladen");
+log("✅ gatsby-browser.js werd volledig geladen");
 
 export const wrapPageElement = wrap;
 
-// ✅ Taaldetectie bij eerste render
+// ✅ Automatische taaldetectie bij eerste client render
 export const onInitialClientRender = () => {
   if (typeof window === "undefined") return;
 
@@ -73,8 +69,8 @@ export const onInitialClientRender = () => {
     let storedLang;
     try {
       storedLang = window.localStorage.getItem("i18nextLng");
-    } catch (error) {
-      console.warn("⚠️ localStorage niet toegankelijk:", error);
+    } catch (err) {
+        warn("⚠️ localStorage niet toegankelijk bij taal ophalen", { err });
       storedLang = null;
     }
 
@@ -85,7 +81,7 @@ export const onInitialClientRender = () => {
         : [navigator.language ?? i18nConfig.fallbackLng]
     ).filter(Boolean);
 
-    console.log("🌐 Gedetecteerde browsertalen:", browserLangs);
+    log("🌐 Gedetecteerde browsertalen:", browserLangs);
 
     const detectedLang =
       browserLangs
@@ -98,34 +94,34 @@ export const onInitialClientRender = () => {
     if (storedLang !== finalLang) {
       try {
         window.localStorage.setItem("i18nextLng", finalLang);
-        console.log(`🌍 Taal opgeslagen: ${finalLang}`);
-      } catch (error) {
-        console.warn("⚠️ localStorage niet toegankelijk. Fallback ingeschakeld.", error);
+        log("🌍 Taal opgeslagen in localStorage:", { finalLang });
+      } catch (err) {
+        warn("⚠️ localStorage niet toegankelijk. Fallback wordt gebruikt.", { err });
 
         const fallbackLang = navigator.language?.split("-")[0] || i18nConfig.fallbackLng;
 
         if (fallbackLang !== i18n.language) {
-          console.log(`🔄 Fallback ingeschakeld. Taal gewijzigd naar: ${fallbackLang}`);
-          i18n.changeLanguage(fallbackLang);
-        }
+            i18n.changeLanguage(fallbackLang);
+            log("🔁 Taal geforceerd gewijzigd via fallback", { fallbackLang });
+          }
 
         if (document.documentElement.lang !== fallbackLang) {
           document.documentElement.lang = fallbackLang;
-          console.log(`🌍 <html lang> ingesteld op: ${fallbackLang}`);
+          log("🌍 <html lang> ingesteld op", { lang: fallbackLang });
         }
       }
     }
 
     if (document.documentElement.lang !== finalLang) {
       document.documentElement.lang = finalLang;
-      console.log(`🌍 <html lang> ingesteld op: ${finalLang}`);
+      log("🌍 <html lang> ingesteld op", { finalLang });
     }
 
     if (i18n.language !== finalLang) {
       i18n.changeLanguage(finalLang);
-      console.log(`✅ i18n taal gewijzigd naar: ${finalLang}`);
+      log("✅ i18n taal gewijzigd naar", { finalLang });
     }
-  } catch (error) {
-    console.warn("⚠️ Fout bij taalinitialisatie. Fallback geactiveerd.", error);
+  } catch (err) {
+    error("⚠️ Taalinitialisatie faalde. Fallback ingeschakeld", { err });
   }
 };
