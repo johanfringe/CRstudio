@@ -76,6 +76,9 @@
     "prettier": "^3.4.2",
     "webpack": "^5.98.0"
   },
+  "engines": {
+    "node": ">=20.11.1"
+  },
   "keywords": [
     "art",
     "artists",
