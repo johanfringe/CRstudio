@@ -30,7 +30,7 @@ export const validateTurnstile = async (token) => {
 
     if (!data.success) {
       warn("❌ Turnstile verificatie mislukt!", { token: maskedToken, cloudflareResponse: data });
-      captureApiError("turnstile.siteverify", response, { token: maskedToken, cloudflareResponse: data });
+      captureApiError("turnstile.siteverify", response, { token: maskedToken, cloudflareResponse: data, errorCode: "TURNSTILE_FAILED" });
       return { success: false, message: "Turnstile verification failed" };
     }
     
@@ -38,7 +38,7 @@ export const validateTurnstile = async (token) => {
     return { success: true };
   } catch (err) {
     error("❌ Turnstile netwerkfout of andere onverwachte fout", { err, token: maskedToken });
-    captureApiError("Turnstile siteverify", undefined, { err, token: maskedToken });
+    captureApiError("Turnstile siteverify", undefined, { err, token: maskedToken, errorCode: "TURNSTILE_NETWORK_ERROR" });
     return { success: false, message: "Turnstile validation error" };
   }
 };

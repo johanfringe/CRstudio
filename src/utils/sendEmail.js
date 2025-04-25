@@ -31,7 +31,7 @@ export const sendEmail = async (to, subject, textBody, htmlBody = "") => {
 
     if (!response.ok) {
         const responseText = await response.text();
-        captureApiError("/email (Postmark)", response, { to, subject, responseText });
+        captureApiError("/email (Postmark)", response, { to, subject, responseText, errorCode: "EMAIL_SEND_FAILED" });
         return { success: false, error: responseText };
       }      
 

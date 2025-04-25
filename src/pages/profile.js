@@ -204,7 +204,7 @@ useEffect(() => {
             return;
           }
 
-          captureApiError("/api/verify-email", res, { response: data, token });
+          captureApiError("/api/verify-email", res, { errorCode: data?.code || "UNKNOWN_ERROR", response: data, token });
           setStatusCode(data.code || "INTERNAL_ERROR");
         } catch (err) {
           error("Verificatie API-call faalt", { err });
@@ -404,7 +404,7 @@ useEffect(() => {
 
       if (!response.ok) {
         const code = result?.code || "INSERT_FAILED";
-        captureApiError("/api/profile", response, { result });
+        captureApiError("/api/profile", response, { errorCode: result?.code || "UNKNOWN_ERROR", result });
         setErrorMsg(t(`profile.verify_error.${code}`));
         return;
       }

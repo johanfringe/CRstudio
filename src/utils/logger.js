@@ -26,9 +26,42 @@ export const error = (message, details = {}) => {
 export const captureApiError = (endpoint, response, extra = {}) => {
   const status = response?.status ?? "NO_RESPONSE";
   const statusText = response?.statusText ?? "Geen response beschikbaar";
+  const code = extra?.errorCode ?? "UNKNOWN_CODE";
 
-  const message = `❌ API-fout bij ${endpoint}: ${status} ${statusText}`;
-  error(message, { response, ...extra, status, statusText });
+  const logContext = { response, ...extra, status, statusText, code };
+
+  // ✅ Bekende successcodes die géén fout of waarschuwing zijn
+  const knownSuccessCodes = [
+    "REGISTER_OK",
+    "EMAIL_SEND",
+    "EMAIL_SEND_AGAIN",
+    "ALREADY_REGISTERED"
+  ];
+
+  // ⚠️ Codes die een 'milde waarschuwing' aangeven (bijv. dubbele registratie)
+  const warnCodes = [
+    "EMAIL_DUPLICATE",
+    "TURNSTILE_FAILED",
+    "EMAIL_INVALID"
+  ];
+
+  const isNoResponse = status === "NO_RESPONSE";
+  const isHttpError = status >= 400;
+  const isKnownSuccess = knownSuccessCodes.includes(code);
+  const isWarn = warnCodes.includes(code);
+
+  const shouldLogAsError =
+    isNoResponse || isHttpError || extra.forceCapture || (!isKnownSuccess && !isWarn && status < 400);
+
+  const message = `📡 API-respons van ${endpoint}: ${status} ${statusText}`;
+
+  if (shouldLogAsError) {
+    error(`❌ ${message}`, logContext);
+  } else if (isWarn) {
+    warn(`⚠️ ${message} (waarschuwing)`, logContext);
+  } else if (process.env.NODE_ENV !== "production") {
+    log(`✅ ${message}`, logContext);
+  }
 };
 
 // ✅ Manuele testfout voor Sentry-test
