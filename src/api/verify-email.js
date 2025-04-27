@@ -10,7 +10,7 @@ const supabase = createClient(
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    warn("⛔ Onjuiste methode voor verify-email", { method: req.method });
+    warn("❌ Ongeldige HTTP-methode bij verify-email", { method: req.method });
     return res.status(405).json({ code: "METHOD_NOT_ALLOWED" });
   }
 
@@ -71,7 +71,11 @@ export default async function handler(req, res) {
         warn("⚠️ Ongeldige of verlopen token", { code, token });
          return res.status(400).json({ code });
 
-      case "EMAIL_DUPLICATE":
+      case "INVALID_USER_RECORD":
+        error("‼️ Ongeldig gebruikersrecord : email ontbreekt", { token });
+        return res.status(400).json({ code });
+      
+         case "EMAIL_DUPLICATE":
         warn("⚠️ Email bestaat al in auth.users", { email });
         return res.status(409).json({ code });
 
