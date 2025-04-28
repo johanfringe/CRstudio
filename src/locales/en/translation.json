@@ -64,6 +64,11 @@
     "message": "The URL may be misspelled or the page you're looking for is no longer available.",
     "homeLink": "Go to the Homepage"
   },
+
+    "overview": {
+      "title": "Bewaar EN",
+      "description": "Spotgemakkelijk EN"
+  },
   
     "privacy": {
       "seoTitle": "Privacy Policy",

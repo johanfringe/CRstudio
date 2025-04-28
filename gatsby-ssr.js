@@ -2,28 +2,10 @@
 const React = require("react");
 const { wrapPageElement: wrap } = require("./src/i18n/wrapPageElement");
 const { warn } = require("./src/utils/logger");
+const { initSentry } = require("./src/utils/sentryInit");
 
 // ✅ SENTRY INITIALISATIE
-const Sentry = require("@sentry/react");
-
-const SENTRY_DSN = process.env.SENTRY_DSN;
-const IS_PRODUCTION = process.env.NODE_ENV === "production";
-
-if (SENTRY_DSN) {
-  try {
-    Sentry.init({
-      dsn: SENTRY_DSN,
-      environment: process.env.NODE_ENV,
-      tracesSampleRate: IS_PRODUCTION ? 1.0 : 0.1, // 🔹 Dynamisch sample rate
-    });
-
-    console.info("✅ Sentry SSR-initialisatie succesvol.");
-  } catch (err) {
-    warn("⚠️ Fout bij initialisatie van Sentry SSR", { err });
-  }
-} else {
-  warn("⚠️ Sentry DSN ontbreekt, monitoring is niet actief.");
-}
+initSentry({ mode: "ssr" });
 
 exports.wrapPageElement = wrap;
 
