@@ -51,7 +51,7 @@ export const captureApiError = (endpoint, response, extra = {}) => {
   const isWarn = warnCodes.includes(code);
 
   const shouldLogAsError =
-    isNoResponse || isHttpError || extra.forceCapture || (!isKnownSuccess && !isWarn && status < 400);
+  isNoResponse || (isHttpError && !isWarn) || extra.forceCapture || (!isKnownSuccess && !isWarn && status < 400);
 
   const message = `📡 API-respons van ${endpoint}: ${status} ${statusText}`;
 

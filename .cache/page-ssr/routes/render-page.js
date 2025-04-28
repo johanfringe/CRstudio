@@ -44153,7 +44153,7 @@ const captureApiError = (endpoint, response, extra = {}) => {
   const isHttpError = status >= 400;
   const isKnownSuccess = knownSuccessCodes.includes(code);
   const isWarn = warnCodes.includes(code);
-  const shouldLogAsError = isNoResponse || isHttpError || extra.forceCapture || !isKnownSuccess && !isWarn && status < 400;
+  const shouldLogAsError = isNoResponse || isHttpError && !isWarn || extra.forceCapture || !isKnownSuccess && !isWarn && status < 400;
   const message = `📡 API-respons van ${endpoint}: ${status} ${statusText}`;
   if (shouldLogAsError) {
     error(`❌ ${message}`, logContext);

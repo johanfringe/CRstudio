@@ -20,6 +20,7 @@ const ResendVerificationInline = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [cooldown, setCooldown] = useState(0);
+  const [redirecting, setRedirecting] = useState(false);
 
   useEffect(() => {
     const cooldownEnd = localStorage.getItem("resendCooldownEnd");
@@ -237,14 +238,14 @@ useEffect(() => {
           return;
         }
   
-        const { data: artist, error } = await supabase
+        const { data: artist, supabaseError } = await supabase
           .from("artists")
           .select("subdomain")
           .eq("user_id", user.id)
           .maybeSingle();
   
-        if (error) {
-          error("❌ Fout bij ophalen artist tijdens redirect", { error });
+        if (supabaseError) {
+          error("❌ Fout bij ophalen artist tijdens redirect", { supabaseError });
           return;
         }
   
