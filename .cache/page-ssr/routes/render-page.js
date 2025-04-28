@@ -2162,27 +2162,14 @@ const {
 const {
   warn
 } = __webpack_require__(/*! ./src/utils/logger */ "./src/utils/logger.js");
+const {
+  initSentry
+} = __webpack_require__(/*! ./src/utils/sentryInit */ "./src/utils/sentryInit.js");
 
 // ✅ SENTRY INITIALISATIE
-const Sentry = __webpack_require__(/*! @sentry/react */ "./node_modules/@sentry/react/esm/index.js");
-const SENTRY_DSN = "https://86312fc3076242b523789d67dd8ebdeb@o4508861802872832.ingest.de.sentry.io/4508861808443472";
-const IS_PRODUCTION = "development" === "production";
-if (SENTRY_DSN) {
-  try {
-    Sentry.init({
-      dsn: SENTRY_DSN,
-      environment: "development",
-      tracesSampleRate: IS_PRODUCTION ? 1.0 : 0.1 // 🔹 Dynamisch sample rate
-    });
-    console.info("✅ Sentry SSR-initialisatie succesvol.");
-  } catch (err) {
-    warn("⚠️ Fout bij initialisatie van Sentry SSR", {
-      err
-    });
-  }
-} else {
-  warn("⚠️ Sentry DSN ontbreekt, monitoring is niet actief.");
-}
+initSentry({
+  mode: "ssr"
+});
 exports.wrapPageElement = wrap;
 exports.onRenderBody = ({
   setHtmlAttributes,
@@ -8085,8 +8072,8 @@ function init(options = {}) {
   }
   if (options.release === undefined) {
     // This allows build tooling to find-and-replace __SENTRY_RELEASE__ to inject a release value
-    if (true) {
-      options.release = "dev-local";
+    if (typeof __SENTRY_RELEASE__ === 'string') {
+      options.release = __SENTRY_RELEASE__;
     }
 
     // This supports the variable that sentry-webpack-plugin injects
@@ -44180,6 +44167,86 @@ function getSubdomain() {
   const host = window.location.hostname;
   const parts = host.split(".");
   return parts.length > 2 ? parts[0] : "main"; // bv. jeanmilo.crstudio.online -> "jeanmilo"
+}
+
+/***/ }),
+
+/***/ "./src/utils/sentryInit.js":
+/*!*********************************!*\
+  !*** ./src/utils/sentryInit.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   initSentry: () => (/* binding */ initSentry)
+/* harmony export */ });
+/* harmony import */ var _sentry_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @sentry/react */ "./node_modules/@sentry/react/esm/sdk.js");
+/* harmony import */ var _sentry_browser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @sentry/browser */ "./node_modules/@sentry-internal/tracing/esm/browser/browsertracing.js");
+/* harmony import */ var _sentry_replay__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @sentry/replay */ "./node_modules/@sentry/replay/esm/index.js");
+/* harmony import */ var _logger__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./logger */ "./src/utils/logger.js");
+// src/utils/sentryInit.js
+
+
+
+
+
+/**
+ * Initialiseert Sentry op basis van de omgeving en mode.
+ * 
+ * @param {Object} options
+ * @param {("browser"|"ssr"|"build")} options.mode - Bepaalt de initialisatiemodus
+ */
+function initSentry({
+  mode = "browser"
+} = {}) {
+  if (typeof window === "undefined" && mode === "browser") {
+    (0,_logger__WEBPACK_IMPORTED_MODULE_0__.warn)("🚫 initSentry(): 'browser' mode maar window is undefined. Init geannuleerd.");
+    return;
+  }
+  const dsn = "https://86312fc3076242b523789d67dd8ebdeb@o4508861802872832.ingest.de.sentry.io/4508861808443472" || 0;
+  const env = "development";
+  const isDev = env === "development";
+  if (!dsn) {
+    (0,_logger__WEBPACK_IMPORTED_MODULE_0__.warn)("⚠️ Geen DSN gevonden. Sentry wordt niet geïnitialiseerd.");
+    return;
+  }
+  const commonOptions = {
+    dsn,
+    environment: env,
+    debug: isDev,
+    release: "dev-local" || 0
+  };
+  try {
+    if (mode === "browser") {
+      _sentry_react__WEBPACK_IMPORTED_MODULE_1__.init({
+        ...commonOptions,
+        integrations: [new _sentry_browser__WEBPACK_IMPORTED_MODULE_2__.BrowserTracing(), new _sentry_replay__WEBPACK_IMPORTED_MODULE_3__.Replay()],
+        tracesSampleRate: isDev ? 0.0 : 0.1,
+        replaysSessionSampleRate: isDev ? 0.0 : 0.1,
+        replaysOnErrorSampleRate: isDev ? 0.0 : 1.0
+      });
+      (0,_logger__WEBPACK_IMPORTED_MODULE_0__.log)("✅ Sentry succesvol geïnitialiseerd in browser-mode");
+    } else if (mode === "ssr") {
+      _sentry_react__WEBPACK_IMPORTED_MODULE_1__.init({
+        ...commonOptions,
+        tracesSampleRate: isDev ? 0.1 : 1.0 // Server-side mag iets ruimer in dev
+      });
+      (0,_logger__WEBPACK_IMPORTED_MODULE_0__.log)("✅ Sentry succesvol geïnitialiseerd in SSR-mode");
+    } else if (mode === "build") {
+      // Voor gebruik tijdens build processing (bv. uploads sourcemaps)
+      _sentry_react__WEBPACK_IMPORTED_MODULE_1__.init(commonOptions);
+      (0,_logger__WEBPACK_IMPORTED_MODULE_0__.log)("✅ Sentry succesvol geïnitialiseerd in build-mode");
+    } else {
+      (0,_logger__WEBPACK_IMPORTED_MODULE_0__.warn)(`⚠️ Onbekende Sentry init mode: ${mode}`);
+    }
+  } catch (err) {
+    (0,_logger__WEBPACK_IMPORTED_MODULE_0__.error)("❌ Fout tijdens initialisatie van Sentry", {
+      err,
+      mode
+    });
+  }
 }
 
 /***/ }),

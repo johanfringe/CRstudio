@@ -1,7 +1,4 @@
 module.exports = [{
-      plugin: require('../node_modules/@sentry/gatsby/gatsby-browser.js'),
-      options: {"plugins":[],"dsn":"https://86312fc3076242b523789d67dd8ebdeb@o4508861802872832.ingest.de.sentry.io/4508861808443472","environment":"development","tracesSampleRate":0.1,"debug":true,"release":"dev-local","sourceMapsUploadOptions":{"include":["./public","./.cache"],"ignore":["node_modules",".cache/dev-404-page"],"validate":true,"rewrite":true}},
-    },{
       plugin: require('../node_modules/gatsby-plugin-react-i18next/gatsby-browser.js'),
       options: {"plugins":[],"localeJsonSourceName":"locales","languages":["en","fr","nl"],"fallbackLanguage":"en","defaultLanguage":"","siteUrl":"http://localhost:8000","i18nextOptions":{"fallbackLng":"en","supportedLngs":["en","fr","nl"],"interpolation":{"escapeValue":false},"detection":{"order":["path","htmlTag","cookie","navigator"],"caches":["cookie"]}},"redirect":true},
     },{

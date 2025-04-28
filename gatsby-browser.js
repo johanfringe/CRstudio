@@ -1,5 +1,6 @@
 // gatsby-browser.js :
 import "./src/styles/global.css";
+import * as Sentry from "@sentry/react";
 import { wrapPageElement as wrap } from "./src/i18n/wrapPageElement";
 import i18n from "./src/i18n/i18n";
 import i18nConfig from "./src/i18n/i18nConfig";

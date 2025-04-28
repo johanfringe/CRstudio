@@ -16,10 +16,6 @@ console.log("🔑 Supabase Service Role Key:", process.env.SUPABASE_SERVICE_ROLE
 // console.log("🔑 Postmark API Key:", process.env.POSTMARK_API_KEY);
 // console.log("🔍 Verbinding maken met Redis...");
 
-const Sentry = require("@sentry/gatsby");
-
-const ENABLE_SENTRY = !!process.env.SENTRY_DSN;
-
 const i18nConfig = require("./src/i18n/i18nConfig");
 const languages = require("./src/locales/languages");
 const robotsConfig = require("./src/config/robots-config.json");
@@ -32,26 +28,6 @@ module.exports = {
     siteUrl: `https://crstudio.online/`,
   },
   plugins: [
-    ENABLE_SENTRY && {
-      resolve: "@sentry/gatsby",
-      options: {
-        dsn: process.env.SENTRY_DSN,
-        environment: "development", // 👈 expliciet en consistent
-        tracesSampleRate: 0.1,
-        debug: true,
-        release: process.env.SENTRY_RELEASE || "unknown",
-        sourceMapsUploadOptions: {
-          include: [
-            "./public",    // ✔️ sourcemaps van build
-            "./.cache",    // ✔️ gatsby cache & page-data
-          ],
-          ignore: ["node_modules", ".cache/dev-404-page"],
-          validate: true,
-          rewrite: true,
-        },
-      },
-    },
-
     // Gecombineerde configuratie voor gatsby-source-filesystem voor verschillende bronnen
     ...[
       { name: "locales", path: `${__dirname}/src/locales` },            // Meertalige JSON-bestanden
