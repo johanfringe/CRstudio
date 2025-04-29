@@ -9,7 +9,7 @@ var plugins = [{
     },{
       name: 'gatsby-plugin-react-i18next',
       plugin: require('/Users/johan/CRstudio/CRstudio/node_modules/gatsby-plugin-react-i18next/gatsby-ssr.js'),
-      options: {"plugins":[],"localeJsonSourceName":"locales","languages":["en","fr","nl"],"fallbackLanguage":"en","defaultLanguage":"","siteUrl":"http://localhost:8000","i18nextOptions":{"fallbackLng":"en","supportedLngs":["en","fr","nl"],"interpolation":{"escapeValue":false},"detection":{"order":["path","htmlTag","cookie","navigator"],"caches":["cookie"]}},"redirect":true},
+      options: {"plugins":[],"localeJsonSourceName":"locales","languages":["en","fr","nl"],"fallbackLanguage":"en","defaultLanguage":"","siteUrl":"https://crstudio.online","i18nextOptions":{"fallbackLng":"en","supportedLngs":["en","fr","nl"],"interpolation":{"escapeValue":false},"detection":{"order":["path","htmlTag","cookie","navigator"],"caches":["cookie"]}},"redirect":true},
     },{
       name: 'gatsby-plugin-sitemap',
       plugin: require('/Users/johan/CRstudio/CRstudio/node_modules/gatsby-plugin-sitemap/gatsby-ssr.js'),
