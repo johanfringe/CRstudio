@@ -38,7 +38,7 @@ export function initSentry({ mode = "browser" } = {}) {
         ...commonOptions,
         integrations: [new BrowserTracing(), new Replay()],
         tracesSampleRate: isDev ? 0.0 : 0.1,
-        replaysSessionSampleRate: isDev ? 0.0 : 0.1,
+        replaysSessionSampleRate: isDev ? 0.0 : 0.0, // tijdelijk, normaal 0.0 : 0.1, (geen 429 errors meer!)
         replaysOnErrorSampleRate: isDev ? 0.0 : 1.0,
       });
       log("✅ Sentry succesvol geïnitialiseerd in browser-mode");

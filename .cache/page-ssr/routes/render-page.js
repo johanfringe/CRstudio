@@ -2165,6 +2165,7 @@ const {
 const {
   initSentry
 } = __webpack_require__(/*! ./src/utils/sentryInit */ "./src/utils/sentryInit.js");
+const i18nConfig = __webpack_require__(/*! ./src/i18n/i18nConfig */ "./src/i18n/i18nConfig.js");
 
 // ✅ SENTRY INITIALISATIE
 initSentry({
@@ -2172,11 +2173,24 @@ initSentry({
 });
 exports.wrapPageElement = wrap;
 exports.onRenderBody = ({
+  pathname,
   setHtmlAttributes,
   setHeadComponents
 }) => {
+  const supportedLangs = i18nConfig.supportedLngs;
+  if (!supportedLangs || supportedLangs.length === 0) {
+    throw new Error("❌ i18nConfig.supportedLngs ontbreekt of is leeg. Controleer je i18n-configuratie.");
+  }
+  const pathLang = (pathname === null || pathname === void 0 ? void 0 : pathname.split("/")[1]) || "";
+  const lang = supportedLangs.includes(pathLang) ? pathLang : i18nConfig.fallbackLng;
+  if ( true && !supportedLangs.includes(pathLang) && pathLang !== "") {
+    warn("⚠️ Onbekende taal gedetecteerd in URL, fallback gebruikt.", {
+      pathLang,
+      fallbackLang: i18nConfig.fallbackLng
+    });
+  }
   setHtmlAttributes({
-    lang: "en",
+    lang,
     xmlns: "http://www.w3.org/1999/xhtml"
   });
   const fonts = [{
@@ -44224,7 +44238,8 @@ function initSentry({
         ...commonOptions,
         integrations: [new _sentry_browser__WEBPACK_IMPORTED_MODULE_2__.BrowserTracing(), new _sentry_replay__WEBPACK_IMPORTED_MODULE_3__.Replay()],
         tracesSampleRate: isDev ? 0.0 : 0.1,
-        replaysSessionSampleRate: isDev ? 0.0 : 0.1,
+        replaysSessionSampleRate: isDev ? 0.0 : 0.0,
+        // tijdelijk, normaal 0.0 : 0.1, (geen 429 errors meer!)
         replaysOnErrorSampleRate: isDev ? 0.0 : 1.0
       });
       (0,_logger__WEBPACK_IMPORTED_MODULE_0__.log)("✅ Sentry succesvol geïnitialiseerd in browser-mode");
