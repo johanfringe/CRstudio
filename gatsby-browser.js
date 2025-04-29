@@ -47,7 +47,9 @@ export const onClientEntry = () => {
 
   try {
     const supportedLangs = i18nConfig.supportedLngs;
-    const fallbackLng = i18nConfig.fallbackLng;
+        const fallbackLng = i18nConfig.fallbackLng || "en";
+    
+        const path = window.location.pathname;
 
     let browserLang;
     try {
@@ -61,6 +63,13 @@ export const onClientEntry = () => {
     }
 
     const finalLang = supportedLangs.includes(browserLang) ? browserLang : fallbackLng;
+    
+        // 🚀 Instant redirect indien root path ("/")
+        if (path === "/" && finalLang !== fallbackLng) {
+          log("🔁 Redirect naar taalpad", { finalLang });
+          window.location.replace(`/${finalLang}/`);
+          return; // stop verdere initialisatie
+        }
 
     try {
       const storedLang = window.localStorage.getItem("i18nextLng");
@@ -87,7 +96,7 @@ export const onInitialClientRender = () => {
 
   try {
     const supportedLangs = i18nConfig.supportedLngs;
-    const fallbackLng = i18nConfig.fallbackLng;
+    const fallbackLng = i18nConfig.fallbackLng || "en";
     const storedLang = window.localStorage.getItem("i18nextLng");
     const finalLang = supportedLangs.includes(storedLang) ? storedLang : fallbackLng;
 
