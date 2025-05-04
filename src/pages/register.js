@@ -105,13 +105,13 @@ const Register = () => {
       });
       const result = await res.json();
       if (result.code === "EMAIL_SEND_AGAIN") {
-        setErrorMsg(t("profile.verify_error.EMAIL_SEND_AGAIN"));
+        setErrorMsg(t("register.verify_error.EMAIL_SEND_AGAIN"));
       } else {
-        setErrorMsg(t("profile.verify_error.EMAIL_SEND_FAILED_AGAIN"));
+        setErrorMsg(t("register.verify_error.EMAIL_SEND_FAILED_AGAIN"));
       }
     } catch (err) {
       error("❌ Fout bij opnieuw verzenden verificatiemail", { err });
-      setErrorMsg(t("profile.verify_error.INTERNAL_EXCEPTION"));
+      setErrorMsg(t("register.verify_error.INTERNAL_EXCEPTION"));
     }
   };
 
@@ -209,15 +209,23 @@ const Register = () => {
       // Success, of fallback bij andere fouten
       if (errorCode === "EMAIL_SEND") {
         log("✅ Registratie succesvol", { data });
-        alert(t("register.succes"));
+        setErrorMsg(t("register.verify_error.EMAIL_SEND"));
         return;
-      } else {
-        setErrorMsg(
-          t(`register.verify_error.${errorCode}`, {
-            defaultValue: t("register.UNKNOWN_ERROR"),
-          })
-        );
       }
+
+        // 📩 Nieuwe e-mail verzonden bij herregistratie (>30min)
+      if (errorCode === "EMAIL_SEND_AGAIN") {
+        log("✅ Nieuwe verificatie e-mail verzonden bij herregistratie", { email });
+        setErrorMsg(t("register.verify_error.EMAIL_SEND_AGAIN"));
+        return;
+      }
+
+      // ❌ Andere fouten
+      setErrorMsg(
+        t(`register.verify_error.${errorCode}`, {
+          defaultValue: t("register.UNKNOWN_ERROR"),
+        })
+      );
       
     } catch (err) {
           error("❌ Registratiefout", { err, email });

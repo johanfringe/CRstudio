@@ -1,6 +1,6 @@
 // src/utils/session.js
 import { supabase } from "../lib/supabaseClient";
-import { warn } from "./logger";
+import { log, warn } from "./logger";
 
 export const waitForSession = async (retries = 5, delay = 300, logId = "") => {
     for (let i = 0; i < retries; i++) {

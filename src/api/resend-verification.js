@@ -119,7 +119,7 @@ export default async function handler(req, res) {
 
       if (!emailResult.success) throw new Error("E-mail verzenden mislukt");
 
-      log("✅ Verificatie-e-mail opnieuw verzonden", { email });
+      log("✅ Verificatie-e-mail succesvol opnieuw verzonden", { email });
       return res.status(200).json({ code: "EMAIL_SEND_AGAIN" });
     } catch (err) {
       warn("⚠️ Eerste poging e-mailverzending faalde, probeer opnieuw", { email, err });
