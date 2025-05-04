@@ -70,5 +70,14 @@
         "relativeCompiledFilePath": "verify-email.js",
         "absoluteCompiledFilePath": "/Users/johan/CRstudio/CRstudio/.cache/functions/verify-email.js",
         "functionId": "verify-email-js"
+    },
+    {
+        "functionRoute": "verify-subdomain",
+        "pluginName": "default-site-plugin",
+        "originalAbsoluteFilePath": "/Users/johan/CRstudio/CRstudio/src/api/verify-subdomain.js",
+        "originalRelativeFilePath": "verify-subdomain.js",
+        "relativeCompiledFilePath": "verify-subdomain.js",
+        "absoluteCompiledFilePath": "/Users/johan/CRstudio/CRstudio/.cache/functions/verify-subdomain.js",
+        "functionId": "verify-subdomain-js"
     }
 ]

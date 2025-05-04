@@ -148,33 +148,39 @@ useEffect(() => {
 }, []);
 
   useEffect(() => {
-    const fetchProvider = async () => {
-      try {
-        const { data } = await supabase.auth.getSession();
-        const sessionUser = data?.session?.user;
-        let userProvider = sessionUser?.app_metadata?.provider;
+      const fetchProvider = async () => {
+        try {
+          const { data } = await supabase.auth.getSession();
+          const sessionUser = data?.session?.user;
+          let userProvider = sessionUser?.app_metadata?.provider || "";
   
-        // Fallback via getUser()
-        if (!userProvider && sessionUser?.id) {
-          const { data: userData, err } = await supabase.auth.getUser();
-          if (err) {
-            error("Fallback getUser() mislukt", { err });
-          } else {
-            userProvider = userData?.user?.app_metadata?.provider;
-            log("📦 Fallback via getUser() gebruikt", { userProvider });
+          // Fallback via getUser() als provider ontbreekt
+          if (!userProvider && sessionUser?.id) {
+            const { data: userData, err } = await supabase.auth.getUser();
+            if (err) {
+              error("Fallback getUser() mislukt", { err });
+            } else {
+              userProvider = userData?.user?.app_metadata?.provider || "";
+              log("📦 Fallback via getUser() gebruikt", { userProvider });
+            }
           }
+  
+          // ✅ Controleer op aanwezigheid van 'email' in de lijst (bijv. 'email,google')
+          const isEmail = userProvider
+            .split(",")
+            .map((p) => p.trim().toLowerCase())
+            .includes("email");
+  
+          setSession(data?.session || null);
+          setIsEmailUser(isEmail);
+          log("🔍 Auth provider gedetecteerd", { userProvider, isEmail });
+        } catch (err) {
+          error("Fout bij ophalen provider", { err });
         }
+      };
   
-        setSession(data?.session || null);
-        setIsEmailUser(userProvider !== "google");
-        log("🔍 Auth provider gedetecteerd", { userProvider });
-      } catch (err) {
-        error("Fout bij ophalen provider", { err });
-      }
-    };
-  
-    fetchProvider();
-  }, []);  
+      fetchProvider();
+    }, []);
 
   useEffect(() => {
     const verifyFlow = async () => {
