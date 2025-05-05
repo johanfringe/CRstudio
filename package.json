@@ -1,19 +1,20 @@
 {
+  "author": "Johan",
+  "description": "CRstudio: The most powerful tool for creating and managing catalogues raisonnés",
+  "license": "MIT",
   "name": "crstudio",
   "private": true,
   "version": "1.0.0",
-  "description": "CRstudio: The most powerful tool for creating and managing catalogues raisonnés",
-  "author": "Johan",
-  "license": "MIT",
   "scripts": {
     "build": "gatsby build",
+    "clean": "gatsby clean",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css}\"",
-    "start": "gatsby develop",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean",
     "lint": "eslint .",
+    "postinstall": "patch-package",
+    "serve": "gatsby serve",
     "sentry:release": "export SENTRY_RELEASE=crstudio@$(git rev-parse --short HEAD) && echo \"📦 Release: $SENTRY_RELEASE\" && yarn build && sentry-cli releases new $SENTRY_RELEASE --org crstudio-th --project crstudio-main && sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps ./public --url-prefix '~/static' --validate --rewrite --org crstudio-th --project crstudio-main && sentry-cli releases finalize $SENTRY_RELEASE --org crstudio-th --project crstudio-main",
+    "start": "gatsby develop",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
@@ -73,9 +74,14 @@
     "dotenv-flow": "^4.1.0",
     "eslint-config-prettier": "^10.1.2",
     "eslint-plugin-prettier": "^5.2.6",
+    "patch-package": "^8.0.0",
     "postcss-loader": "^8.1.1",
+    "postinstall-postinstall": "^2.1.0",
     "prettier": "^3.4.2",
     "webpack": "^5.98.0"
+  },
+  "resolutions": {
+    "whatwg-url": "^11.0.0"
   },
   "engines": {
     "node": ">=20.11.1"
