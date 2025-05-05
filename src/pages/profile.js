@@ -1,5 +1,5 @@
 // src/pages/profile.js :
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { graphql } from "gatsby";
 import { useTranslation } from "gatsby-plugin-react-i18next";
 import Seo from "../components/Seo";
@@ -11,6 +11,7 @@ import { preloadZxcvbn, validatePassword } from "../utils/validatePassword";
 import { validateSubdomain, getSubdomainValidationSteps } from "../utils/validateSubdomain";
 import { log, warn, error, captureApiError } from "../utils/logger";
 import { waitForSession } from "../utils/session";
+import debounce from "lodash.debounce";
 
 const COOLDOWN_SECONDS = 300;
 
@@ -321,28 +322,63 @@ useEffect(() => {
     }
   };
 
+  const checkSubdomainAvailability = async (sub) => {
+    const normalized = sub.trim().toLowerCase();
+    log("🌐 Controle subdomein beschikbaarheid", { normalized });
+  
+    try {
+      const { error, count } = await supabase
+        .from("artists")
+        .select("id", { count: "exact", head: true })
+        .eq("subdomain", normalized);
+  
+      if (error) {
+        warn("⚠️ Subdomein-check mislukt", { error });
+        setSubdomainStatus("error");
+        setSubdomainError(t("profile.verify_error.SUBDOMAIN_CHECK_FAILED"));
+        return;
+      }
+  
+      if (count > 0) {
+        setSubdomainStatus("taken");
+        setSubdomainError(t("profile.verify_error.SUBDOMAIN_TAKEN"));
+      } else {
+        setSubdomainStatus("available");
+        setSubdomainError("");
+      }
+    } catch (err) {
+      error("❌ Onverwachte fout bij subdomain-check", { err });
+      setSubdomainStatus("error");
+      setSubdomainError(t("profile.verify_error.INTERNAL_ERROR"));
+    }
+  };
+  
+  const debouncedCheckSubdomainAvailability = useCallback(
+    debounce(checkSubdomainAvailability, 400),
+    []
+  );
+  
   useEffect(() => {
-    const trimmed = subdomain.trim();
-    if (trimmed.length === 0) {
-      setSubdomainStatus(null);
-      setSubdomainError("");
-      return;
-    }
-    const validationError = validateSubdomain(trimmed);
-    if (validationError) {
+    return () => debouncedCheckSubdomainAvailability.cancel();
+  }, []);
+
+  const handleSubdomainInput = (val) => {
+    const trimmed = val.trim().toLowerCase();
+    setSubdomain(trimmed);
+    setValidationSteps(getSubdomainValidationSteps(trimmed));
+    setShowChecklist(trimmed.length > 0);
+  
+    const errorCode = validateSubdomain(trimmed);
+    if (errorCode) {
       setSubdomainStatus("invalid");
-      setSubdomainError(t(validationError));
+      setSubdomainError(t(errorCode));
       return;
     }
+  
     setSubdomainStatus("checking");
     setSubdomainError("");
-    checkSubdomainAvailability(trimmed);
-  }, [subdomain, t]);
-
-  const checkSubdomainAvailability = async (sub) => {     // TODO
-    log("🌐 Controle subdomein beschikbaarheid", { sub });
-    setSubdomainStatus("available");
-  };
+    debouncedCheckSubdomainAvailability(trimmed);
+  };  
 
   const nameRegex = /^[\p{L}\p{M}](?!.*[-'\s]{2})[\p{L}\p{M}\s'-]{0,38}[\p{L}\p{M}]$/u;
   const emojiRegex = /\p{Extended_Pictographic}/u;
@@ -562,24 +598,7 @@ useEffect(() => {
                       name="subdomain"
                       placeholder={t("profile.subdomain_placeholder")}
                       value={subdomain}
-                      onChange={(e) => {
-                        const val = e.target.value.toLowerCase(); // ⬅️ Forceer lowercase
-                        setSubdomain(val);
-                        setValidationSteps(getSubdomainValidationSteps(val));
-  
-                        // 👉 Checklist tonen zodra gebruiker typt
-                        setShowChecklist(val.length > 0);
-  
-                        const error = validateSubdomain(val);
-                        if (error) {
-                          setSubdomainStatus("invalid");
-                          setSubdomainError(t(error));
-                        } else {
-                          setSubdomainError("");
-                          setSubdomainStatus(null);
-                          checkSubdomainAvailability(val);
-                        }
-                      }}
+                      onChange={(e) => handleSubdomainInput(e.target.value)}
                       className={`input w-full pr-28 ${subdomainStatus === "invalid" ? "input-error" : ""}`}
                     />
                     <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600 text-sm pointer-events-none">
