@@ -58,24 +58,44 @@ export default async function handler(req, res) {
           return res.status(500).json({ code: "USER_CREATION_FAILED", details: createError.message });
         }
 
+        // ✅ Start sessie voor nieuwe gebruiker
+        const { data: sessionData, error: sessionError } = await supabase.auth.signInWithPassword({
+          email,
+          password: randomPassword,
+        });
+
+        if (sessionError || !sessionData?.session) {
+          error("❌ Aanmelding na createUser() mislukt", { sessionError });
+          return res.status(500).json({
+            code: "SESSION_CREATION_FAILED",
+            details: sessionError?.message || "Geen sessie ontvangen",
+          });
+        }
+
         log("✅ Gebruiker succesvol aangemaakt", {
           id: createdUser?.user?.id,
           email,
-        });        
-        return res.status(200).json({ code: "EMAIL_VERIFIED", email });
+        });
+
+        return res.status(200).json({
+          code: "EMAIL_VERIFIED",
+          email,
+          access_token: sessionData.session.access_token,
+          refresh_token: sessionData.session.refresh_token,
+        });
       }
 
       case "TOKEN_NOT_FOUND":
       case "TOKEN_EXPIRED":
       case "TOKEN_INVALID":
         warn("⚠️ Ongeldige of verlopen token", { code, token });
-         return res.status(400).json({ code });
+        return res.status(400).json({ code });
 
       case "INVALID_USER_RECORD":
         error("‼️ Ongeldig gebruikersrecord : email ontbreekt", { token });
         return res.status(400).json({ code });
-      
-         case "EMAIL_DUPLICATE":
+
+      case "EMAIL_DUPLICATE":
         warn("⚠️ Email bestaat al in auth.users", { email });
         return res.status(409).json({ code });
 

@@ -5,6 +5,7 @@ import { useTranslation } from "gatsby-plugin-react-i18next";
 import Seo from "../components/Seo";
 import SectionWrapper from "../components/SectionWrapper";
 import PasswordStrengthMeter from "../components/PasswordStrengthMeter";
+import Spinner from "../components/Spinner";
 import { Input, Button } from "../components/ui";
 import { supabase } from "../lib/supabaseClient";
 import { preloadZxcvbn, validatePassword } from "../utils/validatePassword";
@@ -120,6 +121,7 @@ const Profile = () => {
   const redirectTimer = useRef(null);
   const [statusCode, setStatusCode] = useState(null);
   const [tokenValid, setTokenValid] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(true);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [subdomain, setSubdomain] = useState("");
@@ -139,95 +141,139 @@ const Profile = () => {
   const [showChecklist, setShowChecklist] = useState(false);
   const [token, setToken] = useState(null);
 
-useEffect(() => {
-  if (typeof window !== "undefined") {
-    const params = new URLSearchParams(window.location.search);
-    const tok = params.get("token");
-    setToken(tok);
-    log("🆔 Token uit URL gehaald", { tok });
-  }
-}, []);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const tok = params.get("token");
+      setToken(tok);
+      log("🆔 Token uit URL gehaald", { tok });
+    }
+  }, []);
 
   useEffect(() => {
-      const fetchProvider = async () => {
-        try {
-          const { data } = await supabase.auth.getSession();
-          const sessionUser = data?.session?.user;
-          let userProvider = sessionUser?.app_metadata?.provider || "";
+    const fetchProvider = async () => {
+      try {
+        const { data, error: sessionError } = await supabase.auth.getSession();
+        const sessionUser = data?.session?.user;
+        let provider = sessionUser?.app_metadata?.provider || "";
+        let providers = sessionUser?.app_metadata?.providers || [];
   
-          // Fallback via getUser() als provider ontbreekt
-          if (!userProvider && sessionUser?.id) {
-            const { data: userData, err } = await supabase.auth.getUser();
-            if (err) {
-              error("Fallback getUser() mislukt", { err });
-            } else {
-              userProvider = userData?.user?.app_metadata?.provider || "";
-              log("📦 Fallback via getUser() gebruikt", { userProvider });
-            }
+        // Fallback via getUser() als providers ontbreken
+        if ((!provider || providers.length === 0) && sessionUser?.id) {
+          const { data: userData, error: userError } = await supabase.auth.getUser();
+          if (userError) {
+            error("⚠️ Fallback getUser() mislukt", { userError });
+          } else {
+            provider = userData?.user?.app_metadata?.provider || "";
+            providers = userData?.user?.app_metadata?.providers || [];
+            log("📦 Fallback via getUser() gebruikt", { provider, providers });
           }
-  
-          // ✅ Controleer op aanwezigheid van 'email' in de lijst (bijv. 'email,google')
-          const isEmail = userProvider
-            .split(",")
-            .map((p) => p.trim().toLowerCase())
-            .includes("email");
-  
-          setSession(data?.session || null);
-          setIsEmailUser(isEmail);
-          log("🔍 Auth provider gedetecteerd", { userProvider, isEmail });
-        } catch (err) {
-          error("Fout bij ophalen provider", { err });
         }
-      };
-  
-      fetchProvider();
-    }, []);
 
+        // 🔍 Detecteer extreme fallback-situatie: email-user zonder metadata
+        if (!provider && (!providers || providers.length === 0)) {
+          log("ℹ️ Lege provider: klassieke email-user zonder metadata", {
+            user: sessionUser,
+          });
+        }        
+  
+        const isEmailUser =
+          provider === "email" ||
+          providers.includes("email") ||
+          provider === ""; // fallback voor oudere of incomplete accounts
+  
+        setSession(data?.session || null);
+        setIsEmailUser(isEmailUser);
+  
+        log("🔍 Auth provider gedetecteerd", {
+          provider,
+          providers,
+          isEmailUser,
+        });
+      } catch (err) {
+        error("🚨 Fout bij ophalen provider", { err });
+      }
+    };
+  
+    fetchProvider();
+  }, []);
+  
   useEffect(() => {
     const verifyFlow = async () => {
-      if (tokenValid) return;
-      setStatusCode(null);
-    
-      if (wasVerified.current) {
-        log("✅ Token was already verified in localStorage", { token });
-        setTokenValid(true);
-        return;
-      }
-    
-      if (token) {
-        try {
+      try {
+        setStatusCode(null);
+
+        if (wasVerified.current) {
+          log("✅ Token was already verified in localStorage", { token });
+          const session = await waitForSession(10, 300);
+          setSession(session);
+          setTokenValid(true);
+          return;
+        }
+
+        if (token) {
           const res = await fetch("/api/verify-email", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ token }),
           });
-    
+
           const data = await res.json();
-    
+
           if (data.code === "EMAIL_VERIFIED") {
             localStorage.setItem("verified", "true");
             if (data.email) localStorage.setItem("verifiedEmail", data.email);
             log("📬 Email geverifieerd", { email: data.email });
+  
+            // ✅ Stel sessie expliciet in met access/refresh tokens (indien aanwezig)
+            if (data.access_token && data.refresh_token) {
+              const { error: tokenError } = await supabase.auth.setSession({
+                access_token: data.access_token,
+                refresh_token: data.refresh_token,
+              });
+  
+              if (tokenError) {
+                error("❗ Kon sessie niet instellen na verificatie", { tokenError });
+              } else {
+                log("🟢 Sessietokens succesvol ingesteld na verificatie", {
+                  access_token: data.access_token,
+                });
+              }
+            } else {
+              warn("⚠️ Geen tokens ontvangen uit verify-email.js", { data });
+            }
+
+            // ⚠️ Zorg dat een sessie actief is
+            const session = await waitForSession(10, 300);
+            if (!session) {
+              warn("❗ Geen sessie na verificatie", {});
+              setStatusCode("TOKEN_NOT_FOUND");
+              return;
+            }
+
+            setSession(session);
             setTokenValid(true);
             return;
           }
 
           captureApiError("/api/verify-email", res, { errorCode: data?.code || "UNKNOWN_ERROR", response: data, token });
           setStatusCode(data.code || "INTERNAL_ERROR");
-        } catch (err) {
-          error("Verificatie API-call faalt", { err });
-          setStatusCode("INTERNAL_ERROR");
-        }
-      } else {
-        const foundSession = await waitForSession();
-        if (foundSession) {
-        log("🟢 Sessie gevonden zonder token", { session: foundSession, hasToken: !!token, verified: wasVerified.current });
-          setTokenValid(true);
-          setSession(foundSession);
         } else {
-          warn("🔴 Geen token en geen sessie gevonden", { token });
-          setStatusCode("TOKEN_NOT_FOUND");
+          const foundSession = await waitForSession();
+          if (foundSession) {
+            log("🟢 Sessie gevonden zonder token", { session: foundSession, hasToken: !!token, verified: wasVerified.current });
+            setTokenValid(true);
+            setSession(foundSession);
+          } else {
+            warn("🔴 Geen token en geen sessie gevonden", { token });
+            setStatusCode("TOKEN_NOT_FOUND");
+          }
         }
+      } catch (err) {
+        error("Fout tijdens verifyFlow", { err });
+        setStatusCode("INTERNAL_ERROR");
+      } finally {
+        setIsVerifying(false); // ✅ klaar met controleren
       }
     };
 
@@ -463,7 +509,10 @@ useEffect(() => {
       setLoading(false);
     }
   };
-
+// <Spinner />
+// eventueel vervangen door
+// <div className="text-center text-gray-500">{t("profile.verifying")}</div>
+// of null
   return (
     <>
       <Seo
@@ -472,7 +521,9 @@ useEffect(() => {
       />
       <SectionWrapper bgColor="bg-white">
         <div className="min-h-screen flex justify-center items-start py-24">
-          {tokenValid ? (
+          {isVerifying ? (
+            <Spinner />
+          ) : tokenValid ? (
             <div className="max-w-xs w-full mx-auto">
             <div className="text-center mb-6">
               <img src="/images/CRlogo.jpg" alt={t("profile.logo_alt")} className="h-8 mx-auto" />
