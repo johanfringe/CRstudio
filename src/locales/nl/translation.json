@@ -319,7 +319,7 @@
       "TOKEN_UPDATE_FAILED": "Fout bij vernieuwen van token. Probeer opnieuw.",
       "UNKNOWN_ERROR": "Er is een onbekende fout opgetreden. Probeer opnieuw of contacteer ons supportteam.",
       "USER_CREATION_FAILED": "Er is iets fout gegaan bij het aanmaken van je account.",
-      "USER_NOT_FOUND": "E-mailadres onbekend. Registreer opnieuw."
+      "USER_NOT_FOUND": "Het e-mailadres is onbekend. Registreer opnieuw."
     }
   },
 
