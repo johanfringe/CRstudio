@@ -367,6 +367,67 @@
     }
   },
 
+  "status": {
+    "auth_no_artist": {
+      "registerConfirmed": {
+        "heading": "Registratie bevestigd",
+        "text": "Je bent succesvol geregistreerd. Vervolledig je registratie en activeer je persoonlijke site."
+      },
+      "welcomeBack": {
+        "heading": "Welkom terug",
+        "text": "Vervolledig je registratie en activeer je persoonlijke site."
+      }
+    },
+    "auth_with_artist": {
+      "default": {
+        "heading": "Welkom op jouw site",
+        "text": "Log in om je site te beheren."
+      }
+    },
+    "new_user_expired": {
+      "profileFlow": {
+        "heading": "Nieuwe e-mail verzonden",
+        "text": "Deze link is verlopen. Klik op de link in de e-mail die we daarnet stuurden om verder te gaan."
+      },
+      "registerFlow": {
+        "heading": "Nieuwe e-mail verzonden",
+        "text": "De vorige link is verlopen. Klik op de link in de e-mail die we daarnet stuurden om verder te gaan."
+      }      
+    },
+    "new_user_pending": {
+      "email_send": {
+        "heading": "E-mail verzonden",
+        "text": "Eerste stap is succesvol. Klik op de link in de e-mail die we daarnet stuurden om verder te gaan."
+      },
+      "verifying": {
+        "heading": "Registratie nog niet bevestigd",
+        "text": "Je bent al geregistreerd. Klik op de link in de e-mail die we eerder stuurden om verder te gaan."
+      }      
+    },
+    "unknown_error": {
+      "default": {
+        "heading": "Oeps! Er ging iets mis",
+        "text": "Geen zorgen, probeer het zo meteen nog eens of ververs de pagina."
+      }
+    },
+    "user_not_found": {
+      "default": {
+        "heading": "E-mailadres is onbekend",
+        "text": "Het lijkt erop dat dit e-mailadres niet meer bestaat of nog niet werd geregistreerd. Registreer opnieuw."
+      }
+    },
+    "verified_no_session": {
+      "login_Email": {
+        "heading": "Nieuwe e-mail verzonden",
+        "text": "Je hebt al een account. Klik op de link in de e-mail die we daarnet stuurden om verder te gaan."
+      },
+      "login_Google": {
+        "heading": "Even opnieuw aanmelden",
+        "text": "Je hebt al een account. Log opnieuw in met Google om verder te gaan."
+      }
+    }
+  },
+
   "terms": {
     "seoTitle": "Algemene Voorwaarden",
     "seoDescription": "Lees hier onze algemene voorwaarden.",
@@ -435,7 +496,7 @@
   },
   
   "testi": {
-    "testimonial_title": "Zij vertrouwen op CRstudio om kunstwerken te behouden en te beschermen",
+    "testimonial_title": "Ze vertrouwen CRstudio om kunst te behouden, bewaken en te beschermen",
     "feature_1": "Een krachtige, eenvoudige en veilige tool om mijn volledig oeuvre te tonen aan verzamelaars, galeriehouders, curatoren en kunsthistorici.",
     "feature_2": "Eindelijk kan ik het werk van mijn grootvader goedkoop bewaren en bewaken voor toekomstige generaties",
     "feature_3": "Een uiterst efficiënte manier om de artistieke nalatenschap van een kunstenaar te documenteren en te archiveren.",

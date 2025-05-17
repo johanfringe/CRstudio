@@ -35,7 +35,7 @@ export default async function handler(req, res) {
     }
 
     const { code, email, details } = data;
-    log("🔍 Verificatie status ontvangen", { code, email });
+    log("🔍 Verificatie status ontvangen", { code, email, createdAt });
 
     switch (code) {
       case "EMAIL_VERIFIED": {
@@ -82,6 +82,7 @@ export default async function handler(req, res) {
           email,
           access_token: sessionData.session.access_token,
           refresh_token: sessionData.session.refresh_token,
+          createdAt,
         });
       }
 

@@ -107,7 +107,13 @@ export async function validatePassword(password, context = {}) {
       .filter(Boolean)
       .map((x) => x.toLowerCase());
 
-      const matched = blocked.find((term) => lowered.includes(term));
+      // 🔍 Extra afleidingen voor betere matching
+      const splitEmail = context.email?.split("@")[0]?.toLowerCase();
+      const baseName = context.name?.toLowerCase().replace(/[^a-z0-9]/g, "");
+      const additional = [splitEmail, baseName].filter(Boolean);
+      const allTerms = [...blocked, ...additional];
+  
+      const matched = allTerms.find((term) => lowered.includes(term));
       if (matched) {
         warn("⚠️ Wachtwoord bevat persoonlijke info", { matched, context });
         return "auth.passwordIncludesPersonalInfo";

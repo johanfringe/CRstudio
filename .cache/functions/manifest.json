@@ -36,6 +36,33 @@
         "functionId": "compare-api-4-js"
     },
     {
+        "functionRoute": "CompareApi5",
+        "pluginName": "default-site-plugin",
+        "originalAbsoluteFilePath": "/Users/johan/CRstudio/CRstudio/src/api/CompareApi5.js",
+        "originalRelativeFilePath": "CompareApi5.js",
+        "relativeCompiledFilePath": "CompareApi5.js",
+        "absoluteCompiledFilePath": "/Users/johan/CRstudio/CRstudio/.cache/functions/CompareApi5.js",
+        "functionId": "compare-api-5-js"
+    },
+    {
+        "functionRoute": "CompareApi6",
+        "pluginName": "default-site-plugin",
+        "originalAbsoluteFilePath": "/Users/johan/CRstudio/CRstudio/src/api/CompareApi6.js",
+        "originalRelativeFilePath": "CompareApi6.js",
+        "relativeCompiledFilePath": "CompareApi6.js",
+        "absoluteCompiledFilePath": "/Users/johan/CRstudio/CRstudio/.cache/functions/CompareApi6.js",
+        "functionId": "compare-api-6-js"
+    },
+    {
+        "functionRoute": "CompareApi7",
+        "pluginName": "default-site-plugin",
+        "originalAbsoluteFilePath": "/Users/johan/CRstudio/CRstudio/src/api/CompareApi7.js",
+        "originalRelativeFilePath": "CompareApi7.js",
+        "relativeCompiledFilePath": "CompareApi7.js",
+        "absoluteCompiledFilePath": "/Users/johan/CRstudio/CRstudio/.cache/functions/CompareApi7.js",
+        "functionId": "compare-api-7-js"
+    },
+    {
         "functionRoute": "profile",
         "pluginName": "default-site-plugin",
         "originalAbsoluteFilePath": "/Users/johan/CRstudio/CRstudio/src/api/profile.js",
