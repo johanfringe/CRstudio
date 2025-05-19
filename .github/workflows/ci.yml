@@ -74,6 +74,7 @@ jobs:
           path: public/
 
       - name: Deploy to Netlify via CLI
+      # OPGELET: zijn secret!
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
