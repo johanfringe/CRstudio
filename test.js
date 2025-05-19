@@ -1,2 +1,2 @@
 // test.js
-const x =     3
+const foo      = "bad spacing"
