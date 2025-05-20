@@ -1,5 +1,4 @@
 // src/components/Seo.js :
-import React from "react";
 import { Helmet } from "react-helmet";
 import { useI18next, useTranslation } from "gatsby-plugin-react-i18next";
 
@@ -49,7 +48,7 @@ const Seo = ({ title, description }) => {
       <meta name="twitter:card" content="summary_large_image" />
 
       {/* Multilingual Hreflang - Wat doet dit hier? */}
-      {languages.map((lang) => (
+      {languages.map(lang => (
         <link
           key={lang}
           rel="alternate"
@@ -57,7 +56,7 @@ const Seo = ({ title, description }) => {
           href={`${siteUrl}/${lang}${originalPath}`}
         />
       ))}
-      
+
       {/* Favicon */}
       <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
       <link rel="icon" href="/icons/favicon.ico" sizes="any" />

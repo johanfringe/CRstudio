@@ -31,19 +31,10 @@ export const captureApiError = (endpoint, response, extra = {}) => {
   const logContext = { response, ...extra, status, statusText, code };
 
   // ✅ Bekende successcodes die géén fout of waarschuwing zijn
-  const knownSuccessCodes = [
-    "REGISTER_OK",
-    "EMAIL_SEND",
-    "EMAIL_SEND_AGAIN",
-    "ALREADY_REGISTERED"
-  ];
+  const knownSuccessCodes = ["REGISTER_OK", "EMAIL_SEND", "EMAIL_SEND_AGAIN", "ALREADY_REGISTERED"];
 
   // ⚠️ Codes die een 'milde waarschuwing' aangeven (bijv. dubbele registratie)
-  const warnCodes = [
-    "EMAIL_DUPLICATE",
-    "TURNSTILE_FAILED",
-    "EMAIL_INVALID"
-  ];
+  const warnCodes = ["EMAIL_DUPLICATE", "TURNSTILE_FAILED", "EMAIL_INVALID"];
 
   const isNoResponse = status === "NO_RESPONSE";
   const isHttpError = status >= 400;
@@ -51,7 +42,10 @@ export const captureApiError = (endpoint, response, extra = {}) => {
   const isWarn = warnCodes.includes(code);
 
   const shouldLogAsError =
-  isNoResponse || (isHttpError && !isWarn) || extra.forceCapture || (!isKnownSuccess && !isWarn && status < 400);
+    isNoResponse ||
+    (isHttpError && !isWarn) ||
+    extra.forceCapture ||
+    (!isKnownSuccess && !isWarn && status < 400);
 
   const message = `📡 API-respons van ${endpoint}: ${status} ${statusText}`;
 
@@ -70,12 +64,14 @@ export const throwTestError = () => {
 };
 
 // Helpers om taal en subdomein te capteren
-function getLang() {
+// ze kunnen geimporteerd worden :
+// import { getLang, getSubdomain } from "../utils/logger";
+export function getLang() {
   if (typeof window === "undefined") return "unknown";
   return document?.documentElement?.lang || navigator.language || "unknown";
 }
 
-function getSubdomain() {
+export function getSubdomain() {
   if (typeof window === "undefined") return "server";
   const host = window.location.hostname;
   const parts = host.split(".");

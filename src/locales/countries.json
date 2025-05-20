@@ -1,57 +1,55 @@
 [
-    
-    {
-      "country_code": "DZ",
-      "names": [
-        { "language": "en", "name": "Algeria" },
-        { "language": "ar", "name": "الجزائر" },
-        { "language": "fr", "name": "Algérie" }
-      ]
-    },
-    {
-      "country_code": "AR",
-      "names": [
-        { "language": "en", "name": "Argentina" },
-        { "language": "es", "name": "Argentina" }
-      ]
-    },
-    {
-      "country_code": "AT",
-      "names": [
-        { "language": "en", "name": "Austria" },
-        { "language": "de", "name": "Österreich" }
-      ]
-    },
-    {
-      "country_code": "BE",
-      "names": [
-        { "language": "en", "name": "Belgium" },
-        { "language": "nl", "name": "België" },
-        { "language": "fr", "name": "Belgique" },
-        { "language": "de", "name": "Belgien" }
-      ]
-    },
-    {
-      "country_code": "GQ",
-      "names": [
-        { "language": "en", "name": "Equatorial Guinea" },
-        { "language": "es", "name": "Guinea Ecuatorial" },
-        { "language": "fr", "name": "Guinée équatoriale" }
-      ]
-    },
-    {
-      "country_code": "FR",
-      "names": [
-        { "language": "en", "name": "France" },
-        { "language": "fr", "name": "France" }
-      ]
-    },
-    {
-      "country_code": "NL",
-      "names": [
-        { "language": "en", "name": "Netherlands" },
-        { "language": "nl", "name": "Nederland" }
-      ]
-    }
-  ]
-  
+  {
+    "country_code": "DZ",
+    "names": [
+      { "language": "en", "name": "Algeria" },
+      { "language": "ar", "name": "الجزائر" },
+      { "language": "fr", "name": "Algérie" }
+    ]
+  },
+  {
+    "country_code": "AR",
+    "names": [
+      { "language": "en", "name": "Argentina" },
+      { "language": "es", "name": "Argentina" }
+    ]
+  },
+  {
+    "country_code": "AT",
+    "names": [
+      { "language": "en", "name": "Austria" },
+      { "language": "de", "name": "Österreich" }
+    ]
+  },
+  {
+    "country_code": "BE",
+    "names": [
+      { "language": "en", "name": "Belgium" },
+      { "language": "nl", "name": "België" },
+      { "language": "fr", "name": "Belgique" },
+      { "language": "de", "name": "Belgien" }
+    ]
+  },
+  {
+    "country_code": "GQ",
+    "names": [
+      { "language": "en", "name": "Equatorial Guinea" },
+      { "language": "es", "name": "Guinea Ecuatorial" },
+      { "language": "fr", "name": "Guinée équatoriale" }
+    ]
+  },
+  {
+    "country_code": "FR",
+    "names": [
+      { "language": "en", "name": "France" },
+      { "language": "fr", "name": "France" }
+    ]
+  },
+  {
+    "country_code": "NL",
+    "names": [
+      { "language": "en", "name": "Netherlands" },
+      { "language": "nl", "name": "Nederland" }
+    ]
+  }
+]

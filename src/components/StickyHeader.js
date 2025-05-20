@@ -1,5 +1,5 @@
 // src/components/StickyHeader.js :
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link as GatsbyLink, graphql, useStaticQuery } from "gatsby";
 import { Link as ScrollLink } from "react-scroll";
 import { useTranslation } from "gatsby-plugin-react-i18next";
@@ -47,8 +47,8 @@ const StickyHeader = ({ sections }) => {
     if (!("IntersectionObserver" in window)) return;
 
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
+      entries => {
+        entries.forEach(entry => {
           if (entry.isIntersecting) {
             setActiveSection(entry.target.id);
             console.log("🌍 Actieve sectie", { id: entry.target.id });
@@ -58,35 +58,36 @@ const StickyHeader = ({ sections }) => {
       { rootMargin: "-50% 0px -50% 0px", threshold: 0.3 }
     );
 
-    const observedSections = sections
-      .map(({ id }) => document.getElementById(id))
-      .filter(Boolean);
+    const observedSections = sections.map(({ id }) => document.getElementById(id)).filter(Boolean);
 
-    observedSections.forEach((section) => observer.observe(section));
+    observedSections.forEach(section => observer.observe(section));
 
     return () => {
-      observedSections.forEach((section) => observer.unobserve(section));
+      observedSections.forEach(section => observer.unobserve(section));
       observer.disconnect();
     };
   }, [sections]);
 
   return (
     <motion.header
-      className="sticky top-0 bg-white z-50"
+      className="sticky top-0 z-50 bg-white"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      <nav className="max-w-screen-xl mx-auto py-4 px-[min(5vw,2rem)] flex justify-between items-center">
+      <nav className="mx-auto flex max-w-screen-xl items-center justify-between px-[min(5vw,2rem)] py-4">
         {/* ✅ Logo */}
         <div className="flex items-center">
           <GatsbyLink to="/" className="flex items-center" aria-label={t("stheader.logo_label")}>
-            <GatsbyImage image={data.file.childImageSharp.gatsbyImageData} alt={t("stheader.logo_alt")} />
+            <GatsbyImage
+              image={data.file.childImageSharp.gatsbyImageData}
+              alt={t("stheader.logo_alt")}
+            />
           </GatsbyLink>
         </div>
 
         {/* ✅ Desktop Navigatie */}
-        <ul className="hidden lg:flex space-x-6 items-center">
+        <ul className="hidden items-center space-x-6 lg:flex">
           {sections.map(({ id, label }) => (
             <li key={id}>
               <ScrollLink
@@ -97,8 +98,8 @@ const StickyHeader = ({ sections }) => {
                 spy
                 activeClass="text-black border-b-2 border-black"
                 onClick={() => setActiveSection(id)}
-                className={`relative px-4 py-2 text-sm font-medium cursor-pointer text-gray-800 hover:text-black ${
-                  activeSection === id ? "text-black border-b-2 border-black" : ""
+                className={`relative cursor-pointer px-4 py-2 text-sm font-medium text-gray-800 hover:text-black ${
+                  activeSection === id ? "border-b-2 border-black text-black" : ""
                 }`}
               >
                 {t(label)}
@@ -108,7 +109,7 @@ const StickyHeader = ({ sections }) => {
         </ul>
 
         {/* ✅ Rechtersectie */}
-        <div className="hidden lg:flex space-x-4 items-center">
+        <div className="hidden items-center space-x-4 lg:flex">
           <LanguageSwitcher />
           <GatsbyLink to="/register" className="btn btn-primary">
             {t("stheader.trial")}
@@ -118,13 +119,18 @@ const StickyHeader = ({ sections }) => {
         {/* ✅ Mobiele Menu Knop */}
         <div className="lg:hidden">
           <button
-            onClick={() => setIsMenuOpen((prev) => !prev)}
+            onClick={() => setIsMenuOpen(prev => !prev)}
             className="p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             aria-label="Toggle navigation"
             aria-expanded={isMenuOpen}
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
             </svg>
           </button>
         </div>
@@ -139,7 +145,7 @@ const StickyHeader = ({ sections }) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="absolute left-0 top-16 w-full bg-white shadow-md p-6 flex flex-col space-y-1 text-center z-40"
+            className="absolute left-0 top-16 z-40 flex w-full flex-col space-y-1 bg-white p-6 text-center shadow-md"
           >
             {sections.map(({ id, label }) => (
               <li key={id} className="py-2">
@@ -154,7 +160,7 @@ const StickyHeader = ({ sections }) => {
                     setActiveSection(id);
                     setIsMenuOpen(false);
                   }}
-                  className="text-sm text-gray-800 hover:text-black px-2"
+                  className="px-2 text-sm text-gray-800 hover:text-black"
                 >
                   {t(label)}
                 </ScrollLink>
@@ -165,7 +171,11 @@ const StickyHeader = ({ sections }) => {
               <LanguageSwitcher />
             </li>
             <li className="py-2">
-              <GatsbyLink to="/register" className="btn btn-primary" onClick={() => setIsMenuOpen(false)}>
+              <GatsbyLink
+                to="/register"
+                className="btn btn-primary"
+                onClick={() => setIsMenuOpen(false)}
+              >
                 {t("stheader.trial")}
               </GatsbyLink>
             </li>

@@ -5,24 +5,24 @@
 
 /* ✅ Inter voor bodytekst en UI */
 @font-face {
-  font-family: 'Inter';
-  src: url('/fonts/Inter-Regular.woff2') format('woff2');
+  font-family: "Inter";
+  src: url("/fonts/Inter-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Inter';
-  src: url('/fonts/Inter-Bold.woff2') format('woff2');
+  font-family: "Inter";
+  src: url("/fonts/Inter-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Inter';
-  src: url('/fonts/Inter-Italic.woff2') format('woff2');
+  font-family: "Inter";
+  src: url("/fonts/Inter-Italic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -30,16 +30,16 @@
 
 /* ✅ Inter Display voor titels */
 @font-face {
-  font-family: 'Inter Display';
-  src: url('/fonts/InterDisplay-Regular.woff2') format('woff2');
+  font-family: "Inter Display";
+  src: url("/fonts/InterDisplay-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Inter Display';
-  src: url('/fonts/InterDisplay-Bold.woff2') format('woff2');
+  font-family: "Inter Display";
+  src: url("/fonts/InterDisplay-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -47,19 +47,21 @@
 
 /* ✅ CSS variabelen */
 :root {
-  --font-sans: 'Inter', sans-serif; /* ✅ Verander dit ook in tailwind.config ! */
-  --font-display: 'Inter Display', sans-serif;
+  --font-sans: "Inter", sans-serif; /* ✅ Verander dit ook in tailwind.config ! */
+  --font-display: "Inter Display", sans-serif;
 }
 
 /* ✅ Standaard instellingen */
 body {
   font-family: var(--font-sans); /* ✅ Moderne variabelen */
-  font-family: 'Inter', sans-serif; /* ✅ Ouderwetse fallback */
+  font-family: "Inter", sans-serif; /* ✅ Ouderwetse fallback */
   font-weight: 400;
 }
 
 /* ✅ Gebruik Inter Display voor koppen */
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-family: var(--font-display);
   font-weight: 700;
 }
@@ -68,35 +70,38 @@ html {
   scroll-behavior: smooth;
 }
 
-
 .btn {
-  @apply px-7 py-2 rounded-full bg-blue-500 text-white font-medium transition-all duration-300;
+  @apply rounded-full bg-blue-500 px-7 py-2 font-medium text-white transition-all duration-300;
 }
 .btn-primary {
-  @apply bg-blue-500 hover:bg-blue-600 focus:ring-blue-300 text-white;
+  @apply bg-blue-500 text-white hover:bg-blue-600 focus:ring-blue-300;
 }
-.btn-secondary { /* Bv Annuleren */
-  @apply bg-gray-500 hover:bg-gray-600 focus:ring-gray-300 text-white;
+.btn-secondary {
+  /* Bv Annuleren */
+  @apply bg-gray-500 text-white hover:bg-gray-600 focus:ring-gray-300;
 }
-.btn-tertiary { /* Bv Contact */
-  @apply bg-green-500 hover:bg-green-600 focus:ring-green-300 text-white;
+.btn-tertiary {
+  /* Bv Contact */
+  @apply bg-green-500 text-white hover:bg-green-600 focus:ring-green-300;
 }
-.btn-danger {/* Bv Verwijderen */
-  @apply bg-red-500 hover:bg-red-600 focus:ring-red-300 text-white;
+.btn-danger {
+  /* Bv Verwijderen */
+  @apply bg-red-500 text-white hover:bg-red-600 focus:ring-red-300;
 }
-.btn-outline {/* Bv Tweede knop met witte achtergrond */
-  @apply border border-blue-500 text-blue-500 bg-white hover:bg-blue-500 hover:text-white;
+.btn-outline {
+  /* Bv Tweede knop met witte achtergrond */
+  @apply border border-blue-500 bg-white text-blue-500 hover:bg-blue-500 hover:text-white;
 }
 
 .input {
-  @apply p-1 border rounded-lg w-full text-gray-500 text-sm md:text-base;
+  @apply w-full rounded-lg border p-1 text-sm text-gray-500 md:text-base;
   @apply focus:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-300;
 }
 .input-error {
   @apply border-red-500 focus:bg-red-100 focus:ring-red-300;
 }
 .select {
-  @apply input appearance-none  text-gray-500 text-sm md:text-base;
+  @apply input appearance-none text-sm text-gray-500 md:text-base;
   @apply hover:bg-white;
 }
 .select option {
@@ -104,22 +109,22 @@ html {
   color: #6b7280; /* Grijs (#6b7280 = Tailwind's text-gray-500) */
 }
 .radio-wrapper {
-  @apply flex items-center space-x-4 mb-4;
+  @apply mb-4 flex items-center space-x-4;
 }
 .radio-label {
   @apply flex items-center space-x-2 text-gray-700;
 }
 .radio-input {
-  @apply w-4 h-4 text-blue-500 border-gray-300 rounded-full;
+  @apply h-4 w-4 rounded-full border-gray-300 text-blue-500;
 }
 .intro-text {
-  @apply text-sm text-center text-gray-600 mb-6;
+  @apply mb-6 text-center text-sm text-gray-600;
 }
 
 /* .textarea = Om opmderkingen in een invulformulier te schrijven */
 
 .card {
-  @apply shadow-lg rounded-lg p-4;
+  @apply rounded-lg p-4 shadow-lg;
   @apply border border-gray-200 p-6;
 }
 .card-primary {

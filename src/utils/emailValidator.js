@@ -19,8 +19,7 @@
  * Voor strengere validatie: combineer dit met Kickbox of een dubbele bevestiging per e-mail.
  */
 
-export const validateEmail = (email) => {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-  };
-  
+export const validateEmail = email => {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(email);
+};

@@ -1,48 +1,40 @@
+#.gitignore :
 # Node.js
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Environment variables
-.env
-.env.* # Voor specifieke omgevingen zoals .env.production of .env.development
-content/settings/.env
-content/settings/.env.development
-content/settings/.env.production
-
-# Gatsby files
+# Gatsby
 .cache/
 public/
 
-# Logs
-*.log
-
-# OS-specifieke bestanden
-.DS_Store
-Thumbs.db
-
-# Editor-specifieke bestanden
-.idea/
-.vscode/
-*.sublime-workspace
-
 # Build outputs
 dist/
-
-# Dependency directories
+coverage/
 bower_components/
 
-# Miscellaneous
+# Environment
+.env
+.env.*
+.env.sentry-build-plugin
+content/settings/.env*
+
+# Editor-specific
+.vscode/
+.idea/
+*.sublime-workspace
+
+# Logs
+*.log
 *.bak
 *.tmp
 *.swp
-*.swp~
-node_modules
 
-# Local Netlify folder
-.netlify
+# Misc
+.DS_Store
+Thumbs.db
+
+# Hosting
+.netlify/
 supabase/
-
-# Sentry Config File
-.env.sentry-build-plugin

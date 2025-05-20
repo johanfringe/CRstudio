@@ -7,7 +7,8 @@ const MIN_LENGTH = 12;
 const MAX_LENGTH = 64;
 
 // Geen spaties-only, geen control characters, correcte lengte
-const passwordRegex = /^(?!.*[\s]{12,})[\p{L}\p{N}\p{P}\p{S}\p{Zs}\p{M}\p{Extended_Pictographic}]{12,64}$/u;
+const passwordRegex =
+  /^(?!.*[\s]{12,})[\p{L}\p{N}\p{P}\p{S}\p{Zs}\p{M}\p{Extended_Pictographic}]{12,64}$/u;
 
 let zxcvbnModule = null;
 
@@ -17,11 +18,11 @@ let zxcvbnModule = null;
 export const preloadZxcvbn = () => {
   if (!zxcvbnModule) {
     import("zxcvbn")
-      .then((mod) => {
+      .then(mod => {
         zxcvbnModule = mod.default || mod;
         log("🔍 zxcvbn-module vooraf geladen.");
       })
-      .catch((err) => {
+      .catch(err => {
         error("❌ Fout bij preload van zxcvbn", { err });
       });
   }
@@ -38,12 +39,12 @@ export async function validatePassword(password, context = {}) {
     if (!password) {
       warn("⚠️ Geen wachtwoord ingevoerd", { context });
       return "auth.passwordTooShort";
-    }    
+    }
 
     // 1. Regex: lengte, inhoud, spaties
     log("🧪 Start regex-validatie wachtwoord", { passwordLength: password.length });
     if (!passwordRegex.test(password)) {
-    log("🔍 Regex-validatie mislukt", { passwordLength: password.length });
+      log("🔍 Regex-validatie mislukt", { passwordLength: password.length });
       if (password.length < MIN_LENGTH || password.length > MAX_LENGTH) {
         return "auth.passwordTooShort";
       }
@@ -53,12 +54,47 @@ export async function validatePassword(password, context = {}) {
       return "auth.passwordInvalidChars";
     }
 
-    const blacklistRegex = new RegExp(
-      String.raw`[\u0000-\u001F\u200B\u200C\u200D\u2060\uFEFF]`,
-      "u"
-    );
+    const forbiddenChars = [
+      "\u0000",
+      "\u0001",
+      "\u0002",
+      "\u0003",
+      "\u0004",
+      "\u0005",
+      "\u0006",
+      "\u0007",
+      "\u0008",
+      "\u0009",
+      "\u000A",
+      "\u000B",
+      "\u000C",
+      "\u000D",
+      "\u000E",
+      "\u000F",
+      "\u0010",
+      "\u0011",
+      "\u0012",
+      "\u0013",
+      "\u0014",
+      "\u0015",
+      "\u0016",
+      "\u0017",
+      "\u0018",
+      "\u0019",
+      "\u001A",
+      "\u001B",
+      "\u001C",
+      "\u001D",
+      "\u001E",
+      "\u001F",
+      "\u200B",
+      "\u200C",
+      "\u200D",
+      "\u2060",
+      "\uFEFF",
+    ];
 
-    if (blacklistRegex.test(password)) {
+    if ([...password].some(char => forbiddenChars.includes(char))) {
       warn("⚠️ Wachtwoord bevat control/unicode-tekens", { length: password.length });
       return "auth.passwordInvalidChars";
     }
@@ -70,54 +106,57 @@ export async function validatePassword(password, context = {}) {
     }
 
     // 3. Dynamische import van zxcvbn
-      try {
-        log("📦 Laden van zxcvbn-module gestart", { email: context.email });
-        if (!zxcvbnModule) {
-          const mod = await import("zxcvbn");
-          zxcvbnModule = mod.default || mod;
-          log("✅ zxcvbn geladen bij wachtwoordvalidatie");
-        }
-    
-        const { score } = zxcvbnModule(password);
-        log("🔐 zxcvbn-score wachtwoord", { score, email: context?.email });
-            if (score < 2) {
-              return "auth.passwordTooWeak";
-            }
-      } catch (err) {
-        error("❌ Fout bij laden of uitvoeren van zxcvbn", { err });
-        return "auth.passwordCheckFailed";
+    try {
+      log("📦 Laden van zxcvbn-module gestart", { email: context.email });
+      if (!zxcvbnModule) {
+        const mod = await import("zxcvbn");
+        zxcvbnModule = mod.default || mod;
+        log("✅ zxcvbn geladen bij wachtwoordvalidatie");
       }
 
-    // 4. HIBP-check
-  try {
-    log("🔎 Start HIBP-check");
-    const isLeaked = await checkHIBPPassword(password);
-    if (isLeaked) {
-        warn("⚠️ Wachtwoord gevonden in HIBP-database", { length: password.length, email: context.email });
-      return "auth.passwordLeaked";
+      const { score } = zxcvbnModule(password);
+      log("🔐 zxcvbn-score wachtwoord", { score, email: context?.email });
+      if (score < 2) {
+        return "auth.passwordTooWeak";
+      }
+    } catch (err) {
+      error("❌ Fout bij laden of uitvoeren van zxcvbn", { err });
+      return "auth.passwordCheckFailed";
     }
-  } catch (err) {
-    error("❌ Fout bij HIBP-check", { error: err.message });
-    return "auth.passwordCheckFailed";
-  }
+
+    // 4. HIBP-check
+    try {
+      log("🔎 Start HIBP-check");
+      const isLeaked = await checkHIBPPassword(password);
+      if (isLeaked) {
+        warn("⚠️ Wachtwoord gevonden in HIBP-database", {
+          length: password.length,
+          email: context.email,
+        });
+        return "auth.passwordLeaked";
+      }
+    } catch (err) {
+      error("❌ Fout bij HIBP-check", { error: err.message });
+      return "auth.passwordCheckFailed";
+    }
 
     // 5. Persoonlijke info check
     const lowered = password.toLowerCase();
     const blocked = [context.email, context.name, context.subdomain]
       .filter(Boolean)
-      .map((x) => x.toLowerCase());
+      .map(x => x.toLowerCase());
 
-      // 🔍 Extra afleidingen voor betere matching
-      const splitEmail = context.email?.split("@")[0]?.toLowerCase();
-      const baseName = context.name?.toLowerCase().replace(/[^a-z0-9]/g, "");
-      const additional = [splitEmail, baseName].filter(Boolean);
-      const allTerms = [...blocked, ...additional];
-  
-      const matched = allTerms.find((term) => lowered.includes(term));
-      if (matched) {
-        warn("⚠️ Wachtwoord bevat persoonlijke info", { matched, context });
-        return "auth.passwordIncludesPersonalInfo";
-      }      
+    // 🔍 Extra afleidingen voor betere matching
+    const splitEmail = context.email?.split("@")[0]?.toLowerCase();
+    const baseName = context.name?.toLowerCase().replace(/[^a-z0-9]/g, "");
+    const additional = [splitEmail, baseName].filter(Boolean);
+    const allTerms = [...blocked, ...additional];
+
+    const matched = allTerms.find(term => lowered.includes(term));
+    if (matched) {
+      warn("⚠️ Wachtwoord bevat persoonlijke info", { matched, context });
+      return "auth.passwordIncludesPersonalInfo";
+    }
 
     log("✅ Wachtwoord gevalideerd — alles ok", { context });
     return null; // ✅ alles ok

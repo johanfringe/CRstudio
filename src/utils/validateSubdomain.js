@@ -2,8 +2,8 @@
 
 // src/utils/validateSubdomain.js
 
-import { subdomainBlocklist } from './subdomainBlocklist';
-import { log, warn, error } from './logger';
+import { subdomainBlocklist } from "./subdomainBlocklist";
+import { log, warn, error } from "./logger";
 
 export const MIN_LENGTH = 5;
 export const MAX_LENGTH = 63;
@@ -15,9 +15,9 @@ export const allowedCharsRegex = /^[a-z0-9-]+$/;
 /**
  * ✅ Geef per validatiestap een boolean terug (UX purposes)
  */
-export function getSubdomainValidationSteps(input = '') {
+export function getSubdomainValidationSteps(input = "") {
   // 🔐 Enkel echte strings verwerken — anders vervangen door lege string
-  const raw = typeof input === 'string' ? input.trim() : '';
+  const raw = typeof input === "string" ? input.trim() : "";
   const sub = raw.toLowerCase();
 
   const steps = {
@@ -30,46 +30,46 @@ export function getSubdomainValidationSteps(input = '') {
     notInBlocklist: !subdomainBlocklist.has(sub),
   };
 
-  log('🔍 Subdomain validatiestappen', { input, steps });
+  log("🔍 Subdomain validatiestappen", { input, steps });
   return steps;
 }
 
 /**
  * ✅ Retourneert foutcode string of null
  */
-export function validateSubdomain(input = '') {
+export function validateSubdomain(input = "") {
   // 🔐 Enkel echte strings verwerken — anders vervangen door lege string
-  const raw = typeof input === 'string' ? input.trim() : '';
+  const raw = typeof input === "string" ? input.trim() : "";
   const sub = raw.toLowerCase();
 
-  log('🔧 Ontvangen input voor subdomeinvalidatie', { rawInput: input });
-  log('🔍 Subdomein validatie gestart', { sub });
+  log("🔧 Ontvangen input voor subdomeinvalidatie", { rawInput: input });
+  log("🔍 Subdomein validatie gestart", { sub });
 
   // 📏 Lengte check
   if (sub.length < MIN_LENGTH || sub.length > MAX_LENGTH) {
-    warn('📏 Subdomein heeft ongeldige lengte', { sub, length: sub.length });
-    return 'auth.subdomainInvalidLength';
+    warn("📏 Subdomein heeft ongeldige lengte", { sub, length: sub.length });
+    return "auth.subdomainInvalidLength";
   }
 
   // 🔤 Ongeldige karakters
   if (!allowedCharsRegex.test(sub)) {
-    warn('⚠️ Ongeldige tekens in subdomein', { sub });
-    return 'auth.subdomainInvalidFormat';
+    warn("⚠️ Ongeldige tekens in subdomein", { sub });
+    return "auth.subdomainInvalidFormat";
   }
 
   // 📐 Ongeldige structuur volgens regex
   if (!subdomainRegex.test(sub)) {
-    warn('⚠️ Ongeldige structuur in subdomein', { sub });
-    return 'auth.subdomainInvalidStructure';
+    warn("⚠️ Ongeldige structuur in subdomein", { sub });
+    return "auth.subdomainInvalidStructure";
   }
 
   // 🚫 Blocklist
   if (subdomainBlocklist.has(sub)) {
-    error('❌ Subdomein staat op de blocklist', { sub });
-    return 'auth.subdomainBlocklist';
+    error("❌ Subdomein staat op de blocklist", { sub });
+    return "auth.subdomainBlocklist";
   }
 
   // ✅ Alles is geldig
-  log('✅ Subdomein is geldig', { sub });
+  log("✅ Subdomein is geldig", { sub });
   return null;
 }

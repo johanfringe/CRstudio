@@ -1,6 +1,6 @@
 // /src/utils/logStatusToSentry.js :
 
-import * as Sentry from '@sentry/browser';
+import * as Sentry from "@sentry/browser";
 
 /**
  * Logt statusinformatie naar Sentry wanneer dat relevant is.
@@ -22,7 +22,7 @@ export function logStatusToSentry(statusResult) {
     const shouldLog = logToSentry || meta.logToSentry || isFallback;
     if (!shouldLog) return;
 
-    const variant = meta.translationVariant || 'default';
+    const variant = meta.translationVariant || "default";
 
     const contextInfo = {
       statusCode,
@@ -36,29 +36,26 @@ export function logStatusToSentry(statusResult) {
     };
 
     // ✅ Local dev console logging
-    if (process.env.NODE_ENV !== 'production') {
-      console.warn('[CRstudio] Status log to Sentry:', contextInfo);
+    if (process.env.NODE_ENV !== "production") {
+      console.warn("[CRstudio] Status log to Sentry:", contextInfo);
     }
 
     // ✅ Sentry capture
-    Sentry.captureMessage(
-      `[Status] ${statusCode} (${variant})`,
-      {
-        level: isFallback ? 'error' : 'warning',
-        tags: {
-          statusCode,
-          variant,
-          originContext: originContext || 'unknown',
-          fallback: String(isFallback),
-        },
-        extra: contextInfo,
-      }
-    );
+    Sentry.captureMessage(`[Status] ${statusCode} (${variant})`, {
+      level: isFallback ? "error" : "warning",
+      tags: {
+        statusCode,
+        variant,
+        originContext: originContext || "unknown",
+        fallback: String(isFallback),
+      },
+      extra: contextInfo,
+    });
   } catch (error) {
-    console.error('[CRstudio] Failed to log status to Sentry:', error);
+    console.error("[CRstudio] Failed to log status to Sentry:", error);
     Sentry.captureException(error, {
       extra: {
-        location: 'logStatusToSentry',
+        location: "logStatusToSentry",
         input: statusResult,
       },
     });

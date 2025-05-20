@@ -18,7 +18,7 @@ try {
 } catch (err) {
   error("❌ Redis-verbinding init mislukt", { err });
 }
-redis?.on("error", (err) => {
+redis?.on("error", err => {
   error("❌ Redis-verbinding fout", { err });
 });
 
@@ -36,7 +36,10 @@ export default async function handler(req, res) {
   }
 
   if (!redis) {
-    error("🔌 Redis is niet beschikbaar bij resend-verification", { context: "resend-verification", ip: req.ip, });
+    error("🔌 Redis is niet beschikbaar bij resend-verification", {
+      context: "resend-verification",
+      ip: req.ip,
+    });
     return res.status(503).json({ code: "REDIS_UNAVAILABLE" });
   }
 
@@ -93,7 +96,11 @@ export default async function handler(req, res) {
     try {
       t = (await import(`../locales/${language}/translationemails.js`)).default;
     } catch (err) {
-        warn("🌍 Fallback naar Engelse e-mailvertaling", { requestedLang: lang, fallback: "en", err });
+      warn("🌍 Fallback naar Engelse e-mailvertaling", {
+        requestedLang: lang,
+        fallback: "en",
+        err,
+      });
       t = (await import("../locales/en/translationemails.js")).default;
     }
 

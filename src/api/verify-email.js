@@ -34,7 +34,7 @@ export default async function handler(req, res) {
       return res.status(500).json({ code: "RPC_RESPONSE_INVALID", details: data });
     }
 
-    const { code, email, details } = data;
+    const { code, email, details, createdAt } = data;
     log("🔍 Verificatie status ontvangen", { code, email, createdAt });
 
     switch (code) {
@@ -55,7 +55,9 @@ export default async function handler(req, res) {
             return res.status(409).json({ code: "EMAIL_DUPLICATE" });
           }
           error("❌ createUser() faalde", { createError });
-          return res.status(500).json({ code: "USER_CREATION_FAILED", details: createError.message });
+          return res
+            .status(500)
+            .json({ code: "USER_CREATION_FAILED", details: createError.message });
         }
 
         // ✅ Start sessie voor nieuwe gebruiker

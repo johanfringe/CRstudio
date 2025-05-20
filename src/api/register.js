@@ -20,9 +20,9 @@ try {
   error("❌ Redis-verbinding mislukt", { err });
 }
 
-redis?.on("error", (err) => error("❌ Redis fout", { err }));
+redis?.on("error", err => error("❌ Redis fout", { err }));
 
-const checkIfTempUserExists = async (email) => {
+const checkIfTempUserExists = async email => {
   const { data, error } = await supabase
     .from("temp_users")
     .select("id")
@@ -76,7 +76,9 @@ export default async function handler(req, res) {
     return res.status(400).json({ code: "EMAIL_INVALID" });
   }
 
-  const { data: existsInAuthUsers, error: existsError } = await supabase.rpc("user_email_exists", { _email: email });
+  const { data: existsInAuthUsers, error: existsError } = await supabase.rpc("user_email_exists", {
+    _email: email,
+  });
   if (existsError) {
     error("❌ user_email_exists RPC mislukt", { email, existsError });
     return res.status(500).json({ code: "AUTH_CHECK_FAILED" });

@@ -5194,7 +5194,7 @@ function createProjectionNode({ attachResizeListener, defaultParent, measureScro
                  */
             }
             else if (this.targetDelta) {
-                if (Boolean(this.resumingFrom)) {
+                if (this.resumingFrom) {
                     // TODO: This is creating a new object every frame
                     this.target = this.applyTransform(this.layout.layoutBox);
                 }
@@ -26971,7 +26971,7 @@ var NUMERIC = 5; // An attribute that must be positive numeric or parse as a pos
 
 var POSITIVE_NUMERIC = 6;
 
-/* eslint-disable max-len */
+ 
 var ATTRIBUTE_NAME_START_CHAR = ":A-Z_a-z\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u02FF\\u0370-\\u037D\\u037F-\\u1FFF\\u200C-\\u200D\\u2070-\\u218F\\u2C00-\\u2FEF\\u3001-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFFD";
 /* eslint-enable max-len */
 
@@ -27025,7 +27025,7 @@ function shouldRemoveAttributeWithWarning(name, value, propertyInfo, isCustomCom
     case 'function': // $FlowIssue symbol is perfectly valid here
 
     case 'symbol':
-      // eslint-disable-line
+       
       return true;
 
     case 'boolean':
@@ -27272,7 +27272,7 @@ false);
 // INFORMATION SEPARATOR ONE, inclusive:
 // https://infra.spec.whatwg.org/#c0-control-or-space
 
-/* eslint-disable max-len */
+ 
 
 var isJavaScriptProtocol = /^[\u0000-\u001F ]*j[\r\n\t]*a[\r\n\t]*v[\r\n\t]*a[\r\n\t]*s[\r\n\t]*c[\r\n\t]*r[\r\n\t]*i[\r\n\t]*p[\r\n\t]*t[\r\n\t]*\:/i;
 var didWarn = false;
@@ -28015,7 +28015,7 @@ function getComponentNameFromType(type) {
           }
         }
 
-      // eslint-disable-next-line no-fallthrough
+       
     }
   }
 
@@ -28459,7 +28459,7 @@ function updateWrapper(element, props) {
   if (value != null) {
     if (type === 'number') {
       if (value === 0 && node.value === '' || // We explicitly want to coerce to number here if possible.
-      // eslint-disable-next-line
+       
       node.value != value) {
         node.value = toString(value);
       }
@@ -28685,7 +28685,7 @@ function postMountWrapper$1(element, props) {
   }
 }
 
-var isArrayImpl = Array.isArray; // eslint-disable-next-line no-redeclare
+var isArrayImpl = Array.isArray;  
 
 function isArray(a) {
   return isArrayImpl(a);
@@ -33234,7 +33234,7 @@ function getEventPriority(domEventName) {
     case 'touchend':
     case 'touchstart':
     case 'volumechange': // Used by polyfills:
-    // eslint-disable-next-line no-fallthrough
+     
 
     case 'change':
     case 'selectionchange':
@@ -33242,11 +33242,11 @@ function getEventPriority(domEventName) {
     case 'compositionstart':
     case 'compositionend':
     case 'compositionupdate': // Only enableCreateEventHandleAPI:
-    // eslint-disable-next-line no-fallthrough
+     
 
     case 'beforeblur':
     case 'afterblur': // Not used by React but could be by user code:
-    // eslint-disable-next-line no-fallthrough
+     
 
     case 'beforeinput':
     case 'blur':
@@ -33273,7 +33273,7 @@ function getEventPriority(domEventName) {
     case 'toggle':
     case 'touchmove':
     case 'wheel': // Not used by React but could be by user code:
-    // eslint-disable-next-line no-fallthrough
+     
 
     case 'mouseenter':
     case 'mouseleave':
@@ -34746,7 +34746,7 @@ function extractEvents$2(dispatchQueue, domEventName, targetInst, nativeEvent, n
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
  */
 function is(x, y) {
-  return x === y && (x !== 0 || 1 / x === 1 / y) || x !== x && y !== y // eslint-disable-line no-self-compare
+  return x === y && (x !== 0 || 1 / x === 1 / y) || x !== x && y !== y  
   ;
 }
 
@@ -34876,7 +34876,7 @@ function getOffsets(outerNode) {
   // https://bugzilla.mozilla.org/show_bug.cgi?id=208427
 
   try {
-    /* eslint-disable no-unused-expressions */
+     
     anchorNode.nodeType;
     focusNode.nodeType;
     /* eslint-enable no-unused-expressions */
@@ -36397,7 +36397,7 @@ function createElement(type, props, rootContainerElement, parentNamespace) {
       // set to true and it does not execute
       var div = ownerDocument.createElement('div');
 
-      div.innerHTML = '<script><' + '/script>'; // eslint-disable-line
+      div.innerHTML = '<script><' + '/script>';  
       // This is guaranteed to yield a script element.
 
       var firstChild = div.firstChild;
@@ -44831,7 +44831,7 @@ function constructClassInstance(workInProgress, ctor, props) {
       setIsStrictModeForDevtools(true);
 
       try {
-        instance = new ctor(props, context); // eslint-disable-line no-new
+        instance = new ctor(props, context);  
       } finally {
         setIsStrictModeForDevtools(false);
       }
@@ -52710,7 +52710,7 @@ function isRenderConsistentWithExternalStores(finishedWork) {
     node.sibling.return = node.return;
     node = node.sibling;
   } // Flow doesn't know this is unreachable, but eslint does
-  // eslint-disable-next-line no-unreachable
+   
 
 
   return true;
@@ -52832,7 +52832,7 @@ function discreteUpdates(fn, a, b, c, d) {
 } // Overload the definition to the two valid signatures.
 // Warning, this opts-out of checking the function body.
 
-// eslint-disable-next-line no-redeclare
+ 
 function flushSync(fn) {
   // In legacy mode, we flush pending passive effects at the beginning of the
   // next event, not at the end of the previous one.
@@ -54684,7 +54684,7 @@ var hasBadMapPolyfill;
 
   try {
     var nonExtensibleObject = Object.preventExtensions({});
-    /* eslint-disable no-new */
+     
 
     new Map([[nonExtensibleObject, null]]);
     new Set([nonExtensibleObject]);
@@ -55035,23 +55035,23 @@ key, pendingProps, owner, mode, lanes) {
 
       case REACT_LEGACY_HIDDEN_TYPE:
 
-      // eslint-disable-next-line no-fallthrough
+       
 
       case REACT_SCOPE_TYPE:
 
-      // eslint-disable-next-line no-fallthrough
+       
 
       case REACT_CACHE_TYPE:
 
-      // eslint-disable-next-line no-fallthrough
+       
 
       case REACT_TRACING_MARKER_TYPE:
 
-      // eslint-disable-next-line no-fallthrough
+       
 
       case REACT_DEBUG_TRACING_MODE_TYPE:
 
-      // eslint-disable-next-line no-fallthrough
+       
 
       default:
         {
@@ -56492,7 +56492,7 @@ function hydrateRoot$1(container, initialChildren, options) {
 // Warning, this opts-out of checking the function body.
 
 
-// eslint-disable-next-line no-redeclare
+ 
 function flushSync$1(fn) {
   {
     if (isAlreadyRendering()) {
@@ -65567,7 +65567,7 @@ function getComponentNameFromType(type) {
           }
         }
 
-      // eslint-disable-next-line no-fallthrough
+       
     }
   }
 
@@ -65982,7 +65982,7 @@ function checkPropTypes(typeSpecs, values, location, componentName, element) {
   }
 }
 
-var isArrayImpl = Array.isArray; // eslint-disable-next-line no-redeclare
+var isArrayImpl = Array.isArray;  
 
 function isArray(a) {
   return isArrayImpl(a);
@@ -66823,7 +66823,7 @@ var IdlePriority = 5;
 function markTaskErrored(task, ms) {
 }
 
-/* eslint-disable no-var */
+ 
 
 var hasPerformanceNow = typeof performance === 'object' && typeof performance.now === 'function';
 

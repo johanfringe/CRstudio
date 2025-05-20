@@ -1338,5 +1338,5 @@ export const leakedPasswords = new Set([
   "qazwsxedc12345",
   "hastalavista",
   "asdfqwer1234",
-  "blackpanther"
+  "blackpanther",
 ]);

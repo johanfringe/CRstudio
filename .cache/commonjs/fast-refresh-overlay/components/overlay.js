@@ -59,7 +59,7 @@ function Overlay({
       context: overlay
     });
 
-    // eslint-disable-next-line consistent-return
+     
     return () => {
       handle.disengage();
     };

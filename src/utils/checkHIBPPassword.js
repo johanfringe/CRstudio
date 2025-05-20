@@ -11,10 +11,10 @@ const hibpCache = new Map();
  * @returns {Promise<boolean>} true = gelekt, false = veilig
  */
 export async function checkHIBPPassword(password) {
-    if (!password || typeof password !== "string") {
-      warn("⚠️ Ongeldig wachtwoord meegegeven aan checkHIBPPassword", { password });
-      return false;
-    }
+  if (!password || typeof password !== "string") {
+    warn("⚠️ Ongeldig wachtwoord meegegeven aan checkHIBPPassword", { password });
+    return false;
+  }
 
   // Controleer cache
   if (hibpCache.has(password)) {
@@ -31,15 +31,15 @@ export async function checkHIBPPassword(password) {
     const res = await fetch(`https://api.pwnedpasswords.com/range/${prefix}`);
 
     if (!res.ok) {
-        warn("⚠️ HIBP API gaf geen OK-status", { status: res.status, prefix });
-        captureApiError("HIBP", res, { prefix });
+      warn("⚠️ HIBP API gaf geen OK-status", { status: res.status, prefix });
+      captureApiError("HIBP", res, { prefix });
       return false; // fail open
     }
 
     const lines = (await res.text()).split("\n");
     log("📄 HIBP response bevat", { lines: lines.length });
 
-    const isLeaked = lines.some((line) => {
+    const isLeaked = lines.some(line => {
       const [hashSuffix] = line.trim().split(":");
       return hashSuffix === suffix;
     });
@@ -47,7 +47,6 @@ export async function checkHIBPPassword(password) {
     hibpCache.set(password, isLeaked);
     log("🔍 HIBP resultaat verwerkt", { prefix, isLeaked });
     return isLeaked;
-
   } catch (err) {
     error("❌ Fout bij ophalen van HIBP-data", { err, prefix, context: "checkHIBPPassword" });
     return false; // fail open

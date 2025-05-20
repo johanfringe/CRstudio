@@ -1,19 +1,58 @@
 {
-    "Policy": [
-      {
-        "User-agent": ["Googlebot", "Bingbot", "YandexBot", "BaiduSpider", "Sogou", "Slurp", "PetalBot", 
-        "AhrefsBot", "SemrushBot", "rogerbot", "dotbot", "MJ12bot", "AhrefsSiteAudit", "SemrushSiteAuditBot", "SiteAuditBot", "ZoominfoBot", "Bytespider", "Qwantify", "SeznamBot", 
-        "GtmetrixBot", "PingdomBot", "UptimeRobot", "Google PageSpeed Insights", 
-        "archive.org_bot", "CCBot", 
-        "facebookexternalhit", "Twitterbot", "LinkedInBot", "Applebot", "WhatsApp", "SkypeUriPreview", "TelegramBot", "Discordbot"],
-        "Allow": "/",
-        "Disallow": ["/admin/", "/drafts/", "/preview/", "/private/", "/test-alerts/", "/test-sentry/", "/404/", "/404.html"]
-      },
-      {
-        "User-agent": "*",
-        "Disallow": "/"
-      }
-    ],
-    "Sitemap": "https://crstudio.online/sitemap.xml",
-    "Host": "https://crstudio.online"
-  }
+  "Policy": [
+    {
+      "User-agent": [
+        "Googlebot",
+        "Bingbot",
+        "YandexBot",
+        "BaiduSpider",
+        "Sogou",
+        "Slurp",
+        "PetalBot",
+        "AhrefsBot",
+        "SemrushBot",
+        "rogerbot",
+        "dotbot",
+        "MJ12bot",
+        "AhrefsSiteAudit",
+        "SemrushSiteAuditBot",
+        "SiteAuditBot",
+        "ZoominfoBot",
+        "Bytespider",
+        "Qwantify",
+        "SeznamBot",
+        "GtmetrixBot",
+        "PingdomBot",
+        "UptimeRobot",
+        "Google PageSpeed Insights",
+        "archive.org_bot",
+        "CCBot",
+        "facebookexternalhit",
+        "Twitterbot",
+        "LinkedInBot",
+        "Applebot",
+        "WhatsApp",
+        "SkypeUriPreview",
+        "TelegramBot",
+        "Discordbot"
+      ],
+      "Allow": "/",
+      "Disallow": [
+        "/admin/",
+        "/drafts/",
+        "/preview/",
+        "/private/",
+        "/test-alerts/",
+        "/test-sentry/",
+        "/404/",
+        "/404.html"
+      ]
+    },
+    {
+      "User-agent": "*",
+      "Disallow": "/"
+    }
+  ],
+  "Sitemap": "https://crstudio.online/sitemap.xml",
+  "Host": "https://crstudio.online"
+}

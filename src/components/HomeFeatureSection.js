@@ -1,5 +1,5 @@
 // /components/HomeFeatureSection :
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useTranslation } from "gatsby-plugin-react-i18next";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -46,28 +46,28 @@ const HomeFeatureSection = () => {
 
   useEffect(() => {
     if (typeof window === "undefined") return; // 🚀 Voorkomt SSR-fouten
-  
+
     gsap.registerPlugin(ScrollTrigger);
-  
+
     const sections = sectionsRef.current.filter(Boolean); // ✅ Filter lege refs
-  
+
     if (!sections.length) return;
-  
-    sections.forEach((section) => {
+
+    sections.forEach(section => {
       if (!section) return;
-      
+
       const textBlock = section.querySelector(".feature-text");
       const image = section.querySelector(".feature-image");
       const video = section.querySelector(".feature-video");
       const description = section.querySelector(".feature-description");
       const ctaButton = section.querySelector(".feature-cta");
-  
+
       // ✅ **Tekst fade-in (titel, subtitel en description)
       gsap.fromTo(
         textBlock,
         { opacity: 0, y: 40 }, // 🔹 Startpositie: xx px beneden zijn originele positie
         {
-          opacity: 1,// 🔹 Eindstatus: volledig zichtbaar
+          opacity: 1, // 🔹 Eindstatus: volledig zichtbaar
           y: 0, // 🔹 Eindpositie: 0 = originele positie
           duration: 2, // 🔹 Tijd (sec) om van zijn start- naar zijn eindpositie te gaan
           ease: "power2.out", // 🔹 power2.out : zachte overgang met trage stop
@@ -78,7 +78,7 @@ const HomeFeatureSection = () => {
           },
         }
       );
-  
+
       // ✅ **Description fade-in
       gsap.fromTo(
         [description, ctaButton],
@@ -96,7 +96,7 @@ const HomeFeatureSection = () => {
           },
         }
       );
-  
+
       // ✅ **Afbeelding fade-in
       gsap.set(image, { opacity: 1, y: 200 });
       gsap.to(image, {
@@ -125,8 +125,8 @@ const HomeFeatureSection = () => {
         },
       });
     });
-  
-    return () => sections.forEach((section) => ScrollTrigger.getById(section)?.kill());
+
+    return () => sections.forEach(section => ScrollTrigger.getById(section)?.kill());
   }, []);
 
   return (
@@ -134,43 +134,51 @@ const HomeFeatureSection = () => {
       {features.map((feature, index) => (
         <SectionWrapper bgColor="bg-white" key={index}>
           <div
-            ref={(el) => (sectionsRef.current[index] = el)} // ✅ **Callback-ref**
-            className="relative flex flex-col items-center text-center gap-4 overflow-hidden"
+            ref={el => (sectionsRef.current[index] = el)} // ✅ **Callback-ref**
+            className="relative flex flex-col items-center gap-4 overflow-hidden text-center"
           >
             {/* ✅ Tekstsectie */}
             <div className="feature-text w-full max-w-3xl">
-            <h1 className={`text-lg font-semibold mb-3 ${titleColors[index]}`}>{t(feature.titleKey)}</h1>
-              <h2 className="text-3xl text-gray-900 font-normal mb-3">{t(feature.subtitleKey)}</h2>
-              <p className="feature-description text-lg font-light text-gray-500 mt-2">{t(feature.descriptionKey)}</p>
-            {/* ✅ CTA-Knop */}
-            <div className="feature-cta mt-8 mb-16">
-          <CTAButton />
-        </div>
-        </div>
+              <h1 className={`mb-3 text-lg font-semibold ${titleColors[index]}`}>
+                {t(feature.titleKey)}
+              </h1>
+              <h2 className="mb-3 text-3xl font-normal text-gray-900">{t(feature.subtitleKey)}</h2>
+              <p className="feature-description mt-2 text-lg font-light text-gray-500">
+                {t(feature.descriptionKey)}
+              </p>
+              {/* ✅ CTA-Knop */}
+              <div className="feature-cta mb-16 mt-8">
+                <CTAButton />
+              </div>
+            </div>
 
             {/* ✅ Media: Video en Afbeelding */}
-            <div className="relative w-full flex flex-col lg:flex-row justify-center items-center">
-  {/* Video links */}
-  <div className="relative w-full lg:w-[65%] z-10"> {/* lg=%van totale lengte, zie afb */}
-    <video
-      src={feature.video}
-      autoPlay
-      loop
-      muted
-      playsInline
-      className="feature-video w-full rounded-lg shadow-lg"
-    />
-  </div>
+            <div className="relative flex w-full flex-col items-center justify-center lg:flex-row">
+              {/* Video links */}
+              <div className="relative z-10 w-full lg:w-[65%]">
+                {" "}
+                {/* lg=%van totale lengte, zie afb */}
+                <video
+                  src={feature.video}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="feature-video w-full rounded-lg shadow-lg"
+                />
+              </div>
 
-  {/* Afbeelding rechts, overlappend op grotere schermen */}
-  <div className="relative w-full lg:w-[35%] lg:-ml-[10%] mt-4 lg:mt-0 hidden lg:block"> {/* lg:-ml = overlap */}
-    <img
-      src={feature.image}
-      alt="Feature"
-      className="feature-image w-full rounded-lg shadow-lg"
-    />
-  </div>
-</div>
+              {/* Afbeelding rechts, overlappend op grotere schermen */}
+              <div className="relative mt-4 hidden w-full lg:-ml-[10%] lg:mt-0 lg:block lg:w-[35%]">
+                {" "}
+                {/* lg:-ml = overlap */}
+                <img
+                  src={feature.image}
+                  alt="Feature"
+                  className="feature-image w-full rounded-lg shadow-lg"
+                />
+              </div>
+            </div>
           </div>
         </SectionWrapper>
       ))}

@@ -76,7 +76,7 @@ class PageQueryStore extends _react.default.Component {
     return this.props.location !== nextProps.location || this.state.path !== nextState.path || this.state.page !== nextState.page;
   }
   render() {
-    // eslint-disable-next-line
+     
     if (!this.state.page) {
       return /*#__PURE__*/_react.default.createElement("div", null);
     }

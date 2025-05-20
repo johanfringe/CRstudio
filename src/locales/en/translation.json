@@ -65,134 +65,134 @@
     "homeLink": "Go to the Homepage"
   },
 
-    "overview": {
-      "title": "Bewaar EN",
-      "description": "Spotgemakkelijk EN"
+  "overview": {
+    "title": "Bewaar EN",
+    "description": "Spotgemakkelijk EN"
   },
-  
-    "privacy": {
-      "seoTitle": "Privacy Policy",
-      "seoDescription": "Read how CRstudio handles and protects your data.",
-      "pageDescription": "Privacy Policy Page",
-      "lastUpdated": "Last updated: April 10, 2025",
-      "title": "Privacy Policy",
-      "intro": "This policy explains how CRstudio handles your personal data, both as a customer and as an end user.",
-      "points": {
-        "1": {
-          "title": "1. Introduction",
-          "text": "CRstudio values your privacy. We process personal data in accordance with the GDPR and other applicable laws."
-        },
-        "2": {
-          "title": "2. Controller",
-          "text": "CRstudio is the data controller for the personal data you provide or create through our platforms."
-        },
-        "3": {
-          "title": "3. Purposes of processing",
-          "text": "We only collect data needed for delivering services, invoicing, support, security, and product improvement."
-        },
-        "4": {
-          "title": "4. What data we collect",
-          "text": "We collect name, email, IP address, browser details, CMS usage, login logs, and user interaction data."
-        },
-        "5": {
-          "title": "5. Legal bases",
-          "text": "We process data based on contract, consent, legal obligations, and legitimate interest."
-        },
-        "6": {
-          "title": "6. Sharing with third parties",
-          "text": "We do not share personal data with third parties, unless necessary for service delivery (e.g., hosting, payments) or required by law."
-        },
-        "7": {
-          "title": "7. Retention period",
-          "text": "We retain data no longer than necessary. Deleted accounts are fully erased within 90 days."
-        },
-        "8": {
-          "title": "8. Cookies and tracking",
-          "text": "We only use essential cookies and anonymized analytics. No third-party tracking cookies."
-        },
-        "9": {
-          "title": "9. Security",
-          "text": "We implement appropriate technical and organizational measures to protect your data from loss, theft, or misuse."
-        },
-        "10": {
-          "title": "10. Your rights",
-          "text": "You have the right to access, correct, delete, restrict, object, and transfer your data."
-        },
-        "11": {
-          "title": "11. International data transfer",
-          "text": "CRstudio uses data centers within the EU or providers with an adequacy decision under GDPR."
-        },
-        "12": {
-          "title": "12. Contact & complaints",
-          "text": "Questions or complaints? Contact us via privacy@crstudio.online or the Data Protection Authority."
-        }
-      }
-    },
 
-    "terms": {
-      "seoTitle": "Terms and Conditions",
-      "seoDescription": "Read our general terms and conditions here.",
-      "pageDescription": "Terms and Conditions Page",
-      "lastUpdated": "Last updated: April 10, 2025",
-      "title": "Terms and Conditions",
-      "intro": "These terms apply to all products and services of CRstudio. By using our services, you agree to these terms.",
-      "points": {
-        "1": {
-          "title": "1. Introduction",
-          "text": "These general terms and conditions (\"Terms\") govern the use of all products and services provided by CRstudio. By using our services, you agree to these Terms, the annexes (Product Terms), and the Data Processing Agreement (DPA)."
-        },
-        "2": {
-          "title": "2. Definitions",
-          "text": "CRstudio refers to the SaaS provider offering CMS, hosting, preview tools, and e-commerce solutions. A Product is a subscription-based service (e.g., website, database, preview, e-commerce). Content = material (images, text, files) added by the customer or end users. User = customer of CRstudio or their end users."
-        },
-        "3": {
-          "title": "3. Access and registration",
-          "text": "To use certain services, you must register and provide accurate, up-to-date information. You are responsible for the security of your account."
-        },
-        "4": {
-          "title": "4. Use of the services",
-          "text": "You may not use our services for illegal or inappropriate purposes. You are responsible for the content you add and manage."
-        },
-        "5": {
-          "title": "5. User responsibilities",
-          "text": "You are responsible for your own data, users, and content. We reserve the right to remove content that violates our guidelines."
-        },
-        "6": {
-          "title": "6. Payments and subscriptions",
-          "text": "CRstudio operates on monthly or yearly subscription plans. Payments are processed via Stripe. Access may be suspended for late payments."
-        },
-        "7": {
-          "title": "7. Trial period",
-          "text": "New users get access to a 30-day trial period. After this, a valid subscription is required to continue using the platform."
-        },
-        "8": {
-          "title": "8. Termination",
-          "text": "Both you and CRstudio can terminate the service usage. In case of abuse or violation of the terms, your account can be terminated immediately."
-        },
-        "9": {
-          "title": "9. Privacy and data protection",
-          "text": "Your data is processed in accordance with our Privacy Policy and the Data Processing Agreement (DPA)."
-        },
-        "10": {
-          "title": "10. Intellectual property",
-          "text": "Source code, designs, and templates remain the property of CRstudio. You are granted a license to use them during a valid subscription."
-        },
-        "11": {
-          "title": "11. Limitation of liability",
-          "text": "CRstudio is not liable for indirect damages, data loss, or lost profits, unless required by law."
-        },
-        "12": {
-          "title": "12. Changes to the terms",
-          "text": "CRstudio may update these terms. You will be informed and continued use implies acceptance of the updated terms."
-        },
-        "13": {
-          "title": "13. Governing law",
-          "text": "These terms are governed by Belgian law. Disputes will be handled by the courts of Ghent, Belgium."
-        },
-        "14": {
-          "title": "14. Contact",
-          "text": "For questions regarding these terms, you can contact us at legal@crstudio.online."
-        }
+  "privacy": {
+    "seoTitle": "Privacy Policy",
+    "seoDescription": "Read how CRstudio handles and protects your data.",
+    "pageDescription": "Privacy Policy Page",
+    "lastUpdated": "Last updated: April 10, 2025",
+    "title": "Privacy Policy",
+    "intro": "This policy explains how CRstudio handles your personal data, both as a customer and as an end user.",
+    "points": {
+      "1": {
+        "title": "1. Introduction",
+        "text": "CRstudio values your privacy. We process personal data in accordance with the GDPR and other applicable laws."
+      },
+      "2": {
+        "title": "2. Controller",
+        "text": "CRstudio is the data controller for the personal data you provide or create through our platforms."
+      },
+      "3": {
+        "title": "3. Purposes of processing",
+        "text": "We only collect data needed for delivering services, invoicing, support, security, and product improvement."
+      },
+      "4": {
+        "title": "4. What data we collect",
+        "text": "We collect name, email, IP address, browser details, CMS usage, login logs, and user interaction data."
+      },
+      "5": {
+        "title": "5. Legal bases",
+        "text": "We process data based on contract, consent, legal obligations, and legitimate interest."
+      },
+      "6": {
+        "title": "6. Sharing with third parties",
+        "text": "We do not share personal data with third parties, unless necessary for service delivery (e.g., hosting, payments) or required by law."
+      },
+      "7": {
+        "title": "7. Retention period",
+        "text": "We retain data no longer than necessary. Deleted accounts are fully erased within 90 days."
+      },
+      "8": {
+        "title": "8. Cookies and tracking",
+        "text": "We only use essential cookies and anonymized analytics. No third-party tracking cookies."
+      },
+      "9": {
+        "title": "9. Security",
+        "text": "We implement appropriate technical and organizational measures to protect your data from loss, theft, or misuse."
+      },
+      "10": {
+        "title": "10. Your rights",
+        "text": "You have the right to access, correct, delete, restrict, object, and transfer your data."
+      },
+      "11": {
+        "title": "11. International data transfer",
+        "text": "CRstudio uses data centers within the EU or providers with an adequacy decision under GDPR."
+      },
+      "12": {
+        "title": "12. Contact & complaints",
+        "text": "Questions or complaints? Contact us via privacy@crstudio.online or the Data Protection Authority."
+      }
+    }
+  },
+
+  "terms": {
+    "seoTitle": "Terms and Conditions",
+    "seoDescription": "Read our general terms and conditions here.",
+    "pageDescription": "Terms and Conditions Page",
+    "lastUpdated": "Last updated: April 10, 2025",
+    "title": "Terms and Conditions",
+    "intro": "These terms apply to all products and services of CRstudio. By using our services, you agree to these terms.",
+    "points": {
+      "1": {
+        "title": "1. Introduction",
+        "text": "These general terms and conditions (\"Terms\") govern the use of all products and services provided by CRstudio. By using our services, you agree to these Terms, the annexes (Product Terms), and the Data Processing Agreement (DPA)."
+      },
+      "2": {
+        "title": "2. Definitions",
+        "text": "CRstudio refers to the SaaS provider offering CMS, hosting, preview tools, and e-commerce solutions. A Product is a subscription-based service (e.g., website, database, preview, e-commerce). Content = material (images, text, files) added by the customer or end users. User = customer of CRstudio or their end users."
+      },
+      "3": {
+        "title": "3. Access and registration",
+        "text": "To use certain services, you must register and provide accurate, up-to-date information. You are responsible for the security of your account."
+      },
+      "4": {
+        "title": "4. Use of the services",
+        "text": "You may not use our services for illegal or inappropriate purposes. You are responsible for the content you add and manage."
+      },
+      "5": {
+        "title": "5. User responsibilities",
+        "text": "You are responsible for your own data, users, and content. We reserve the right to remove content that violates our guidelines."
+      },
+      "6": {
+        "title": "6. Payments and subscriptions",
+        "text": "CRstudio operates on monthly or yearly subscription plans. Payments are processed via Stripe. Access may be suspended for late payments."
+      },
+      "7": {
+        "title": "7. Trial period",
+        "text": "New users get access to a 30-day trial period. After this, a valid subscription is required to continue using the platform."
+      },
+      "8": {
+        "title": "8. Termination",
+        "text": "Both you and CRstudio can terminate the service usage. In case of abuse or violation of the terms, your account can be terminated immediately."
+      },
+      "9": {
+        "title": "9. Privacy and data protection",
+        "text": "Your data is processed in accordance with our Privacy Policy and the Data Processing Agreement (DPA)."
+      },
+      "10": {
+        "title": "10. Intellectual property",
+        "text": "Source code, designs, and templates remain the property of CRstudio. You are granted a license to use them during a valid subscription."
+      },
+      "11": {
+        "title": "11. Limitation of liability",
+        "text": "CRstudio is not liable for indirect damages, data loss, or lost profits, unless required by law."
+      },
+      "12": {
+        "title": "12. Changes to the terms",
+        "text": "CRstudio may update these terms. You will be informed and continued use implies acceptance of the updated terms."
+      },
+      "13": {
+        "title": "13. Governing law",
+        "text": "These terms are governed by Belgian law. Disputes will be handled by the courts of Ghent, Belgium."
+      },
+      "14": {
+        "title": "14. Contact",
+        "text": "For questions regarding these terms, you can contact us at legal@crstudio.online."
       }
     }
   }
+}

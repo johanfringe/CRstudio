@@ -3,11 +3,6 @@ import { createClient } from "@supabase/supabase-js";
 import { validateSubdomain } from "../utils/validateSubdomain";
 import { log, warn, error } from "../utils/logger";
 
-const supabase = createClient(
-  process.env.GATSBY_SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-);
-
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.setHeader("Allow", ["POST"]);
@@ -20,10 +15,7 @@ export default async function handler(req, res) {
     return res.status(401).json({ code: "TOKEN_MISSING" });
   }
 
-  const client = createClient(
-    process.env.GATSBY_SUPABASE_URL,
-    token
-  );
+  const client = createClient(process.env.GATSBY_SUPABASE_URL, token);
   const { firstName, lastName, subdomain, language } = req.body;
 
   const subError = validateSubdomain(subdomain);

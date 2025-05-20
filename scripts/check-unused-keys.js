@@ -11,22 +11,20 @@ const TRANSLATION_PATH = "./src/locales/nl/translation.json";
 const flattenKeys = (obj, prefix = "") =>
   Object.entries(obj).flatMap(([key, val]) => {
     const fullKey = prefix ? `${prefix}.${key}` : key;
-    return typeof val === "object" && val !== null
-      ? flattenKeys(val, fullKey)
-      : [fullKey];
+    return typeof val === "object" && val !== null ? flattenKeys(val, fullKey) : [fullKey];
   });
 
 // 🔍 Zoek keys in JS-content: t("...") of "faq.q1"
-const findUsedKeys = (content) => {
+const findUsedKeys = content => {
   const matches = [];
 
   // t("...") / t('...') / t(`...`)
   const tMatches = [...content.matchAll(/t\(["'`]([^"'`]+)["'`]\)/g)];
-  tMatches.forEach((m) => matches.push(m[1]));
+  tMatches.forEach(m => matches.push(m[1]));
 
   // ook "faq.q1", 'profile.verify_error.EMAIL_DUPLICATE'
   const stringMatches = [...content.matchAll(/["'`]([a-z0-9_-]+\.[a-z0-9_.-]+)["'`]/gi)];
-  stringMatches.forEach((m) => matches.push(m[1]));
+  stringMatches.forEach(m => matches.push(m[1]));
 
   return matches;
 };
@@ -34,14 +32,14 @@ const findUsedKeys = (content) => {
 // ✅ Dynamische key helpers
 const addDynamicKeyRange = (prefix, start, end, suffixes = ["title", "text"]) => {
   for (let i = start; i <= end; i++) {
-    suffixes.forEach((suffix) => {
+    suffixes.forEach(suffix => {
       usedKeys.add(`${prefix}.${i}.${suffix}`);
     });
   }
 };
 
 const addDynamicErrorCodes = (prefix, codes) => {
-  codes.forEach((code) => usedKeys.add(`${prefix}.${code}`));
+  codes.forEach(code => usedKeys.add(`${prefix}.${code}`));
 };
 
 const addDynamicFaqKeys = () => {
@@ -61,7 +59,7 @@ const runCheck = () => {
 
   for (const file of files) {
     const content = fs.readFileSync(file, "utf8");
-    findUsedKeys(content).forEach((key) => usedKeys.add(key));
+    findUsedKeys(content).forEach(key => usedKeys.add(key));
   }
 
   // 🔁 Voeg dynamisch gegenereerde keys toe
@@ -96,7 +94,7 @@ const runCheck = () => {
     "TOKEN_UPDATE_FAILED",
     "UNKNOWN_ERROR",
     "USER_CREATION_FAILED",
-    "USER_NOT_FOUND"
+    "USER_NOT_FOUND",
   ]);
 
   addDynamicErrorCodes("register.verify_error", [
@@ -115,15 +113,15 @@ const runCheck = () => {
     "MISSING_FIELDS",
     "RATE_LIMIT",
     "TURNSTILE_FAILED",
-    "UNKNOWN_ERROR"
+    "UNKNOWN_ERROR",
   ]);
 
   // 🔍 Vergelijk
-  const unusedKeys = allKeys.filter((key) => !usedKeys.has(key));
+  const unusedKeys = allKeys.filter(key => !usedKeys.has(key));
 
   if (unusedKeys.length > 0) {
     console.log(`🟡 Ongebruikte vertaalkeys gevonden (${unusedKeys.length}):\n`);
-    unusedKeys.forEach((k) => console.log("  -", k));
+    unusedKeys.forEach(k => console.log("  -", k));
     console.log("\n💡 Tip: verwijder manueel of bewaar voor toekomstige features.");
     process.exit(1);
   } else {

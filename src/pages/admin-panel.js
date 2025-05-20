@@ -1,7 +1,8 @@
 // src/admin-panel.js :
-import React from "react";
 
-const deleteUser = async (userId) => {
+import { useTranslation } from "gatsby-plugin-react-i18next";
+
+const deleteUser = async userId => {
   try {
     const response = await fetch("/api/deleteUser", {
       method: "POST",
@@ -24,9 +25,11 @@ const deleteUser = async (userId) => {
 
 // 🔹 Voeg een knop toe om een gebruiker te verwijderen
 const AdminPanel = () => {
+  const { t } = useTranslation();
+
   return (
     <button onClick={() => deleteUser("550e8400-e29b-41d4-a716-446655440000")}>
-      (klik) Verwijder Gebruiker
+      {t("admin.delete_user")}
     </button>
   );
 };

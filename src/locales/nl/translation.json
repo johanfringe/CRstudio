@@ -3,37 +3,39 @@
   "default_title": "CRstudio - De ultieme catalogus raisonné tool",
   "default_description": "Maak en beheer catalogi raisonnés met gemak.",
   "default_ogImage": "/icons/default-og-image.jpg",
+  "description": "Maak en beheer catalogi raisonnés met gemak.",
   "site_url": "https://crstudio.online",
   "welcome_message": "Welkom bij CRstudio",
-  "description": "Maak en beheer catalogi raisonnés met gemak.",
 
   "social": {
     "facebook": "CRstudioOfficial"
   },
 
   "seo": {
-    "title": "Welkom bij CRstudio",
     "description": "De ultieme tool voor catalogi raisonnés",
-    "ogimagealt": "Maak en beheer uw catalogus raisonné professioneel met CRstudio"
+    "ogimagealt": "Maak en beheer uw catalogus raisonné professioneel met CRstudio",
+    "title": "Welkom bij CRstudio"
   },
-  
+
   "stheader": {
-    "logo_label": "Ga naar de startpagina",
     "logo_alt": "CR Studio Logo",
+    "logo_label": "Ga naar de startpagina",
     "trial": "Probeer gratis"
   },
 
   "footer": {
-    "slogan": "De efficiëntste manier om\ncatalogues raisonnés te maken",
+    "copyright": "© {{year}} CRstudio bv",
     "privacy": "Privacy",
+    "slogan": "De efficiëntste manier om\ncatalogues raisonnés te maken",
+    "title": "CRstudio",
     "terms": "Voorwaarden"
   },
 
   "header": {
-    "overview": "Overzicht",
+    "faq": "Veelgestelde vragen",
     "feature": "Demo's",
-    "pricing": "Prijzen",
-    "faq": "Veelgestelde vragen"
+    "overview": "Overzicht",
+    "pricing": "Prijzen"
   },
 
   "auth": {
@@ -56,13 +58,12 @@
     "subdomainInvalidLength": "Het subdomein moet tussen 5 en 63 tekens lang zijn.",
     "subdomainInvalidStructure": "Het subdomein heeft een ongeldige structuur.",
     "subdomainTaken": "Dit subdomein is al in gebruik."
-
   },
-  
+
   "cta": {
     "text": "Probeer 30 dagen de complete site\nGeen creditcard vereist"
   },
-  
+
   "faq": {
     "title": "Vind de antwoorden die je nodig hebt",
     "expand_all": "Alles uitvouwen",
@@ -98,7 +99,7 @@
     "q15": "Ik heb nog een vraag",
     "a15": "Stuur ze ons per mail: info@crstudio.online"
   },
-  
+
   "feature": {
     "title_1": "Eenvoudig, geen technische kennis ",
     "subtitle_1": "Alles in één abonnement",
@@ -109,7 +110,6 @@
     "title_3": "Eenvoudig, geen technische kennis ",
     "subtitle_3": "Alles in één abonnement",
     "description_3": "Met CRstudio is het ontzettend gemakkelijk om een CR te maken. En je spaart veel tijd en geld uit.\nBekijk onze demo’s om te zien hoe CRstudio werkt,\nhoe eenvoudig en toch uiterst krachtig en professioneel het is."
-    
   },
 
   "forgot": {
@@ -126,7 +126,7 @@
     "error_server": "Er is een onverwachte fout opgetreden. Probeer het later opnieuw.",
     "error_required_fields": "Vul uw e-mailadres in."
   },
-  
+
   "highlight": {
     "sentence_1": "Maak jouw catalogue raisonné overzichtelijk en klaar voor publicatie, Gemakkelijk zonder ingewikkelde tools",
     "sentence_2": "Zorg ervoor dat jouw werk wordt gepresenteerd aan een breed publiek.",
@@ -155,27 +155,17 @@
     "message": "De URL is mogelijk verkeerd gespeld of de pagina die u zoekt is niet langer beschikbaar.",
     "homeLink": "Ga naar de Homepage"
   },
-  
+
   "overview": {
     "title": "Jouw catalogue raisonné.\nAltijd online. Voor iedereen.",
     "description": "Publiceer eenvoudig en betaalbaar\nZonder zorgen over techniek\nIn 3 talen, gekozen uit 30 talen\nIn jouw layout, jouw stijl\nAan te vullen à volonté"
   },
 
   "pricing": {
-    "title": "Start vandaag jouw catalogue raisonné",
-    "subtitle": "Probeer het gratis uit of kies het juiste abonnement voor u, afhankelijk van het aantal kunstwerken.",
-    "up_to": "Tot",
-    "up_to_free": "Gratis proberen tot",
-    "artworks": "kunstwerken",
-    "monthly": "Maandelijks",
     "annually": "Jaarlijks",
-    "month": "/ maand",
-    "billed_monthly": "Maandelijkse betaling",
+    "artworks": "kunstwerken",
     "billed_annually": "Jaarlijkse betaling",
-    "more_than_4000": "Meer dan 4.000 kunstwerken?",
-    "other_services": "Kunnen we je helpen?",
-    "offering": "Wij bieden professioneel het volgende aan:",
-    "taxes": "Prices shown are exclusive of any applicable taxes such as VAT, added at checkout.",
+    "billed_monthly": "Maandelijkse betaling",
     "button_10": "Tot 1.000 kunstwerken",
     "button_11": "Geen creditcard vereist",
     "button_12": "Online opslag inbegrepen",
@@ -187,12 +177,23 @@
     "button_32": "Omzetten van jouw gedrukte CR naar CRstudio",
     "button_33": "Migreren van jouw online CR naar CRstudio",
     "buy_now": "Start gratis, upgrade later!",
-    "try_free": "Probeer 30 dagen de complete site",
     "contact_us": "Contacteer ons",
     "email_subject": "Aanvraag gepersonaliseerde diensten",
-    "email_body": "Beste team, ik ben geïnteresseerd in jullie gepersonaliseerde diensten. Kunnen jullie me meer info sturen?"
+    "email_body": "Beste team, ik ben geïnteresseerd in jullie gepersonaliseerde diensten. Kunnen jullie me meer info sturen?",
+    "month": "/ maand",
+    "monthly": "Maandelijks",
+    "more_than_4000": "Meer dan 4.000 kunstwerken?",
+    "offering": "Wij bieden professioneel het volgende aan:",
+    "other_services": "Kunnen we je helpen?",
+    "price_free": "€0",
+    "subtitle": "Probeer het gratis uit of kies het juiste abonnement voor u, afhankelijk van het aantal kunstwerken.",
+    "taxes": "Prices shown are exclusive of any applicable taxes such as VAT, added at checkout.",
+    "title": "Start vandaag jouw catalogue raisonné",
+    "try_free": "Probeer 30 dagen de complete site",
+    "up_to": "Tot",
+    "up_to_free": "Gratis proberen tot"
   },
-  
+
   "privacy": {
     "seoTitle": "Privacyverklaring",
     "seoDescription": "Lees hier hoe CRstudio jouw gegevens verwerkt en beveiligt.",
@@ -250,8 +251,8 @@
         "text": "Heb je vragen of klachten? Contacteer ons via privacy@crstudio.online of de Gegevensbeschermingsautoriteit."
       }
     }
-  },  
-  
+  },
+
   "profile": {
     "seo_title": "Gratis proberen bij CRstudio",
     "seo_description": "Gratis CRstudio proberen voor een maand.",
@@ -272,6 +273,7 @@
     "subdomain_heading": "Subdomein",
     "subdomain_intro_text": "Het subdomein is wellicht voornaam+naam zoals pablopicasso of pablo-picasso. Je kunt later een eigen domeinnaam aan de site koppelen zoals pablopicasso.com.",
     "subdomain_placeholder": "Subdomein",
+    "subdomain_suffix": "/crstudio.online",
     "actions": {
       "register": "Registreer opnieuw",
       "login": "Log in"
@@ -392,7 +394,7 @@
       "registerFlow": {
         "heading": "Nieuwe e-mail verzonden",
         "text": "De vorige link is verlopen. Klik op de link in de e-mail die we daarnet stuurden om verder te gaan."
-      }      
+      }
     },
     "new_user_pending": {
       "email_send": {
@@ -402,7 +404,7 @@
       "verifying": {
         "heading": "Registratie nog niet bevestigd",
         "text": "Je bent al geregistreerd. Klik op de link in de e-mail die we eerder stuurden om verder te gaan."
-      }      
+      }
     },
     "unknown_error": {
       "default": {
@@ -494,7 +496,7 @@
       }
     }
   },
-  
+
   "testi": {
     "testimonial_title": "Ze vertrouwen CRstudio om kunst te behouden, bewaken en te beschermen",
     "feature_1": "Een krachtige, eenvoudige en veilige tool om mijn volledig oeuvre te tonen aan verzamelaars, galeriehouders, curatoren en kunsthistorici.",

@@ -1,5 +1,4 @@
 // src/pages/index.js :
-import React from "react";
 import { graphql } from "gatsby";
 import { useTranslation } from "gatsby-plugin-react-i18next";
 import Seo from "../components/Seo";
@@ -13,8 +12,8 @@ import FAQSection from "../components/HomeFAQSection";
 import TestiSection from "../components/HomeTestiSection";
 
 const IndexPage = () => {
-  console.log("Rendering [componentnaam]", Date.now());  // 🚀 Debugging
-  
+  console.log("Rendering [componentnaam]", Date.now()); // 🚀 Debugging
+
   const { t } = useTranslation();
 
   const sections = [
@@ -28,8 +27,8 @@ const IndexPage = () => {
     <>
       <Seo />
       <StickyHeader sections={sections} />
-      <div className="flex flex-col min-h-screen relative">
-        <main className="flex-grow space-y-0 relative z-10">
+      <div className="relative flex min-h-screen flex-col">
+        <main className="relative z-10 flex-grow space-y-0">
           <section id="overview">
             <OverviewSection />
           </section>

@@ -1,5 +1,4 @@
-// src/components/PasswordStrengthMeter.js
-import React from "react";
+// src/components/PasswordStrengthMeter.js :
 import { useTranslation } from "gatsby-plugin-react-i18next";
 
 const strengthLevels = [
@@ -16,13 +15,13 @@ const PasswordStrengthMeter = ({ score }) => {
 
   return (
     <div className="mt-2">
-      <div className="w-full h-2 bg-gray-200 rounded-full">
+      <div className="h-2 w-full rounded-full bg-gray-200">
         <div
           className={`h-2 rounded-full transition-all duration-300 ${level.color}`}
           style={{ width: `${(score + 1) * 20}%` }}
         ></div>
       </div>
-      <p className="text-xs mt-1 text-gray-700">{t(level.labelKey)}</p>
+      <p className="mt-1 text-xs text-gray-700">{t(level.labelKey)}</p>
     </div>
   );
 };

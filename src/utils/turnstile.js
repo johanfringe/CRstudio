@@ -6,7 +6,7 @@ import { log, error } from "./logger";
  * @param {function} callback - Wordt aangeroepen wanneer Turnstile een succesvolle validatie uitvoert
  */
 
-export const loadTurnstile = (callback) => {
+export const loadTurnstile = callback => {
   if (typeof window === "undefined") return;
 
   const siteKey = process.env.GATSBY_TURNSTILE_SITE_KEY;
@@ -27,7 +27,10 @@ export const loadTurnstile = (callback) => {
   script.defer = true;
 
   script.onload = () => {
-    log("✅ Turnstile script geladen en render gestart", { container: "#turnstile-container", siteKey });
+    log("✅ Turnstile script geladen en render gestart", {
+      container: "#turnstile-container",
+      siteKey,
+    });
     try {
       window.turnstile.render("#turnstile-container", {
         sitekey: siteKey,
@@ -35,11 +38,11 @@ export const loadTurnstile = (callback) => {
       });
       log("✅ Turnstile script geladen en gerenderd");
     } catch (err) {
-        error("❌ Fout bij uitvoeren van turnstile.render()", { err });
+      error("❌ Fout bij uitvoeren van turnstile.render()", { err });
     }
   };
 
-  script.onerror = (e) => {
+  script.onerror = e => {
     error("❌ Fout bij het laden van Turnstile-script vanaf CDN", {
       src: script.src,
       event: e?.type ?? "unknown",

@@ -6,7 +6,7 @@ import { log, warn, error } from "./logger";
 
 /**
  * Initialiseert Sentry op basis van de omgeving en mode.
- * 
+ *
  * @param {Object} options
  * @param {("browser"|"ssr"|"build")} options.mode - Bepaalt de initialisatiemodus
  */

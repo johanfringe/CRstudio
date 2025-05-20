@@ -8,7 +8,10 @@ require("dotenv-flow").config({
 
 // console.log("✅ .env-bestanden geladen uit:", `${__dirname}/content/settings`);
 // console.log("🔑 Supabase URL:", process.env.GATSBY_SUPABASE_URL);
-console.log("🔑 Supabase Service Role Key:", process.env.SUPABASE_SERVICE_ROLE_KEY ? "✔️ Loaded" : "❌ Not Loaded");
+console.log(
+  "🔑 Supabase Service Role Key:",
+  process.env.SUPABASE_SERVICE_ROLE_KEY ? "✔️ Loaded" : "❌ Not Loaded"
+);
 // console.log("🔑 Turnstile Secret Key:", process.env.TURNSTILE_SECRET ? "✔️ Loaded" : "❌ Not Loaded");
 // console.log("🔑 Turnstile Site Key:", process.env.GATSBY_TURNSTILE_SITE_KEY);
 // console.log("🔑 Kickbox API Key:", process.env.KICKBOX_API_KEY);
@@ -30,9 +33,9 @@ module.exports = {
   plugins: [
     // Gecombineerde configuratie voor gatsby-source-filesystem voor verschillende bronnen
     ...[
-      { name: "locales", path: `${__dirname}/src/locales` },            // Meertalige JSON-bestanden
-      { name: "utils", path: `${__dirname}/src/utils` },                // Seo
-      { name: "images", path: `${__dirname}/content/images` },         // Afbeeldingen
+      { name: "locales", path: `${__dirname}/src/locales` }, // Meertalige JSON-bestanden
+      { name: "utils", path: `${__dirname}/src/utils` }, // Seo
+      { name: "images", path: `${__dirname}/content/images` }, // Afbeeldingen
       { name: "texts", path: `${__dirname}/content/texts` },
     ].map(({ name, path }) => {
       return {

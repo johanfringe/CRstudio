@@ -3614,7 +3614,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-/* eslint-disable max-lines */
+ 
 
 const DEFAULT_TRACE_PROPAGATION_TARGETS = ['localhost', /^\/(?!\/)/];
 
@@ -3950,7 +3950,7 @@ function addTracingHeadersToFetchRequest(
  *
  * @returns Span if a span was created, otherwise void.
  */
-// eslint-disable-next-line complexity
+ 
 function xhrCallback(
   handlerData,
   shouldCreateSpan,
@@ -4333,7 +4333,7 @@ __webpack_require__.r(__webpack_exports__);
 const onFID = (onReport) => {
   const visibilityWatcher = (0,_lib_getVisibilityWatcher_js__WEBPACK_IMPORTED_MODULE_0__.getVisibilityWatcher)();
   const metric = (0,_lib_initMetric_js__WEBPACK_IMPORTED_MODULE_1__.initMetric)('FID');
-  // eslint-disable-next-line prefer-const
+   
   let report;
 
   const handleEntry = (entry) => {
@@ -5472,7 +5472,7 @@ function wrap(
     return fn;
   }
 
-  /* eslint-disable prefer-rest-params */
+   
   // It is important that `sentryWrapped` is not an arrow function to preserve the context of `this`
   const sentryWrapped = function () {
     const args = Array.prototype.slice.call(arguments);
@@ -5514,7 +5514,7 @@ function wrap(
       throw ex;
     }
   };
-  /* eslint-enable prefer-rest-params */
+   
 
   // Accessing some objects may throw
   // ref: https://github.com/getsentry/sentry-javascript/issues/1168
@@ -6349,7 +6349,7 @@ class GlobalHandlers  {
 
     // We can disable guard-for-in as we construct the options object above + do checks against
     // `this._installFunc` for the property.
-    // eslint-disable-next-line guard-for-in
+     
     for (const key in options) {
       const installFunc = this._installFunc[key ];
       if (installFunc && options[key ]) {
@@ -7360,7 +7360,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-/* eslint-disable max-lines */
+ 
 
 const MS_TO_NS = 1e6;
 // Use 0 as main thread id which is identical to threadId in node:worker_threads
@@ -10588,12 +10588,12 @@ class Hub  {
     if ((typeof __SENTRY_DEBUG__ === 'undefined' || __SENTRY_DEBUG__) && !result) {
       const client = this.getClient();
       if (!client) {
-        // eslint-disable-next-line no-console
+         
         console.warn(
           "Tracing extension 'startTransaction' is missing. You should 'init' the SDK before calling 'startTransaction'",
         );
       } else {
-        // eslint-disable-next-line no-console
+         
         console.warn(`Tracing extension 'startTransaction' has not been added. Call 'addTracingExtensions' before calling 'init':
 Sentry.addTracingExtensions();
 Sentry.init({...});
@@ -11944,7 +11944,7 @@ class Scope  {
         this._propagationContext = captureContext._propagationContext;
       }
     } else if ((0,_sentry_utils__WEBPACK_IMPORTED_MODULE_1__.isPlainObject)(captureContext)) {
-      // eslint-disable-next-line no-param-reassign
+       
       captureContext = captureContext ;
       this._tags = { ...this._tags, ...captureContext.tags };
       this._extra = { ...this._extra, ...captureContext.extra };
@@ -12237,7 +12237,7 @@ function initAndBind(
       _sentry_utils__WEBPACK_IMPORTED_MODULE_0__.logger.enable();
     } else {
       // use `console.warn` rather than `logger.warn` since by non-debug bundles have all `logger.x` statements stripped
-      // eslint-disable-next-line no-console
+       
       console.warn('[Sentry] Cannot initialize SDK with `debug` option using a non-debug bundle.');
     }
   }
@@ -12315,7 +12315,7 @@ function makeSession(context) {
  * @param session the `Session` to update
  * @param context the `SessionContext` holding the properties that should be updated in @param session
  */
-// eslint-disable-next-line complexity
+ 
 function updateSession(session, context = {}) {
   if (context.user) {
     if (!session.ipAddress && context.user.ip_address) {
@@ -21667,7 +21667,7 @@ function createEventBuffer({
 }) {
   if (
     useCompression &&
-    // eslint-disable-next-line no-restricted-globals
+     
     window.Worker
   ) {
     const worker = _loadWorker(customWorkerUrl);
@@ -23921,7 +23921,7 @@ function throttle(
   };
 }
 
-/* eslint-disable max-lines */ // TODO: We might want to split this file up
+  // TODO: We might want to split this file up
 
 /**
  * The main replay container class, which holds all the state and methods for recording and sending replays.
@@ -25092,7 +25092,7 @@ function getOption(
       allSelectors.push(`.${deprecatedClassOption}`);
     }
 
-    // eslint-disable-next-line no-console
+     
     console.warn(
       '[Replay] You are using a deprecated configuration item for privacy. Read the documentation on how to use the new privacy configuration.',
     );
@@ -25349,7 +25349,7 @@ class Replay  {
     };
 
     if (typeof sessionSampleRate === 'number') {
-      // eslint-disable-next-line
+       
       console.warn(
         `[Replay] You are passing \`sessionSampleRate\` to the Replay integration.
 This option is deprecated and will be removed soon.
@@ -25361,7 +25361,7 @@ Sentry.init({ replaysSessionSampleRate: ${sessionSampleRate} })`,
     }
 
     if (typeof errorSampleRate === 'number') {
-      // eslint-disable-next-line
+       
       console.warn(
         `[Replay] You are passing \`errorSampleRate\` to the Replay integration.
 This option is deprecated and will be removed soon.
@@ -25513,7 +25513,7 @@ function loadReplayOptionsFromClient(initialOptions) {
   const finalOptions = { sessionSampleRate: 0, errorSampleRate: 0, ...(0,_sentry_utils__WEBPACK_IMPORTED_MODULE_2__.dropUndefinedKeys)(initialOptions) };
 
   if (!opt) {
-    // eslint-disable-next-line no-console
+     
     console.warn('SDK client is not available.');
     return finalOptions;
   }
@@ -25524,7 +25524,7 @@ function loadReplayOptionsFromClient(initialOptions) {
     opt.replaysSessionSampleRate == null &&
     opt.replaysOnErrorSampleRate == null
   ) {
-    // eslint-disable-next-line no-console
+     
     console.warn(
       'Replay is disabled because neither `replaysSessionSampleRate` nor `replaysOnErrorSampleRate` are set.',
     );
@@ -25998,7 +25998,7 @@ function _htmlElementAsString(el, keyAttrs) {
       out.push(`#${elem.id}`);
     }
 
-    // eslint-disable-next-line prefer-const
+     
     className = elem.className;
     if (className && (0,_is_js__WEBPACK_IMPORTED_MODULE_1__.isString)(className)) {
       classes = className.split(/\s+/);
@@ -26152,7 +26152,7 @@ function dsnFromString(str) {
 
   if (!match) {
     // This should be logged to the console
-    // eslint-disable-next-line no-console
+     
     console.error(`Invalid Sentry Dsn: ${str}`);
     return undefined;
   }
@@ -27390,7 +27390,7 @@ function instrumentError() {
     });
 
     if (_oldOnErrorHandler && !_oldOnErrorHandler.__SENTRY_LOADER__) {
-      // eslint-disable-next-line prefer-rest-params
+       
       return _oldOnErrorHandler.apply(this, arguments);
     }
 
@@ -27409,7 +27409,7 @@ function instrumentUnhandledRejection() {
     triggerHandlers('unhandledrejection', e);
 
     if (_oldOnUnhandledRejectionHandler && !_oldOnUnhandledRejectionHandler.__SENTRY_LOADER__) {
-      // eslint-disable-next-line prefer-rest-params
+       
       return _oldOnUnhandledRejectionHandler.apply(this, arguments);
     }
 
@@ -27664,7 +27664,7 @@ __webpack_require__.r(__webpack_exports__);
  * Returns true if we are in the browser.
  */
 function isBrowser() {
-  // eslint-disable-next-line no-restricted-globals
+   
   return typeof window !== 'undefined' && (!(0,_node_js__WEBPACK_IMPORTED_MODULE_0__.isNodeEnv)() || isElectronNodeRenderer());
 }
 
@@ -27894,7 +27894,7 @@ function uuid4() {
   // http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript/2117523#2117523
   // Concatenating the following numbers as strings results in '10000000100040008000100000000000'
   return (([1e7] ) + 1e3 + 4e3 + 8e3 + 1e11).replace(/[018]/g, c =>
-    // eslint-disable-next-line no-bitwise
+     
     ((c ) ^ ((getRandomByte() & 15) >> ((c ) / 4))).toString(16),
   );
 }
@@ -28108,12 +28108,12 @@ function filenameIsInApp(filename, isNative = false) {
 }
 
 /** Node Stack line parser */
-// eslint-disable-next-line complexity
+ 
 function node(getModule) {
   const FILENAME_MATCH = /^\s*[-]{4,}$/;
   const FULL_MATCH = /at (?:async )?(?:(.+?)\s+\()?(?:(.+):(\d+):(\d+)?|([^)]+))\)?/;
 
-  // eslint-disable-next-line complexity
+   
   return (line) => {
     const lineMatch = line.match(FULL_MATCH);
 
@@ -28455,7 +28455,7 @@ function visit(
   return normalized;
 }
 
-/* eslint-disable complexity */
+ 
 /**
  * Stringify the given value. Handles various known special values and types.
  *
@@ -28487,12 +28487,12 @@ function stringifyValue(
       return '[Global]';
     }
 
-    // eslint-disable-next-line no-restricted-globals
+     
     if (typeof window !== 'undefined' && value === window) {
       return '[Window]';
     }
 
-    // eslint-disable-next-line no-restricted-globals
+     
     if (typeof document !== 'undefined' && value === document) {
       return '[Document]';
     }
@@ -28539,7 +28539,7 @@ function stringifyValue(
     return `**non-serializable** (${err})`;
   }
 }
-/* eslint-enable complexity */
+ 
 
 function getConstructorName(value) {
   const prototype = Object.getPrototypeOf(value);
@@ -28549,7 +28549,7 @@ function getConstructorName(value) {
 
 /** Calculates bytes size of input string */
 function utf8Length(value) {
-  // eslint-disable-next-line no-bitwise
+   
   return ~-encodeURI(value).split(/%..|./).length;
 }
 
@@ -29377,7 +29377,7 @@ function snipLine(line, colno) {
     return newLine;
   }
   if (colno > lineLength) {
-    // eslint-disable-next-line no-param-reassign
+     
     colno = lineLength;
   }
 
@@ -30388,7 +30388,7 @@ function isGlobalObj(obj) {
 /** Get's the global object for the current JavaScript runtime */
 const GLOBAL_OBJ =
   (typeof globalThis == 'object' && isGlobalObj(globalThis)) ||
-  // eslint-disable-next-line no-restricted-globals
+   
   (typeof window == 'object' && isGlobalObj(window)) ||
   (typeof self == 'object' && isGlobalObj(self)) ||
   (typeof global == 'object' && isGlobalObj(global)) ||
@@ -33244,7 +33244,7 @@ function parseModel(response, json) {
   return JSON.parse(json, response._fromJSON);
 }
 
-// eslint-disable-next-line no-unused-vars
+ 
 function resolveModuleReference(bundlerConfig, moduleData) {
   if (bundlerConfig) {
     return bundlerConfig[moduleData.id][moduleData.name];
@@ -33367,7 +33367,7 @@ function readChunk(chunk) {
       return initializeModuleChunk(chunk);
 
     case PENDING:
-      // eslint-disable-next-line no-throw-literal
+       
       throw chunk;
 
     default:
@@ -40939,7 +40939,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
    * inlined Object.is polyfill to avoid requiring consumers ship their own
    * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
    */
-  /*eslint-disable no-self-compare*/
+   
   function is(x, y) {
     // SameValue algorithm
     if (x === y) {
@@ -40951,7 +40951,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
       return x !== x && y !== y;
     }
   }
-  /*eslint-enable no-self-compare*/
+   
 
   /**
    * We use an Error-like object for backward compatibility as people may call

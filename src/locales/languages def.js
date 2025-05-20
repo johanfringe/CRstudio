@@ -4,7 +4,7 @@ module.exports = [
   { code: "ms", label: "Bahasa Melayu" },
   { code: "da", label: "Dansk" },
   { code: "de", label: "Deutsch" },
-  { code: "en", label: "English",},
+  { code: "en", label: "English" },
   { code: "es", label: "Español" },
   { code: "fr", label: "Français" },
   { code: "it", label: "Italiano" },

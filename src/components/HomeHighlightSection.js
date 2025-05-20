@@ -1,5 +1,5 @@
 // /components/HomeHighlightSection :
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useTranslation } from "gatsby-plugin-react-i18next";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -35,7 +35,7 @@ const HighlightSection = () => {
   useEffect(() => {
     if (!sectionRef.current) return;
 
-    textRefs.current.forEach((wordArray, index) => {
+    textRefs.current.forEach(wordArray => {
       if (!wordArray) return;
 
       gsap.set(wordArray, { opacity: 0.3 });
@@ -58,17 +58,20 @@ const HighlightSection = () => {
 
   return (
     <SectionWrapper bgColor="bg-gray-100">
-      <div ref={sectionRef} className="max-w-4xl mx-auto text-center space-y-10">
+      <div ref={sectionRef} className="mx-auto max-w-4xl space-y-10 text-center">
         {lines.map((line, index) => (
-          <p key={index} className={`text-2xl md:text-4xl font-light !leading-normal ${colorClasses[index]}`}>
+          <p
+            key={index}
+            className={`text-2xl font-light !leading-normal md:text-4xl ${colorClasses[index]}`}
+          >
             {line.split(" ").map((word, wordIndex) => (
               <span
                 key={wordIndex}
-                ref={(el) => {
+                ref={el => {
                   if (!textRefs.current[index]) textRefs.current[index] = [];
                   textRefs.current[index][wordIndex] = el;
                 }}
-                className="inline-block mx-1"
+                className="mx-1 inline-block"
               >
                 {/* ✅ Dynamisch de juiste kleur voor de link */}
                 {index === lines.length - 1 ? (

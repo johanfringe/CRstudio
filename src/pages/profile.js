@@ -1,5 +1,5 @@
 // src/pages/profile.js :
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { graphql } from "gatsby";
 import { useTranslation } from "gatsby-plugin-react-i18next";
 import Seo from "../components/Seo";
@@ -22,7 +22,6 @@ const ResendVerificationInline = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [cooldown, setCooldown] = useState(0);
-  const [redirecting, setRedirecting] = useState(false);
 
   useEffect(() => {
     const cooldownEnd = localStorage.getItem("resendCooldownEnd");
@@ -35,7 +34,7 @@ const ResendVerificationInline = () => {
   useEffect(() => {
     if (cooldown <= 0) return;
     const interval = setInterval(() => {
-      setCooldown((prev) => {
+      setCooldown(prev => {
         if (prev <= 1) {
           localStorage.removeItem("resendCooldownEnd");
           clearInterval(interval);
@@ -85,8 +84,10 @@ const ResendVerificationInline = () => {
     }
   };
 
-  const formatTime = (seconds) => {
-    const m = Math.floor(seconds / 60).toString().padStart(2, "0");
+  const formatTime = seconds => {
+    const m = Math.floor(seconds / 60)
+      .toString()
+      .padStart(2, "0");
     const s = (seconds % 60).toString().padStart(2, "0");
     return `${m}:${s}`;
   };
@@ -102,11 +103,11 @@ const ResendVerificationInline = () => {
         {loading
           ? t("profile.resend.loading")
           : cooldown > 0
-          ? `${t("profile.resend.cooldown")} (${formatTime(cooldown)})`
-          : t("profile.resend.cta")}
+            ? `${t("profile.resend.cooldown")} (${formatTime(cooldown)})`
+            : t("profile.resend.cta")}
       </button>
-      {message && <p className="text-green-600 text-sm mt-2">{message}</p>}
-      {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+      {message && <p className="mt-2 text-sm text-green-600">{message}</p>}
+      {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
     </div>
   );
 };
@@ -136,6 +137,7 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [isEmailUser, setIsEmailUser] = useState(false);
   const [subdomainError, setSubdomainError] = useState("");
+  const [redirecting, setRedirecting] = useState(false);
   const [subdomainStatus, setSubdomainStatus] = useState(null);
   const [validationSteps, setValidationSteps] = useState({});
   const [showChecklist, setShowChecklist] = useState(false);
@@ -153,11 +155,11 @@ const Profile = () => {
   useEffect(() => {
     const fetchProvider = async () => {
       try {
-        const { data, error: sessionError } = await supabase.auth.getSession();
+        const { data } = await supabase.auth.getSession();
         const sessionUser = data?.session?.user;
         let provider = sessionUser?.app_metadata?.provider || "";
         let providers = sessionUser?.app_metadata?.providers || [];
-  
+
         // Fallback via getUser() als providers ontbreken
         if ((!provider || providers.length === 0) && sessionUser?.id) {
           const { data: userData, error: userError } = await supabase.auth.getUser();
@@ -175,16 +177,13 @@ const Profile = () => {
           log("ℹ️ Lege provider: klassieke email-user zonder metadata", {
             user: sessionUser,
           });
-        }        
-  
-        const isEmailUser =
-          provider === "email" ||
-          providers.includes("email") ||
-          provider === ""; // fallback voor oudere of incomplete accounts
-  
+        }
+
+        const isEmailUser = provider === "email" || providers.includes("email") || provider === ""; // fallback voor oudere of incomplete accounts
+
         setSession(data?.session || null);
         setIsEmailUser(isEmailUser);
-  
+
         log("🔍 Auth provider gedetecteerd", {
           provider,
           providers,
@@ -194,10 +193,10 @@ const Profile = () => {
         error("🚨 Fout bij ophalen provider", { err });
       }
     };
-  
+
     fetchProvider();
   }, []);
-  
+
   useEffect(() => {
     const verifyFlow = async () => {
       try {
@@ -224,14 +223,14 @@ const Profile = () => {
             localStorage.setItem("verified", "true");
             if (data.email) localStorage.setItem("verifiedEmail", data.email);
             log("📬 Email geverifieerd", { email: data.email });
-  
+
             // ✅ Stel sessie expliciet in met access/refresh tokens (indien aanwezig)
             if (data.access_token && data.refresh_token) {
               const { error: tokenError } = await supabase.auth.setSession({
                 access_token: data.access_token,
                 refresh_token: data.refresh_token,
               });
-  
+
               if (tokenError) {
                 error("❗ Kon sessie niet instellen na verificatie", { tokenError });
               } else {
@@ -256,12 +255,20 @@ const Profile = () => {
             return;
           }
 
-          captureApiError("/api/verify-email", res, { errorCode: data?.code || "UNKNOWN_ERROR", response: data, token });
+          captureApiError("/api/verify-email", res, {
+            errorCode: data?.code || "UNKNOWN_ERROR",
+            response: data,
+            token,
+          });
           setStatusCode(data.code || "INTERNAL_ERROR");
         } else {
           const foundSession = await waitForSession();
           if (foundSession) {
-            log("🟢 Sessie gevonden zonder token", { session: foundSession, hasToken: !!token, verified: wasVerified.current });
+            log("🟢 Sessie gevonden zonder token", {
+              session: foundSession,
+              hasToken: !!token,
+              verified: wasVerified.current,
+            });
             setTokenValid(true);
             setSession(foundSession);
           } else {
@@ -281,34 +288,35 @@ const Profile = () => {
   }, [token]);
 
   useEffect(() => {
-  
     const redirectIfAlreadyComplete = async () => {
       try {
         const activeSession = session ?? (await supabase.auth.getSession()).data?.session;
         const user = activeSession?.user;
-  
+
         if (!user || didRedirect.current) {
           return;
         }
-  
+
         const { data: artist, supabaseError } = await supabase
           .from("artists")
           .select("subdomain")
           .eq("user_id", user.id)
           .maybeSingle();
-  
+
         if (supabaseError) {
           error("❌ Fout bij ophalen artist tijdens redirect", { supabaseError });
           return;
         }
-  
+
         if (artist?.subdomain) {
           didRedirect.current = true;
-          log("🔁 Reeds bestaand artist-profiel, redirect naar subsite", { subdomain: artist.subdomain });
-  
+          log("🔁 Reeds bestaand artist-profiel, redirect naar subsite", {
+            subdomain: artist.subdomain,
+          });
+
           setRedirecting(true);
           localStorage.setItem("subdomain", artist.subdomain);
-  
+
           redirectTimer.current = setTimeout(() => {
             window.location.href = `https://${artist.subdomain}.crstudio.online/account`;
           }, 1000);
@@ -319,11 +327,11 @@ const Profile = () => {
         error("🛑 Onverwachte fout in redirectIfAlreadyComplete", { err });
       }
     };
-  
+
     if (tokenValid) {
       redirectIfAlreadyComplete();
     }
-  
+
     return () => {
       if (redirectTimer.current) {
         clearTimeout(redirectTimer.current);
@@ -336,7 +344,9 @@ const Profile = () => {
       case "TOKEN_EXPIRED":
         return (
           <div className="text-center">
-            <h1 className="text-xl font-semibold mt-16">{t("profile.verify_error.TOKEN_EXPIRED")}</h1>
+            <h1 className="mt-16 text-xl font-semibold">
+              {t("profile.verify_error.TOKEN_EXPIRED")}
+            </h1>
             <ResendVerificationInline />
           </div>
         );
@@ -344,7 +354,9 @@ const Profile = () => {
       case "USER_NOT_FOUND":
         return (
           <div className="text-center">
-            <h1 className="text-xl font-semibold mt-16">{t("profile.verify_error.USER_NOT_FOUND")}</h1>
+            <h1 className="mt-16 text-xl font-semibold">
+              {t("profile.verify_error.USER_NOT_FOUND")}
+            </h1>
             <Button href="/register" className="btn btn-secondary mt-4">
               {t("profile.actions.register")}
             </Button>
@@ -353,7 +365,9 @@ const Profile = () => {
       case "EMAIL_DUPLICATE":
         return (
           <div className="text-center">
-            <h1 className="text-xl font-semibold mt-16">{t("profile.verify_error.EMAIL_DUPLICATE")}</h1>
+            <h1 className="mt-16 text-xl font-semibold">
+              {t("profile.verify_error.EMAIL_DUPLICATE")}
+            </h1>
             <Button href="/login" className="btn btn-secondary mt-4">
               {t("profile.actions.login")}
             </Button>
@@ -362,29 +376,31 @@ const Profile = () => {
       default:
         return (
           <div className="text-center">
-            <h1 className="text-xl font-semibold mt-16">{t("profile.verify_error.INTERNAL_ERROR")}</h1>
+            <h1 className="mt-16 text-xl font-semibold">
+              {t("profile.verify_error.INTERNAL_ERROR")}
+            </h1>
           </div>
         );
     }
   };
 
-  const checkSubdomainAvailability = async (sub) => {
+  const checkSubdomainAvailability = async sub => {
     const normalized = sub.trim().toLowerCase();
     log("🌐 Controle subdomein beschikbaarheid", { normalized });
-  
+
     try {
       const { error, count } = await supabase
         .from("artists")
         .select("id", { count: "exact", head: true })
         .eq("subdomain", normalized);
-  
+
       if (error) {
         warn("⚠️ Subdomein-check mislukt", { error });
         setSubdomainStatus("error");
         setSubdomainError(t("profile.verify_error.SUBDOMAIN_CHECK_FAILED"));
         return;
       }
-  
+
       if (count > 0) {
         setSubdomainStatus("taken");
         setSubdomainError(t("profile.verify_error.SUBDOMAIN_TAKEN"));
@@ -398,44 +414,54 @@ const Profile = () => {
       setSubdomainError(t("profile.verify_error.INTERNAL_ERROR"));
     }
   };
-  
+
   const debouncedCheckSubdomainAvailability = useCallback(
     debounce(checkSubdomainAvailability, 400),
     []
   );
-  
+
   useEffect(() => {
     return () => debouncedCheckSubdomainAvailability.cancel();
   }, []);
 
-  const handleSubdomainInput = (val) => {
+  const handleSubdomainInput = val => {
     const trimmed = val.trim().toLowerCase();
     setSubdomain(trimmed);
     setValidationSteps(getSubdomainValidationSteps(trimmed));
     setShowChecklist(trimmed.length > 0);
-  
+
     const errorCode = validateSubdomain(trimmed);
     if (errorCode) {
       setSubdomainStatus("invalid");
       setSubdomainError(t(errorCode));
       return;
     }
-  
+
     setSubdomainStatus("checking");
     setSubdomainError("");
     debouncedCheckSubdomainAvailability(trimmed);
-  };  
+  };
 
   const nameRegex = /^[\p{L}\p{M}](?!.*[-'\s]{2})[\p{L}\p{M}\s'-]{0,38}[\p{L}\p{M}]$/u;
   const emojiRegex = /\p{Extended_Pictographic}/u;
 
-  const cleanName = (name) => name.trim().replace(/\s+/g, " ").replace(/[-'\s]{2,}/g, "").replace(/^[-'\s]+|[-'\s]+$/g, "");
-  const validateName = (name) => {
+  const cleanName = name =>
+    name
+      .trim()
+      .replace(/\s+/g, " ")
+      .replace(/[-'\s]{2,}/g, "")
+      .replace(/^[-'\s]+|[-'\s]+$/g, "");
+  const validateName = name => {
     const cleaned = cleanName(name);
-    return cleaned.length >= 2 && cleaned.length <= 40 && nameRegex.test(cleaned) && !emojiRegex.test(cleaned);
+    return (
+      cleaned.length >= 2 &&
+      cleaned.length <= 40 &&
+      nameRegex.test(cleaned) &&
+      !emojiRegex.test(cleaned)
+    );
   };
 
-  const handleFormSubmit = async (e) => {
+  const handleFormSubmit = async e => {
     e.preventDefault();
     if (loading) return;
     setErrorMsg("");
@@ -493,7 +519,10 @@ const Profile = () => {
 
       if (!response.ok) {
         const code = result?.code || "INSERT_FAILED";
-        captureApiError("/api/profile", response, { errorCode: result?.code || "UNKNOWN_ERROR", result });
+        captureApiError("/api/profile", response, {
+          errorCode: result?.code || "UNKNOWN_ERROR",
+          result,
+        });
         setErrorMsg(t(`profile.verify_error.${code}`));
         return;
       }
@@ -509,10 +538,10 @@ const Profile = () => {
       setLoading(false);
     }
   };
-// <Spinner />
-// eventueel vervangen door
-// <div className="text-center text-gray-500">{t("profile.verifying")}</div>
-// of null
+  // <Spinner />
+  // eventueel vervangen door
+  // <div className="text-center text-gray-500">{t("profile.verifying")}</div>
+  // of null
   return (
     <>
       <Seo
@@ -520,16 +549,19 @@ const Profile = () => {
         description={t("profile.seo_description", { defaultValue: t("seo.description") })}
       />
       <SectionWrapper bgColor="bg-white">
-        <div className="min-h-screen flex justify-center items-start py-24">
+        <div className="flex min-h-screen items-start justify-center py-24">
+          {redirecting && (
+            <div className="text-center text-gray-500">{t("profile.redirecting_message")}</div>
+          )}
           {isVerifying ? (
             <Spinner />
           ) : tokenValid ? (
-            <div className="max-w-xs w-full mx-auto">
-            <div className="text-center mb-6">
-              <img src="/images/CRlogo.jpg" alt={t("profile.logo_alt")} className="h-8 mx-auto" />
-              <h1 className="text-xl font-semibold mt-16">{t("profile.heading")}</h1>
-            </div>
-            <p className="intro-text">{t("profile.intro_text")}</p>
+            <div className="mx-auto w-full max-w-xs">
+              <div className="mb-6 text-center">
+                <img src="/images/CRlogo.jpg" alt={t("profile.logo_alt")} className="mx-auto h-8" />
+                <h1 className="mt-16 text-xl font-semibold">{t("profile.heading")}</h1>
+              </div>
+              <p className="intro-text">{t("profile.intro_text")}</p>
               <form onSubmit={handleFormSubmit} className="space-y-4">
                 {/* Voornaam */}
                 <div className="relative">
@@ -539,10 +571,12 @@ const Profile = () => {
                     id="firstName"
                     placeholder={t("profile.first_name_placeholder")}
                     value={firstName}
-                    onChange={(e) => {
+                    onChange={e => {
                       const value = e.target.value;
                       setFirstName(value);
-                      setFirstNameError(!validateName(value) ? t("profile.first_name_invalid") : "");
+                      setFirstNameError(
+                        !validateName(value) ? t("profile.first_name_invalid") : ""
+                      );
                       log("🧪 Voornaam input", { firstName: value });
                     }}
                     aria-invalid={firstNameError ? "true" : "false"}
@@ -550,12 +584,12 @@ const Profile = () => {
                     className={`input ${firstNameError ? "input-error" : ""}`}
                   />
                   {firstNameError && (
-                    <p id="firstName-error" className="text-red-500 text-xs mt-1">
+                    <p id="firstName-error" className="mt-1 text-xs text-red-500">
                       {firstNameError}
                     </p>
                   )}
                 </div>
-  
+
                 {/* Familienaam */}
                 <div className="relative">
                   <Input
@@ -564,7 +598,7 @@ const Profile = () => {
                     id="lastName"
                     placeholder={t("profile.last_name_placeholder")}
                     value={lastName}
-                    onChange={(e) => {
+                    onChange={e => {
                       const value = e.target.value;
                       setLastName(value);
                       setLastNameError(!validateName(value) ? t("profile.last_name_invalid") : "");
@@ -575,12 +609,12 @@ const Profile = () => {
                     className={`input ${lastNameError ? "input-error" : ""}`}
                   />
                   {lastNameError && (
-                    <p id="lastName-error" className="text-red-500 text-xs mt-1">
+                    <p id="lastName-error" className="mt-1 text-xs text-red-500">
                       {lastNameError}
                     </p>
                   )}
                 </div>
-  
+
                 {/* Wachtwoord, Alleen voor e-mailgebruikers */}
                 {isEmailUser && (
                   <div className="relative">
@@ -590,15 +624,15 @@ const Profile = () => {
                       placeholder={t("profile.password_placeholder")}
                       value={password}
                       onFocus={preloadZxcvbn}
-                      onChange={async (e) => {
+                      onChange={async e => {
                         const value = e.target.value;
                         setPassword(value);
                         setCheckingPassword(true);
-  
+
                         const zxcvbnLib = await import("zxcvbn");
                         const { score } = zxcvbnLib.default(value);
                         setPasswordScore(score);
-  
+
                         const error = await validatePassword(value, {
                           email: session?.user?.email,
                           name: firstName + lastName,
@@ -617,31 +651,27 @@ const Profile = () => {
                       </div>
                     )}
                     {checkingPassword && (
-                      <p className="text-xs text-gray-500 mt-1">
+                      <p className="mt-1 text-xs text-gray-500">
                         {t("profile.checkingPassword")}...
                       </p>
                     )}
                     {passwordError && (
-                      <p id="password-error" className="text-red-500 text-xs mt-1">
+                      <p id="password-error" className="mt-1 text-xs text-red-500">
                         {t(passwordError)}
                       </p>
                     )}
                   </div>
                 )}
-  
+
                 {/* Subdomein */}
                 <div className="my-6 flex items-center">
                   <hr className="flex-grow border-gray-300" />
-                  <span className="px-3 text-gray-700">
-                    {t("profile.subdomain_heading")}
-                  </span>
+                  <span className="px-3 text-gray-700">{t("profile.subdomain_heading")}</span>
                   <hr className="flex-grow border-gray-300" />
                 </div>
-  
-                <p className="intro-text">
-                  {t("profile.subdomain_intro_text")}
-                </p>
-  
+
+                <p className="intro-text">{t("profile.subdomain_intro_text")}</p>
+
                 <div className="space-y-1">
                   <div className="relative">
                     <Input
@@ -649,46 +679,66 @@ const Profile = () => {
                       name="subdomain"
                       placeholder={t("profile.subdomain_placeholder")}
                       value={subdomain}
-                      onChange={(e) => handleSubdomainInput(e.target.value)}
+                      onChange={e => handleSubdomainInput(e.target.value)}
                       className={`input w-full pr-28 ${subdomainStatus === "invalid" ? "input-error" : ""}`}
                     />
-                    <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600 text-sm pointer-events-none">
-                      /crstudio.online
+                    <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 transform text-sm text-gray-600">
+                      {t("profile.subdomain_suffix")}
                     </span>
+                    {subdomainError && (
+                      <p className="mt-1 text-xs text-red-500">{subdomainError}</p>
+                    )}
                   </div>
-  
+
                   {/* ✅/❌ lijst met live feedback */}
                   {showChecklist && (
-                    <ul className="text-xs text-gray-600 mt-2 space-y-1">
+                    <ul className="mt-2 space-y-1 text-xs text-gray-600">
                       <li className={validationSteps.validChars ? "text-gray-400" : "text-red-500"}>
-                        {validationSteps.validChars ? "✔" : "✖"} {t("profile.subdomain_validation.validChars")}
+                        {validationSteps.validChars ? "✔" : "✖"}{" "}
+                        {t("profile.subdomain_validation.validChars")}
                       </li>
-                      <li className={validationSteps.correctLength ? "text-gray-400" : "text-red-500"}>
-                        {validationSteps.correctLength ? "✔" : "✖"} {t("profile.subdomain_validation.correctLength")}
+                      <li
+                        className={validationSteps.correctLength ? "text-gray-400" : "text-red-500"}
+                      >
+                        {validationSteps.correctLength ? "✔" : "✖"}{" "}
+                        {t("profile.subdomain_validation.correctLength")}
                       </li>
-                      <li className={validationSteps.startsCorrectly ? "text-gray-400" : "text-red-500"}>
-                        {validationSteps.startsCorrectly ? "✔" : "✖"} {t("profile.subdomain_validation.startsCorrectly")}
+                      <li
+                        className={
+                          validationSteps.startsCorrectly ? "text-gray-400" : "text-red-500"
+                        }
+                      >
+                        {validationSteps.startsCorrectly ? "✔" : "✖"}{" "}
+                        {t("profile.subdomain_validation.startsCorrectly")}
                       </li>
-                      <li className={validationSteps.endsCorrectly ? "text-gray-400" : "text-red-500"}>
-                        {validationSteps.endsCorrectly ? "✔" : "✖"} {t("profile.subdomain_validation.endsCorrectly")}
+                      <li
+                        className={validationSteps.endsCorrectly ? "text-gray-400" : "text-red-500"}
+                      >
+                        {validationSteps.endsCorrectly ? "✔" : "✖"}{" "}
+                        {t("profile.subdomain_validation.endsCorrectly")}
                       </li>
-                      <li className={validationSteps.notInBlocklist ? "text-gray-400" : "text-red-500"}>
-                        {validationSteps.notInBlocklist ? "✔" : "✖"} {t("profile.subdomain_validation.notInBlocklist")}
+                      <li
+                        className={
+                          validationSteps.notInBlocklist ? "text-gray-400" : "text-red-500"
+                        }
+                      >
+                        {validationSteps.notInBlocklist ? "✔" : "✖"}{" "}
+                        {t("profile.subdomain_validation.notInBlocklist")}
                       </li>
                     </ul>
                   )}
                 </div>
-  
-                {formSuccess && <p className="text-green-600 text-sm text-center">{formSuccess}</p>}
-                {errorMsg && <p className="text-red-500 text-sm text-center">{errorMsg}</p>}
+
+                {formSuccess && <p className="text-center text-sm text-green-600">{formSuccess}</p>}
+                {errorMsg && <p className="text-center text-sm text-red-500">{errorMsg}</p>}
                 <Button type="submit" disabled={loading} className="btn btn-primary w-full">
                   {loading ? t("profile.button_busy") : t("profile.button_submit")}
                 </Button>
               </form>
             </div>
           ) : (
-            <div className="max-w-xs w-full mx-auto">
-              <img src="/images/CRlogo.jpg" alt={t("register.logo_alt")} className="h-8 mx-auto" />
+            <div className="mx-auto w-full max-w-xs">
+              <img src="/images/CRlogo.jpg" alt={t("register.logo_alt")} className="mx-auto h-8" />
               {renderErrorMessage()}
             </div>
           )}
@@ -701,7 +751,7 @@ const Profile = () => {
 export default Profile;
 
 export const query = graphql`
-  query($language: String!) {
+  query ($language: String!) {
     locales: allLocale(filter: { language: { eq: $language } }) {
       edges {
         node {

@@ -1,7 +1,7 @@
 // /src/hooks/useStatusMessage.js
 
-import { useTranslation } from 'react-i18next';
-import { resolveTranslationKeys } from '../utils/resolveTranslationKeys';
+import { useTranslation } from "react-i18next";
+import { resolveTranslationKeys } from "../utils/resolveTranslationKeys";
 
 /**
  * Hook die automatisch heading/text/type afleidt uit een statusobject.
@@ -14,7 +14,7 @@ export function useStatusMessage(status) {
   if (!status) return { heading: null, text: null, type: null };
 
   const { headingKey, textKey } = resolveTranslationKeys(status);
-  const type = status.meta?.messageType || 'info';
+  const type = status.meta?.messageType || "info";
 
   return {
     heading: t(headingKey),

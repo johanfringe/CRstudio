@@ -1,12 +1,14 @@
 // src/dashboard2.js :
 // Dit moet in de kunstenaarssite komen.
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "../utils/supabaseClient";
-import LoginModal from "../components/LoginModal2"; // 🔹 Nieuw component voor modale login
+import LoginModal from "../components/LoginModal2";
+import { useTranslation } from "gatsby-plugin-react-i18next";
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -22,15 +24,19 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
-      <h1 className="text-3xl font-semibold text-center">🏠 Welkom op je dashboard!</h1>
+    <div className="mx-auto max-w-4xl rounded-lg bg-white p-6 shadow-lg">
+      <h1 className="text-center text-3xl font-semibold">{t("dashboard.welcome")}</h1>
 
       {user ? (
         <div className="mt-6">
-          <p className="text-lg text-gray-700 text-center">Wat wil je doen?</p>
-          <div className="grid grid-cols-2 gap-4 mt-4">
-            <button className="w-full p-3 bg-blue-500 text-white rounded-lg">📂 Gegevens beheren</button>
-            <button className="w-full p-3 bg-green-500 text-white rounded-lg">🎨 Lay-out aanpassen</button>
+          <p className="text-center text-lg text-gray-700">{t("dashboard.what_do")}</p>
+          <div className="mt-4 grid grid-cols-2 gap-4">
+            <button className="w-full rounded-lg bg-blue-500 p-3 text-white">
+              {t("dashboard.manage_data")}
+            </button>
+            <button className="w-full rounded-lg bg-green-500 p-3 text-white">
+              {t("dashboard.edit_layout")}
+            </button>
           </div>
         </div>
       ) : (

@@ -1,3 +1,16 @@
+node_modules/
 .cache/
 public/
-node_modules/
+dist/
+.netlify/
+supabase/
+.git/
+.vscode/
+.idea/
+coverage/
+__testsBackup__/
+*.log
+*.bak
+*.tmp
+*.swp
+.env.sentry-build-plugin

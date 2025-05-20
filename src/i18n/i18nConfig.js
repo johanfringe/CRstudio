@@ -1,5 +1,5 @@
 // src/i18n/i18nConfig.js :
-const languages = require('../locales/languages');
+const languages = require("../locales/languages");
 
 const i18nConfig = {
   fallbackLng: "en",

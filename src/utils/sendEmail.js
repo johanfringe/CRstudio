@@ -1,6 +1,6 @@
 // src/utils/sendEmail.js :
 import fetch from "node-fetch";
-import { log, warn, error, captureApiError } from "./logger";
+import { log, error, captureApiError } from "./logger";
 
 /**
  * 📧 Herbruikbare e-mailfunctie met Postmark
@@ -12,30 +12,39 @@ import { log, warn, error, captureApiError } from "./logger";
 export const sendEmail = async (to, subject, textBody, htmlBody = "") => {
   try {
     log("📩 Verzenden van e-mail naar", { to, subject });
-    log("📨 API-call naar Postmark wordt verstuurd", { endpoint: "https://api.postmarkapp.com/email", to, subject });
-    
+    log("📨 API-call naar Postmark wordt verstuurd", {
+      endpoint: "https://api.postmarkapp.com/email",
+      to,
+      subject,
+    });
+
     const response = await fetch("https://api.postmarkapp.com/email", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-Postmark-Server-Token": process.env.POSTMARK_API_KEY
+        "X-Postmark-Server-Token": process.env.POSTMARK_API_KEY,
       },
       body: JSON.stringify({
         From: "info@crstudio.online",
         To: to,
         Subject: subject,
         TextBody: textBody,
-        HtmlBody: htmlBody
-      })
+        HtmlBody: htmlBody,
+      }),
     });
 
     if (!response.ok) {
-        const responseText = await response.text();
-        captureApiError("/email (Postmark)", response, { to, subject, responseText, errorCode: "EMAIL_SEND_FAILED" });
-        return { success: false, error: responseText };
-      }      
+      const responseText = await response.text();
+      captureApiError("/email (Postmark)", response, {
+        to,
+        subject,
+        responseText,
+        errorCode: "EMAIL_SEND_FAILED",
+      });
+      return { success: false, error: responseText };
+    }
 
-      log("✅ E-mail succesvol verzonden", { to, subject });
+    log("✅ E-mail succesvol verzonden", { to, subject });
     return { success: true };
   } catch (err) {
     error("❌ Fout bij verzenden e-mail via Postmark", { to, subject, err });
