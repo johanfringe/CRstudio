@@ -43,12 +43,25 @@ export default [
     },
   },
 
-  // 📁 Gatsby root-bestanden
+  // 📁 gatsby-browser.js is ESM in browsercontext
   {
-    files: ["gatsby-*.js", "gatsby-config.js", "gatsby-node.js"],
+    files: ["gatsby-browser.js"],
     languageOptions: {
       ecmaVersion: 2023,
-      sourceType: "module",
+      sourceType: "module", // ✅ ESM
+      globals: {
+        ...globals.browser, // ✅ lost window, document, navigator op
+        ...globals.node,
+      },
+    },
+  },
+
+  // 📁 Gatsby root-bestanden
+  {
+    files: ["gatsby-*.cjs", "gatsby-config.cjs", "gatsby-node.cjs"],
+    languageOptions: {
+      ecmaVersion: 2023,
+      sourceType: "script", // = CommonJS
       globals: {
         ...globals.browser,
         ...globals.node,

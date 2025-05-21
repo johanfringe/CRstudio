@@ -1,4 +1,4 @@
-// gatsby-ssr.js :
+// gatsby-ssr.cjs :
 
 const React = require("react");
 const { wrapPageElement: wrap } = require("./src/i18n/wrapPageElement");

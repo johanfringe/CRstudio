@@ -1,4 +1,4 @@
-// gatsby-config.js :
+// gatsby-config.cjs :
 // console.log("🔍 Gatsby Functions worden geladen...");
 
 require("dotenv-flow").config({
