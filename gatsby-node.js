@@ -2,7 +2,6 @@
 require("dotenv-flow").config({
   path: `${__dirname}/content/settings`,
 });
-const path = require("path");
 
 // ✅ Debugging: Log alleen in development of debug-mode
 if (process.env.NODE_ENV === "development") {

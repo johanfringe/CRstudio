@@ -9,17 +9,8 @@ import prettier from "eslint-plugin-prettier";
 import i18next from "eslint-plugin-i18next";
 
 export default [
-  js.configs.recommended,
-
+  // 🔒 Globale uitsluitingen
   {
-    files: ["**/__tests__/**/*.js", "**/*.test.js", "**/*.spec.js"],
-    plugins: { jest },
-    rules: {
-      ...jest.configs.recommended.rules,
-    },
-  },
-  {
-    files: ["src/**/*.{js,jsx,ts,tsx}"],
     ignores: [
       "**/node_modules/**",
       "**/.cache/**",
@@ -31,13 +22,74 @@ export default [
       "**/.vscode/**",
       "**/.idea/**",
       "**/coverage/**",
-      "**/__testsBackup__/**", // ✅ tijdelijk uitgesloten, ook bij .prettierignore
+      "**/__testsBackup__/**",
       "**/*.log",
       "**/*.bak",
       "**/*.tmp",
       "**/*.swp",
       "**/.env.sentry-build-plugin",
     ],
+  },
+
+  // 🧠 Aanbevolen JS-config
+  js.configs.recommended,
+
+  // 🎯 Jest testbestanden
+  {
+    files: ["**/__tests__/**/*.js", "**/*.test.js", "**/*.spec.js"],
+    plugins: { jest },
+    rules: {
+      ...jest.configs.recommended.rules,
+    },
+  },
+
+  // 📁 Gatsby root-bestanden
+  {
+    files: ["gatsby-*.js", "gatsby-config.js", "gatsby-node.js"],
+    languageOptions: {
+      ecmaVersion: 2023,
+      sourceType: "module",
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
+    },
+  },
+
+  // 📦 Configuratie- en Node-bestanden buiten src/
+  {
+    files: [
+      "*.config.js",
+      "*.mjs",
+      "check-unused-keys.js",
+      "pingRedis.js",
+      "postcss.config.js",
+      "tailwind.config.mjs",
+    ],
+    languageOptions: {
+      ecmaVersion: 2023,
+      sourceType: "module",
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
+
+  // 📦 Node scripts zoals check-unused-keys
+  {
+    files: ["scripts/check-unused-keys.js"],
+    languageOptions: {
+      ecmaVersion: 2023,
+      sourceType: "script",
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
+
+  // 🎯 Je eigen projectbestanden
+  {
+    files: ["src/**/*.{js,jsx,ts,tsx}"],
     languageOptions: {
       ecmaVersion: 2023,
       sourceType: "module",

@@ -20,7 +20,6 @@ console.log(
 // console.log("🔍 Verbinding maken met Redis...");
 
 const i18nConfig = require("./src/i18n/i18nConfig");
-const languages = require("./src/locales/languages");
 const robotsConfig = require("./src/config/robots-config.json");
 
 module.exports = {
