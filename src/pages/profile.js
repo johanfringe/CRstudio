@@ -1,5 +1,6 @@
 // src/pages/profile.js :
-import { useState, useEffect, useRef, useCallback } from "react";
+import React from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { graphql } from "gatsby";
 import { useTranslation } from "gatsby-plugin-react-i18next";
 import Seo from "../components/Seo";
@@ -337,7 +338,7 @@ const Profile = () => {
         clearTimeout(redirectTimer.current);
       }
     };
-  }, [tokenValid]);
+  }, [tokenValid, session]);
 
   const renderErrorMessage = () => {
     switch (statusCode) {
@@ -384,45 +385,47 @@ const Profile = () => {
     }
   };
 
-  const checkSubdomainAvailability = async sub => {
-    const normalized = sub.trim().toLowerCase();
-    log("🌐 Controle subdomein beschikbaarheid", { normalized });
+  const checkSubdomainAvailability = useCallback(
+    async sub => {
+      const normalized = sub.trim().toLowerCase();
+      log("🌐 Controle subdomein beschikbaarheid", { normalized });
 
-    try {
-      const { error, count } = await supabase
-        .from("artists")
-        .select("id", { count: "exact", head: true })
-        .eq("subdomain", normalized);
+      try {
+        const { error, count } = await supabase
+          .from("artists")
+          .select("id", { count: "exact", head: true })
+          .eq("subdomain", normalized);
 
-      if (error) {
-        warn("⚠️ Subdomein-check mislukt", { error });
+        if (error) {
+          warn("⚠️ Subdomein-check mislukt", { error });
+          setSubdomainStatus("error");
+          setSubdomainError(t("profile.verify_error.SUBDOMAIN_CHECK_FAILED"));
+          return;
+        }
+
+        if (count > 0) {
+          setSubdomainStatus("taken");
+          setSubdomainError(t("profile.verify_error.SUBDOMAIN_TAKEN"));
+        } else {
+          setSubdomainStatus("available");
+          setSubdomainError("");
+        }
+      } catch (err) {
+        error("❌ Onverwachte fout bij subdomain-check", { err });
         setSubdomainStatus("error");
-        setSubdomainError(t("profile.verify_error.SUBDOMAIN_CHECK_FAILED"));
-        return;
+        setSubdomainError(t("profile.verify_error.INTERNAL_ERROR"));
       }
-
-      if (count > 0) {
-        setSubdomainStatus("taken");
-        setSubdomainError(t("profile.verify_error.SUBDOMAIN_TAKEN"));
-      } else {
-        setSubdomainStatus("available");
-        setSubdomainError("");
-      }
-    } catch (err) {
-      error("❌ Onverwachte fout bij subdomain-check", { err });
-      setSubdomainStatus("error");
-      setSubdomainError(t("profile.verify_error.INTERNAL_ERROR"));
-    }
-  };
-
-  const debouncedCheckSubdomainAvailability = useCallback(
-    debounce(checkSubdomainAvailability, 400),
-    []
+    },
+    [t]
   );
+
+  const debouncedCheckSubdomainAvailability = useMemo(() => {
+    return debounce(checkSubdomainAvailability, 400);
+  }, [checkSubdomainAvailability]);
 
   useEffect(() => {
     return () => debouncedCheckSubdomainAvailability.cancel();
-  }, []);
+  }, [debouncedCheckSubdomainAvailability]);
 
   const handleSubdomainInput = val => {
     const trimmed = val.trim().toLowerCase();

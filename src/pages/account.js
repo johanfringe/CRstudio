@@ -1,4 +1,5 @@
 // src/pages/account.js : = login pagina in de kunstenaarssites
+import React from "react";
 import { graphql } from "gatsby";
 import { useTranslation } from "gatsby-plugin-react-i18next";
 import Seo from "../components/Seo";

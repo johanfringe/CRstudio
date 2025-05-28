@@ -14,6 +14,22 @@ if (!process.env.SENTRY_DSN && process.env.NODE_ENV === "production") {
   console.warn("⚠️ WAARSCHUWING: SENTRY_DSN ontbreekt in productie!");
 }
 
+exports.onCreateBabelConfig = ({ actions }) => {
+  actions.setBabelPreset({
+    name: require.resolve("@babel/preset-env"),
+    options: {
+      targets: "> 0.25%, not dead",
+    },
+  });
+
+  actions.setBabelPreset({
+    name: require.resolve("@babel/preset-react"),
+    options: {
+      runtime: "automatic",
+    },
+  });
+};
+
 // ✅ Webpack alias configuratie
 exports.onCreateWebpackConfig = ({ actions }) => {
   const path = require("path");
@@ -21,7 +37,7 @@ exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     resolve: {
       alias: {
-        "@": path.resolve(__dirname, "src"), // ✅ Zorgt ervoor dat @ verwijst naar /src
+        "@": path.resolve(__dirname, "src"),
       },
     },
   });

@@ -3,6 +3,7 @@
 // ✔ Prijsvergelijking per plan
 // ✔ Kiezen tussen maandelijks of jaarlijks betalen
 // ✔ Klikken op een "Nu upgraden"-knop die naar Stripe Customer Portal leidt
+import React from "react";
 import { graphql } from "gatsby";
 import { useTranslation } from "gatsby-plugin-react-i18next";
 import Seo from "../components/Seo";

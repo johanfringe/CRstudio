@@ -1,4 +1,5 @@
 // src/components/LanguageSwitcher.js :
+import React from "react";
 import { useState, useRef, useEffect } from "react";
 import { useI18next } from "gatsby-plugin-react-i18next";
 import languages from "../locales/languages";

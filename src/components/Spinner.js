@@ -1,4 +1,5 @@
 // src/components/Spinner.js :
+import React from "react";
 const Spinner = () => {
   return (
     <div className="flex h-32 w-full items-center justify-center">

@@ -1,4 +1,5 @@
 // /components/HomeTestiSection.js :
+import React from "react";
 import { useTranslation } from "gatsby-plugin-react-i18next";
 import SectionWrapper from "../components/SectionWrapper";
 
@@ -24,7 +25,7 @@ const HomeTestiSection = () => {
             key={index}
             className="flex flex-col rounded-lg border border-gray-300 bg-white p-6 shadow-lg"
           >
-            <p className="mb-2 text-xl text-gray-700">" {t(testi)} "</p>
+            <p className="mb-2 text-xl text-gray-700">&ldquo; {t(testi)} &ldquo;</p>
             <p className="text-base italic text-gray-600">- {t(clients[index])}</p>
           </div>
         ))}

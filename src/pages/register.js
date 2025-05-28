@@ -1,4 +1,5 @@
 // /src/pages/register.js :
+import React from "react";
 import { useState, useEffect } from "react";
 import { Link, graphql, navigate } from "gatsby";
 import { useTranslation } from "gatsby-plugin-react-i18next";

@@ -1,7 +1,6 @@
 // gatsby-ssr.cjs :
-
 const React = require("react");
-const { wrapPageElement: wrap } = require("./src/i18n/wrapPageElement");
+const wrap = require("./src/i18n/wrapPageElement");
 const { warn } = require("./src/utils/logger");
 const { initSentry } = require("./src/utils/sentryInit");
 const i18nConfig = require("./src/i18n/i18nConfig");

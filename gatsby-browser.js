@@ -1,12 +1,11 @@
-// gatsby-browser.js :
-
-import "./src/styles/global.css";
-import * as Sentry from "@sentry/react";
-import { wrapPageElement as wrap } from "./src/i18n/wrapPageElement";
-import i18n from "./src/i18n/i18n";
-import i18nConfig from "./src/i18n/i18nConfig";
-import { log, warn, error } from "./src/utils/logger";
-import { initSentry } from "./src/utils/sentryInit";
+// ✅ gatsby-browser.js :
+require("./src/styles/global.css");
+const i18n = require("./src/i18n/i18n");
+const i18nConfig = require("./src/i18n/i18nConfig");
+const { log, warn, error } = require("./src/utils/logger");
+const { initSentry } = require("./src/utils/sentryInit");
+const Sentry = require("@sentry/react");
+const wrap = require("./src/i18n/wrapPageElement");
 
 // ✅ SENTRY INITIALISATIE
 if (typeof window !== "undefined") {
@@ -32,7 +31,7 @@ if (typeof window !== "undefined") {
 log("✅ gatsby-browser.js werd volledig geladen");
 
 // ✅ Gatsby Lifecycle: wrapPageElement
-export const wrapPageElement = wrap;
+exports.wrapPageElement = wrap;
 
 // ✅ Helper: zet document <html lang> attribuut veilig
 const setDocumentLang = lang => {
@@ -43,7 +42,7 @@ const setDocumentLang = lang => {
 };
 
 // ✅ Snelle browser-taaldetectie vóór React hydration
-export const onClientEntry = () => {
+exports.onClientEntry = () => {
   if (typeof window === "undefined") return;
 
   try {
@@ -92,7 +91,7 @@ export const onClientEntry = () => {
 };
 
 // ✅ Taalwisseling ná React hydration
-export const onInitialClientRender = () => {
+exports.onInitialClientRender = () => {
   if (typeof window === "undefined") return;
 
   try {

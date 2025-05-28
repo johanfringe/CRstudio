@@ -1,4 +1,5 @@
 // src/components/PasswordStrengthMeter.js :
+import React from "react";
 import { useTranslation } from "gatsby-plugin-react-i18next";
 
 const strengthLevels = [

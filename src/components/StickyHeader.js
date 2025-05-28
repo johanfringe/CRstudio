@@ -1,4 +1,5 @@
 // src/components/StickyHeader.js :
+import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { Link as GatsbyLink, graphql, useStaticQuery } from "gatsby";
 import { Link as ScrollLink } from "react-scroll";

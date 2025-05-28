@@ -1,4 +1,5 @@
 // /components/CTAButton :
+import React from "react";
 import { useTranslation, Link } from "gatsby-plugin-react-i18next";
 
 const CTAButton = () => {

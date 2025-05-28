@@ -1,4 +1,5 @@
 // src/pages/forgot.js
+import React from "react";
 import { useState } from "react";
 import { graphql } from "gatsby";
 import { useTranslation } from "gatsby-plugin-react-i18next";

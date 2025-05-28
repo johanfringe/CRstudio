@@ -1,5 +1,5 @@
 // src/admin-panel.js :
-
+import React from "react";
 import { useTranslation } from "gatsby-plugin-react-i18next";
 
 const deleteUser = async userId => {

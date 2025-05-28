@@ -9,7 +9,7 @@ import prettier from "eslint-plugin-prettier";
 import i18next from "eslint-plugin-i18next";
 
 export default [
-  // 🔒 Globale uitsluitingen
+  // ── 1. Core ignores & recommended JS rules ──
   {
     ignores: [
       "**/node_modules/**",
@@ -30,46 +30,30 @@ export default [
       "**/.env.sentry-build-plugin",
     ],
   },
-
-  // 🧠 Aanbevolen JS-config
   js.configs.recommended,
 
-  // 🎯 Jest testbestanden
+  // ── 2. React-plugin flat-presets ──
+  react.configs.flat.recommended,
+  react.configs.flat["jsx-runtime"],
+
+  // ── 3. Jest override ──
   {
     files: ["**/__tests__/**/*.js", "**/*.test.js", "**/*.spec.js"],
     plugins: { jest },
-    rules: {
-      ...jest.configs.recommended.rules,
-    },
+    rules: { ...jest.configs.recommended.rules },
   },
 
-  // 📁 gatsby-browser.js is ESM in browsercontext
+  // ── 4. Gatsby-CJS override ──
   {
-    files: ["gatsby-browser.js"],
+    files: ["gatsby-*.cjs", "gatsby-browser.js", "gatsby-config.js", "gatsby-node.js"],
     languageOptions: {
       ecmaVersion: 2023,
-      sourceType: "module", // ✅ ESM
-      globals: {
-        ...globals.browser, // ✅ lost window, document, navigator op
-        ...globals.node,
-      },
+      globals: { ...globals.browser, ...globals.node },
+      sourceType: "script",
     },
   },
 
-  // 📁 Gatsby root-bestanden
-  {
-    files: ["gatsby-*.cjs", "gatsby-config.cjs", "gatsby-node.cjs"],
-    languageOptions: {
-      ecmaVersion: 2023,
-      sourceType: "script", // = CommonJS
-      globals: {
-        ...globals.browser,
-        ...globals.node,
-      },
-    },
-  },
-
-  // 📦 Configuratie- en Node-bestanden buiten src/
+  // ── 5. Node/ESM override ──
   {
     files: [
       "*.config.js",
@@ -81,66 +65,58 @@ export default [
     ],
     languageOptions: {
       ecmaVersion: 2023,
+      globals: { ...globals.node },
       sourceType: "module",
-      globals: {
-        ...globals.node,
-      },
     },
   },
 
-  // 📦 Node scripts zoals check-unused-keys
+  // ── 6. Node scripts override ──
   {
     files: ["scripts/check-unused-keys.js"],
     languageOptions: {
       ecmaVersion: 2023,
+      globals: { ...globals.node },
       sourceType: "script",
-      globals: {
-        ...globals.node,
-      },
     },
   },
 
-  // 🎯 Je eigen projectbestanden
+  // ── 7. Project-code override ──
   {
     files: ["src/**/*.{js,jsx,ts,tsx}"],
     languageOptions: {
       ecmaVersion: 2023,
+      globals: { ...globals.browser, ...globals.jest, ...globals.node },
+      parserOptions: { ecmaFeatures: { jsx: true } },
       sourceType: "module",
-      globals: {
-        ...globals.browser,
-        ...globals.jest,
-        ...globals.node,
-      },
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        },
-      },
     },
     plugins: {
+      i18next,
+      "jsx-a11y": jsxA11y,
+      prettier,
       react,
       "react-hooks": reactHooks,
-      "jsx-a11y": jsxA11y,
-      i18next,
-      prettier,
     },
     settings: {
-      react: {
-        version: "detect",
-      },
+      react: { runtime: "automatic", version: "detect" },
     },
     rules: {
-      "prettier/prettier": "error",
-      "react/jsx-uses-vars": "error",
-      "react/prop-types": "off",
-      "react/react-in-jsx-scope": "off",
+      // voorkomt false-positives in i18n-lint
       "i18next/no-literal-string": [
         "warn",
         {
-          markupOnly: true,
           ignoreAttribute: ["id", "name", "type", "htmlFor", "data-testid"],
+          markupOnly: true,
+          varsIgnorePattern: "^React$",
         },
       ],
+      // core ESLint: voorkomt unused-vars op React-imports
+      "no-unused-vars": ["error", { varsIgnorePattern: "^React$" }],
+      // Prettier
+      "prettier/prettier": "error",
+      // voorkomt problemen bij automatische JSX-runtime
+      "react/jsx-uses-vars": "error",
+      "react/prop-types": "off",
+      "react/react-in-jsx-scope": "off",
     },
   },
 ];

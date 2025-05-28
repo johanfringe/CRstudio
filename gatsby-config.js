@@ -1,6 +1,4 @@
-// gatsby-config.cjs :
-// console.log("🔍 Gatsby Functions worden geladen...");
-
+// gatsby-config.js :
 require("dotenv-flow").config({
   path: `${__dirname}/content/settings`,
   silent: false, // Zorgt ervoor dat fouten worden gelogd als variabelen niet worden geladen

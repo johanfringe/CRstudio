@@ -18,13 +18,14 @@ export async function checkHIBPPassword(password) {
 
   // Controleer cache
   if (hibpCache.has(password)) {
-    log("🔁 HIBP-cache gebruikt voor wachtwoord", { prefix });
     return hibpCache.get(password);
   }
 
   const hashed = sha1(password).toUpperCase();
   const prefix = hashed.slice(0, 5);
   const suffix = hashed.slice(5);
+
+  log("🔁 HIBP-cache gebruikt voor wachtwoord", { prefix });
   log("🔐 Wachtwoord gehashed", { prefix, suffixPreview: suffix.slice(0, 5) }); // nooit volledige hash
 
   try {

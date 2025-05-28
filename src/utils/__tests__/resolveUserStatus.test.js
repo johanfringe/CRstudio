@@ -1,7 +1,7 @@
 // __tests__/resolveUserStatus.test.js :
 
-import { resolveUserStatus } from "../src/utils/resolveUserStatus";
-import { STATUS } from "../src/utils/statusCodes";
+import { resolveUserStatus } from "../resolveUserStatus";
+import { STATUS } from "../statusCodes";
 
 // Huidige tijd als referentie
 const NOW = Date.now();

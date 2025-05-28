@@ -1,4 +1,5 @@
 // /components/HomeFAQSection :
+import React from "react";
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
