@@ -1,5 +1,4 @@
 // src/pages/404.js :
-//import React from "react";
 import React from "react";
 import { graphql } from "gatsby";
 import { useTranslation, Link } from "gatsby-plugin-react-i18next";

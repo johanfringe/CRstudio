@@ -9,6 +9,16 @@ import prettier from "eslint-plugin-prettier";
 import i18next from "eslint-plugin-i18next";
 
 export default [
+  // ── 0. Root-settings voor React vóór alles ──
+  {
+    settings: {
+      react: {
+        version: "detect",
+        runtime: "automatic",
+      },
+    },
+  },
+
   // ── 1. Core ignores & recommended JS rules ──
   {
     ignores: [
