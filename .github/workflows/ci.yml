@@ -1,5 +1,4 @@
 # .github/workflows/ci.yml :
-
 name: CI - Build Test & Deploy
 
 on:
@@ -38,7 +37,8 @@ jobs:
       - name: Build Gatsby site
         run: yarn build
         env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          GATSBY_SUPABASE_ANON_KEY: ${{ secrets.GATSBY_SUPABASE_ANON_KEY }}
+          GATSBY_SUPABASE_URL: ${{ secrets.GATSBY_SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
 
