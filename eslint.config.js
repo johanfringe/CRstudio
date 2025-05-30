@@ -22,22 +22,22 @@ export default [
   // ── 1. Core ignores & recommended JS rules ──
   {
     ignores: [
-      "**/node_modules/**",
       "**/.cache/**",
-      "**/public/**",
-      "**/dist/**",
-      "**/.netlify/**",
-      "**/supabase/**",
+      "**/.env.sentry-build-plugin",
       "**/.git/**",
-      "**/.vscode/**",
       "**/.idea/**",
+      "**/.netlify/**",
+      "**/.vscode/**",
+      "**/dist/**",
+      "**/node_modules/**",
+      "**/public/**",
+      "**/supabase/**",
       "**/coverage/**",
       "**/__testsBackup__/**",
-      "**/*.log",
       "**/*.bak",
-      "**/*.tmp",
+      "**/*.log",
       "**/*.swp",
-      "**/.env.sentry-build-plugin",
+      "**/*.tmp",
     ],
   },
   js.configs.recommended,
@@ -110,7 +110,6 @@ export default [
       react: { runtime: "automatic", version: "detect" },
     },
     rules: {
-      // voorkomt false-positives in i18n-lint
       "i18next/no-literal-string": [
         "warn",
         {
@@ -119,11 +118,8 @@ export default [
           varsIgnorePattern: "^React$",
         },
       ],
-      // core ESLint: voorkomt unused-vars op React-imports
       "no-unused-vars": ["error", { varsIgnorePattern: "^React$" }],
-      // Prettier
       "prettier/prettier": "error",
-      // voorkomt problemen bij automatische JSX-runtime
       "react/jsx-uses-vars": "error",
       "react/prop-types": "off",
       "react/react-in-jsx-scope": "off",

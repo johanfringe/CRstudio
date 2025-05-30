@@ -34,13 +34,23 @@ jobs:
       - name: Run ESLint
         run: yarn lint
 
-      - name: Build Gatsby site
-        run: yarn build
+      - name: Build Gatsby site & release to Sentry
+        run: |
+          export SENTRY_RELEASE=crstudio@$(git rev-parse --short HEAD)
+          yarn build
+          sentry-cli releases new $SENTRY_RELEASE \
+            --org crstudio-th --project crstudio-main
+          sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps ./public \
+            --url-prefix '~/static' --validate --rewrite \
+            --org crstudio-th --project crstudio-main
+          sentry-cli releases finalize $SENTRY_RELEASE \
+            --org crstudio-th --project crstudio-main
         env:
           GATSBY_SUPABASE_ANON_KEY: ${{ secrets.GATSBY_SUPABASE_ANON_KEY }}
           GATSBY_SUPABASE_URL: ${{ secrets.GATSBY_SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
       - name: Upload production build
         uses: actions/upload-artifact@v4
@@ -74,9 +84,12 @@ jobs:
           path: public/
 
       - name: Deploy to Netlify via CLI
-        # OPGELET: zijn secret!
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: |
-          npx netlify-cli deploy --prod --dir=public --site=$NETLIFY_SITE_ID --auth=$NETLIFY_AUTH_TOKEN
+          npx netlify-cli deploy \
+            --prod \
+            --dir=public \
+            --site=$NETLIFY_SITE_ID \
+            --skip-build
