@@ -38,12 +38,12 @@ jobs:
         run: |
           export SENTRY_RELEASE=crstudio@$(git rev-parse --short HEAD)
           yarn build
-          sentry-cli releases new $SENTRY_RELEASE \
+          yarn run sentry-cli releases new $SENTRY_RELEASE \
             --org crstudio-th --project crstudio-main
-          sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps ./public \
+          yarn run sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps ./public \
             --url-prefix '~/static' --validate --rewrite \
             --org crstudio-th --project crstudio-main
-          sentry-cli releases finalize $SENTRY_RELEASE \
+          yarn run sentry-cli releases finalize $SENTRY_RELEASE \
             --org crstudio-th --project crstudio-main
         env:
           GATSBY_SUPABASE_ANON_KEY: ${{ secrets.GATSBY_SUPABASE_ANON_KEY }}
