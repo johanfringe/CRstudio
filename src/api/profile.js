@@ -1,4 +1,4 @@
-// src/api/profile.js :
+// src/api/profile.js:
 import { createClient } from "@supabase/supabase-js";
 import { validateSubdomain } from "../utils/validateSubdomain";
 import { log, warn, error } from "../utils/logger";
