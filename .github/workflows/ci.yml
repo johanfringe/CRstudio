@@ -84,12 +84,9 @@ jobs:
           path: public/
 
       - name: Deploy to Netlify via CLI
+        uses: South-Paw/action-netlify-cli@v2
+        with:
+          args: deploy --prod --dir=public
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        run: |
-          npx netlify-cli deploy \
-            --prod \
-            --dir=public \
-            --site=$NETLIFY_SITE_ID \
-            --skip-build
