@@ -1,5 +1,4 @@
 // /src/utils/logStatusToSentry.js :
-
 import * as Sentry from "@sentry/browser";
 
 /**

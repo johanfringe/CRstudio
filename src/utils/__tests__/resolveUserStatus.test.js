@@ -1,5 +1,4 @@
 // __tests__/resolveUserStatus.test.js :
-
 import { resolveUserStatus } from "../resolveUserStatus";
 import { STATUS } from "../statusCodes";
 
@@ -213,4 +212,46 @@ describe("resolveUserStatus()", () => {
     expect(result.statusCode).toBe(STATUS.UNKNOWN_ERROR);
     expect(result.meta.translationVariant).toBe("default");
   });
+});
+
+test("8️⃣ resolveStatusEntry → onbekende statusCode", () => {
+  const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
+
+  // Direct test van de helper met foute status
+  const fallback = require("../statusMap").statusMap[STATUS.UNKNOWN_ERROR];
+  const resolved = require("../resolveUserStatus").resolveStatusEntry("STATUS_DOES_NOT_EXIST");
+
+  expect(resolved.headingKey).toBe(fallback.headingKey);
+  expect(consoleWarnSpy).toHaveBeenCalledWith(
+    "[CRstudio] Onbekende statusCode in resolveStatusEntry:",
+    "STATUS_DOES_NOT_EXIST"
+  );
+
+  consoleWarnSpy.mockRestore();
+});
+
+test("9️⃣ NEW_USER_PENDING — debug info bij development", () => {
+  const oldEnv = process.env.NODE_ENV;
+  process.env.NODE_ENV = "development";
+  const consoleDebugSpy = jest.spyOn(console, "debug").mockImplementation(() => {});
+
+  resolveUserStatus({
+    user: null,
+    session: null,
+    artist: null,
+    token: {
+      isTempUser: true,
+      isExpired: false,
+      createdAt: new Date(Date.now() - 4 * MIN).toISOString(), // jong token
+    },
+    originPage: "register",
+  });
+
+  expect(consoleDebugSpy).toHaveBeenCalledWith(
+    expect.stringContaining("NEW_USER_PENDING: leeftijd token"),
+    expect.any(Number)
+  );
+
+  consoleDebugSpy.mockRestore();
+  process.env.NODE_ENV = oldEnv; // herstel originele waarde
 });

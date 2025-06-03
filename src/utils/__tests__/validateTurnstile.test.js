@@ -1,5 +1,4 @@
 // __tests__/validateTurnstile.test.js :
-
 import { validateTurnstile } from "../validateTurnstile";
 
 global.fetch = jest.fn();

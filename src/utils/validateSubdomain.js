@@ -1,7 +1,4 @@
 // src/utils/validateSubdomain.js :
-
-// src/utils/validateSubdomain.js
-
 import { subdomainBlocklist } from "./subdomainBlocklist";
 import { log, warn, error } from "./logger";
 
@@ -37,9 +34,15 @@ export function getSubdomainValidationSteps(input = "") {
 /**
  * ✅ Retourneert foutcode string of null
  */
-export function validateSubdomain(input = "") {
+export function validateSubdomain(input) {
   // 🔐 Enkel echte strings verwerken — anders vervangen door lege string
-  const raw = typeof input === "string" ? input.trim() : "";
+  // const raw = typeof input === "string" ? input.trim() : "";
+  let raw;
+  if (typeof input === "string") {
+    raw = input.trim();
+  } else {
+    raw = "";
+  }
   const sub = raw.toLowerCase();
 
   log("🔧 Ontvangen input voor subdomeinvalidatie", { rawInput: input });

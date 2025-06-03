@@ -1,5 +1,4 @@
 // /src/utils/statusMap.js :
-
 import { STATUS } from "./statusCodes";
 
 // ✅ Contexten waarin een status zich kan voordoen. Wordt alleen gebruikt voor logging/debugging
@@ -28,7 +27,7 @@ export const defaultMeta = {
 };
 
 // ✅ Helper
-function createStatusConfig({
+export function createStatusConfig({
   statusCode,
   translationKey,
   redirectTo = null,

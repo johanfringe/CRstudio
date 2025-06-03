@@ -5,6 +5,9 @@ import { log, warn, error, captureApiError } from "./logger";
 // Optioneel cache-resultaat binnen sessie
 const hibpCache = new Map();
 
+export function __clearCache() {
+  hibpCache.clear();
+}
 /**
  * Controleer of een wachtwoord gelekt is via HaveIBeenPwned API (k-anonimiteit)
  * @param {string} password

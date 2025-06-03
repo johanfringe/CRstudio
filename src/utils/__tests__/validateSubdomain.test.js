@@ -1,5 +1,4 @@
-// __tests__/validateSubdomain.test.js
-
+// __tests__/validateSubdomain.test.js :
 // Mock logger om testoutput proper te houden
 jest.mock("../logger", () => ({
   log: jest.fn(),
@@ -139,6 +138,13 @@ describe("validateSubdomain()", () => {
   test("❌ null en undefined input", () => {
     expect(validateSubdomain(null)).toBe("auth.subdomainInvalidLength");
     expect(validateSubdomain(undefined)).toBe("auth.subdomainInvalidLength");
+  });
+
+  test("❌ Niet-string inputtypes worden correct afgehandeld", () => {
+    expect(validateSubdomain(123)).toBe("auth.subdomainInvalidLength");
+    expect(validateSubdomain({})).toBe("auth.subdomainInvalidLength");
+    expect(validateSubdomain([])).toBe("auth.subdomainInvalidLength");
+    expect(validateSubdomain(() => {})).toBe("auth.subdomainInvalidLength");
   });
 
   test("✅ Geldig subdomein met enkel cijfers", () => {

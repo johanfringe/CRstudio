@@ -10,6 +10,10 @@ import { log, error, captureApiError } from "./logger";
  * @param {string} htmlBody - HTML-inhoud van de e-mail (optioneel)
  */
 export const sendEmail = async (to, subject, textBody, htmlBody = "") => {
+  if (!process.env.POSTMARK_API_KEY) {
+    return { success: false, error: "API sleutel ontbreekt" };
+  }
+
   try {
     log("📩 Verzenden van e-mail naar", { to, subject });
     log("📨 API-call naar Postmark wordt verstuurd", {

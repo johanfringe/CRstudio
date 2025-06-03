@@ -1,5 +1,4 @@
-// __tests__/resolveTranslationKeys.test.js
-
+// __tests__/resolveTranslationKeys.test.js :
 import { resolveTranslationKeys } from "../resolveTranslationKeys";
 
 describe("resolveTranslationKeys()", () => {

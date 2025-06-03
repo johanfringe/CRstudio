@@ -1,5 +1,4 @@
-// __tests__/emailValidator.test.js
-
+// __tests__/emailValidator.test.js :
 import { validateEmail } from "../emailValidator";
 
 describe("validateEmail()", () => {

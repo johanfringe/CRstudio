@@ -68,7 +68,9 @@ export const throwTestError = () => {
 // import { getLang, getSubdomain } from "../utils/logger";
 export function getLang() {
   if (typeof window === "undefined") return "unknown";
-  return document?.documentElement?.lang || navigator.language || "unknown";
+  const lang = window.document?.documentElement?.lang;
+  const navLang = window.navigator?.language;
+  return lang || navLang || "unknown";
 }
 
 export function getSubdomain() {
