@@ -1,5 +1,5 @@
-// src/utils/session.js
-import { supabase } from "../lib/supabaseClient";
+// src/utils/session.js :
+import { supabase } from "./supabaseClient";
 import { log, warn } from "./logger";
 
 export const waitForSession = async (retries = 5, delay = 300, logId = "") => {

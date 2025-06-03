@@ -5,7 +5,7 @@ import { Link, graphql, navigate } from "gatsby";
 import { useTranslation } from "gatsby-plugin-react-i18next";
 import { useI18next } from "gatsby-plugin-react-i18next";
 import { validateEmail } from "../utils/emailValidator";
-import { supabase } from "../lib/supabaseClient";
+import { supabase } from "../utils/supabaseClient";
 import { Button, Input } from "../components/ui";
 import Seo from "../components/Seo";
 import SectionWrapper from "../components/SectionWrapper";

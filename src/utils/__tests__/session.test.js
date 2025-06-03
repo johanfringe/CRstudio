@@ -1,6 +1,6 @@
 // __tests__/session.test.js :
 import { waitForSession } from "../session";
-import { supabase } from "../../lib/supabaseClient";
+import { supabase } from "../supabaseClient";
 import * as logger from "../logger";
 
 // Mock loggers
@@ -10,7 +10,7 @@ jest.mock("../logger", () => ({
 }));
 
 // Mock supabase
-jest.mock("../../lib/supabaseClient", () => ({
+jest.mock("../supabaseClient", () => ({
   supabase: {
     auth: {
       getSession: jest.fn(),

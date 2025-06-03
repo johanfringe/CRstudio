@@ -8,7 +8,7 @@ import SectionWrapper from "../components/SectionWrapper";
 import PasswordStrengthMeter from "../components/PasswordStrengthMeter";
 import Spinner from "../components/Spinner";
 import { Input, Button } from "../components/ui";
-import { supabase } from "../lib/supabaseClient";
+import { supabase } from "../utils/supabaseClient";
 import { preloadZxcvbn, validatePassword } from "../utils/validatePassword";
 import { validateSubdomain, getSubdomainValidationSteps } from "../utils/validateSubdomain";
 import { log, warn, error, captureApiError } from "../utils/logger";
