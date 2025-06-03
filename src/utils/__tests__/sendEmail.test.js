@@ -1,6 +1,11 @@
 // __tests__/sendEmail.test.js :
 import { sendEmail } from "../sendEmail";
 import fetch from "node-fetch";
+import { TextEncoder, TextDecoder } from "util";
+
+// ✅ Fix voor node-fetch/whatwg-url dependency in testomgeving
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
 
 jest.mock("node-fetch", () => jest.fn());
 
